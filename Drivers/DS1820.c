@@ -154,17 +154,32 @@ Status_t DS1820_Start_Conversion(int Ch)
 /*******************************************************************************
 * 
 *******************************************************************************/
-Status_t DS1820_Read_Temp(int *Temp, int Ch)
+Status_t DS1820_Read_Temp(int *Temp, int Ch, uint8 *SerialNumber_p)
 {
   Function_IN(DS1820_READ_TEMP);
   Status_t StatusReturn = GENERAL_ERROR;
   uint8 Scratchpad[2] = {0};
+  int i;
   
   StatusReturn = DS_Reset(Ch);
   CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_READ_TEMP);
   
-  StatusReturn = DS_Write_Byte(DS_SKIP_ROM_COMMAND, Ch);
-  CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_READ_TEMP);
+  if( SerialNumber_p == NULL)
+  {
+    StatusReturn = DS_Write_Byte(DS_SKIP_ROM_COMMAND, Ch);
+    CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_READ_TEMP);
+  }
+  else
+  {
+    StatusReturn = DS_Write_Byte(DS_MATCH_ROM_COMMAND, Ch);
+    CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_READ_TEMP);
+    for(i = 0; i < 8; i++)
+    {
+      StatusReturn = DS_Write_Byte(SerialNumber_p[i], Ch);
+      CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_READ_TEMP);
+    }
+  }
+      
   StatusReturn = DS_Write_Byte(DS_READ_SCRATCHPAD_COMMAND, Ch);
   CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_READ_TEMP);
   

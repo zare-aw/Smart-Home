@@ -27,7 +27,7 @@
 // Function declarations
 Status_t DS1820_Init(int Ch);
 Status_t DS1820_Start_Conversion(int Ch);
-Status_t DS1820_Read_Temp(int *Temp, int Ch);
+Status_t DS1820_Read_Temp(int *Temp, int Ch, uint8 *SerialNumber_p);
 Status_t DS1820_Read_SN(uint8 *SerialNumber, int Ch);
 
 #endif

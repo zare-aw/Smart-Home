@@ -269,7 +269,7 @@ Status_t Get_Temp_Command(uint8 NoOfCommand, uint8 Chanel)
   StatusReturn = DS1820_Start_Conversion(1);
   CONTROL(StatusReturn == SUCCESS, StatusReturn);
   Dly(750, 'm', NULL);
-  StatusReturn = DS1820_Read_Temp(&Temp, 1);
+  StatusReturn = DS1820_Read_Temp(&Temp, 1, NULL);
   CONTROL(StatusReturn == SUCCESS, StatusReturn);
   printc("\r # Temp = %d\n", Temp);
   
