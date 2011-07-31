@@ -8,7 +8,7 @@
 #define DS_DIR_IN_1()     ( FIO1DIR_bit.P1_22 = 0 )
 #define DS_DIR_OUT_1()    ( FIO1DIR_bit.P1_22 = 1 )
 
-#define DS_INIT_2()       ( PINSEL0_bit.P0_13 = 1, FIO0DIR_bit.P0_13 = 0 )
+#define DS_INIT_2()       ( PINSEL0_bit.P0_13 = 0, FIO0DIR_bit.P0_13 = 0 )
 #define DS_READ_2(Value)  ( Value = FIO0PIN_bit.P0_13 )
 #define DS_WRITE_LOW_2()  ( FIO0CLR_bit.P0_13 = 1 )
 #define DS_WRITE_HIGH_2() ( FIO0SET_bit.P0_13 = 1 )
