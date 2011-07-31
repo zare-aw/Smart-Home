@@ -34,15 +34,18 @@ Status_t DS1820_Init(int Ch)
 static Status_t DS_Reset(int Ch)
 {
   Function_IN(DS_RESET);
+  uint8 Result;
   
   DS_WRITE_LOW(Ch);
   DS_DIR_OUT(Ch);
   CONTROL_EXIT_FUNC(Dly(480, 'u', NULL) == SUCCESS, DLY_TIMER_UNAVAILABLE_ERROR, DS_RESET);
   DS_DIR_IN(Ch);            // Set Pin as input - wait for DS1820 to pull low
   CONTROL_EXIT_FUNC(Dly(66, 'u', NULL) == SUCCESS, DLY_TIMER_UNAVAILABLE_ERROR, DS_RESET);
-  CONTROL_EXIT_FUNC(DS_READ(Ch) == 0, DS1820_NO_PRESENCE_ERROR, DS_RESET);
+  DS_READ(Ch, Result);
+  CONTROL_EXIT_FUNC(Result == 0, DS1820_NO_PRESENCE_ERROR, DS_RESET);
   CONTROL_EXIT_FUNC(Dly(480-66, 'u', NULL) == SUCCESS, DLY_TIMER_UNAVAILABLE_ERROR, DS_RESET);
-  CONTROL_EXIT_FUNC(DS_READ(Ch) == 1, DS1820_SHORT_CIRCUIT_ERROR, DS_RESET);
+  DS_READ(Ch, Result);
+  CONTROL_EXIT_FUNC(Result == 1, DS1820_SHORT_CIRCUIT_ERROR, DS_RESET);
   
   RETURN_SUCCESS();
 }
@@ -88,7 +91,7 @@ static int DS_Read_Bit(int Ch)
   DS_DIR_IN(Ch);
   if(Dly(4, 'u', NULL) != SUCCESS)
     goto ErrorExit;
-  Result = DS_READ(Ch);
+  DS_READ(Ch, Result);
   if(Dly(65, 'u', NULL) != SUCCESS)
     goto ErrorExit;
   
