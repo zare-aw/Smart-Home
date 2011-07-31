@@ -135,16 +135,31 @@ static Status_t DS_Read_Byte(uint8 *Result, int Ch)
 /*******************************************************************************
 * 
 *******************************************************************************/
-Status_t DS1820_Start_Conversion(int Ch)
+Status_t DS1820_Start_Conversion(int Ch, uint8 *SerialNumber_p)
 {
   Function_IN(DS1820_START_CONVERSION);
   Status_t StatusReturn = GENERAL_ERROR;
+  int i;
   
   StatusReturn = DS_Reset(Ch);
   CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_START_CONVERSION);
   
-  StatusReturn = DS_Write_Byte(DS_SKIP_ROM_COMMAND, Ch);
-  CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_START_CONVERSION);
+  if( SerialNumber_p == NULL)
+  {
+    StatusReturn = DS_Write_Byte(DS_SKIP_ROM_COMMAND, Ch);
+    CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_START_CONVERSION);
+  }
+  else
+  {
+    StatusReturn = DS_Write_Byte(DS_MATCH_ROM_COMMAND, Ch);
+    CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_START_CONVERSION);
+    for(i = 0; i < 8; i++)
+    {
+      StatusReturn = DS_Write_Byte(SerialNumber_p[i], Ch);
+      CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_START_CONVERSION);
+    }
+  }
+  
   StatusReturn = DS_Write_Byte(DS_CONVERT_TEMPERATURE_COMMAND, Ch);
   CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_START_CONVERSION);
   
