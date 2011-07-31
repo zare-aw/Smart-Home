@@ -3,7 +3,7 @@
 
 #include "Includes.h"
 
-#define RTC_COUNT_PER_SEC     32768
+#define RTC_COUNT_PER_SEC   32768
 
 #define RTC_YEARMIN         1901
 #define RTC_YEARMAX         2099
