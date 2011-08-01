@@ -34,10 +34,10 @@
 #endif
 
 /* delay definition */
-#define HD44780_POWER_UP_DLY          400     /* 40 ms (tick 100us) */
-#define HD44780_FIRST_COMM_DLY        41      /* 4.1 ms (tick 100us) */
-#define HD44780_SECOND_COMM_DLY       2       /* 100 us (tick 100us) */
-#define HD44780_MAX_COMM_DLY          30      /* 3ms (tick 100us) */
+#define HD44780_POWER_UP_DLY          40000   // 40 ms
+#define HD44780_FIRST_COMM_DLY        4100    // 4.1 ms
+#define HD44780_SECOND_COMM_DLY       100     // 100 us
+#define HD44780_MAX_COMM_DLY          3000    // 3ms
 
 /* HD44780 command set */
 #define HD44780_CLEAR                 0x01    /* Clear display */
@@ -110,7 +110,7 @@ Int8S DataRamAddHold = 0;
  * Description: Write data to HD44780
  *
  *************************************************************************/
-void HD44780WrData (Int8U Data)
+void HD44780WrData(uint8 Data)
 {
   HD44780SetRS(1);
 #if HD44780_BUS_WIDTH == 8
@@ -129,9 +129,9 @@ void HD44780WrData (Int8U Data)
  * Description: Read data from HD44780
  *
  *************************************************************************/
-Int8U HD44780RdData (void)
+uint8 HD44780RdData(void)
 {
-Int8U Data;
+uint8 Data;
   HD44780SetRS(1);
 #if HD44780_BUS_WIDTH == 8
   Data = HD44780RdIO();
@@ -150,7 +150,7 @@ Int8U Data;
  * Description: Send command to HD44780
  *
  *************************************************************************/
-void HD44780WrComm (Int8U Command)
+void HD44780WrComm(uint8 Command)
 {
   HD44780SetRS(0);
 #if HD44780_BUS_WIDTH == 8
@@ -169,9 +169,9 @@ void HD44780WrComm (Int8U Command)
  * Description: Read status of HD44780
  *
  *************************************************************************/
-Int8U HD44780RdStatus (void)
+uint8 HD44780RdStatus(void)
 {
-Int8U Data;
+uint8 Data;
   HD44780SetRS(0);
 #if HD44780_BUS_WIDTH == 8
   Data = HD44780RdIO();
@@ -194,7 +194,7 @@ Int8U Data;
  * Description: Calculate DDRAM address by X,Y coordinate
  *
  *************************************************************************/
-HD44780_ERROR_CODE_DEF HD44780_GetDDRamAdd (HD44780_XY_DEF X, HD44780_XY_DEF Y,Int8U * DDAdd)
+HD44780_ERROR_CODE_DEF HD44780_GetDDRamAdd(HD44780_XY_DEF X, HD44780_XY_DEF Y, uint8 * DDAdd)
 {
   /* Find Address by coordinate */
   if (Y > 2)
@@ -224,9 +224,9 @@ HD44780_ERROR_CODE_DEF HD44780_GetDDRamAdd (HD44780_XY_DEF X, HD44780_XY_DEF Y,I
  * Description: Whether current DDRAM address is into visual area
  *
  *************************************************************************/
-HD44780_ERROR_CODE_DEF HD44780_CheckVisual(Int8U DDRamAdd)
+HD44780_ERROR_CODE_DEF HD44780_CheckVisual(uint8 DDRamAdd)
 {
-Int8U LastPos = 0;
+  uint8 LastPos = 0;
   if (DDRamAdd > HD44780_MAX_LINE2_ADD)
   {
     return HD44780_ERROR;
@@ -265,10 +265,10 @@ Int8U LastPos = 0;
  * Description: Wait MaxDly *100u or until the busy flag is clear
  *
  *************************************************************************/
-HD44780_ERROR_CODE_DEF HD44780_BusyCheck (Int8U * AddCount, Int32U MaxDly)
+HD44780_ERROR_CODE_DEF HD44780_BusyCheck(uint8 * AddCount, uint32 MaxDly)
 {
 #if HD4780_WR > 0
-Int8U AddHold;
+uint8 AddHold;
 #endif
   for (;MaxDly;--MaxDly)
   {
@@ -313,7 +313,7 @@ Int8U AddHold;
  *************************************************************************/
 HD44780_ERROR_CODE_DEF HD44780_PowerUpInit (void)
 {
-Int8U Command;
+  uint8 Command;
   HD4478_Ctrl.DisplayPos = 0;
   /* Init MCU IO */
   HD44780_IO_Init();
@@ -400,9 +400,9 @@ HD44780_CTRL_DEF * HD44780_GetSetting(void)
  * Description: Set display mode: Display On/Off; Cursor On/Off
  *  Cursor blink On/Off
  *************************************************************************/
-HD44780_ERROR_CODE_DEF HD44780_SetMode (void)
+HD44780_ERROR_CODE_DEF HD44780_SetMode(void)
 {
-Int8U Command = HD44780_DISPLAY_CTRL;
+  uint8 Command = HD44780_DISPLAY_CTRL;
   if (HD4478_Ctrl.DisplayOn)
   {
     Command |= HD44780_DISPLAY_CTRL_D_ON;
@@ -447,7 +447,7 @@ HD44780_ERROR_CODE_DEF HD44780_ClearDisplay (void)
  * Description: Set display position to home
  *
  *************************************************************************/
-HD44780_ERROR_CODE_DEF HD44780_ReturnToHome (void)
+HD44780_ERROR_CODE_DEF HD44780_ReturnToHome(void)
 {
 #if HD4780_WR == 0
   DataRamAddHold = 0;
@@ -465,7 +465,7 @@ HD44780_ERROR_CODE_DEF HD44780_ReturnToHome (void)
  * Description: Return X coordinate of visual part
  *
  *************************************************************************/
-Int8U HD44780_GetDisplayPosition (void)
+uint8 HD44780_GetDisplayPosition(void)
 {
   return HD4478_Ctrl.DisplayPos;
 }
@@ -479,9 +479,9 @@ Int8U HD44780_GetDisplayPosition (void)
  * Description: Shift display
  *
  *************************************************************************/
-HD44780_ERROR_CODE_DEF HD44780_DisplayShift (Boolean DisplayOn, Int8S DisplayShift)
+HD44780_ERROR_CODE_DEF HD44780_DisplayShift(uint8 DisplayOn, sint8 DisplayShift)
 {
-Int8U ShiftDir;
+  uint8 ShiftDir;
   if (DisplayShift >= 0)
   {
     if(DisplayShift > HD44780_MAX_LINE1_ADD)
@@ -534,9 +534,9 @@ Int8U ShiftDir;
  * Description: Set position of cursor
  *
  *************************************************************************/
-HD44780_ERROR_CODE_DEF HD44780_CursorPosSet (Boolean CursorOn,Boolean CursorBlink, HD44780_XY_DEF X, HD44780_XY_DEF Y)
+HD44780_ERROR_CODE_DEF HD44780_CursorPosSet (uint8 CursorOn, uint8 CursorBlink, HD44780_XY_DEF X, HD44780_XY_DEF Y)
 {
-Int8U CursorPos;
+  uint8 CursorPos;
   /* Find Address by coordinate */
   if (HD44780_GetDDRamAdd(X,Y,&CursorPos) != HD44780_OK)
   {
@@ -574,10 +574,10 @@ Int8U CursorPos;
  * Description: Read Character pattern from CGRAM
  *
  *************************************************************************/
-HD44780_ERROR_CODE_DEF HD44780_RdCGRAM (HD44780_STRING_DEF * CG_Data, Int8U CGRAM_Add)
+HD44780_ERROR_CODE_DEF HD44780_RdCGRAM(HD44780_STRING_DEF * CG_Data, uint8 CGRAM_Add)
 {
-Int8U Counter = 8;
-Int8U DDRAM_AddHold;
+  uint8 Counter = 8;
+  uint8 DDRAM_AddHold;
   if (CGRAM_Add > HD44780_MAX_CGRAM)
   {
     return HD44780_ERROR;
@@ -630,10 +630,10 @@ Int8U DDRAM_AddHold;
  *
 HD44780_ERROR_CODE_DEF HD44780_WrCGRAM (const HD44780_STRING_DEF * CG_Data, Int8U CGRAM_Add)
  *************************************************************************/
-HD44780_ERROR_CODE_DEF HD44780_WrCGRAM (HD44780_STRING_DEF * CG_Data, Int8U CGRAM_Add)
+HD44780_ERROR_CODE_DEF HD44780_WrCGRAM (HD44780_STRING_DEF * CG_Data, uint8 CGRAM_Add)
 {
-Int8U Counter = 8;
-Int8U DDRAM_AddHold;
+  uint8 Counter = 8;
+  uint8 DDRAM_AddHold;
   /* Get current DDRAM address */
   if (HD44780_BusyCheck(&DDRAM_AddHold,HD44780_SECOND_COMM_DLY) != HD44780_OK)
   {
@@ -686,8 +686,8 @@ Int8U DDRAM_AddHold;
  *************************************************************************/
 HD44780_ERROR_CODE_DEF HD44780_StrShow(HD44780_XY_DEF X, HD44780_XY_DEF Y,  HD44780_STRING_DEF * DataStr)
 {
-Int8U DDRamAdd;
-HD44780_ERROR_CODE_DEF ErrorRes = HD44780_OK;
+  uint8 DDRamAdd;
+  HD44780_ERROR_CODE_DEF ErrorRes = HD44780_OK;
   if(HD44780_GetDDRamAdd(X,Y,&DDRamAdd) != HD44780_OK)
   {
     return HD44780_ERROR;

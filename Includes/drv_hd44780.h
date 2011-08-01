@@ -30,8 +30,8 @@
 #ifndef  __DRV_HD44780_H
 #define  __DRV_HD44780_H
 
-typedef Int8U HD44780_XY_DEF;
-typedef Int8S HD44780_STRING_DEF;
+typedef uint8 HD44780_XY_DEF;
+typedef uint8 HD44780_STRING_DEF;
 
 /* Display address range definition */
 #define HD44780_MIN_LINE1_ADD     0x00
@@ -66,14 +66,14 @@ typedef Int8S HD44780_STRING_DEF;
 
 typedef struct _HD44780_CTRL_DEF
 {
-  Int8U  DisplayPos;
-  Int16U AC_Direction  : 1;
-  Int16U DisplayShift  : 1;
-  Int16U Line          : 1;
-  Int16U DotMode       : 1;
-  Int16U DisplayOn     : 1;
-  Int16U CursorOn      : 1;
-  Int16U CursorBlink   : 1;
+  uint8  DisplayPos;
+  uint16 AC_Direction  : 1;
+  uint16 DisplayShift  : 1;
+  uint16 Line          : 1;
+  uint16 DotMode       : 1;
+  uint16 DisplayOn     : 1;
+  uint16 CursorOn      : 1;
+  uint16 CursorBlink   : 1;
 } HD44780_CTRL_DEF;
 
 typedef enum _HD44780_ERROR_CODE_DEF
@@ -89,12 +89,12 @@ HD44780_CTRL_DEF * HD44780_GetSetting(void);
 HD44780_ERROR_CODE_DEF HD44780_SetMode (void);
 HD44780_ERROR_CODE_DEF HD44780_ClearDisplay (void);
 HD44780_ERROR_CODE_DEF HD44780_ReturnToHome (void);
-HD44780_ERROR_CODE_DEF HD44780_DisplayShift (Boolean DisplayOn, Int8S DisplayShift);
-HD44780_ERROR_CODE_DEF HD44780_CursorPosSet (Boolean CursorOn, Boolean CursorBlink, HD44780_XY_DEF X, HD44780_XY_DEF Y);
-HD44780_ERROR_CODE_DEF HD44780_RdCGRAM (HD44780_STRING_DEF * CG_Data, Int8U CGRAM_Add);
-HD44780_ERROR_CODE_DEF HD44780_WrCGRAM (HD44780_STRING_DEF * CG_Data, Int8U CGRAM_Add);
+HD44780_ERROR_CODE_DEF HD44780_DisplayShift(uint8 DisplayOn, sint8 DisplayShift);
+HD44780_ERROR_CODE_DEF HD44780_CursorPosSet (uint8 CursorOn, uint8 CursorBlink, HD44780_XY_DEF X, HD44780_XY_DEF Y);
+HD44780_ERROR_CODE_DEF HD44780_RdCGRAM(HD44780_STRING_DEF * CG_Data, uint8 CGRAM_Add);
+HD44780_ERROR_CODE_DEF HD44780_WrCGRAM (HD44780_STRING_DEF * CG_Data, uint8 CGRAM_Add);
 HD44780_ERROR_CODE_DEF HD44780_StrShow(HD44780_XY_DEF X, HD44780_XY_DEF Y,  HD44780_STRING_DEF * DataStr);
-Int8U HD44780_GetDisplayPosition (void);
+uint8 HD44780_GetDisplayPosition(void);
 
 extern void Dly100us(void *arg);
 

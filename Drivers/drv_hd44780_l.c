@@ -47,7 +47,7 @@ void HD44780_IO_Init (void)
  * Description: Set RS signal
  *
  *************************************************************************/
-void HD44780SetRS (Boolean Data)
+void HD44780SetRS(uint8 Data)
 {
   if(Data)
   {
@@ -66,7 +66,7 @@ void HD44780SetRS (Boolean Data)
  * Description: Set E signal
  *
  *************************************************************************/
-void HD44780SetE (Boolean Data)
+void HD44780SetE(uint8 Data)
 {
   if(Data)
   {
@@ -85,9 +85,9 @@ void HD44780SetE (Boolean Data)
  * Description: Write to HD44780 I/O
  *
  *************************************************************************/
-void HD44780WrIO (Int8U Data)
+void HD44780WrIO(uint8 Data)
 {
-Int32U Tmp = (Int32U)Data << 16;
+  uint32 Tmp = (uint32)Data << 16;
   // Set Direction
   IO1DIR  |= HD44780_OUTPUT_SET_MASK;
 #if HD4780_WR > 0
@@ -111,7 +111,7 @@ Int32U Tmp = (Int32U)Data << 16;
  * Description: Set R/W signal
  *
  *************************************************************************/
-void HD44780SetRW (Boolean Data)
+void HD44780SetRW(uint8 Data)
 {
   if(Data)
   {
@@ -130,9 +130,9 @@ void HD44780SetRW (Boolean Data)
  * Description: Read from HD44780 I/O
  *
  *************************************************************************/
-Int8U HD44780RdIO (void)
+uint8 HD44780RdIO(void)
 {
-Int8U Data;
+  uint8 Data;
   // Set Direction
   IO1DIR  &= HD44780_INPUT_SET_MASK;
   HD44780SetRW(1);
