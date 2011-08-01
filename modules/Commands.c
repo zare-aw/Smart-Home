@@ -263,15 +263,23 @@ Status_t Get_Temp_Command(uint8 NoOfCommand, uint8 Chanel)
 {
   Function_IN(GET_TEMP_COMMAND);
   
-  int Temp;
+  int Temp1, Temp2;
   Status_t StatusReturn = GENERAL_ERROR;
   
   StatusReturn = DS1820_Start_Conversion(1, NULL);
   CONTROL(StatusReturn == SUCCESS, StatusReturn);
-  Dly(750, 'm', NULL);
-  StatusReturn = DS1820_Read_Temp(&Temp, 1, NULL);
+  StatusReturn = DS1820_Start_Conversion(2, NULL);
   CONTROL(StatusReturn == SUCCESS, StatusReturn);
-  printc("\r # Temp = %d\n", Temp);
+  
+  Dly(750, 'm', NULL);
+  
+  StatusReturn = DS1820_Read_Temp(&Temp1, 1, NULL);
+  CONTROL(StatusReturn == SUCCESS, StatusReturn);
+  StatusReturn = DS1820_Read_Temp(&Temp2, 2, NULL);
+  CONTROL(StatusReturn == SUCCESS, StatusReturn);
+  
+  printc("\r # Temp1 = %d\n", Temp1);
+  printc("\r # Temp2 = %d\n", Temp2);
   
   RETURN_SUCCESS();
 }
