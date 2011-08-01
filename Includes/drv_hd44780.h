@@ -25,7 +25,7 @@
  *    $Revision: 30870 $
  **************************************************************************/
 
-#include "includes.h"
+#include "Includes.h"
 
 #ifndef  __DRV_HD44780_H
 #define  __DRV_HD44780_H
@@ -95,7 +95,5 @@ HD44780_ERROR_CODE_DEF HD44780_RdCGRAM(HD44780_STRING_DEF * CG_Data, uint8 CGRAM
 HD44780_ERROR_CODE_DEF HD44780_WrCGRAM (HD44780_STRING_DEF * CG_Data, uint8 CGRAM_Add);
 HD44780_ERROR_CODE_DEF HD44780_StrShow(HD44780_XY_DEF X, HD44780_XY_DEF Y,  HD44780_STRING_DEF * DataStr);
 uint8 HD44780_GetDisplayPosition(void);
-
-extern void Dly100us(void *arg);
 
 #endif  /* __DRV_HD44780_H */

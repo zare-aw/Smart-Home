@@ -18,13 +18,13 @@
 #ifndef  __DRV_HD44780_CNFG_H
 #define  __DRV_HD44780_CNFG_H
 
-#include "includes.h"
+#include "Includes.h"
 
 /* HD44780 DRV Default setup data */
 // The R/W signal is connected when is > 0 to LCD module
 #define HD4780_WR                 1
 // Interface type 4/8bit
-#define HD44780_BUS_WIDTH         8
+#define HD44780_BUS_WIDTH         4
 /* Horizontal Size of display 8/16 symbols */
 #define HD44780_HORIZONTAL_SIZE   16
 /* Address counter direction
@@ -33,7 +33,7 @@
 /* Auto Display shift or cursor move */
 #define HD44780_MOVE              HD44780_CURSOR_MOVE
 /* MCU interface */
-#define HD44780_INTERFACE         HD44780_8_BIT
+#define HD44780_INTERFACE         HD44780_4_BIT
 /* Number of line */
 #define HD44780_LINE              HD44780_2_LINE
 /* Dot Matrix 5x8 or 5x10 */

@@ -311,7 +311,7 @@ uint8 AddHold;
  * Description: Init HD44780 after power-up
  *
  *************************************************************************/
-HD44780_ERROR_CODE_DEF HD44780_PowerUpInit (void)
+HD44780_ERROR_CODE_DEF HD44780_PowerUpInit(void)
 {
   uint8 Command;
   HD4478_Ctrl.DisplayPos = 0;
