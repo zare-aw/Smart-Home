@@ -1,30 +1,3 @@
-/*************************************************************************
- *
- *    Used with ICCARM and AARM.
- *
- *    (c) Copyright IAR Systems 2005
- *
- *    File name   : drv_hd44780.h
- *    Description : HD44780 Driver definition
- *
- *    History :
- *    1. Date        : Feb 10, 2005
- *       Author      : Stanimir Bonev
- *       Description : Create
- *    2. Date        : Nov 3, 2005
- *       Author      : Stanimir Bonev
- *       Description : Modify
- *                      Add some definitions connected
- *                     with HD44780_StrShow, HD44780_CheckVisual,
- *                     HD44780_DisplayShift, HD44780_GetDDRamAdd functions
- *    3. Date        : Jan 4, 2006
- *       Author      : Stanimir Bonev
- *       Description : Modify
- *                      Macro HD44780_BUS_DLY
- *
- *    $Revision: 30870 $
- **************************************************************************/
-
 #include "Includes.h"
 
 #ifndef  __DRV_HD44780_H

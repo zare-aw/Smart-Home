@@ -1,30 +1,3 @@
-/*************************************************************************
- *
- *    Used with ICCARM and AARM.
- *
- *    (c) Copyright IAR Systems 2005
- *
- *    File name   : drv_hd44780.c
- *    Description : HD44780 driver
- *
- *    History :
- *    1. Date        : Feb 12, 2005
- *       Author      : Stanimir Bonev
- *       Description : Create
- *    2. Date        : Nov 3, 2005
- *       Author      : Stanimir Bonev
- *       Description : Modify
- *                      Correct some functions -
- *                     HD44780_StrShow, HD44780_CheckVisual,
- *                     HD44780_DisplayShift, HD44780_GetDDRamAdd
- *    3. Date        : Jan 4, 2006
- *       Author      : Stanimir Bonev
- *       Description : Modify
- *                      Fix power-up initialization problem whit 4 bit
- *                     interface
- *
- *    $Revision: 30870 $
- **************************************************************************/
 #include "drv_hd44780.h"
 #include "drv_hd44780_cnfg.h"
 #include "drv_hd44780_l.h"
@@ -94,90 +67,86 @@ HD44780_CTRL_DEF HD4478_Ctrl =
 };
 
 #if HD4780_WR == 0
-Int8S DataRamAddHold = 0;
+sint8 DataRamAddHold = 0;
 #endif
 
 #if HD44780_BUS_WIDTH == 8
-  #define HD44780WrComm_High(Data)  HD44780WrIO(Data)
+  #define HD44780_WRITE_COMMAND_HIGH(Data)  HD44780_Write_IO(Data)
 #else
-  #define HD44780WrComm_High(Data)  HD44780WrIO((Data>>4))
+  #define HD44780_WRITE_COMMAND_HIGH(Data)  HD44780_Write_IO((Data >> 4))
 #endif
 
 /*************************************************************************
- * Function Name: HD44780WrData
- * Parameters: Int8U Data
- * Return: none
- * Description: Write data to HD44780
- *
- *************************************************************************/
-void HD44780WrData(uint8 Data)
+* Function Name: HD44780_Write_Data
+* @in: uint8 Data
+* @out: None
+* Description: Write data to HD44780
+*************************************************************************/
+void HD44780_Write_Data(uint8 Data)
 {
-  HD44780SetRS(1);
+  HD44780_Set_RS(1);
 #if HD44780_BUS_WIDTH == 8
-  HD44780WrIO(Data);
+  HD44780_Write_IO(Data);
 #else
-  HD44780WrIO((Data>>4) & 0xF);
-  HD44780WrIO(Data & 0xF);
+  HD44780_Write_IO((Data >> 4) & 0xF);
+  HD44780_Write_IO(Data & 0xF);
 #endif
 }
 
 #if HD4780_WR > 0
 /*************************************************************************
- * Function Name: HD44780RdData
- * Parameters: none
- * Return: Int8U
- * Description: Read data from HD44780
- *
- *************************************************************************/
-uint8 HD44780RdData(void)
+* Function Name: HD44780_Read_Data
+* @in: None
+* @out: uint8
+* Description: Read data from HD44780
+*************************************************************************/
+uint8 HD44780_Read_Data(void)
 {
-uint8 Data;
-  HD44780SetRS(1);
+  uint8 Data;
+  HD44780_Set_RS(1);
 #if HD44780_BUS_WIDTH == 8
-  Data = HD44780RdIO();
+  Data = HD44780_Read_IO();
 #else
-  Data = (HD44780RdIO() << 4) & 0xF0;
-  Data |= HD44780RdIO()       & 0x0F;
+  Data = (HD44780_Read_IO() << 4) & 0xF0;
+  Data |= HD44780_Read_IO()       & 0x0F;
 #endif
   return Data;
 }
 #endif
 
 /*************************************************************************
- * Function Name: HD44780WrComm
- * Parameters: Int8U Command
- * Return: none
- * Description: Send command to HD44780
- *
- *************************************************************************/
-void HD44780WrComm(uint8 Command)
+* Function Name: HD44780_Write_Command
+* @in: uint8 Command
+* @out: None
+* Description: Send command to HD44780
+*************************************************************************/
+void HD44780_Write_Command(uint8 Command)
 {
-  HD44780SetRS(0);
+  HD44780_Set_RS(0);
 #if HD44780_BUS_WIDTH == 8
-  HD44780WrIO(Command);
+  HD44780_Write_IO(Command);
 #else
-  HD44780WrIO((Command >> 4) & 0xF);
-  HD44780WrIO(Command & 0xF);
+  HD44780_Write_IO((Command >> 4) & 0xF);
+  HD44780_Write_IO(Command & 0xF);
 #endif
 }
 
 #if HD4780_WR > 0
 /*************************************************************************
- * Function Name: HD44780RdStatus
- * Parameters: none
- * Return: Int8U
- * Description: Read status of HD44780
- *
- *************************************************************************/
-uint8 HD44780RdStatus(void)
+* Function Name: HD44780_Read_Status
+* @in: None
+* @out: uint8
+* Description: Read status of HD44780
+*************************************************************************/
+uint8 HD44780_Read_Status(void)
 {
-uint8 Data;
-  HD44780SetRS(0);
+  uint8 Data;
+  HD44780_Set_RS(0);
 #if HD44780_BUS_WIDTH == 8
-  Data = HD44780RdIO();
+  Data = HD44780_Read_IO();
 #else
-  Data = (HD44780RdIO() << 4) & 0xF0;
-  Data |= HD44780RdIO()       & 0x0F;
+  Data = (HD44780_Read_IO() << 4) & 0xF0;
+  Data |= HD44780_Read_IO()       & 0x0F;
 #endif
   return Data;
 }
@@ -273,14 +242,14 @@ uint8 AddHold;
   for (;MaxDly;--MaxDly)
   {
 #if HD4780_WR > 0
-    AddHold = HD44780RdStatus();
+    AddHold = HD44780_Read_Status();
     if ((AddHold & HD44780_STATUS_BUSY_MASK) == 0)
     {
       /* Wait 1.5 * Tlcd */
       HD44780_BUS_DLY();
       HD44780_BUS_DLY();
       /* Get current AC */
-      AddHold = HD44780RdStatus();
+      AddHold = HD44780_Read_Status();
       AddHold &= HD44780_STATUS_AC_MASK;
       if(AddCount != NULL)
       {
@@ -319,18 +288,18 @@ HD44780_ERROR_CODE_DEF HD44780_PowerUpInit(void)
   HD44780_IO_Init();
   /* Power up init sequence */
   Dly100us((void *)HD44780_POWER_UP_DLY);
-  HD44780SetRS(0);
-  HD44780WrComm_High(HD44780_FUNCTION_SET+HD44780_FUNCTION_SET_8_BIT);
+  HD44780_Set_RS(0);
+  HD44780_WRITE_COMMAND_HIGH(HD44780_FUNCTION_SET+HD44780_FUNCTION_SET_8_BIT);
   Dly100us((void *)HD44780_FIRST_COMM_DLY);
-  HD44780WrComm_High(HD44780_FUNCTION_SET+HD44780_FUNCTION_SET_8_BIT);
+  HD44780_WRITE_COMMAND_HIGH(HD44780_FUNCTION_SET+HD44780_FUNCTION_SET_8_BIT);
   Dly100us((void *)HD44780_SECOND_COMM_DLY);
-  HD44780WrComm_High(HD44780_FUNCTION_SET+HD44780_FUNCTION_SET_8_BIT);
+  HD44780_WRITE_COMMAND_HIGH(HD44780_FUNCTION_SET+HD44780_FUNCTION_SET_8_BIT);
   Dly100us((void *)HD44780_SECOND_COMM_DLY);
   /* Display Function set */
 #if HD44780_BUS_WIDTH == 8
   Command = HD44780_FUNCTION_SET + HD44780_FUNCTION_SET_8_BIT;
 #else
-  HD44780WrComm_High(HD44780_FUNCTION_SET + HD44780_FUNCTION_SET_4_BIT);
+  HD44780_WRITE_COMMAND_HIGH(HD44780_FUNCTION_SET + HD44780_FUNCTION_SET_4_BIT);
   Dly100us((void *)HD44780_SECOND_COMM_DLY);
   Command = HD44780_FUNCTION_SET + HD44780_FUNCTION_SET_4_BIT;
 #endif
@@ -342,13 +311,13 @@ HD44780_ERROR_CODE_DEF HD44780_PowerUpInit(void)
   {
     Command |= HD44780_FUNCTION_SET_DOT_5_10;
   }
-  HD44780WrComm(Command);
+  HD44780_Write_Command(Command);
   if (HD44780_BusyCheck(NULL,HD44780_SECOND_COMM_DLY) != HD44780_OK)
   {
     return HD44780_ERROR;
   }
   /* Display off */
-  HD44780WrComm(HD44780_DISPLAY_CTRL);
+  HD44780_Write_Command(HD44780_DISPLAY_CTRL);
   if (HD44780_BusyCheck(NULL,HD44780_MAX_COMM_DLY) != HD44780_OK)
   {
     return HD44780_ERROR;
@@ -415,7 +384,7 @@ HD44780_ERROR_CODE_DEF HD44780_SetMode(void)
   {
     Command |= HD44780_DISPLAY_CTRL_C_BLINK;
   }
-  HD44780WrComm(Command);
+  HD44780_Write_Command(Command);
   return HD44780_BusyCheck(NULL,HD44780_FIRST_COMM_DLY);
 }
 
@@ -434,7 +403,7 @@ HD44780_ERROR_CODE_DEF HD44780_ClearDisplay (void)
   DataRamAddHold = 0;
 #endif
   HD4478_Ctrl.DisplayPos = 0;
-  HD44780WrComm(HD44780_CLEAR);
+  HD44780_Write_Command(HD44780_CLEAR);
   return HD44780_BusyCheck(NULL,HD44780_MAX_COMM_DLY);
 }
 
@@ -453,7 +422,7 @@ HD44780_ERROR_CODE_DEF HD44780_ReturnToHome(void)
   DataRamAddHold = 0;
 #endif
   HD4478_Ctrl.DisplayPos = 0;
-  HD44780WrComm(HD44780_RETURN);
+  HD44780_Write_Command(HD44780_RETURN);
   return HD44780_BusyCheck(NULL,HD44780_MAX_COMM_DLY);
 }
 
@@ -501,7 +470,7 @@ HD44780_ERROR_CODE_DEF HD44780_DisplayShift(uint8 DisplayOn, sint8 DisplayShift)
   }
   for (int i = 0; i < DisplayShift; ++i)
   {
-    HD44780WrComm(HD44780_DISPLAY_MOVE + HD44780_DISPLAY_MOVE_D + ShiftDir);
+    HD44780_Write_Command(HD44780_DISPLAY_MOVE + HD44780_DISPLAY_MOVE_D + ShiftDir);
     if (HD44780_BusyCheck(NULL,HD44780_SECOND_COMM_DLY) != HD44780_OK)
     {
       return HD44780_ERROR;
@@ -549,7 +518,7 @@ HD44780_ERROR_CODE_DEF HD44780_CursorPosSet (uint8 CursorOn, uint8 CursorBlink, 
     return HD44780_ERROR;
   }
   /* Set Address to DDRAM */
-  HD44780WrComm(HD44780_SET_DDRAM_ADD + CursorPos);
+  HD44780_Write_Command(HD44780_SET_DDRAM_ADD + CursorPos);
 #if HD4780_WR == 0
   DataRamAddHold = CursorPos;
 #endif
@@ -600,7 +569,7 @@ HD44780_ERROR_CODE_DEF HD44780_RdCGRAM(HD44780_STRING_DEF * CG_Data, uint8 CGRAM
     CGRAM_Add &= 0x7;
   }
   /* Set CGRAM Address */
-  HD44780WrComm(HD44780_SET_CGRAM_ADD + CGRAM_Add);
+  HD44780_Write_Command(HD44780_SET_CGRAM_ADD + CGRAM_Add);
   if (HD44780_BusyCheck(NULL,HD44780_SECOND_COMM_DLY) != HD44780_OK)
   {
     return HD44780_ERROR;
@@ -614,7 +583,7 @@ HD44780_ERROR_CODE_DEF HD44780_RdCGRAM(HD44780_STRING_DEF * CG_Data, uint8 CGRAM
     }
     ++CG_Data;
   }
-  HD44780WrComm(HD44780_SET_DDRAM_ADD + DDRAM_AddHold);
+  HD44780_Write_Command(HD44780_SET_DDRAM_ADD + DDRAM_AddHold);
   return((HD44780_ERROR_CODE_DEF)(HD44780_BusyCheck(NULL,HD44780_SECOND_COMM_DLY) || (Counter?HD44780_ERROR:HD44780_OK)));
 }
 #endif
@@ -657,21 +626,21 @@ HD44780_ERROR_CODE_DEF HD44780_WrCGRAM (HD44780_STRING_DEF * CG_Data, uint8 CGRA
     return HD44780_ERROR;
   }
   /* Set CGRAM Address */
-  HD44780WrComm(HD44780_SET_CGRAM_ADD + CGRAM_Add);
+  HD44780_Write_Command(HD44780_SET_CGRAM_ADD + CGRAM_Add);
   if (HD44780_BusyCheck(NULL,HD44780_SECOND_COMM_DLY) != HD44780_OK)
   {
     return HD44780_ERROR;
   }
   for ( ;Counter; --Counter)
   {
-    HD44780WrData(*CG_Data);
+    HD44780_Write_Data(*CG_Data);
     if (HD44780_BusyCheck(NULL,HD44780_SECOND_COMM_DLY) != HD44780_OK)
     {
       break;
     }
     ++CG_Data;
   }
-  HD44780WrComm(HD44780_SET_DDRAM_ADD + DDRAM_AddHold);
+  HD44780_Write_Command(HD44780_SET_DDRAM_ADD + DDRAM_AddHold);
   return((HD44780_ERROR_CODE_DEF)(HD44780_BusyCheck(NULL,HD44780_SECOND_COMM_DLY) || (Counter?HD44780_ERROR:HD44780_OK)));
 }
 
@@ -693,7 +662,7 @@ HD44780_ERROR_CODE_DEF HD44780_StrShow(HD44780_XY_DEF X, HD44780_XY_DEF Y,  HD44
     return HD44780_ERROR;
   }
   /* Set Address to DDRAM */
-  HD44780WrComm(HD44780_SET_DDRAM_ADD + DDRamAdd);
+  HD44780_Write_Command(HD44780_SET_DDRAM_ADD + DDRamAdd);
 #if HD4780_WR == 0
   DataRamAddHold = DDRamAdd;
 #endif
@@ -705,7 +674,7 @@ HD44780_ERROR_CODE_DEF HD44780_StrShow(HD44780_XY_DEF X, HD44780_XY_DEF Y,  HD44
   while (*DataStr)
   {
     ErrorRes |= HD44780_CheckVisual(DDRamAdd);
-    HD44780WrData(*DataStr);
+    HD44780_Write_Data(*DataStr);
 #if HD4780_WR == 0
     if(HD4478_Ctrl.AC_Direction)
     {
@@ -737,7 +706,7 @@ HD44780_ERROR_CODE_DEF HD44780_StrShow(HD44780_XY_DEF X, HD44780_XY_DEF Y,  HD44
     ++DataStr;
     if((Y == 1) && DDRamAdd > HD44780_MAX_LINE1_ADD)
     {
-      HD44780WrComm(HD44780_SET_DDRAM_ADD+HD44780_MIN_LINE1_ADD);
+      HD44780_Write_Command(HD44780_SET_DDRAM_ADD+HD44780_MIN_LINE1_ADD);
     #if HD4780_WR == 0
       DataRamAddHold = HD44780_MIN_LINE1_ADD;
     #endif
@@ -748,7 +717,7 @@ HD44780_ERROR_CODE_DEF HD44780_StrShow(HD44780_XY_DEF X, HD44780_XY_DEF Y,  HD44
     }
     else if ((Y == 2) && DDRamAdd < HD44780_MIN_LINE2_ADD)
     {
-      HD44780WrComm(HD44780_SET_DDRAM_ADD+HD44780_MIN_LINE2_ADD);
+      HD44780_Write_Command(HD44780_SET_DDRAM_ADD+HD44780_MIN_LINE2_ADD);
     #if HD4780_WR == 0
       DataRamAddHold = HD44780_MIN_LINE2_ADD;
     #endif

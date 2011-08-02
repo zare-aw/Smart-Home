@@ -1,147 +1,184 @@
-/*************************************************************************
- *
- *    Used with ICCARM and AARM.
- *
- *    (c) Copyright IAR Systems 2005
- *
- *    File name   : drv_hd44780_l.c
- *    Description : I/O function
- *
- *    History :
- *    1. Date        : June 13, 2005
- *       Author      : Stanimir Bonev
- *       Description : Create
- *
- *    $Revision: 30870 $
-**************************************************************************/
 #include "drv_hd44780_cnfg.h"
 #include "drv_hd44780_l.h"
 
-#define HD44780_INPUT_SET_MASK        ~0x00FF0000
-#define HD44780_OUTPUT_SET_MASK        0x03FF0000
-
 /*************************************************************************
- * Function Name: HD44780_IO_Init
- * Parameters: none
- * Return: none
- * Description: Init IO ports directions and level
- *
- *************************************************************************/
-void HD44780_IO_Init (void)
+* Function Name: HD44780_IO_Init
+* @in: None
+* @out: None
+* Description: Init IO ports directions and level
+*************************************************************************/
+void HD44780_IO_Init(void)
 {
-  IO1DIR  |= HD44780_OUTPUT_SET_MASK;
-  // RS Output - Low
-  HD44780SetRS(0);
-  // E  Output - Low
-  HD44780SetE(0);
-#if HD4780_WR > 0
-  // WR Output - Low
-  HD44780SetRW(0);
-#endif
+  HD44780_RS_INIT();
+  HD44780_RW_INIT();
+  HD44780_E_INIT();
+  HD44780_D7_INIT();
+  HD44780_D6_INIT();
+  HD44780_D5_INIT();
+  HD44780_D4_INIT();
 }
 
 /*************************************************************************
- * Function Name: HD44780SetRS
- * Parameters: Boolean Data
- * Return: none
- * Description: Set RS signal
- *
- *************************************************************************/
-void HD44780SetRS(uint8 Data)
+* Function Name: HD44780_Set_RS
+* @in: uint8 Data
+* @out: None
+* Description: Set RS signal
+*************************************************************************/
+void HD44780_Set_RS(uint8 Data)
 {
   if(Data)
-  {
-    IO1SET = 1<<24;
-  }
+    HD44780_RS_SET();
   else
-  {
-    IO1CLR = 1<<24;
-  }
+    HD44780_RS_CLR();
 }
 
 /*************************************************************************
- * Function Name: HD44780SetE
- * Parameters: Boolean Data
- * Return: none
- * Description: Set E signal
- *
- *************************************************************************/
-void HD44780SetE(uint8 Data)
+* Function Name: HD44780_Set_E
+* @in: uint8 Data
+* @out: None
+* Description: Set E signal
+*************************************************************************/
+void HD44780_Set_E(uint8 Data)
 {
   if(Data)
-  {
-    IO1SET = 1<<25;
-  }
+    HD44780_E_SET();
   else
-  {
-    IO1CLR = 1<<25;
-  }
+    HD44780_E_CLR();
 }
 
 /*************************************************************************
- * Function Name: HD44780WrIO
- * Parameters: Int8U Data
- * Return: none
- * Description: Write to HD44780 I/O
- *
- *************************************************************************/
-void HD44780WrIO(uint8 Data)
+* Function Name: HD44780_Data_Out
+* @in: None
+* @out: None
+* Description: Set HD44780 Data I/O to output
+*************************************************************************/
+void HD44780_Data_Out(void)
 {
-  uint32 Tmp = (uint32)Data << 16;
-  // Set Direction
-  IO1DIR  |= HD44780_OUTPUT_SET_MASK;
+  HD44780_D7_OUT();
+  HD44780_D6_OUT();
+  HD44780_D5_OUT();
+  HD44780_D4_OUT();
+  HD44780_D3_OUT();
+  HD44780_D2_OUT();
+  HD44780_D1_OUT();
+  HD44780_D0_OUT();
+}
+
+/*************************************************************************
+* Function Name: HD44780_Data_In
+* @in: None
+* @out: None
+* Description: Set HD44780 Data I/O to input
+*************************************************************************/
+void HD44780_Data_In(void)
+{
+  HD44780_D7_IN();
+  HD44780_D6_IN();
+  HD44780_D5_IN();
+  HD44780_D4_IN();
+  HD44780_D3_IN();
+  HD44780_D2_IN();
+  HD44780_D1_IN();
+  HD44780_D0_IN();
+}
+
+/*************************************************************************
+* Function Name: HD44780_Wr_IO
+* @in: uint8 Data
+* @out: None
+* Description: Write to HD44780 I/O
+*************************************************************************/
+void HD44780_Write_IO(uint8 Data)
+{
+  HD44780_Data_Out();
 #if HD4780_WR > 0
-  HD44780SetRW(0);
+  HD44780_Set_RW(0);
 #endif
   // Write Data
   // Clock E
-  HD44780SetE(1);
-
-  IO1SET |=  Tmp & 0xFF0000;
-  IO1CLR |= ~Tmp & 0xFF0000 ;
+  HD44780_Set_E(1);
+  
+#if HD44780_BUS_WIDTH != 8
+  Data <<= 4;
+#endif
+  
+  if(Data & 0x80)
+    HD44780_D7_SET();
+  else
+    HD44780_D7_CLR();
+  if(Data & 0x40)
+    HD44780_D6_SET();
+  else
+    HD44780_D6_CLR();
+  if(Data & 0x20)
+    HD44780_D5_SET();
+  else
+    HD44780_D5_CLR();
+  if(Data & 0x10)
+    HD44780_D4_SET();
+  else
+    HD44780_D4_CLR();
+  
+#if HD44780_BUS_WIDTH == 8
+  
+  if(Data & 0x08)
+    HD44780_D3_SET();
+  else
+    HD44780_D3_CLR();
+  if(Data & 0x04)
+    HD44780_D2_SET();
+  else
+    HD44780_D2_CLR();
+  if(Data & 0x02)
+    HD44780_D1_SET();
+  else
+    HD44780_D1_CLR();
+  if(Data & 0x01)
+    HD44780_D0_SET();
+  else
+    HD44780_D0_CLR();
+  
+#endif
+  
   HD44780_BUS_DLY();
-  HD44780SetE(0);
+  HD44780_Set_E(0);
 }
 
 #if HD4780_WR > 0
 /*************************************************************************
- * Function Name: HD44780SetRW
- * Parameters: Boolean Data
- * Return: none
- * Description: Set R/W signal
- *
- *************************************************************************/
-void HD44780SetRW(uint8 Data)
+* Function Name: HD44780_Set_RW
+* @in: uint8 Data
+* @out: None
+* Description: Set R/W signal
+*************************************************************************/
+void HD44780_Set_RW(uint8 Data)
 {
   if(Data)
-  {
-    IO0SET = 1<<22;
-  }
+    HD44780_RW_SET();
   else
-  {
-    IO0CLR = 1<<22;
-  }
+    HD44780_RW_CLR();
 }
 
 /*************************************************************************
- * Function Name: HD44780RdIO
- * Parameters: none
- * Return: Int8U
- * Description: Read from HD44780 I/O
- *
- *************************************************************************/
-uint8 HD44780RdIO(void)
+* Function Name: HD44780_Rd_IO
+* @in: None
+* @out: uint8
+* Description: Read from HD44780 I/O
+*************************************************************************/
+uint8 HD44780_Read_IO(void)
 {
-  uint8 Data;
-  // Set Direction
-  IO1DIR  &= HD44780_INPUT_SET_MASK;
-  HD44780SetRW(1);
+  uint8 Data = 0;
+  
+  HD44780_Data_In();
+  HD44780_Set_RW(1);
   // Read Data
-  HD44780SetE(1);
+  HD44780_Set_E(1);
   HD44780_BUS_DLY();
-  Data = (IO1PIN >> 16) & 0xFF;
-  HD44780SetE(0);
-  // Clock E
+  
+  //Data = (IO1PIN >> 16) & 0xFF;
+  
+  HD44780_Set_E(0);
+  
   return Data;
 }
 #endif

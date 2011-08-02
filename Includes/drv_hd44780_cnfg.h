@@ -1,20 +1,3 @@
-/*************************************************************************
- *
- *    Used with ICCARM and AARM.
- *
- *    (c) Copyright IAR Systems 2005
- *
- *    File name   : drv_hd44780_cnfg.h
- *    Description : HD44780 Driver common definition
- *
- *    History :
- *    1. Date        : Feb 10, 2005
- *       Author      : Stanimir Bonev
- *       Description : Create
- *
- *    $Revision: 30870 $
- **************************************************************************/
-
 #ifndef  __DRV_HD44780_CNFG_H
 #define  __DRV_HD44780_CNFG_H
 
@@ -22,7 +5,7 @@
 
 /* HD44780 DRV Default setup data */
 // The R/W signal is connected when is > 0 to LCD module
-#define HD4780_WR                 1
+#define HD4780_WR                 0
 // Interface type 4/8bit
 #define HD44780_BUS_WIDTH         4
 /* Horizontal Size of display 8/16 symbols */
