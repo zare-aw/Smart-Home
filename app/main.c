@@ -9,10 +9,15 @@ void main()
   printc("\r****** Device Started !!! ******\n");
   printc("\r********************************\n");
   
+  printd(1, "Display Test");
+  printd(2, "Smart Home system");
+  syncd();
+  
   while(1)
   {
     (void)Console_Print_Pull();
     Console_Command_Execute(0);
+    Update_Display_Panel(PULL);
 //    (void)Out_Sync();
   } // while(1)
 }   // main()

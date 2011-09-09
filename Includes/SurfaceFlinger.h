@@ -1,8 +1,8 @@
 #ifndef _SurfaceFlinger_h
 #define _SurfaceFlinger_h
 
-#define Y_SIZE  2
-#define X_SIZE  16
+#define Y_SIZE  4
+#define X_SIZE  20
 
 #define PULL    0
 #define FORCE   1

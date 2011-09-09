@@ -19,7 +19,7 @@ static void Swap_Surface_Buffer(void);
 *******************************************************************************/
 Status_t printd(uint8 line, const char *format, ...)
 {
-  uint32 i = 0;
+  uint32 i = 1;
   uint32 column = 0;
   char VsBuffer[Y_SIZE * X_SIZE] = {0};
   va_list args;
@@ -37,7 +37,7 @@ Status_t printd(uint8 line, const char *format, ...)
     if(VsBuffer[i] == 0x0A)
     {
       line++;
-      column = 0;
+      column = 1;
       if(line > Y_SIZE)
         return INVALID_INPUT_PARAMETER;
     }
@@ -72,10 +72,10 @@ static Status_t Update_Surface_Buffer(char InputChar, uint8 Line, uint8 Column)
   switch(BeckupSurface)
   {
     case 1:
-      SurfaceBuffer_1[Line][Column] = InputChar;
+      SurfaceBuffer_1[Line - 1][Column - 1] = InputChar;
       break;
     case 2:
-      SurfaceBuffer_2[Line][Column] = InputChar;
+      SurfaceBuffer_2[Line - 1][Column - 1] = InputChar;
       break;
     default:
       return GENERAL_ERROR;
@@ -104,14 +104,14 @@ static void Swap_Surface_Buffer(void)
 *******************************************************************************/
 void Console_Display_Dump(void)
 {
-  printc("\n*");
+  printc("\n**");
   for(int i = 0; i < X_SIZE; i++)
     printc("*");
-  printc("*\n");
+  printc("**\n");
   
   for(int i = 0; i < Y_SIZE; i++)
   {
-    printc("*");
+    printc("**");
     
     for(int j = 0; j < X_SIZE; j++)
     {
@@ -135,13 +135,13 @@ void Console_Display_Dump(void)
       }
     }
     
-    printc("*\n");
+    printc("**\n");
   }
   
-  printc("*");
+  printc("**");
   for(int i = 0; i < X_SIZE; i++)
     printc("*");
-  printc("*\n");
+  printc("**\n");
 }
 
 /*******************************************************************************
