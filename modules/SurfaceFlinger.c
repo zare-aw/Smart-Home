@@ -19,8 +19,8 @@ static void Swap_Surface_Buffer(void);
 *******************************************************************************/
 Status_t printd(uint8 line, const char *format, ...)
 {
-  uint32 i = 1;
-  uint32 column = 0;
+  uint32 i = 0;
+  uint32 column = 1;
   char VsBuffer[Y_SIZE * X_SIZE] = {0};
   va_list args;
   
@@ -157,12 +157,14 @@ void Update_Display_Panel(uint8 Mode)
         if(ConsoleDisplayPrint == ENABLE)
           Console_Display_Dump();
         // Dovrsi
+        DisplaySync = 0;
       }
       break;
     case FORCE:
       if(ConsoleDisplayPrint == ENABLE)
         Console_Display_Dump();
       // Dovrsi
+      DisplaySync = 0;
       break;
     default:
       break;
