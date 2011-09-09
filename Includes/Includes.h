@@ -70,5 +70,6 @@ typedef signed long long    sint64;
 #include "ir.h"
 #include "Out.h"
 #include "DS1820.h"
+#include "SurfaceFlinger.h"
 
 #endif

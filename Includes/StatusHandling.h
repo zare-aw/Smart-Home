@@ -62,13 +62,14 @@ extern uint8 FunctionInBeckupBuffer;
 *******************************************************************************/
 #define SUCCESS                             0
 #define INFO                                1
-#define GENERAL_ERROR                       2
-#define FATAL_ERROR                         3
-#define	UNKNOWN_ERROR		            4
-#define COMMUNICATION_ERROR	            5
-#define INVALID_INPUT_PARAMETER             6
-#define INVALID_INIT_INPUT_PARAMETER        7
-#define INVALID_INPUT_POINTER               8
+#define ERROR                               2
+#define GENERAL_ERROR                       3
+#define FATAL_ERROR                         4
+#define	UNKNOWN_ERROR		            5
+#define COMMUNICATION_ERROR	            6
+#define INVALID_INPUT_PARAMETER             7
+#define INVALID_INIT_INPUT_PARAMETER        8
+#define INVALID_INPUT_POINTER               9
 
 #define	MEMORY_ERROR                        10
 #define HEAP_ALLOCATION_ERROR               11
