@@ -9,6 +9,7 @@
 
 // Function definitions
 Status_t printd(uint8 line, const char *format, ...);
+void clrd(void);
 Status_t syncd(void);
 void Console_Display_Dump(void);
 void Update_Display_Panel(uint8 Mode);

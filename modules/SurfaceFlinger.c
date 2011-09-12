@@ -24,7 +24,7 @@ Status_t printd(uint8 line, const char *format, ...)
   char VsBuffer[Y_SIZE * X_SIZE] = {0};
   va_list args;
   
-  EXIT(line < Y_SIZE, INVALID_INPUT_PARAMETER);
+  EXIT(line <= Y_SIZE, INVALID_INPUT_PARAMETER);
   EXIT(format != NULL, INVALID_INPUT_POINTER);
   
   va_start(args, format);
@@ -46,6 +46,26 @@ Status_t printd(uint8 line, const char *format, ...)
   }
   va_end(args);
   return SUCCESS;
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+void clrd(void)
+{
+  switch(BeckupSurface)
+  {
+    case 1:
+      for(int i = 0; i < Y_SIZE; i++)
+        memset(SurfaceBuffer_1[i], 0, X_SIZE);
+      break;
+    case 2:
+      for(int i = 0; i < Y_SIZE; i++)
+        memset(SurfaceBuffer_2[i], 0, X_SIZE);
+      break;
+    default:
+      break;
+  }
 }
 
 /*******************************************************************************
