@@ -3,7 +3,9 @@
 uint8 AlarmIntType_Beckup = 0;
 uint8 IncIntType_Beckup = 0;
 
-void (*Sys_Time_Update)(void) = NULL;
+void *Sys_Time_Update[RTC_INC_CALLBACKS] = {0};
+uint8 Sys_Time_Type[RTC_INC_CALLBACKS] = {0};
+
 void (*Alarm)(void) = NULL;
 
 /*************************************************************************
@@ -339,7 +341,7 @@ Status_t RTC_Get_Date_Time(RtcDateTime_t *DateTime_p)
  * @out: void 
  * Description: Set increment interrupt type
  *************************************************************************/
-void RTC_Enable_Inc_Int(uint8 IncIntType, void *Callback_p)
+void RTC_Enable_Inc_Int(uint8 IncIntType)
 {
   if(IncIntType != NULL)
     CIIR = IncIntType & 0xFF;
@@ -348,10 +350,31 @@ void RTC_Enable_Inc_Int(uint8 IncIntType, void *Callback_p)
     CIIR = IncIntType_Beckup & 0xFF;
     IncIntType_Beckup = IncIntType;
   }
-  if(Callback_p != NULL)
-    Sys_Time_Update = (void(*)(void))Callback_p;
   
   return;
+}
+
+/*************************************************************************
+ * 
+*************************************************************************/
+uint8 RTC_Register_Inc_Int(void *Callback_p, uint32 Type)
+{
+  int i;
+  for(i = 0; i < RTC_INC_CALLBACKS; i++)
+    if(Sys_Time_Update[i] == NULL)
+    {
+      Sys_Time_Update[i] = Callback_p;
+      Sys_Time_Type[i] = Type;
+    }
+  return i;
+}
+
+/*************************************************************************
+ * 
+*************************************************************************/
+void RTC_Remove_Inc_Int(uint8 ID)
+{
+  Sys_Time_Update[ID] = NULL;
 }
 
 /*************************************************************************
@@ -469,8 +492,13 @@ __irq void RTC_ISR(void)
   
   if (IntStatus & RTCIncrementInt)	// Increment Interrupt
   {
-    if(Sys_Time_Update != NULL)
-      Sys_Time_Update();
+    for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Sec int
+    {
+      if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_SEC)
+        ((void(*)(void))(Sys_Time_Update[i]))();
+    }
+    // TODO: Add Implementation for other Interrupt types of incremental Interrupt.
+    
   }
   
   if (IntStatus & RTCAlarmInt)	        // Alarm Interrupt

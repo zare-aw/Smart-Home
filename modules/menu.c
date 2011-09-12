@@ -3,6 +3,7 @@
 uint8 LocationChange = 0;
 uint16 Level = 0;
 uint16 Location[NO_OF_LEVELS] = {0};
+uint8 Sec_Callback_ID = 0;
 
 char MainViewBuffer[12][21] = {0};
 
@@ -15,7 +16,8 @@ Status_t Menu_Init(void)
 {
   Function_IN(MENU_INIT);
   
-  RTC_Enable_Inc_Int(IncIntType_SEC, (void *)Menu_Sec_Int_Callback);
+  RTC_Enable_Inc_Int(IncIntType_SEC);
+  Sec_Callback_ID = RTC_Register_Inc_Int((void *)Menu_Sec_Int_Callback, IncIntType_SEC);
   
   RETURN_SUCCESS();
 }

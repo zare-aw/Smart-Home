@@ -4,6 +4,7 @@
 #include "Includes.h"
 
 #define RTC_COUNT_PER_SEC   32768
+#define RTC_INC_CALLBACKS   10
 
 #define RTC_YEARMIN         1901
 #define RTC_YEARMAX         2099
@@ -122,7 +123,9 @@ Status_t RTC_Get_Date(RtcDate_t *Date_p);
 Status_t RTC_Get_Time(RtcTime_t *Time_p);
 Status_t RTC_Get_Date_Time(RtcDateTime_t *DateTime_p);
 
-void RTC_Enable_Inc_Int(uint8 IncIntType, void *Callback_p);
+void RTC_Enable_Inc_Int(uint8 IncIntType);
+uint8 RTC_Register_Inc_Int(void *Callback_p, uint32 Type);
+void RTC_Remove_Inc_Int(uint8 ID);
 void RTC_Disable_Inc_Int(void);
 
 Status_t RTC_Enable_Alarm(uint8 AlarmIntType, RtcDateTime_t *DateTime_p, void *Callback_p);
