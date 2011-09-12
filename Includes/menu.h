@@ -2,6 +2,7 @@
 #define _menu_h
 
 #define _MENU_DEBUG
+#define _MENU_INFO
 
 #ifdef _MENU_DEBUG
 #define MENU_DEBUG(a) a
@@ -9,7 +10,49 @@
 #define MENU_DEBUG(a)
 #endif
 
-Status_t Menu_Init(uint8 DisplayType, uint16 Xres, uint16 Yres);
+#ifdef _MENU_INFO
+#define MENU_INFO(a) a
+#else
+#define MENU_INFO(a)
+#endif
+
+
+#define NO_OF_LEVELS    100
+
+// Events
+#define POWER_KEY_EVENT       1
+#define UP_KEY_EVENT          2
+#define DOWN_KEY_EVENT        3
+#define LEFT_KEY_EVENT        4
+#define RIGHT_KEY_EVENT       5
+#define ENTER_KEY_EVENT       6
+#define CANCEL_KEY_EVENT      7
+#define MENU_KEY_EVENT        8
+#define EXIT_KEY_EVENT        9
+#define NUM1_KEY_EVENT        10
+#define NUM2_KEY_EVENT        11
+#define NUM3_KEY_EVENT        12
+#define NUM4_KEY_EVENT        13
+#define NUM5_KEY_EVENT        14
+#define NUM6_KEY_EVENT        15
+#define NUM7_KEY_EVENT        16
+#define NUM8_KEY_EVENT        17
+#define NUM9_KEY_EVENT        18
+#define NUM0_KEY_EVENT        19
+#define VOL_UP_KEY_EVENT      20
+#define VOL_DOWN_KEY_EVENT    21
+#define CH_UP_KEY_EVENT       22
+#define CH_DOWN_KEY_EVENT     23
+#define MUTE_KEY_EVENT        24
+
+
+// Functions
+Status_t Menu_Init(void);
+Status_t Menu(uint32 Event);
+void Menu_Sec_Int_Callback(void);
+
+// MenuCallbacks Functions
+Status_t Menu_Callbacks_Init(uint8 DisplayType, uint16 Xres, uint16 Yres);
 Status_t Power_Key_Callback(void *p);
 Status_t Up_Key_Callback(void *p);
 Status_t Down_Key_Callback(void *p);

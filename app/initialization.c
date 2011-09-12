@@ -26,9 +26,10 @@ Status_t Initialization(void)
   Timer_1_Init();
   VICInit();
   (void)IR_Init();
-  Menu_Init(NULL, NULL, NULL);
+  Menu_Callbacks_Init(NULL, NULL, NULL);
   RTC_Init(1);
   RTC_Enable();
+  Menu_Init();
   
   __enable_interrupt();
   StatusReturn = DS1820_Init(1);

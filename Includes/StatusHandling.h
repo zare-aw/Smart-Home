@@ -117,6 +117,8 @@ extern uint8 FunctionInBeckupBuffer;
 #define DS1820_SHORT_CIRCUIT_ERROR          301
 #define DS1820_UNABLE_TO_READ_DATA_ERROR    302
 
+#define MENU_DISPLAY_ERROR                  350
+
 /*******************************************************************************
 * Function code definition
 *******************************************************************************/
@@ -198,7 +200,7 @@ extern uint8 FunctionInBeckupBuffer;
 #define OUT_INIT                        10100
 #define OUT_SYNC                        10101
 
-#define MENU_INIT                       10200
+#define MENU_CALLBACKS_INIT             10200
 #define POWER_KEY_CALLBACK              10201
 #define UP_KEY_CALLBACK                 10202
 #define DOWN_KEY_CALLBACK               10203
@@ -242,6 +244,11 @@ extern uint8 FunctionInBeckupBuffer;
 #define DS1820_READ_TEMP                10502
 #define DS1820_READ_SN                  10503
 #define DS_RESET                        10520
+
+#define MENU_INIT                       10600
+#define MENU                            10601
+#define DISPLAY_MENU_UPDATE             10602
+#define DISPLAY_DATE_TIME_UPDATE        10603
 
 void Function_IN(Function_t Function);
 void Function_OUT(Function_t Function);
