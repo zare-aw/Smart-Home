@@ -46,6 +46,8 @@ Status_t Power_Key_Callback(void *p)
   Function_IN(POWER_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Power key callback called !\n"));
   
+  CONTROL(Menu(POWER_KEY_EVENT), MENU_ERROR);
+  
   RETURN_SUCCESS();
 }
 
@@ -56,6 +58,8 @@ Status_t Up_Key_Callback(void *p)
 {
   Function_IN(UP_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Up key callback called !\n"));
+  
+  CONTROL(Menu(UP_KEY_EVENT), MENU_ERROR);
   
   RETURN_SUCCESS();
 }
@@ -68,6 +72,8 @@ Status_t Down_Key_Callback(void *p)
   Function_IN(DOWN_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Down key callback called !\n"));
   
+  CONTROL(Menu(DOWN_KEY_EVENT), MENU_ERROR);
+  
   RETURN_SUCCESS();
 }
 
@@ -78,6 +84,8 @@ Status_t Left_Key_Callback(void *p)
 {
   Function_IN(LEFT_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Left key callback called !\n"));
+  
+  CONTROL(Menu(LEFT_KEY_EVENT), MENU_ERROR);
   
   RETURN_SUCCESS();
 }
@@ -90,6 +98,8 @@ Status_t Right_Key_Callback(void *p)
   Function_IN(RIGHT_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Right key callback called !\n"));
   
+  CONTROL(Menu(RIGHT_KEY_EVENT), MENU_ERROR);
+  
   RETURN_SUCCESS();
 }
 
@@ -100,6 +110,8 @@ Status_t Enter_Key_Callback(void *p)
 {
   Function_IN(ENTER_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Enter key callback called !\n"));
+  
+  CONTROL(Menu(ENTER_KEY_EVENT), MENU_ERROR);
   
   RETURN_SUCCESS();
 }
@@ -112,6 +124,8 @@ Status_t Cancel_Key_Callback(void *p)
   Function_IN(CANCEL_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Cancel key callback called !\n"));
   
+  CONTROL(Menu(CANCEL_KEY_EVENT), MENU_ERROR);
+  
   RETURN_SUCCESS();
 }
 
@@ -122,6 +136,8 @@ Status_t Menu_Key_Callback(void *p)
 {
   Function_IN(MENU_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Menu key callback called !\n"));
+  
+  CONTROL(Menu(MENU_KEY_EVENT), MENU_ERROR);
   
   RETURN_SUCCESS();
 }
@@ -134,6 +150,8 @@ Status_t Exit_Key_Callback(void *p)
   Function_IN(EXIT_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Exit key callback called !\n"));
   
+  CONTROL(Menu(EXIT_KEY_EVENT), MENU_ERROR);
+  
   RETURN_SUCCESS();
 }
 
@@ -144,6 +162,8 @@ Status_t Num1_Key_Callback(void *p)
 {
   Function_IN(NUM1_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Num1 key callback called !\n"));
+  
+  CONTROL(Menu(NUM1_KEY_EVENT), MENU_ERROR);
   
   RETURN_SUCCESS();
 }
@@ -156,6 +176,8 @@ Status_t Num2_Key_Callback(void *p)
   Function_IN(NUM2_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Num2 key callback called !\n"));
   
+  CONTROL(Menu(NUM2_KEY_EVENT), MENU_ERROR);
+  
   RETURN_SUCCESS();
 }
 
@@ -166,6 +188,8 @@ Status_t Num3_Key_Callback(void *p)
 {
   Function_IN(NUM3_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Num3 key callback called !\n"));
+  
+  CONTROL(Menu(NUM3_KEY_EVENT), MENU_ERROR);
   
   RETURN_SUCCESS();
 }
@@ -178,6 +202,8 @@ Status_t Num4_Key_Callback(void *p)
   Function_IN(NUM4_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Num4 key callback called !\n"));
   
+  CONTROL(Menu(NUM4_KEY_EVENT), MENU_ERROR);
+  
   RETURN_SUCCESS();
 }
 
@@ -188,6 +214,8 @@ Status_t Num5_Key_Callback(void *p)
 {
   Function_IN(NUM5_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Num5 key callback called !\n"));
+  
+  CONTROL(Menu(NUM5_KEY_EVENT), MENU_ERROR);
   
   RETURN_SUCCESS();
 }
@@ -200,6 +228,8 @@ Status_t Num6_Key_Callback(void *p)
   Function_IN(NUM6_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Num6 key callback called !\n"));
   
+  CONTROL(Menu(NUM6_KEY_EVENT), MENU_ERROR);
+  
   RETURN_SUCCESS();
 }
 
@@ -210,6 +240,8 @@ Status_t Num7_Key_Callback(void *p)
 {
   Function_IN(NUM7_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Num7 key callback called !\n"));
+  
+  CONTROL(Menu(NUM7_KEY_EVENT), MENU_ERROR);
   
   RETURN_SUCCESS();
 }
@@ -222,6 +254,8 @@ Status_t Num8_Key_Callback(void *p)
   Function_IN(NUM8_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Num8 key callback called !\n"));
   
+  CONTROL(Menu(NUM8_KEY_EVENT), MENU_ERROR);
+  
   RETURN_SUCCESS();
 }
 
@@ -232,6 +266,8 @@ Status_t Num9_Key_Callback(void *p)
 {
   Function_IN(NUM9_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Num9 key callback called !\n"));
+  
+  CONTROL(Menu(NUM9_KEY_EVENT), MENU_ERROR);
   
   RETURN_SUCCESS();
 }
@@ -244,6 +280,8 @@ Status_t Num0_Key_Callback(void *p)
   Function_IN(NUM0_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Num0 key callback called !\n"));
   
+  CONTROL(Menu(NUM0_KEY_EVENT), MENU_ERROR);
+  
   RETURN_SUCCESS();
 }
 
@@ -254,6 +292,8 @@ Status_t Vol_Up_Key_Callback(void *p)
 {
   Function_IN(VOL_UP_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Vol-Up key callback called !\n"));
+  
+  CONTROL(Menu(VOL_UP_KEY_EVENT), MENU_ERROR);
   
   RETURN_SUCCESS();
 }
@@ -266,6 +306,8 @@ Status_t Vol_Down_Key_Callback(void *p)
   Function_IN(VOL_DOWN_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Vol-Down key callback called !\n"));
   
+  CONTROL(Menu(VOL_DOWN_KEY_EVENT), MENU_ERROR);
+  
   RETURN_SUCCESS();
 }
 
@@ -276,6 +318,8 @@ Status_t Ch_Up_Key_Callback(void *p)
 {
   Function_IN(CH_UP_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Ch-Up key callback called !\n"));
+  
+  CONTROL(Menu(CH_UP_KEY_EVENT), MENU_ERROR);
   
   RETURN_SUCCESS();
 }
@@ -288,6 +332,8 @@ Status_t Ch_Down_Key_Callback(void *p)
   Function_IN(CH_DOWN_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Ch-Down key callback called !\n"));
   
+  CONTROL(Menu(CH_DOWN_KEY_EVENT), MENU_ERROR);
+  
   RETURN_SUCCESS();
 }
 
@@ -298,6 +344,8 @@ Status_t Mute_Key_Callback(void *p)
 {
   Function_IN(MUTE_KEY_CALLBACK);
   MENU_DEBUG(printc("\r # Mute key callback called !\n"));
+  
+  CONTROL(Menu(MUTE_KEY_EVENT), MENU_ERROR);
   
   RETURN_SUCCESS();
 }

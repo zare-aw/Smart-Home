@@ -117,7 +117,8 @@ extern uint8 FunctionInBeckupBuffer;
 #define DS1820_SHORT_CIRCUIT_ERROR          301
 #define DS1820_UNABLE_TO_READ_DATA_ERROR    302
 
-#define MENU_DISPLAY_ERROR                  350
+#define MENU_ERROR                          350
+#define MENU_DISPLAY_ERROR                  351
 
 /*******************************************************************************
 * Function code definition
