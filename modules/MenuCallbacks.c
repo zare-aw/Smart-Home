@@ -4,9 +4,9 @@
 /*******************************************************************************
 * 
 *******************************************************************************/
-Status_t Menu_Init(uint8 DisplayType, uint16 Xres, uint16 Yres)
+Status_t Menu_Callbacks_Init(uint8 DisplayType, uint16 Xres, uint16 Yres)
 {
-  Function_IN(MENU_INIT);
+  Function_IN(MENU_CALLBACKS_INIT);
   
   CONTROL(!IR_Command_Init(POWER_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Power_Key_Callback), IR_COMMAND_INIT_ERROR);
   CONTROL(!IR_Command_Init(UP_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Up_Key_Callback), IR_COMMAND_INIT_ERROR);
