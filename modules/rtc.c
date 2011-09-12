@@ -27,7 +27,7 @@ static uint8 Is_Leap_Year (uint16 Year)
  * @out: uint16 (Day of Year)
  * Description: Get the Day of year according to the date
  *************************************************************************/
-static uint16 Get_DoY (uint16 Year, uint8 Month, uint8 Day)
+static uint16 Get_DoY(uint16 Year, uint8 Month, uint8 Day)
 {
   uint16 DoY = 0, i;
 
@@ -50,7 +50,7 @@ static uint16 Get_DoY (uint16 Year, uint8 Month, uint8 Day)
  * Description: Get the day of week according to the date.
  * NOTE: Year is not smaller than RTC_YEARMIN (1901).
  *************************************************************************/
-static uint8 Get_DoW (uint16 Year, uint8 Month, uint8 Day)
+static uint8 Get_DoW(uint16 Year, uint8 Month, uint8 Day)
 {
   int i, DoW=0;
 
@@ -481,7 +481,6 @@ __irq void RTC_ISR(void)
   
   VICVectAddr = 0;
 }
-
 
 /*************************************************************************
  * Function Name: FormatDate
