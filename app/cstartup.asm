@@ -25,15 +25,23 @@
         PUBLIC  __vector
         PUBLIC  __vector_0x14
         PUBLIC  __iar_program_start
+        PUBLIC  __undefined_instructions
+        PUBLIC  __software_interrupt
+        PUBLIC  __prefetch_abort
+        PUBLIC  __data_abort
         EXTERN IRQ_ISR_Handler
+        EXTERN Undefined_Instructions_Handler
+        EXTERN Software_Interrupt_Handler
+        EXTERN Prefetch_Abort_Handler
+        EXTERN Data_Abort_Handler
 
         ARM
 __vector:
-        ldr   pc,=__iar_program_start   ;; Reset
-        B   .                           ;; Undefined instructions
-        B   .                           ;; Software interrupt (SWI/SVC)
-        B   .                           ;; Prefetch abort
-        B   .                           ;; Data abort
+        ldr   pc,=__iar_program_start         ;; Reset
+        ldr   pc,=__undefined_instructions    ;; Undefined instructions
+        ldr   pc,=__software_interrupt        ;; Software interrupt (SWI/SVC)
+        ldr   pc,=__prefetch_abort            ;; Prefetch abort
+        ldr   pc,=__data_abort                ;; Data abort
 __vector_0x14:
         DC32  0                         ;; RESERVED
         ldr     pc, [pc, #-0xFF0]       ;; IRQ Handler (reads vector address from VicVecAddr)
@@ -45,6 +53,19 @@ __vector_0x14:
         EXTERN  ?main
         REQUIRE __vector
         ARM
+        
+__undefined_instructions:
+        ldr     r0,=Undefined_Instructions_Handler
+        bx      r0
+__software_interrupt:
+        ldr     r0,=Software_Interrupt_Handler
+        bx      r0
+__prefetch_abort:
+        ldr     r0,=Prefetch_Abort_Handler
+        bx      r0
+__data_abort:
+        ldr     r0,=Data_Abort_Handler
+        bx      r0
 
 __iar_program_start:
 

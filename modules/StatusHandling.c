@@ -87,7 +87,7 @@ uint8 Abort(Status_t Status)
     break;
   }
   
-  printc("ABORT !!!\nERROR: %u\n", Status);  
+  printc("ABORT !!!\nERROR: %u\n", Status);
   Print_Function_History();
   
   __disable_interrupt();

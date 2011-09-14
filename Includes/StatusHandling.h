@@ -71,8 +71,13 @@ extern uint8 FunctionInBeckupBuffer;
 #define INVALID_INIT_INPUT_PARAMETER        8
 #define INVALID_INPUT_POINTER               9
 
-#define	MEMORY_ERROR                        10
-#define HEAP_ALLOCATION_ERROR               11
+#define UNDEFINED_INSTRUCTIONS_EXCEPTION    10
+#define SOFTWARE_INTERRUPT_EXCEPTION        11
+#define PREFETCH_ABORT_EXCEPTION            12
+#define DATA_ABORT_EXCEPTION                13
+
+#define	MEMORY_ERROR                        15
+#define HEAP_ALLOCATION_ERROR               16
 
 #define SET_SAMPLE_RATE_ERROR               21
 #define SET_SAMPLE_NUMBER_ERROR             22
