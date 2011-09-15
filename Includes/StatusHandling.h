@@ -79,8 +79,7 @@ extern uint8 FunctionInBeckupBuffer;
 #define	MEMORY_ERROR                        15
 #define HEAP_ALLOCATION_ERROR               16
 
-#define SET_SAMPLE_RATE_ERROR               21
-#define SET_SAMPLE_NUMBER_ERROR             22
+#define NOT_REGISTERED_ERROR                20
 
 #define BUS_ERROR                           31
 #define PCLKSEL_ERROR                       32
@@ -124,6 +123,9 @@ extern uint8 FunctionInBeckupBuffer;
 
 #define MENU_ERROR                          350
 #define MENU_DISPLAY_ERROR                  351
+
+#define TEMP_SLOTS_ERROR                    400
+
 
 /*******************************************************************************
 * Function code definition
@@ -256,6 +258,13 @@ extern uint8 FunctionInBeckupBuffer;
 #define DISPLAY_MENU_UPDATE             10602
 #define DISPLAY_DATE_TIME_UPDATE        10603
 
+#define REGISTER_TEMP_SENSOR            10700
+#define UNREGISTER_TEMP_SENSOR          10701
+#define REGISTER_TEMP_ALARM             10702
+#define UNREGISTER_TEMP_ALARM           10703
+
+
+// Functions
 void Function_IN(Function_t Function);
 void Function_OUT(Function_t Function);
 void This_Function_OUT(void);

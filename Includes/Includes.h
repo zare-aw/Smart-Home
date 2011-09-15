@@ -71,5 +71,6 @@ typedef signed long long    sint64;
 #include "Out.h"
 #include "DS1820.h"
 #include "SurfaceFlinger.h"
+#include "Temperature.h"
 
 #endif
