@@ -372,7 +372,7 @@ uint8 RTC_Register_Inc_Int(void *Callback_p, uint32 Type)
 /*************************************************************************
  * 
 *************************************************************************/
-void RTC_Remove_Inc_Int(uint8 ID)
+void RTC_Unregister_Inc_Int(uint8 ID)
 {
   Sys_Time_Update[ID] = NULL;
 }
