@@ -101,7 +101,7 @@
 #define DS_READ_POWER_SUPPLY_COMMAND      0xB4
 
 // Function declarations
-Status_t DS1820_Init(int Ch);
+Status_t DS1820_Init(int Ch, char *SN);
 Status_t DS1820_Start_Conversion(int Ch, uint8 *SerialNumber_p);
 Status_t DS1820_Read_Temp(int *Temp, int Ch, uint8 *SerialNumber_p);
 Status_t DS1820_Read_SN(uint8 *SerialNumber, int Ch);

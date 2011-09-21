@@ -5,7 +5,7 @@ static Status_t DS_Reset(int Ch);
 /*******************************************************************************
 * 
 *******************************************************************************/
-Status_t DS1820_Init(int Ch)
+Status_t DS1820_Init(int Ch, char *SN)
 {
   Function_IN(DS1820_INIT);
   Status_t StatusReturn = GENERAL_ERROR;
@@ -15,6 +15,9 @@ Status_t DS1820_Init(int Ch)
 
   StatusReturn = DS1820_Read_SN(SerialNumber, Ch);
   CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_INIT);
+  
+  if(SN != NULL)
+    memcpy(SN, SerialNumber, 8);
   
   printc("\r # DS1820 Initialized, Chanell = %u, SerialNumber = ", Ch);
   for(int i = 7; i >= 0; i--)
@@ -182,7 +185,7 @@ Status_t DS1820_Read_Temp(int *Temp, int Ch, uint8 *SerialNumber_p)
   StatusReturn = DS_Reset(Ch);
   CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_READ_TEMP);
   
-  if( SerialNumber_p == NULL)
+  if(SerialNumber_p == NULL)
   {
     StatusReturn = DS_Write_Byte(DS_SKIP_ROM_COMMAND, Ch);
     CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_READ_TEMP);
