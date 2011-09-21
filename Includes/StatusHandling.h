@@ -125,6 +125,7 @@ extern uint8 FunctionInBeckupBuffer;
 #define MENU_DISPLAY_ERROR                  351
 
 #define TEMP_SLOTS_ERROR                    400
+#define TEMP_SENSOR_REGISTER_ERROR          401
 
 
 /*******************************************************************************
@@ -262,6 +263,10 @@ extern uint8 FunctionInBeckupBuffer;
 #define UNREGISTER_TEMP_SENSOR          10701
 #define REGISTER_TEMP_ALARM             10702
 #define UNREGISTER_TEMP_ALARM           10703
+#define SET_STATE_TEMP_ALARM            10704
+#define TEMP_INIT                       10705
+#define TEMP_REINIT                     10706
+#define TEMP_WORK                       10707
 
 
 // Functions

@@ -5,7 +5,6 @@ void Pin_MUX_Init(void);
 Status_t Initialization(void)
 {
   Function_IN(INITIALIZATION);
-  Status_t StatusReturn = GENERAL_ERROR;
   
   printc("\n********************************\n");
   printc("\r*** Smart home system Rev 1.0 **\n");
@@ -32,10 +31,7 @@ Status_t Initialization(void)
   Menu_Init();
   
   __enable_interrupt();
-  StatusReturn = DS1820_Init(1);
-  CONTROL(StatusReturn == SUCCESS, StatusReturn);
-  StatusReturn = DS1820_Init(2);
-  CONTROL(StatusReturn == SUCCESS, StatusReturn);
+  Temp_Init();
   __disable_interrupt();
   
   RETURN_SUCCESS();
