@@ -175,22 +175,28 @@ static Status_t Display_Date_Time_Update(RtcTime_t *Time_p, RtcDate_t *Date_p)
   CONTROL(Date_p != NULL, INVALID_INPUT_POINTER);
   
   char Time_S[10] = {0};
-  char Date_S[31] = {0};
+  char Date_S[32] = {0};
   int i;
   
   CONTROL(!Format_Time(1, Time_p, Time_S), RTC_GENERAL_ERROR);
   CONTROL(!Format_Date(2, Date_p, Date_S), RTC_GENERAL_ERROR);
   
+  for(i = 0; Time_S[i] != 0; i++);
+  CONTROL(i <= 9, RTC_GENERAL_ERROR);
+  
+  for(i = 0; Date_S[i] != 0; i++);
+  CONTROL(i <= 30, RTC_GENERAL_ERROR);
+      
   strcpy(MainViewBuffer[0], Time_S);
   MainViewBuffer[0][8] = ' ';
   MainViewBuffer[0][9] = ' ';
   
-  for(i = 0; Date_S[i] != ' '; i++)
+  for(i = 0; (Date_S[i] != ' ') && (i < 10); i++)
     MainViewBuffer[0][i + 10] = Date_S[i];
   MainViewBuffer[0][i + 10] = '\0';
   
   i += 2;
-  for(int j = 0; Date_S[i] != 0; i++, j++)
+  for(int j = 0; (Date_S[i] != 0) && (j < 19); i++, j++)
     MainViewBuffer[1][j] = Date_S[i];
   
   RETURN_SUCCESS();

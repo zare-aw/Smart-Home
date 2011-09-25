@@ -21,7 +21,7 @@ Status_t printd(uint8 line, const char *format, ...)
 {
   uint32 i = 0;
   uint32 column = 1;
-  char VsBuffer[Y_SIZE * X_SIZE] = {0};
+  char VsBuffer[(Y_SIZE * X_SIZE) + 4] = {0};
   va_list args;
   
   EXIT(line <= Y_SIZE, INVALID_INPUT_PARAMETER);
@@ -89,6 +89,7 @@ Status_t syncd(void)
 *******************************************************************************/
 static Status_t Update_Surface_Buffer(char InputChar, uint8 Line, uint8 Column)
 {
+  // TODO: Check line and column
   switch(BeckupSurface)
   {
     case 1:
