@@ -15,6 +15,8 @@ Status_t Initialization(void)
   
   Pin_MUX_Init();
   
+  Print_Reset_Source();
+  
   Power_Init();
   (void)PLL_Init(ENABLE);
   PCLK_Init(2);

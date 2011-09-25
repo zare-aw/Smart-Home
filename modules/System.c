@@ -104,3 +104,32 @@ void PCLK_Init(uint8 a)
     break;
   }
 }
+
+/*******************************************************************************
+*
+*******************************************************************************/
+void Print_Reset_Source(void)
+{
+  uint8 Rsir = RSIR;
+  printc("\r # Reset reason: ");
+  switch(Rsir)
+  {
+    case 0x01:
+      printc("Power-On\n");
+      break;
+    case 0x02:
+      printc("External Reset Pin\n");
+      break;
+    case 0x04:
+      printc("Watchdog Timer\n");
+      break;
+    case 0x08:
+      printc("Brown-Out Detect\n");
+      break;
+    default:
+      printc("Unknown, RSIR = %X\n", Rsir);
+      break;
+  }
+  
+  RSIR = 0x0F;    // Reset reset source register
+}
