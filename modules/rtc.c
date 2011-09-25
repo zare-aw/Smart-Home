@@ -3,7 +3,7 @@
 uint8 AlarmIntType_Beckup = 0;
 uint8 IncIntType_Beckup = 0;
 
-void *Sys_Time_Update[RTC_INC_CALLBACKS] = {0};
+void *Sys_Time_Update[RTC_INC_CALLBACKS] = {NULL};
 uint8 Sys_Time_Type[RTC_INC_CALLBACKS] = {0};
 
 void (*Alarm)(void) = NULL;
@@ -365,8 +365,14 @@ uint8 RTC_Register_Inc_Int(void *Callback_p, uint32 Type)
     {
       Sys_Time_Update[i] = Callback_p;
       Sys_Time_Type[i] = Type;
+      RTC_DEBUG(printc("\r # RTC increment interrupt callback registered, Type = %d, ID = %d\n", Type, i));
+      break;
     }
-  return i;
+  
+  if(i == RTC_INC_CALLBACKS)
+    return 255;
+  else
+    return i;
 }
 
 /*************************************************************************

@@ -3,6 +3,8 @@
 
 #include "Includes.h"
 
+#define _RTC_DEBUG          1
+
 #define RTC_COUNT_PER_SEC   32768
 #define RTC_INC_CALLBACKS   10
 
@@ -22,6 +24,12 @@
 /* RTC Clock control register bit descriptions */
 #define CCR_CLKEN_BIT       0
 #define CCR_CTCRST_BIT      1
+
+#ifdef _RTC_DEBUG
+#define RTC_DEBUG(a) a
+#else
+#define RTC_DEBUG(a)
+#endif
 
 /* RTC Increment Interrupt Type */
 #define IncIntType_SEC	    0x1
