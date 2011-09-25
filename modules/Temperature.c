@@ -53,7 +53,10 @@ Status_t Register_Temp_Sensor(uint8 Ch, uint8 *SerialNumber, uint8 *SensorID)
   FirstTemp[*SensorID] = 1;
   
   if(CallbackID == 255)
-    CallbackID = RTC_Register_Inc_Int((void *)Temp_Callback, AlarmIntType_SEC);
+  {
+    CallbackID = RTC_Register_Inc_Int((void *)Temp_Callback, IncIntType_SEC);
+    TEMP_DEBUG(printc("\r # Temp callback registered on RTC icrement interrupt with ID = %d\n", CallbackID));
+  }
   
   RETURN_SUCCESS();
 }
@@ -78,6 +81,7 @@ Status_t Unregister_Temp_Sensor(uint8 SensorID)
   if((i == NO_OF_TEMP_SENSORS) && CallbackID != 255)
   {
     RTC_Unregister_Inc_Int(CallbackID);
+    TEMP_DEBUG(printc("\r # Temp callback unregistered on RTC icrement interrupt with ID = %d\n", CallbackID));
     CallbackID = 255;
   }
   
@@ -108,6 +112,12 @@ Status_t Register_Temp_Alarm(uint8 SensorID, uint8 Event, int TempValue, void *C
     }
   CONTROL(*AlarmID != NO_OF_ALARMS, TEMP_SLOTS_ERROR);
   
+  TEMP_DEBUG(printc("\r # Temp Alarm registered with parameters:\n"));
+  TEMP_DEBUG(printc("\r # Sensor ID = %d\n", SensorID));
+  TEMP_DEBUG(printc("\r # Event = %d\n", Event));
+  TEMP_DEBUG(printc("\r # Temperature = %d\n", TempValue));
+  TEMP_DEBUG(printc("\r # Alarm ID = %d\n", *AlarmID));
+  
   RETURN_SUCCESS();
 }
 
@@ -124,6 +134,10 @@ Status_t Unregister_Temp_Alarm(uint8 SensorID, uint8 AlarmID)
   AlarmState[SensorID][AlarmID] = ALARM_OFF;
   AlarmValue[SensorID][AlarmID] = -250;
   AlarmCallback[SensorID][AlarmID] = NULL;
+  
+  TEMP_DEBUG(printc("\r # Temp Alarm unregistered wih parameters:\n"));
+  TEMP_DEBUG(printc("\r # Sensor ID = %d\n", SensorID));
+  TEMP_DEBUG(printc("\r # Alarm ID = %d\n", AlarmID));
   
   RETURN_SUCCESS();
 }
@@ -154,19 +168,19 @@ Status_t Temp_Init(void)
   if(StatusReturn == SUCCESS)
   {
     CONTROL(!Register_Temp_Sensor(1, NULL, &SensorID_1), TEMP_SENSOR_REGISTER_ERROR);
-    printc("\rTemperature sensor on channel 1 registered on ID = %d\n", SensorID_1);
+    printc("\r # Temperature sensor on channel 1 registered on ID = %d\n", SensorID_1);
   }
   else
-    printc("\rFailed to register Temperature sensor on channel 1\n");
+    printc("\r # Failed to register Temperature sensor on channel 1\n");
   
   StatusReturn = DS1820_Init(2, NULL);
   if(StatusReturn == SUCCESS)
   {
     CONTROL(!Register_Temp_Sensor(2, NULL, &SensorID_2), TEMP_SENSOR_REGISTER_ERROR);
-    printc("\rTemperature sensor on channel 2 registered on ID = %d\n", SensorID_2);
+    printc("\r # Temperature sensor on channel 2 registered on ID = %d\n", SensorID_2);
   }
   else
-    printc("\rFailed to register Temperature sensor on channel 2\n");
+    printc("\r # Failed to register Temperature sensor on channel 2\n");
   
   RETURN_SUCCESS();
 }
@@ -294,4 +308,8 @@ Status_t Temp_Work(void)
 void Temp_Callback(void)
 {
   TempUpdate = 1;
+  if(SensorID_1 != 255)
+    printc("\r Temp1 = %d\n", ReadTemp(SensorID_1));
+  if(SensorID_2 != 255)
+    printc("\r Temp2 = %d\n", ReadTemp(SensorID_2));
 }
