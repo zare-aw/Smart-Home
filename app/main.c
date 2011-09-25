@@ -17,6 +17,7 @@ void main()
   {
     (void)Console_Print_Pull();
     Console_Command_Execute(0);
+    Temp_Work();
     Update_Display_Panel(PULL);
 //    (void)Out_Sync();
   } // while(1)
