@@ -52,7 +52,13 @@ extern uint8 FunctionInBeckupBuffer;
 
 #define RETURN_SUCCESS()\
   do {\
-    Function_OUT(FunctionBuffer[FunctionInBeckupBuffer - 1]); \
+    This_Function_OUT(); \
+    return SUCCESS; \
+  }while(0)
+
+#define RETURN_SUCCESS_FUNC(Func)\
+  do {\
+    Function_OUT(Func); \
     return SUCCESS; \
   }while(0)
 
@@ -258,6 +264,7 @@ extern uint8 FunctionInBeckupBuffer;
 #define MENU                            10601
 #define DISPLAY_MENU_UPDATE             10602
 #define DISPLAY_DATE_TIME_UPDATE        10603
+#define UPDATE_DISPLAY_PANEL            10604
 
 #define REGISTER_TEMP_SENSOR            10700
 #define UNREGISTER_TEMP_SENSOR          10701
