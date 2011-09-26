@@ -10,6 +10,8 @@
         ;; Forward declaration of sections used here.
         SECTION IRQ_STACK:DATA:NOROOT(3)
         SECTION FIQ_STACK:DATA:NOROOT(3)
+        SECTION UND_STACK:DATA:NOROOT(3)
+        SECTION ABT_STACK:DATA:NOROOT(3)
         SECTION CSTACK:DATA:NOROOT(3)
 
 ;
@@ -55,17 +57,25 @@ __vector_0x14:
         ARM
         
 __undefined_instructions:
-        ldr     r0,=Undefined_Instructions_Handler
-        bx      r0
+        sub     r0, lr, #8              ;; Address of latest instruntion
+        ldr     r1, [r0]                ;; Instruction
+        ldr     r2,=Undefined_Instructions_Handler
+        bx      r2
 __software_interrupt:
-        ldr     r0,=Software_Interrupt_Handler
-        bx      r0
+        sub     r0, lr, #8              ;; Address of latest instruntion
+        ldr     r1, [r0]                ;; Instruction
+        ldr     r2,=Software_Interrupt_Handler
+        bx      r2
 __prefetch_abort:
-        ldr     r0,=Prefetch_Abort_Handler
-        bx      r0
+        sub     r0, lr, #8              ;; Address of latest instruntion
+        ldr     r1, [r0]                ;; Instruction
+        ldr     r2,=Prefetch_Abort_Handler
+        bx      r2
 __data_abort:
-        ldr     r0,=Data_Abort_Handler
-        bx      r0
+        sub     r0, lr, #8              ;; Address of latest instruntion
+        ldr     r1, [r0]                ;; Instruction
+        ldr     r2,=Data_Abort_Handler
+        bx      r2
 
 __iar_program_start:
 
@@ -119,6 +129,18 @@ SYS_MODE DEFINE 0x1F            ; System mode
                 orr     r0,r0,#IRQ_MODE                     ; Set IRQ mode bits
                 msr     cpsr_c,r0                           ; Change the mode
                 ldr     sp,=SFE(IRQ_STACK)                  ; End of IRQ_STACK
+                
+                mrs     r0,cpsr                             ; Original PSR value
+                bic     r0,r0,#MODE_MSK                     ; Clear the mode bits
+                orr     r0,r0,#UND_MODE                     ; Set ABT mode bits
+                msr     cpsr_c,r0                           ; Change the mode
+                ldr     sp,=SFE(ABT_STACK)                  ; End of ABT_STACK
+                
+                mrs     r0,cpsr                             ; Original PSR value
+                bic     r0,r0,#MODE_MSK                     ; Clear the mode bits
+                orr     r0,r0,#ABT_MODE                     ; Set ABT mode bits
+                msr     cpsr_c,r0                           ; Change the mode
+                ldr     sp,=SFE(UND_STACK)                  ; End of UND_STACK
 
                 bic     r0,r0,#MODE_MSK                     ; Clear the mode bits
                 orr     r0,r0,#SYS_MODE                     ; Set System mode bits
