@@ -89,7 +89,7 @@ Status_t syncd(void)
 *******************************************************************************/
 static Status_t Update_Surface_Buffer(char InputChar, uint8 Line, uint8 Column)
 {
-  // TODO: Check line and column
+  CONTROL((Line < Y_SIZE) && (Column < X_SIZE), INVALID_INPUT_PARAMETER);
   switch(BeckupSurface)
   {
     case 1:
@@ -168,8 +168,10 @@ void Console_Display_Dump(void)
 /*******************************************************************************
 * 
 *******************************************************************************/
-void Update_Display_Panel(uint8 Mode)
+Status_t Update_Display_Panel(uint8 Mode)
 {
+  Function_IN(UPDATE_DISPLAY_PANEL);
+  
   switch(Mode)
   {
     case PULL:
@@ -188,6 +190,9 @@ void Update_Display_Panel(uint8 Mode)
       DisplaySync = 0;
       break;
     default:
+      CONTROL(0, INVALID_INPUT_PARAMETER);
       break;
   }
+  
+  RETURN_SUCCESS_FUNC(UPDATE_DISPLAY_PANEL);
 }
