@@ -6,6 +6,12 @@ uint8 FunctionInBeckupBuffer = 0;
 
 void Function_IN(Function_t Function)
 {
+  if(FunctionInBeckupBuffer >= MAX_FUNCTION_IN_BECKUP_BUFFER)
+  {
+    printc(">>> WARNING: Invalid FunctionInBeckupBuffer Value, %d\n", FunctionInBeckupBuffer);
+    FunctionInBeckupBuffer = 0;
+    // TODO: Sometime FunctionInBeckupBuffer = 10. See what causing that.
+  }
   FunctionBuffer[FunctionInBeckupBuffer] = Function;
   FunctionInBeckupBuffer ++;
   if(FunctionInBeckupBuffer >= MAX_FUNCTION_IN_BECKUP_BUFFER)
