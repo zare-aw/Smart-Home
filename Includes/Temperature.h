@@ -7,7 +7,7 @@
 #define NO_OF_CHANNELS        2
 #define NO_OF_ALARMS          5
 
-#define SENSOR_REINIT         -255
+#define SENSOR_REMOVED        -255
 
 // Register_Temp_Alarm(Event)
 #define NO_ALARM              0

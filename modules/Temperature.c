@@ -15,6 +15,7 @@ uint8 SensorID_2 = 255;
 
 uint8 CallbackID = 255;
 uint8 TempUpdate = 0;
+uint8 ReinitFlag = 0;
 
 uint8 FirstTemp[NO_OF_TEMP_SENSORS] = {1};
 
@@ -168,6 +169,7 @@ Status_t Temp_Init(void)
   if(StatusReturn == SUCCESS)
   {
     CONTROL(!Register_Temp_Sensor(1, NULL, &SensorID_1), TEMP_SENSOR_REGISTER_ERROR);
+    CONTROL(!Register_Menu_Temp(INTERNAL_SENSOR, SensorID_1), TEMP_SENSOR_REGISTER_ERROR);
     printc("\r # Temperature sensor on channel 1 registered on ID = %d\n", SensorID_1);
   }
   else
@@ -177,6 +179,7 @@ Status_t Temp_Init(void)
   if(StatusReturn == SUCCESS)
   {
     CONTROL(!Register_Temp_Sensor(2, NULL, &SensorID_2), TEMP_SENSOR_REGISTER_ERROR);
+    CONTROL(!Register_Menu_Temp(EXTERNAL_SENSOR, SensorID_2), TEMP_SENSOR_REGISTER_ERROR);
     printc("\r # Temperature sensor on channel 2 registered on ID = %d\n", SensorID_2);
   }
   else
@@ -204,6 +207,7 @@ Status_t Temp_Reinit(void)
     if(i == NO_OF_TEMP_SENSORS)
     {
       CONTROL(!Register_Temp_Sensor(1, NULL, &SensorID_1), TEMP_SENSOR_REGISTER_ERROR);
+      CONTROL(!Register_Menu_Temp(INTERNAL_SENSOR, SensorID_1), TEMP_SENSOR_REGISTER_ERROR);
       printc("\rTemperature sensor on channel 1 registered on ID = %d\n", SensorID_1);
     }
   }
@@ -212,6 +216,7 @@ Status_t Temp_Reinit(void)
     if(i < NO_OF_TEMP_SENSORS)
     {
       Unregister_Temp_Sensor(SensorID_1);
+      CONTROL(!Unregister_Menu_Temp(INTERNAL_SENSOR), TEMP_SENSOR_REGISTER_ERROR);
       printc("\rFailed to register Temperature sensor on channel 1. Sensor removed!\n");
     }
   }
@@ -226,6 +231,7 @@ Status_t Temp_Reinit(void)
     if(i == NO_OF_TEMP_SENSORS)
     {
       CONTROL(!Register_Temp_Sensor(2, NULL, &SensorID_2), TEMP_SENSOR_REGISTER_ERROR);
+      CONTROL(!Register_Menu_Temp(EXTERNAL_SENSOR, SensorID_2), TEMP_SENSOR_REGISTER_ERROR);
       printc("\rTemperature sensor on channel 2 registered on ID = %d\n", SensorID_2);
     }
   }
@@ -234,6 +240,7 @@ Status_t Temp_Reinit(void)
     if(i < NO_OF_TEMP_SENSORS)
     {
       Unregister_Temp_Sensor(SensorID_2);
+      CONTROL(!Unregister_Menu_Temp(EXTERNAL_SENSOR), TEMP_SENSOR_REGISTER_ERROR);
       printc("\rFailed to register Temperature sensor on channel 2. Sensor removed!\n");
     }
   }
@@ -248,6 +255,13 @@ Status_t Temp_Work(void)
 {
   Function_IN(TEMP_WORK);
   int j;
+  
+  if(ReinitFlag == 1)
+  {
+    CONTROL(!Temp_Reinit(), TEMP_SENSOR_REINIT_ERROR);
+    ReinitFlag = 0;
+    RETURN_SUCCESS();
+  }
   
   if(TempUpdate == 0)
     RETURN_SUCCESS();
@@ -265,24 +279,24 @@ Status_t Temp_Work(void)
         if(j < 8)
         {
           if(DS1820_Read_Temp(&Temp[i], TempSensorCH[i], TempSensorSN[i]) != SUCCESS)
-            Temp[i] = SENSOR_REINIT;
+            Temp[i] = SENSOR_REMOVED;
         }
         else
         {
           if(DS1820_Read_Temp(&Temp[i], TempSensorCH[i], NULL) != SUCCESS)
-            Temp[i] = SENSOR_REINIT;
+            Temp[i] = SENSOR_REMOVED;
         }
       }
       
       if(j < 8)
       {
         if(DS1820_Start_Conversion(TempSensorCH[i], TempSensorSN[i]) != SUCCESS)
-          Temp[i] = SENSOR_REINIT;
+          Temp[i] = SENSOR_REMOVED;
       }
       else
       {
         if(DS1820_Start_Conversion(TempSensorCH[i], NULL) != SUCCESS)
-          Temp[i] = SENSOR_REINIT;
+          Temp[i] = SENSOR_REMOVED;
       }
       
       FirstTemp[i] = 0;
@@ -294,12 +308,15 @@ Status_t Temp_Work(void)
         
       }
       
+      if(Temp[i] == SENSOR_REMOVED)
+        ReinitFlag = 1;
+      
       TempBeckup[i] = Temp[i];
     }
   }
   
   TempUpdate = 0;
-  RETURN_SUCCESS();
+  RETURN_SUCCESS_FUNC(TEMP_WORK);
 }
 
 /*******************************************************************************
@@ -308,8 +325,4 @@ Status_t Temp_Work(void)
 void Temp_Callback(void)
 {
   TempUpdate = 1;
-  if(SensorID_1 != 255)
-    printc("\r Temp1 = %d\n", ReadTemp(SensorID_1));
-  if(SensorID_2 != 255)
-    printc("\r Temp2 = %d\n", ReadTemp(SensorID_2));
 }

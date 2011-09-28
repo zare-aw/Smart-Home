@@ -17,7 +17,10 @@
 #endif
 
 
-#define NO_OF_LEVELS    100
+#define NO_OF_LEVELS          100
+#define INTERNAL_SENSOR       1
+#define EXTERNAL_SENSOR       2
+#define NO_SENSOR             -255
 
 // Events
 #define POWER_KEY_EVENT       1
@@ -49,6 +52,8 @@
 // Functions
 Status_t Menu_Init(void);
 Status_t Menu(uint32 Event);
+Status_t Register_Menu_Temp(const uint8 Source, const uint8 ID);
+Status_t Unregister_Menu_Temp(const uint8 Source);
 void Menu_Sec_Int_Callback(void);
 
 // MenuCallbacks Functions

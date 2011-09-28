@@ -5,6 +5,9 @@ uint16 Level = 0;
 uint16 Location[NO_OF_LEVELS] = {0};
 uint8 Sec_Callback_ID = 0;
 
+uint8 TempExtID = 0xFF;
+uint8 TempIntID = 0xFF;
+
 char MainViewBuffer[12][21] = {0};
 
 static Status_t Display_Menu_Update(const uint8 Level, const uint16 *Location);
@@ -205,15 +208,89 @@ static Status_t Display_Date_Time_Update(RtcTime_t *Time_p, RtcDate_t *Date_p)
 /*******************************************************************************
 * 
 *******************************************************************************/
+static Status_t Display_Temp_Update(const int TempInt, const int TempExt)
+{
+  Function_IN(DISPLAY_TEMP_UPDATE);
+  
+  if(TempInt != NO_SENSOR)
+    sprintf(MainViewBuffer[2] + 5, "%d'C    ", TempInt);
+  if(TempExt != NO_SENSOR)
+    sprintf(MainViewBuffer[2] + 15, "%d'C", TempExt);
+  
+  RETURN_SUCCESS_FUNC(DISPLAY_TEMP_UPDATE);
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+Status_t Register_Menu_Temp(const uint8 Source, const uint8 ID)
+{
+  Function_IN(REGISTER_MENU_TEMP);
+  
+  switch(Source)
+  {
+    case INTERNAL_SENSOR:
+      TempIntID = ID;
+      sprintf(MainViewBuffer[2], "Tint=     ");
+      break;
+    case EXTERNAL_SENSOR:
+      TempExtID = ID;
+      sprintf(MainViewBuffer[2] + 10, "Text=");
+      break;
+    default:
+      CONTROL(0, INVALID_INPUT_PARAMETER);
+      break;
+  }
+  
+  RETURN_SUCCESS_FUNC(REGISTER_MENU_TEMP);
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+Status_t Unregister_Menu_Temp(const uint8 Source)
+{
+  Function_IN(UNREGISTER_MENU_TEMP);
+  
+  switch(Source)
+  {
+    case INTERNAL_SENSOR:
+      TempIntID = 0xFF;
+      sprintf(MainViewBuffer[2], "          ");
+      break;
+    case EXTERNAL_SENSOR:
+      TempExtID = 0xFF;
+      sprintf(MainViewBuffer[2] + 10, "          ");
+      break;
+    default:
+      CONTROL(0, INVALID_INPUT_PARAMETER);
+      break;
+  }
+  
+  RETURN_SUCCESS_FUNC(REGISTER_MENU_TEMP);
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
 void Menu_Sec_Int_Callback(void)
 {
   RtcTime_t Time;
   RtcDate_t Date;
+  int TempInt = NO_SENSOR;
+  int TempExt = NO_SENSOR;
   
   RTC_Get_Time(&Time);
   RTC_Get_Date(&Date);
   
   Display_Date_Time_Update(&Time, &Date);
+  
+  if(TempIntID != 0xFF)
+    TempInt = ReadTemp(TempIntID);
+  if(TempExtID != 0xFF)
+    TempExt = ReadTemp(TempExtID);
+  
+  Display_Temp_Update(TempInt, TempExt);
   
   if((Level == 0) && (Location[0] == 0))
     Display_Menu_Update(Level, Location);
