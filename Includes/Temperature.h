@@ -35,6 +35,14 @@
 #define TEMP_INFO(a)
 #endif
 
+typedef struct TempAlarm_s
+{
+  uint8 Event;
+  uint8 State;
+  int Value;
+  void *Callback;
+} TempAlarm_t;
+
 // Functions
 int ReadTemp(uint8 SensorID);
 Status_t Register_Temp_Sensor(uint8 Ch, uint8 *SerialNumber, uint8 *SensorID);
@@ -42,6 +50,8 @@ Status_t Unregister_Temp_Sensor(uint8 SensorID);
 Status_t Register_Temp_Alarm(uint8 SensorID, uint8 Event, int TempValue, void *Callback_p, uint8 *AlarmID);
 Status_t Unregister_Temp_Alarm(uint8 SensorID, uint8 AlarmID);
 Status_t Set_State_Temp_Alarm(uint8 SensorID, uint8 AlarmID, uint8 State);
+Status_t Read_Temp_Alarm(uint8 SensorID, uint8 AlarmID, TempAlarm_t *TempAlarm_p);
+Status_t Read_Temp_Alarm_Wrap(uint8 SensorID, uint8 AlarmID, TempAlarm_t *TempAlarm_p);
 Status_t Temp_Init(void);
 Status_t Temp_Reinit(void);
 Status_t Temp_Work(void);

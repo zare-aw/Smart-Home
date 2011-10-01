@@ -160,6 +160,39 @@ Status_t Set_State_Temp_Alarm(uint8 SensorID, uint8 AlarmID, uint8 State)
 /*******************************************************************************
 * 
 *******************************************************************************/
+Status_t Read_Temp_Alarm(uint8 SensorID, uint8 AlarmID, TempAlarm_t *TempAlarm_p)
+{
+  Function_IN(READ_TEMP_ALARM);
+  EXIT(TempSensorCH[SensorID] != 0, NOT_REGISTERED_ERROR);
+  EXIT(AlarmEvent[SensorID][AlarmID] != 0, NOT_REGISTERED_ERROR);
+  
+  TempAlarm_p -> Event = AlarmEvent[SensorID][AlarmID];
+  TempAlarm_p -> State = AlarmState[SensorID][AlarmID];
+  TempAlarm_p -> Value = AlarmValue[SensorID][AlarmID];
+  TempAlarm_p -> Callback = AlarmCallback[SensorID][AlarmID];
+  
+  RETURN_SUCCESS();
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+Status_t Read_Temp_Alarm_Wrap(uint8 SensorID, uint8 AlarmID, TempAlarm_t *TempAlarm_p)
+{
+  switch(SensorID)
+  {
+    case 1:
+      return Read_Temp_Alarm(SensorID_1, AlarmID, TempAlarm_p);
+    case 2:
+      return Read_Temp_Alarm(SensorID_2, AlarmID, TempAlarm_p);
+    default:
+      return INVALID_INPUT_PARAMETER;
+  }
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
 Status_t Temp_Init(void)
 {
   Function_IN(TEMP_INIT);

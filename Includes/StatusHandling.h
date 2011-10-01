@@ -181,6 +181,8 @@ extern uint8 FunctionInBeckupBuffer;
 #define CONSOLE_TEMP                  1270
 #define CONSOLE_ALARM                 1271
 #define CONSOLE_SET_ALARM             1272
+#define CONSOLE_TEMP_ALARM            1273
+#define CONSOLE_SET_TEMP_ALARM        1274
 
 #define GET_TIME_COMMAND                2001
 #define SET_TIME_COMMAND                2002
@@ -201,6 +203,8 @@ extern uint8 FunctionInBeckupBuffer;
 #define SET_SWITCH_SETINGS_COMMAND      2017
 #define GET_ALARM_COMMAND               2030
 #define SET_ALARM_COMMAND               2031
+#define GET_TEMP_ALARM_COMMAND          2032
+#define SET_TEMP_ALARM_COMMAND          2033
 
 // IR driver
 #define IR_INIT                         10000
@@ -275,9 +279,10 @@ extern uint8 FunctionInBeckupBuffer;
 #define REGISTER_TEMP_ALARM             10702
 #define UNREGISTER_TEMP_ALARM           10703
 #define SET_STATE_TEMP_ALARM            10704
-#define TEMP_INIT                       10705
-#define TEMP_REINIT                     10706
-#define TEMP_WORK                       10707
+#define READ_TEMP_ALARM                 10705
+#define TEMP_INIT                       10706
+#define TEMP_REINIT                     10707
+#define TEMP_WORK                       10708
 
 
 // Functions
