@@ -2,6 +2,7 @@
 #define _Temperature_h
 
 #define _TEMP_DEBUG           1
+#define _TEMP_INFO            1
 
 #define NO_OF_TEMP_SENSORS    4
 #define NO_OF_CHANNELS        2
@@ -26,6 +27,12 @@
 #define TEMP_DEBUG(a) a
 #else
 #define TEMP_DEBUG(a)
+#endif
+
+#ifdef _TEMP_INFO
+#define TEMP_INFO(a) a
+#else
+#define TEMP_INFO(a)
 #endif
 
 // Functions

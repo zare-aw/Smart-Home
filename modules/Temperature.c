@@ -303,9 +303,63 @@ Status_t Temp_Work(void)
       
       if(TempBeckup[i] != Temp[i])
       {
-      
-        // TODO: Implement support for Alarms
-        
+        for(int j = 0; j < NO_OF_ALARMS; j++)
+          if((AlarmEvent[i][j] != NO_ALARM) && (AlarmState[i][j] == ALARM_ON))
+          {
+            switch(AlarmEvent[i][j])
+            {
+              case ABOVE:
+                if((TempBeckup[i] <= AlarmValue[i][j]) && (Temp[i] > AlarmValue[i][j]))
+                {
+                  ((Status_t(*)(void*))(AlarmCallback[i][j]))(NULL);
+                  TEMP_INFO(printc(" # Temperature Alarm, SensorID = %d, AlarmID = %d\n", i, j));
+                  TEMP_DEBUG(printc(" # Temperature = %d, AlarmEvent = ABOVE, TempValue = %d\n", Temp[i], AlarmValue[i][j]));
+                }
+                break;
+              case BELLOW:
+                if((TempBeckup[i] >= AlarmValue[i][j]) && (Temp[i] < AlarmValue[i][j]))
+                {
+                  ((Status_t(*)(void*))(AlarmCallback[i][j]))(NULL);
+                  TEMP_INFO(printc(" # Temperature Alarm, SensorID = %d, AlarmID = %d\n", i, j));
+                  TEMP_DEBUG(printc(" # Temperature = %d, AlarmEvent = BELLOW, TempValue = %d\n", Temp[i], AlarmValue[i][j]));
+                }
+                break;
+              case EQUAL:
+                if((TempBeckup[i] != AlarmValue[i][j]) && (Temp[i] == AlarmValue[i][j]))
+                {
+                  ((Status_t(*)(void*))(AlarmCallback[i][j]))(NULL);
+                  TEMP_INFO(printc(" # Temperature Alarm, SensorID = %d, AlarmID = %d\n", i, j));
+                  TEMP_DEBUG(printc(" # Temperature = %d, AlarmEvent = EQUAL, TempValue = %d\n", Temp[i], AlarmValue[i][j]));
+                }
+                break;
+              case ABOVE_OR_EQUAL:
+                if((TempBeckup[i] < AlarmValue[i][j]) && (Temp[i] >= AlarmValue[i][j]))
+                {
+                  ((Status_t(*)(void*))(AlarmCallback[i][j]))(NULL);
+                  TEMP_INFO(printc(" # Temperature Alarm, SensorID = %d, AlarmID = %d\n", i, j));
+                  TEMP_DEBUG(printc(" # Temperature = %d, AlarmEvent = ABOVE_OR_EQUAL, TempValue = %d\n", Temp[i], AlarmValue[i][j]));
+                }
+                break;
+              case BELLOW_OR_EQUAL:
+                if((TempBeckup[i] > AlarmValue[i][j]) && (Temp[i] <= AlarmValue[i][j]))
+                {
+                  ((Status_t(*)(void*))(AlarmCallback[i][j]))(NULL);
+                  TEMP_INFO(printc(" # Temperature Alarm, SensorID = %d, AlarmID = %d\n", i, j));
+                  TEMP_DEBUG(printc(" # Temperature = %d, AlarmEvent = BELLOW_OR_EQUAL, TempValue = %d\n", Temp[i], AlarmValue[i][j]));
+                }
+                break;
+              case DIFFERENT:
+                if((TempBeckup[i] == AlarmValue[i][j]) && (Temp[i] != AlarmValue[i][j]))
+                {
+                  ((Status_t(*)(void*))(AlarmCallback[i][j]))(NULL);
+                  TEMP_INFO(printc(" # Temperature Alarm, SensorID = %d, AlarmID = %d\n", i, j));
+                  TEMP_DEBUG(printc(" # Temperature = %d, AlarmEvent = DIFFERENT, TempValue = %d\n", Temp[i], AlarmValue[i][j]));
+                }
+                break;
+              default:
+                break;
+            }
+          }
       }
       
       if(Temp[i] == SENSOR_REMOVED)
