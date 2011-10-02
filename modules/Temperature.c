@@ -413,3 +413,13 @@ void Temp_Callback(void)
 {
   TempUpdate = 1;
 }
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+Status_t Temp_Alarm_Dummy_Handler(void *Ptr)
+{
+  TEMP_INFO(printc(" # Temperature alarm dummy handler executed!\n"));
+  
+  return SUCCESS;
+}

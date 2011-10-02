@@ -55,6 +55,7 @@ Status_t Read_Temp_Alarm_Wrap(uint8 SensorID, uint8 AlarmID, TempAlarm_t *TempAl
 Status_t Temp_Init(void);
 Status_t Temp_Reinit(void);
 Status_t Temp_Work(void);
+Status_t Temp_Alarm_Dummy_Handler(void *Ptr);
 
 
 #endif
