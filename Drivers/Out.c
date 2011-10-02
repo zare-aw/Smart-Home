@@ -30,59 +30,125 @@ Status_t Out_Sync(void)
     Out.Change = 0;
     
     if(Out.S_1 == 0)
+    {
       OUT_1_CLR();
+      OUT_INFO(printc(" # Out 1 Clear\n"));
+    }
     else
+    {
       OUT_1_SET();
+      OUT_INFO(printc(" # Out 1 Set\n"));
+    }
     
     if(Out.S_2 == 0)
+    {
       OUT_2_CLR();
+      OUT_INFO(printc(" # Out 2 Clear\n"));
+    }
     else
+    {
       OUT_2_SET();
+      OUT_INFO(printc(" # Out 2 Set\n"));
+    }
     
     if(Out.S_3 == 0)
+    {
       OUT_3_CLR();
+      OUT_INFO(printc(" # Out 3 Clear\n"));
+    }
     else
+    {
       OUT_3_SET();
+      OUT_INFO(printc(" # Out 3 Set\n"));
+    }
     
     if(Out.S_4 == 0)
+    {
       OUT_4_CLR();
+      OUT_INFO(printc(" # Out 4 Clear\n"));
+    }
     else
+    {
       OUT_4_SET();
+      OUT_INFO(printc(" # Out 4 Set\n"));
+    }
     
     if(Out.S_5 == 0)
+    {
       OUT_5_CLR();
+      OUT_INFO(printc(" # Out 5 Clear\n"));
+    }
     else
+    {
       OUT_5_SET();
+      OUT_INFO(printc(" # Out 5 Set\n"));
+    }
     
     if(Out.S_6 == 0)
+    {
       OUT_6_CLR();
+      OUT_INFO(printc(" # Out 6 Clear\n"));
+    }
     else
+    {
       OUT_6_SET();
+      OUT_INFO(printc(" # Out 6 Set\n"));
+    }
     
     if(Out.S_7 == 0)
+    {
       OUT_7_CLR();
+      OUT_INFO(printc(" # Out 7 Clear\n"));
+    }
     else
+    {
       OUT_7_SET();
+      OUT_INFO(printc(" # Out 7 Set\n"));
+    }
     
     if(Out.S_8 == 0)
+    {
       OUT_8_CLR();
+      OUT_INFO(printc(" # Out 8 Clear\n"));
+    }
     else
+    {
       OUT_8_SET();
+      OUT_INFO(printc(" # Out 8 Set\n"));
+    }
     
     if(Out.S_9 == 0)
+    {
       OUT_9_CLR();
+      OUT_INFO(printc(" # Out 9 Clear\n"));
+    }
     else
+    {
       OUT_9_SET();
+      OUT_INFO(printc(" # Out 9 Set\n"));
+    }
     
     if(Out.S_10 == 0)
+    {
       OUT_10_CLR();
+      OUT_INFO(printc(" # Out 10 Clear\n"));
+    }
     else
+    {
       OUT_10_SET();
+      OUT_INFO(printc(" # Out 10 Set\n"));
+    }
     
     if(Out.S_11 == 0)
+    {
       OUT_11_CLR();
+      OUT_INFO(printc(" # Out 11 Clear\n"));
+    }
     else
+    {
       OUT_11_SET();
+      OUT_INFO(printc(" # Out 11 Set\n"));
+    }
   } // if
   
   RETURN_SUCCESS();

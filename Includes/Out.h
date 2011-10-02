@@ -1,6 +1,14 @@
 #ifndef _Out_h
 #define _Out_h
 
+#define _OUT_INFO
+
+#ifdef _OUT_INFO
+#define OUT_INFO(a) a
+#else
+#define OUT_INFO(a)
+#endif
+
 /*******************************************************************************
 * Struktura vo koja ke se cuvaat parametrite za izlezite.
 *******************************************************************************/
