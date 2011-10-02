@@ -66,11 +66,12 @@ typedef signed long long    sint64;
 #include "menu.h"
 #include "lcd.h"
 #include "lcd_bukvi.h"
+#include "Temperature.h"
 #include "Commands.h"
+#include "ConsoleCommands.h"
 #include "ir.h"
 #include "Out.h"
 #include "DS1820.h"
 #include "SurfaceFlinger.h"
-#include "Temperature.h"
 
 #endif

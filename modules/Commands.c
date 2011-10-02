@@ -307,3 +307,146 @@ Status_t Set_Alarm_Command(uint8 NoOfCommand)
   
   RETURN_SUCCESS();
 }
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+Status_t Get_Temp_Alarm_Command(uint8 NoOfCommand, uint8 SensorID)
+{
+  Function_IN(GET_TEMP_ALARM_COMMAND);
+  TempAlarm_t TempAlarm_s;
+  
+  if(SensorID == ALL_TEMP_ALARMS)
+  {
+    for(uint8 i = 0; i < NO_OF_TEMP_SENSORS; i++)
+      for(uint8 j = 0; j < NO_OF_ALARMS; j++)
+        if(Read_Temp_Alarm(i, j, &TempAlarm_s) == SUCCESS)
+        {
+          printc(" # TempSensor %d, AlarmID %d, State = ", i, j);
+          switch(TempAlarm_s.State)
+          {
+            case ALARM_OFF:
+              printc("OFF");
+              break;
+            case ALARM_ON:
+              printc("ON");
+              break;
+            default:
+              printc("UNKNOWN");
+              break;
+          }
+          printc(", Event = ");
+          switch(TempAlarm_s.Event)
+          {
+            case ABOVE:
+              printc("ABOVE");
+              break;
+            case BELLOW:
+              printc("BELLOW");
+              break;
+            case EQUAL:
+              printc("EQUAL");
+              break;
+            case ABOVE_OR_EQUAL:
+              printc("ABOVE_OR_EQUAL");
+              break;
+            case BELLOW_OR_EQUAL:
+              printc("BELLOW_OR_EQUAL");
+              break;
+            case DIFFERENT:
+              printc("DIFFERENT");
+              break;
+            default:
+              printc("UNKNOWN");
+              break;
+          }
+          printc(", Value = %d", TempAlarm_s.Value);
+          TEMP_DEBUG(printc(", CallbackAddress = %X", (uint32)TempAlarm_s.Callback));
+          printc("\n");
+        }
+  }
+  else
+  {
+    for(uint8 j = 0; j < NO_OF_ALARMS; j++)
+        if(Read_Temp_Alarm_Wrap(SensorID, j, &TempAlarm_s) == SUCCESS)
+        {
+          printc(" # TempSensor %d, AlarmID %d, State = ", SensorID, j);
+          switch(TempAlarm_s.State)
+          {
+            case ALARM_OFF:
+              printc("OFF");
+              break;
+            case ALARM_ON:
+              printc("ON");
+              break;
+            default:
+              printc("UNKNOWN");
+              break;
+          }
+          printc(", Event = ");
+          switch(TempAlarm_s.Event)
+          {
+            case ABOVE:
+              printc("ABOVE");
+              break;
+            case BELLOW:
+              printc("BELLOW");
+              break;
+            case EQUAL:
+              printc("EQUAL");
+              break;
+            case ABOVE_OR_EQUAL:
+              printc("ABOVE_OR_EQUAL");
+              break;
+            case BELLOW_OR_EQUAL:
+              printc("BELLOW_OR_EQUAL");
+              break;
+            case DIFFERENT:
+              printc("DIFFERENT");
+              break;
+            default:
+              printc("UNKNOWN");
+              break;
+          }
+          printc(", Value = %d", TempAlarm_s.Value);
+          TEMP_DEBUG(printc(", CallbackAddress = %X", (uint32)TempAlarm_s.Callback));
+          printc("\n");
+        }
+  }
+  
+  RETURN_SUCCESS();
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+Status_t Set_Temp_Alarm_Command(uint8 NoOfCommand, TempAlarm_t *TempAlarm_p)
+{
+  Function_IN(SET_TEMP_ALARM_COMMAND);
+  
+  if(TempAlarm_p -> AlarmID != 0)
+  {
+    CONTROL(!Set_Temp_Alarm(TempAlarm_p), TEMP_SET_ALARM_ERROR);
+    printc(" # Temp Alarm set\n");
+  }
+  else
+  {
+    if((TempAlarm_p -> Event != NO_ALARM) &&
+       (TempAlarm_p -> Value != -255) &&
+       (TempAlarm_p -> Callback != NULL) &&
+       (TempAlarm_p -> SensorID < NO_OF_TEMP_SENSORS))
+    {
+      CONTROL(Register_Temp_Alarm(TempAlarm_p -> SensorID, TempAlarm_p -> Event, TempAlarm_p -> Value,
+                                  TempAlarm_p -> Callback, &(TempAlarm_p -> AlarmID)), TEMP_ALARM_REGISTER_ERROR);
+      printc(" # Temp Alarm Registered\n");
+    }
+    
+    if((TempAlarm_p -> State != 0) && (TempAlarm_p -> SensorID < NO_OF_TEMP_SENSORS) && (TempAlarm_p -> AlarmID != 0))
+    {
+      CONTROL(Set_State_Temp_Alarm(TempAlarm_p -> SensorID, TempAlarm_p -> AlarmID, TempAlarm_p -> State), TEMP_ALARM_SET_STATE_ERROR);
+      printc(" # Temp Alarm state set\n");
+    }
+  }
+  
+  RETURN_SUCCESS();
+}

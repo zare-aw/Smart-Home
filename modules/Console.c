@@ -319,6 +319,10 @@ Status_t Console_Command_Execute(uint8 NoOfCommand)
        CONTROL(!Console_Alarm(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
   else if(!strncmp( "set-alarm", QueueConsoleCommand[NoOfCommand], 9))
        CONTROL(!Console_Set_Alarm(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
+  else if(!strncmp( "get-temp-alarm", QueueConsoleCommand[NoOfCommand], 14))
+       CONTROL(!Console_Get_Temp_Alarm(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
+  else if(!strncmp( "set-temp-alarm", QueueConsoleCommand[NoOfCommand], 14))
+       CONTROL(!Console_Set_Temp_Alarm(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
   
   CONTROL(!Remove_Console_Command_From_Queue(NoOfCommand), CONSOLE_COMMAND_ERROR);
   RETURN_SUCCESS();

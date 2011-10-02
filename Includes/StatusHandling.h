@@ -133,7 +133,9 @@ extern uint8 FunctionInBeckupBuffer;
 #define TEMP_SLOTS_ERROR                    400
 #define TEMP_SENSOR_REGISTER_ERROR          401
 #define TEMP_SENSOR_REINIT_ERROR            402
-
+#define TEMP_SET_ALARM_ERROR                403
+#define TEMP_ALARM_REGISTER_ERROR           404
+#define TEMP_ALARM_SET_STATE_ERROR          405
 
 /*******************************************************************************
 * Function code definition

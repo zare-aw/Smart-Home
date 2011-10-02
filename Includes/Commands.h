@@ -25,6 +25,8 @@ Status_t Set_Switch_Setings_Command(uint8 NoOfCommand, uint8 Chanel);
 Status_t Get_Temp_Command(uint8 NoOfCommand, uint8 Chanel);
 Status_t Get_Alarm_Command(uint8 NoOfCommand);
 Status_t Set_Alarm_Command(uint8 NoOfCommand);
+Status_t Get_Temp_Alarm_Command(uint8 NoOfCommand, uint8 ID);
+Status_t Set_Temp_Alarm_Command(uint8 NoOfCommand, TempAlarm_t *TempAlarm_p);
 
 
 #endif

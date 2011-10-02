@@ -466,3 +466,145 @@ Status_t Console_Set_Alarm(uint8 NoOfCommand)
   
   RETURN_SUCCESS();
 }
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+Status_t Console_Get_Temp_Alarm(uint8 NoOfCommand)
+{
+  Function_IN(CONSOLE_TEMP_ALARM);
+  
+  if(strstr(QueueConsoleCommand[NoOfCommand], "int") != NULL)
+    Get_Temp_Alarm_Command(NoOfCommand, 1);
+  else if(strstr(QueueConsoleCommand[NoOfCommand], "ext") != NULL)
+    Get_Temp_Alarm_Command(NoOfCommand, 2);
+  else
+    Get_Temp_Alarm_Command(NoOfCommand, ALL_TEMP_ALARMS);     // Take all registered interrupts
+  
+  RETURN_SUCCESS();
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+Status_t Console_Set_Temp_Alarm(uint8 NoOfCommand)
+{
+  Function_IN(CONSOLE_SET_TEMP_ALARM);
+  TempAlarm_t TempAlarm_s = {NULL};
+  char *CommandString = NULL;
+  
+  TempAlarm_s.Value = -255;
+  
+  CommandString = strstr(QueueConsoleCommand[NoOfCommand], "sensor=");
+  if(CommandString != NULL)
+  {
+    if(!strncmp("int", CommandString + 7, 3))
+      TempAlarm_s.SensorID = 1;
+    else if(!strncmp("ext", CommandString + 7, 3))
+      TempAlarm_s.SensorID = 2;
+    else
+    {
+      printc(" # Invalid input parameters!\n");
+      printc(" # sensor parameters is: int, ext\n");
+      printc(" # Alarm not set!\n");
+      RETURN_SUCCESS_FUNC(CONSOLE_SET_TEMP_ALARM);
+    }
+  }
+  else
+  {
+    printc(" # Missing input parameter! 'sensor' parametar must be specified!\n");
+    RETURN_SUCCESS_FUNC(CONSOLE_SET_TEMP_ALARM);
+  }
+  
+  CommandString = strstr(QueueConsoleCommand[NoOfCommand], "temp=");
+  if(CommandString != NULL)
+    TempAlarm_s.Value = atoi(CommandString + 5);
+  
+  CommandString = strstr(QueueConsoleCommand[NoOfCommand], "event=");
+  if(CommandString != NULL)
+  {
+    if(!strncmp("above", CommandString + 6, 5))
+      TempAlarm_s.Event = ABOVE;
+    else if(!strncmp("bellow", CommandString + 6, 6))
+      TempAlarm_s.Event = BELLOW;
+    else if(!strncmp("equal", CommandString + 6, 6))
+      TempAlarm_s.Event = EQUAL;
+    else if(!strncmp("above_or_equal", CommandString + 6, 6))
+      TempAlarm_s.Event = ABOVE_OR_EQUAL;
+    else if(!strncmp("bellow_or_equal", CommandString + 6, 6))
+      TempAlarm_s.Event = BELLOW_OR_EQUAL;
+    else if(!strncmp("different", CommandString + 6, 6))
+      TempAlarm_s.Event = DIFFERENT;
+    else
+    {
+      printc(" # Invalid input parameters!\n");
+      printc(" # event parameters is: above, bellow, equal, above_or_equal, bellow_or_equal, different\n");
+      printc(" # Alarm not set!\n");
+      RETURN_SUCCESS_FUNC(CONSOLE_SET_TEMP_ALARM);
+    }
+  }
+  
+  CommandString = strstr(QueueConsoleCommand[NoOfCommand], "state=");
+  if(CommandString != NULL)
+  {
+    if(!strncmp("ON", CommandString + 6, 2))
+      TempAlarm_s.State = ALARM_ON;
+    else if(!strncmp("OFF", CommandString + 6, 3))
+      TempAlarm_s.State = ALARM_OFF;
+    else
+    {
+      printc(" # Invalid input parameters!\n");
+      printc(" # state parameters is: ON, OFF\n");
+      printc(" # Alarm not set!\n");
+      RETURN_SUCCESS_FUNC(CONSOLE_SET_TEMP_ALARM);
+    }
+  }
+  
+  CommandString = strstr(QueueConsoleCommand[NoOfCommand], "alarmID=");
+  if(CommandString != NULL)
+    TempAlarm_s.AlarmID = atoi(CommandString + 8);
+  
+  CommandString = strstr(QueueConsoleCommand[NoOfCommand], "response=");
+  if(CommandString != NULL)
+  {
+    if(!strncmp("out_1_ON", CommandString + 9, 8))
+      TempAlarm_s.Callback = (void *)Out_1_Set;
+    else if(!strncmp("out_1_OFF", CommandString + 9, 9))
+      TempAlarm_s.Callback = (void *)Out_1_Clr;
+    if(!strncmp("out_2_ON", CommandString + 9, 8))
+      TempAlarm_s.Callback = (void *)Out_2_Set;
+    else if(!strncmp("out_2_OFF", CommandString + 9, 9))
+      TempAlarm_s.Callback = (void *)Out_2_Clr;
+    if(!strncmp("out_3_ON", CommandString + 9, 8))
+      TempAlarm_s.Callback = (void *)Out_3_Set;
+    else if(!strncmp("out_3_OFF", CommandString + 9, 9))
+      TempAlarm_s.Callback = (void *)Out_3_Clr;
+    if(!strncmp("out_4_ON", CommandString + 9, 8))
+      TempAlarm_s.Callback = (void *)Out_4_Set;
+    else if(!strncmp("out_4_OFF", CommandString + 9, 9))
+      TempAlarm_s.Callback = (void *)Out_4_Clr;
+    if(!strncmp("out_5_ON", CommandString + 9, 8))
+      TempAlarm_s.Callback = (void *)Out_5_Set;
+    else if(!strncmp("out_5_OFF", CommandString + 9, 9))
+      TempAlarm_s.Callback = (void *)Out_5_Clr;
+    if(!strncmp("out_6_ON", CommandString + 9, 8))
+      TempAlarm_s.Callback = (void *)Out_6_Set;
+    else if(!strncmp("out_6_OFF", CommandString + 9, 9))
+      TempAlarm_s.Callback = (void *)Out_6_Clr;
+    if(!strncmp("sound_alarm", CommandString + 9, 11))
+      TempAlarm_s.Callback = (void *)Temp_Alarm_Dummy_Handler;
+    else if(!strncmp("dummy", CommandString + 9, 5))
+      TempAlarm_s.Callback = (void *)Temp_Alarm_Dummy_Handler;
+    else
+    {
+      printc(" # Invalid input parameters!\n");
+      printc(" # response parametar is invalid, see help for this command\n");
+      printc(" # Alarm not set!\n");
+      RETURN_SUCCESS_FUNC(CONSOLE_SET_TEMP_ALARM);
+    }
+  }
+  
+  Set_Temp_Alarm_Command(NoOfCommand, &TempAlarm_s);
+  
+  RETURN_SUCCESS_FUNC(CONSOLE_SET_TEMP_ALARM);
+}
