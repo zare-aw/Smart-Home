@@ -125,6 +125,45 @@ Status_t Register_Temp_Alarm(uint8 SensorID, uint8 Event, int TempValue, void *C
 /*******************************************************************************
 * 
 *******************************************************************************/
+Status_t Set_Temp_Alarm(TempAlarm_t *TempAlarm_p)
+{
+  Function_IN(SET_TEMP_ALARM);
+  CONTROL(TempAlarm_p -> SensorID < NO_OF_TEMP_SENSORS, INVALID_INPUT_PARAMETER);
+  CONTROL(TempAlarm_p -> AlarmID < NO_OF_ALARMS, INVALID_INPUT_PARAMETER);
+  
+  if(AlarmEvent[TempAlarm_p -> AlarmID] != 0)
+  {
+    TEMP_DEBUG(printc("\r # Temp Alarm set with parameters:\n"));
+    TEMP_DEBUG(printc("\r # Sensor ID = %d\n", TempAlarm_p -> SensorID));
+    TEMP_DEBUG(printc("\r # Alarm ID = %d\n", TempAlarm_p -> AlarmID));
+    
+    if(TempAlarm_p -> Event != 0)
+    {
+      AlarmEvent[TempAlarm_p -> SensorID][TempAlarm_p -> AlarmID] = TempAlarm_p -> Event;
+      TEMP_DEBUG(printc("\r # Event = %d\n", TempAlarm_p -> Event));
+    }
+    if(TempAlarm_p -> Value != -255)
+    {
+      AlarmValue[TempAlarm_p -> SensorID][TempAlarm_p -> AlarmID] = TempAlarm_p -> Value;
+      TEMP_DEBUG(printc("\r # Temperature = %d\n", TempAlarm_p -> Value));
+    }
+    if(TempAlarm_p -> Callback != NULL)
+    {
+      AlarmCallback[TempAlarm_p -> SensorID][TempAlarm_p -> AlarmID] = TempAlarm_p -> Callback;
+    }
+    if(TempAlarm_p -> State != 0)
+    {
+      AlarmState[TempAlarm_p -> SensorID][TempAlarm_p -> AlarmID] = TempAlarm_p -> State;
+      TEMP_DEBUG(printc("\r # State = %d\n", TempAlarm_p -> State));
+    }
+  }
+  
+  RETURN_SUCCESS_FUNC(SET_TEMP_ALARM);
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
 Status_t Unregister_Temp_Alarm(uint8 SensorID, uint8 AlarmID)
 {
   Function_IN(UNREGISTER_TEMP_ALARM);

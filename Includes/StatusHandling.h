@@ -277,12 +277,13 @@ extern uint8 FunctionInBeckupBuffer;
 #define REGISTER_TEMP_SENSOR            10700
 #define UNREGISTER_TEMP_SENSOR          10701
 #define REGISTER_TEMP_ALARM             10702
-#define UNREGISTER_TEMP_ALARM           10703
-#define SET_STATE_TEMP_ALARM            10704
-#define READ_TEMP_ALARM                 10705
-#define TEMP_INIT                       10706
-#define TEMP_REINIT                     10707
-#define TEMP_WORK                       10708
+#define SET_TEMP_ALARM                  10703
+#define UNREGISTER_TEMP_ALARM           10704
+#define SET_STATE_TEMP_ALARM            10705
+#define READ_TEMP_ALARM                 10706
+#define TEMP_INIT                       10707
+#define TEMP_REINIT                     10708
+#define TEMP_WORK                       10709
 
 
 // Functions
