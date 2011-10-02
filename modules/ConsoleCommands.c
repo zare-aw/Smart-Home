@@ -608,3 +608,21 @@ Status_t Console_Set_Temp_Alarm(uint8 NoOfCommand)
   
   RETURN_SUCCESS_FUNC(CONSOLE_SET_TEMP_ALARM);
 }
+
+
+
+
+
+
+// Debug commands
+/*******************************************************************************
+* 
+*******************************************************************************/
+Status_t Console_Dump_Display(uint8 NoOfCommand)
+{
+  Function_IN(CONSOLE_DISPLAY_DUMP);
+  
+  Display_Dump_Command(NoOfCommand);
+  
+  RETURN_SUCCESS_FUNC(CONSOLE_DISPLAY_DUMP);
+}

@@ -28,4 +28,6 @@ Status_t Console_Set_Alarm(uint8 NoOfCommand);
 Status_t Console_Get_Temp_Alarm(uint8 NoOfCommand);
 Status_t Console_Set_Temp_Alarm(uint8 NoOfCommand);
 
+// Debug commands
+Status_t Console_Dump_Display(uint8 NoOfCommand);
 #endif

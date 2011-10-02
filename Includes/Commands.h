@@ -28,5 +28,8 @@ Status_t Set_Alarm_Command(uint8 NoOfCommand);
 Status_t Get_Temp_Alarm_Command(uint8 NoOfCommand, uint8 ID);
 Status_t Set_Temp_Alarm_Command(uint8 NoOfCommand, TempAlarm_t *TempAlarm_p);
 
+// Debug Commands
+Status_t Display_Dump_Command(uint8 NoOfCommand);
+
 
 #endif

@@ -450,3 +450,17 @@ Status_t Set_Temp_Alarm_Command(uint8 NoOfCommand, TempAlarm_t *TempAlarm_p)
   
   RETURN_SUCCESS();
 }
+
+
+// Debug Commands
+/*******************************************************************************
+* 
+*******************************************************************************/
+Status_t Display_Dump_Command(uint8 NoOfCommand)
+{
+  Function_IN(DISPLAY_DUMP_COMMAND);
+  
+  Console_Display_Dump();
+  
+  RETURN_SUCCESS_FUNC(DISPLAY_DUMP_COMMAND);
+}

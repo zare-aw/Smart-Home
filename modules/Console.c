@@ -324,6 +324,10 @@ Status_t Console_Command_Execute(uint8 NoOfCommand)
   else if(!strncmp( "set-temp-alarm", QueueConsoleCommand[NoOfCommand], 14))
        CONTROL(!Console_Set_Temp_Alarm(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
   
+  // Debug commands
+  else if(!strncmp( "dd", QueueConsoleCommand[NoOfCommand], 2))
+       CONTROL(!Console_Dump_Display(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
+  
   CONTROL(!Remove_Console_Command_From_Queue(NoOfCommand), CONSOLE_COMMAND_ERROR);
   RETURN_SUCCESS();
 }
