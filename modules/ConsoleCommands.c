@@ -620,9 +620,33 @@ Status_t Console_Set_Temp_Alarm(uint8 NoOfCommand)
 *******************************************************************************/
 Status_t Console_Dump_Display(uint8 NoOfCommand)
 {
-  Function_IN(CONSOLE_DISPLAY_DUMP);
+  Function_IN(CONSOLE_DUMP_DISPLAY);
   
   Display_Dump_Command(NoOfCommand);
   
-  RETURN_SUCCESS_FUNC(CONSOLE_DISPLAY_DUMP);
+  RETURN_SUCCESS_FUNC(CONSOLE_DUMP_DISPLAY);
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+Status_t Console_Update_Display(uint8 NoOfCommand)
+{
+  Function_IN(CONSOLE_UPDATE_DISPLAY);
+  
+  switch(atoi(QueueConsoleCommand[NoOfCommand] + 3))
+  {
+    case 0:
+      Display_Update_Command(NoOfCommand, DISABLE);
+      break;
+    case 1:
+      Display_Update_Command(NoOfCommand, ENABLE);
+      break;
+    default:
+      Display_Update_Command(NoOfCommand, DISABLE);
+      printc(" # Console display update disabled!\n");
+      break;
+  }
+  
+  RETURN_SUCCESS_FUNC(CONSOLE_UPDATE_DISPLAY);
 }

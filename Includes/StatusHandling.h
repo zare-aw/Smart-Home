@@ -187,7 +187,8 @@ extern uint8 FunctionInBeckupBuffer;
 #define CONSOLE_SET_TEMP_ALARM        1274
 
 // Debug Commands
-#define CONSOLE_DISPLAY_DUMP          1500
+#define CONSOLE_DUMP_DISPLAY          1500
+#define CONSOLE_UPDATE_DISPLAY        1501
 
 #define GET_TIME_COMMAND                2001
 #define SET_TIME_COMMAND                2002
@@ -213,6 +214,7 @@ extern uint8 FunctionInBeckupBuffer;
 
 // Debug Commands
 #define DISPLAY_DUMP_COMMAND            2500
+#define DISPLAY_UPDATE_COMMAND          2501
 
 // IR driver
 #define IR_INIT                         10000

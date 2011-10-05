@@ -464,3 +464,15 @@ Status_t Display_Dump_Command(uint8 NoOfCommand)
   
   RETURN_SUCCESS_FUNC(DISPLAY_DUMP_COMMAND);
 }
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+Status_t Display_Update_Command(uint8 NoOfCommand, uint8 UpdateFlag)
+{
+  Function_IN(DISPLAY_UPDATE_COMMAND);
+  
+  Console_Display_Update_Set(UpdateFlag);
+  
+  RETURN_SUCCESS_FUNC(DISPLAY_UPDATE_COMMAND);
+}

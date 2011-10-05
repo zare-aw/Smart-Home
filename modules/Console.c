@@ -327,6 +327,8 @@ Status_t Console_Command_Execute(uint8 NoOfCommand)
   // Debug commands
   else if(!strncmp( "dd", QueueConsoleCommand[NoOfCommand], 2))
        CONTROL(!Console_Dump_Display(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
+  else if(!strncmp( "du", QueueConsoleCommand[NoOfCommand], 2))
+       CONTROL(!Console_Update_Display(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
   
   CONTROL(!Remove_Console_Command_From_Queue(NoOfCommand), CONSOLE_COMMAND_ERROR);
   RETURN_SUCCESS();
