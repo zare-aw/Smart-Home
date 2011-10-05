@@ -257,29 +257,24 @@ Status_t Set_Switch_Setings_Command(uint8 NoOfCommand, uint8 Chanel)
 
 /*******************************************************************************
 * @in NoOfCommand - Broj na komanda vo Queue
-* @in Chanel - Broj na kanal od koj ja sakame temperaturata
+* @in SensorID - Sensor od koj ja sakame temperaturata, 0xFF za site kanali
 *******************************************************************************/
-Status_t Get_Temp_Command(uint8 NoOfCommand, uint8 Chanel)
+Status_t Get_Temp_Command(uint8 NoOfCommand, uint8 SensorID)
 {
   Function_IN(GET_TEMP_COMMAND);
+  int Temp;
   
-  int Temp1, Temp2;
-  Status_t StatusReturn = GENERAL_ERROR;
-  
-  StatusReturn = DS1820_Start_Conversion(1, NULL);
-  CONTROL(StatusReturn == SUCCESS, StatusReturn);
-  StatusReturn = DS1820_Start_Conversion(2, NULL);
-  CONTROL(StatusReturn == SUCCESS, StatusReturn);
-  
-  Dly(750, 'm', NULL);
-  
-  StatusReturn = DS1820_Read_Temp(&Temp1, 1, NULL);
-  CONTROL(StatusReturn == SUCCESS, StatusReturn);
-  StatusReturn = DS1820_Read_Temp(&Temp2, 2, NULL);
-  CONTROL(StatusReturn == SUCCESS, StatusReturn);
-  
-  printc("\r # Temp1 = %d\n", Temp1);
-  printc("\r # Temp2 = %d\n", Temp2);
+  if(SensorID == 0xFF)
+  {
+    for(int i = 0; i < NO_OF_TEMP_SENSORS; i++)
+    {
+      Temp = ReadTemp(i);
+      if(Temp > -250)
+        printc(" # Temp%d = %d\n", i, Temp);
+    }
+  }
+  else
+    printc(" # Temp = %d\n", ReadTemp(SensorID));
   
   RETURN_SUCCESS();
 }

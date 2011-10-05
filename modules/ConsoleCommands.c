@@ -433,12 +433,18 @@ Status_t Console_Set_Switch_Settings(uint8 NoOfCommand)
 Status_t Console_Temp(uint8 NoOfCommand)
 {
   Function_IN(CONSOLE_TEMP);
+  char *CommandString = NULL;
   
-  uint8 Chanel = 0;
-      
-  //TODO: Dovrsi ja komandata.
-      
-  Get_Temp_Command(NoOfCommand, Chanel);
+  if(strstr(QueueConsoleCommand[NoOfCommand], "all") != NULL)
+    Get_Temp_Command(NoOfCommand, 0xFF);
+  else if(strstr(QueueConsoleCommand[NoOfCommand], "id="))
+  {
+    CommandString = strstr(QueueConsoleCommand[NoOfCommand], "id=");
+    if(CommandString != NULL)
+      Get_Temp_Command(NoOfCommand, atoi(CommandString + 3));
+  }
+  else
+    Get_Temp_Command(NoOfCommand, 0xFF);
   
   RETURN_SUCCESS();
 }

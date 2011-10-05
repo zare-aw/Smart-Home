@@ -22,7 +22,7 @@ Status_t Get_Out_Switch_Command(uint8 NoOfCommand);
 Status_t Set_Out_Switch_Command(uint8 NoOfCommand);
 Status_t Get_Switch_Setings_Command(uint8 NoOfCommand, uint8 Chanel);
 Status_t Set_Switch_Setings_Command(uint8 NoOfCommand, uint8 Chanel);
-Status_t Get_Temp_Command(uint8 NoOfCommand, uint8 Chanel);
+Status_t Get_Temp_Command(uint8 NoOfCommand, uint8 SensorID);
 Status_t Get_Alarm_Command(uint8 NoOfCommand);
 Status_t Set_Alarm_Command(uint8 NoOfCommand);
 Status_t Get_Temp_Alarm_Command(uint8 NoOfCommand, uint8 ID);
