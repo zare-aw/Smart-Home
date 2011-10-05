@@ -5,7 +5,7 @@ char SurfaceBuffer_2[Y_SIZE][X_SIZE] = {0};
 uint8 WorkingSurface = 1;
 uint8 BeckupSurface = 2;
 uint8 DisplaySync = 0;
-uint8 ConsoleDisplayPrint = ENABLE;
+uint8 ConsoleDisplayPrint = DISABLE;
 
 static Status_t Update_Surface_Buffer(char InputChar, uint8 line, uint8 column);
 static void Swap_Surface_Buffer(void);
@@ -118,6 +118,14 @@ static void Swap_Surface_Buffer(void)
     BeckupSurface = 1;
   else
     BeckupSurface = 2;
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+void Console_Display_Update_Set(uint8 UpdateFlag)
+{
+  ConsoleDisplayPrint = UpdateFlag;
 }
 
 /*******************************************************************************
