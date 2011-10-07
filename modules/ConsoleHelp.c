@@ -36,6 +36,8 @@ Status_t Console_Help(uint8 NoOfCommand)
     printc(" - temp\n");
     printc(" - alarm\n");
     printc(" - set-alarm\n");
+    printc(" - get-temp-alarm\n");
+    printc(" - set-temp-alarm\n");
   }
   else
   {
@@ -56,27 +58,27 @@ Status_t Console_Help(uint8 NoOfCommand)
     }
     else if(!strncmp("info", QueueConsoleCommand[NoOfCommand], 4))
     {
-      printc("\r # info - Print information about Hardware and Software\n");
+      printc("\r # 'info' - Print information about Hardware and Software\n");
     }
     else if(!strncmp("time", QueueConsoleCommand[NoOfCommand], 4))
     {
-      printc("\r # time - Print current time\n");
-      printc("\r # time -a - Print current time in 12h format\n");
+      printc("\r # 'time' - Print current time\n");
+      printc("\r # 'time -a' - Print current time in 12h format\n");
     }
     else if(!strncmp("date", QueueConsoleCommand[NoOfCommand], 4))
     {
-      printc("\r # date - Print current date\n");
-      printc("\r # date -l - Print current date in extended format\n");
+      printc("\r # 'date' - Print current date\n");
+      printc("\r # 'date -l' - Print current date in extended format\n");
     }
     else if(!strncmp("set-time", QueueConsoleCommand[NoOfCommand], 8))
     {
-      printc("\r # set-time hh:mm:ss - Set time in 24h format\n");
-      printc("\r # ex: set-time 14:02:55\n");
+      printc("\r # 'set-time hh:mm:ss' - Set time in 24h format\n");
+      printc("\r # example: 'set-time 14:02:55'\n");
     }
     else if(!strncmp("set-date", QueueConsoleCommand[NoOfCommand], 8))
     {
-      printc("\r # set-date dd.mm.yyyy - Set date\n");
-      printc("\r # ex: set-date 25.05.2011\n");
+      printc("\r # 'set-date dd.mm.yyyy' - Set date\n");
+      printc("\r # example: 'set-date 25.05.2011'\n");
     }
     else if(!strncmp("config", QueueConsoleCommand[NoOfCommand], 10))
     {
@@ -92,9 +94,9 @@ Status_t Console_Help(uint8 NoOfCommand)
     }
     else if(!strncmp("set-ir", QueueConsoleCommand[NoOfCommand], 6))
     {
-      printc("\r # set-ir n=X - Set IR command, X - number of command, command are get from IR receiver\n");
-      printc("\r # set-ir n=X a=Y c=Z - Set IR command, X - number of command, Y - Address of command, Z - Command of command\n");
-      printc("\r # Address and Command (X and Y) are from RC5 protocol\n");
+      printc("\r # 'set-ir n=X' - Set IR command, X - number of command, command are get from IR receiver\n");
+      printc("\r # 'set-ir n=X a=Y c=Z' - Set IR command, X - number of command, Y - Address of command, Z - Command of command\n");
+      printc("\r # Address and Command (Y and Z) are from RC5 protocol\n");
     }
     else if(!strncmp("becklight", QueueConsoleCommand[NoOfCommand], 13))
     {
@@ -130,7 +132,11 @@ Status_t Console_Help(uint8 NoOfCommand)
     }
     else if(!strncmp("temp", QueueConsoleCommand[NoOfCommand], 4))
     {
-      printc("\r # Not implemented\n");
+      printc("\r # 'temp X' - X = all, id=.\n");
+      printc("\r # all - get temperature from all sensors.\n");
+      printc("\r # id= - set sensor ID.\n");
+      printc("\r # if X parameter is missing, temp is printing from all sensors\n");
+      printc("\r # example: 'temp id=2'\n");
     }
     else if(!strncmp("alarm", QueueConsoleCommand[NoOfCommand], 5))
     {
@@ -139,6 +145,28 @@ Status_t Console_Help(uint8 NoOfCommand)
     else if(!strncmp("set-alarm", QueueConsoleCommand[NoOfCommand], 9))
     {
       printc("\r # Not implemented\n");
+    }
+    else if(!strncmp("get-temp-alarm", QueueConsoleCommand[NoOfCommand], 5))
+    {
+      printc("\r # 'get-temp-alarm X' - X=int or X=ext\n");
+      printc("\r # int - temp alarm on internal temperature sensor\n");
+      printc("\r # ext - temp alarm on external temperature sensor\n");
+      printc("\r # 'get-temp-alarm' - (without parameter) get temp alarms on all sensors\n");
+      printc("\r # example: 'get-temp-alarm ext'\n");
+    }
+    else if(!strncmp("set-temp-alarm", QueueConsoleCommand[NoOfCommand], 9))
+    {
+      printc("\r # 'set-temp-alarm sensor=A temp=B event=C state=D alarmID=E response=F' - Set temperature alarm\n");
+      printc("\r # sensor   A = int, ext. int - internal sensor, ext - external sensor\n");
+      printc("\r # temp     B = temperature in celsius\n");
+      printc("\r # event    C = above, bellow, equal, above_or_equal, bellow_or_equal, different\n");
+      printc("\r # state    D = ON, OFF\n");
+      printc("\r # alarmID  E = number, alarm ID\n");
+      printc("\r # response F = out_1_ON, out_1_OFF, ... , out_6_ON, out_6_OFF, sound_alarm, dummy\n");
+      printc("\r # If you set 'alarmID' all other parameters is updated on that alarm. Other parameters is no necessary to set\n");
+      printc("\r # If you not set 'alarmID' you must set: sensor, temp, event, response. You can set and 'state' if you like\n");
+      printc("\r # example 1: 'set-temp-alarm alarmID=2 temp=26 state=ON'\n");
+      printc("\r # example 2: 'set-temp-alarm sensor=int temp=26 state=ON event=equal response=out_1_OFF'\n");
     }
     
   }
