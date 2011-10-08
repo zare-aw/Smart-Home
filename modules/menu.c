@@ -8,7 +8,7 @@ uint8 Sec_Callback_ID = 0;
 uint8 TempExtID = 0xFF;
 uint8 TempIntID = 0xFF;
 
-char MainViewBuffer[12][21] = {0};
+char MainViewBuffer[MAIN_VIEW_BUFFER_LINE][MAIN_VIEW_BUFFER_COL] = {0};
 
 static Status_t Display_Menu_Update(const uint8 Level, const uint16 *Location);
 
@@ -18,6 +18,10 @@ static Status_t Display_Menu_Update(const uint8 Level, const uint16 *Location);
 Status_t Menu_Init(void)
 {
   Function_IN(MENU_INIT);
+  
+  for(int i = 0; i < MAIN_VIEW_BUFFER_LINE; i++)
+    for(int j = 0; j < MAIN_VIEW_BUFFER_COL; j++)
+      MainViewBuffer[i][j] = '\0';
   
   RTC_Enable_Inc_Int(IncIntType_SEC);
   Sec_Callback_ID = RTC_Register_Inc_Int((void *)Menu_Sec_Int_Callback, IncIntType_SEC);
@@ -213,9 +217,15 @@ static Status_t Display_Temp_Update(const int TempInt, const int TempExt)
   Function_IN(DISPLAY_TEMP_UPDATE);
   
   if(TempInt != NO_SENSOR)
-    sprintf(MainViewBuffer[2] + 5, "%d'C    ", TempInt);
+  {
+    sprintf(MainViewBuffer[2] + 5, "%d'C      ", TempInt);
+    MainViewBuffer[2][14] = 0;
+  }
   if(TempExt != NO_SENSOR)
-    sprintf(MainViewBuffer[2] + 15, "%d'C", TempExt);
+  {
+    sprintf(MainViewBuffer[2] + 10, "Text=%d'C", TempExt);
+    MainViewBuffer[2][20] = 0;
+  }
   
   RETURN_SUCCESS_FUNC(DISPLAY_TEMP_UPDATE);
 }
@@ -231,11 +241,13 @@ Status_t Register_Menu_Temp(const uint8 Source, const uint8 ID)
   {
     case INTERNAL_SENSOR:
       TempIntID = ID;
+      MENU_INFO(printc("\r # Menu internal temperature sensor registered with ID = %u\n", ID)); 
       sprintf(MainViewBuffer[2], "Tint=     ");
       break;
     case EXTERNAL_SENSOR:
       TempExtID = ID;
       sprintf(MainViewBuffer[2] + 10, "Text=");
+      MENU_INFO(printc("\r # Menu external temperature sensor registered with ID = %u\n", ID));
       break;
     default:
       CONTROL(0, INVALID_INPUT_PARAMETER);
@@ -257,10 +269,12 @@ Status_t Unregister_Menu_Temp(const uint8 Source)
     case INTERNAL_SENSOR:
       TempIntID = 0xFF;
       sprintf(MainViewBuffer[2], "          ");
+      MENU_INFO(printc("\r # Menu internal temperature sensor unregistered\n"));
       break;
     case EXTERNAL_SENSOR:
       TempExtID = 0xFF;
       sprintf(MainViewBuffer[2] + 10, "          ");
+      MENU_INFO(printc("\r # Menu external temperature sensor unregistered\n"));
       break;
     default:
       CONTROL(0, INVALID_INPUT_PARAMETER);
