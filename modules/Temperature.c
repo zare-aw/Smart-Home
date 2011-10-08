@@ -237,6 +237,9 @@ Status_t Temp_Init(void)
   Function_IN(TEMP_INIT);
   Status_t StatusReturn = GENERAL_ERROR;
   
+  for(int i = 0; i < NO_OF_TEMP_SENSORS; i++)
+    Temp[i] = -250;
+  
   StatusReturn = DS1820_Init(1, NULL);
   if(StatusReturn == SUCCESS)
   {
