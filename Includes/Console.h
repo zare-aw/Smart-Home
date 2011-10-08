@@ -3,7 +3,7 @@
 
 #include "StatusHandling.h"
 
-#define MAX_CONSOLE_COMMAND_LENGTH         64
+#define MAX_CONSOLE_COMMAND_LENGTH         128
 #define CONSOLE_QUEUE_SIZE                 4096
 #define MAX_CONSOLE_COMMAND_IN_QUEUE       4
 #define VS_BUFFER_SIZE                     256
