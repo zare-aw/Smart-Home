@@ -6,6 +6,14 @@
 #define CONSOLE_INPUT   20
 #define IR_INPUT        21
 
+//#define _COMMAND_DEBUG
+
+#ifdef _COMMAND_DEBUG
+#define COMMAND_DEBUG(a) a
+#else
+#define COMMAND_DEBUG(a)
+#endif
+
 Status_t Get_Time_Command(uint8 NoOfCommand);
 Status_t Set_Time_Command(uint8 NoOfCommand, uint8 h, uint8 m, uint8 s);
 Status_t Get_Date_Command(uint8 NoOfCommand);
