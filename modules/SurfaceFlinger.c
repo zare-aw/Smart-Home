@@ -19,6 +19,7 @@ static void Swap_Surface_Buffer(void);
 *******************************************************************************/
 Status_t printd(uint8 line, const char *format, ...)
 {
+  Function_IN(PRINTD);
   uint32 i = 0;
   uint32 column = 1;
   char VsBuffer[(Y_SIZE * X_SIZE) + 4] = {0};
@@ -45,7 +46,7 @@ Status_t printd(uint8 line, const char *format, ...)
     i++;
   }
   va_end(args);
-  return SUCCESS;
+  RETURN_SUCCESS_FUNC(PRINTD);
 }
 
 /*******************************************************************************
@@ -89,7 +90,9 @@ Status_t syncd(void)
 *******************************************************************************/
 static Status_t Update_Surface_Buffer(char InputChar, uint8 Line, uint8 Column)
 {
-  CONTROL((Line < Y_SIZE) && (Column < X_SIZE), INVALID_INPUT_PARAMETER);
+  Function_IN(UPDATE_SURFACE_BUFFER);
+  
+  CONTROL((Line <= Y_SIZE) && (Column <= X_SIZE), INVALID_INPUT_PARAMETER);
   switch(BeckupSurface)
   {
     case 1:
@@ -101,7 +104,8 @@ static Status_t Update_Surface_Buffer(char InputChar, uint8 Line, uint8 Column)
     default:
       return GENERAL_ERROR;
   }
-  return SUCCESS;
+  
+  RETURN_SUCCESS_FUNC(UPDATE_SURFACE_BUFFER);
 }
 
 /*******************************************************************************

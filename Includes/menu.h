@@ -22,6 +22,9 @@
 #define EXTERNAL_SENSOR       2
 #define NO_SENSOR             -255
 
+#define MAIN_VIEW_BUFFER_LINE 12
+#define MAIN_VIEW_BUFFER_COL  25
+
 // Events
 #define POWER_KEY_EVENT       1
 #define UP_KEY_EVENT          2

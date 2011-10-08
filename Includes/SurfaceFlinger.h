@@ -7,6 +7,14 @@
 #define PULL    0
 #define FORCE   1
 
+#define _SF_DEBUG
+
+#ifdef _SF_DEBUG
+#define SF_DEBUG(a) a
+#else
+#define SF_DEBUG(a)
+#endif
+
 // Function definitions
 Status_t printd(uint8 line, const char *format, ...);
 void clrd(void);
