@@ -533,13 +533,13 @@ Status_t Console_Set_Temp_Alarm(uint8 NoOfCommand)
       TempAlarm_s.Event = ABOVE;
     else if(!strncmp("bellow", CommandString + 6, 6))
       TempAlarm_s.Event = BELLOW;
-    else if(!strncmp("equal", CommandString + 6, 6))
+    else if(!strncmp("equal", CommandString + 6, 5))
       TempAlarm_s.Event = EQUAL;
-    else if(!strncmp("above_or_equal", CommandString + 6, 6))
+    else if(!strncmp("above_or_equal", CommandString + 6, 14))
       TempAlarm_s.Event = ABOVE_OR_EQUAL;
-    else if(!strncmp("bellow_or_equal", CommandString + 6, 6))
+    else if(!strncmp("bellow_or_equal", CommandString + 6, 15))
       TempAlarm_s.Event = BELLOW_OR_EQUAL;
-    else if(!strncmp("different", CommandString + 6, 6))
+    else if(!strncmp("different", CommandString + 6, 9))
       TempAlarm_s.Event = DIFFERENT;
     else
     {
