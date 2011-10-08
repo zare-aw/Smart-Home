@@ -8,7 +8,7 @@ void Function_IN(Function_t Function)
 {
   if(FunctionInBeckupBuffer >= MAX_FUNCTION_IN_BECKUP_BUFFER)
   {
-    printc(">>> WARNING: Invalid FunctionInBeckupBuffer Value, %d\n", FunctionInBeckupBuffer);
+    STATUS_DEBUG(printc(">>> WARNING: Invalid FunctionInBeckupBuffer Value, %d\n", FunctionInBeckupBuffer));
     FunctionInBeckupBuffer = 0;
     // TODO: Sometime FunctionInBeckupBuffer = 10. See what causing that.
   }

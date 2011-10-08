@@ -6,6 +6,14 @@ typedef unsigned long Function_t;
 
 #define MAX_FUNCTION_IN_BECKUP_BUFFER  10
 
+//#define _STATUS_DEBUG
+
+#ifdef _STATUS_DEBUG
+#define STATUS_DEBUG(a) a
+#else
+#define STATUS_DEBUG(a)
+#endif
+
 extern Function_t FunctionBuffer[MAX_FUNCTION_IN_BECKUP_BUFFER];
 extern uint8 FunctionInBeckupBuffer;
 
