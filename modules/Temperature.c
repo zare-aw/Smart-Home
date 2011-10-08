@@ -92,6 +92,14 @@ Status_t Unregister_Temp_Sensor(uint8 SensorID)
 /*******************************************************************************
 * 
 *******************************************************************************/
+int Check_Sensor_Availability(uint8 SensorID)
+{
+  return TempSensorCH[SensorID];
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
 Status_t Register_Temp_Alarm(uint8 SensorID, uint8 Event, int TempValue, void *Callback_p, uint8 *AlarmID)
 {
   Function_IN(REGISTER_TEMP_ALARM);
@@ -103,7 +111,7 @@ Status_t Register_Temp_Alarm(uint8 SensorID, uint8 Event, int TempValue, void *C
   *AlarmID = NO_OF_ALARMS;
   
   for(int i = 0; i < NO_OF_ALARMS; i++)
-    if(AlarmEvent[i] == 0)
+    if(AlarmEvent[SensorID][i] == NO_ALARM)
     {
       AlarmEvent[SensorID][i] = Event;
       AlarmValue[SensorID][i] = TempValue;
@@ -111,7 +119,7 @@ Status_t Register_Temp_Alarm(uint8 SensorID, uint8 Event, int TempValue, void *C
       *AlarmID = i;
       break;
     }
-  CONTROL(*AlarmID != NO_OF_ALARMS, TEMP_SLOTS_ERROR);
+  CONTROL(*AlarmID < NO_OF_ALARMS, TEMP_SLOTS_ERROR);
   
   TEMP_DEBUG(printc("\r # Temp Alarm registered with parameters:\n"));
   TEMP_DEBUG(printc("\r # Sensor ID = %d\n", SensorID));
@@ -131,7 +139,7 @@ Status_t Set_Temp_Alarm(TempAlarm_t *TempAlarm_p)
   CONTROL(TempAlarm_p -> SensorID < NO_OF_TEMP_SENSORS, INVALID_INPUT_PARAMETER);
   CONTROL(TempAlarm_p -> AlarmID < NO_OF_ALARMS, INVALID_INPUT_PARAMETER);
   
-  if(AlarmEvent[TempAlarm_p -> AlarmID] != 0)
+  if(AlarmEvent[TempAlarm_p -> SensorID][TempAlarm_p -> AlarmID] != NO_ALARM)
   {
     TEMP_DEBUG(printc("\r # Temp Alarm set with parameters:\n"));
     TEMP_DEBUG(printc("\r # Sensor ID = %d\n", TempAlarm_p -> SensorID));
@@ -239,6 +247,10 @@ Status_t Temp_Init(void)
   
   for(int i = 0; i < NO_OF_TEMP_SENSORS; i++)
     Temp[i] = -250;
+  
+  for(int i = 0; i < NO_OF_TEMP_SENSORS; i++)
+    for(int j = 0; j < NO_OF_ALARMS; j++)
+      AlarmEvent[i][j] = NO_ALARM;
   
   StatusReturn = DS1820_Init(1, NULL);
   if(StatusReturn == SUCCESS)
