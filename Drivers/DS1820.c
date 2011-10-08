@@ -63,7 +63,7 @@ static Status_t DS_Write_Bit(uint8 Data, int Ch)
   case 0:
     DS_WRITE_LOW(Ch);
     DS_DIR_OUT(Ch);
-    EXIT(Dly(50, 'u', NULL) == SUCCESS, DLY_TIMER_UNAVAILABLE_ERROR);
+    EXIT(Dly(40, 'u', NULL) == SUCCESS, DLY_TIMER_UNAVAILABLE_ERROR);
     DS_DIR_IN(Ch);
     EXIT(Dly(10, 'u', NULL) == SUCCESS, DLY_TIMER_UNAVAILABLE_ERROR);
     break;
@@ -72,7 +72,7 @@ static Status_t DS_Write_Bit(uint8 Data, int Ch)
     DS_DIR_OUT(Ch);
     EXIT(Dly(2, 'u', NULL) == SUCCESS, DLY_TIMER_UNAVAILABLE_ERROR);
     DS_DIR_IN(Ch);
-    EXIT(Dly(58, 'u', NULL) == SUCCESS, DLY_TIMER_UNAVAILABLE_ERROR);
+    EXIT(Dly(48, 'u', NULL) == SUCCESS, DLY_TIMER_UNAVAILABLE_ERROR);
     break;
   default:
     EXIT(0, INVALID_INPUT_PARAMETER);
@@ -89,13 +89,13 @@ static int DS_Read_Bit(int Ch)
   
   DS_WRITE_LOW(Ch);
   DS_DIR_OUT(Ch);
-  if(Dly(4, 'u', NULL) != SUCCESS)
+  if(Dly(2, 'u', NULL) != SUCCESS)
     goto ErrorExit;
   DS_DIR_IN(Ch);
-  if(Dly(4, 'u', NULL) != SUCCESS)
+  if(Dly(3, 'u', NULL) != SUCCESS)
     goto ErrorExit;
   DS_READ(Ch, Result);
-  if(Dly(65, 'u', NULL) != SUCCESS)
+  if(Dly(70, 'u', NULL) != SUCCESS)
     goto ErrorExit;
   
   return Result;
