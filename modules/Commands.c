@@ -270,11 +270,11 @@ Status_t Get_Temp_Command(uint8 NoOfCommand, uint8 SensorID)
     {
       Temp = ReadTemp(i);
       if(Temp > -250)
-        printc(" # Temp%d = %d\n", i, Temp);
+        printc("\r # Temp%d = %d\n", i, Temp);
     }
   }
   else
-    printc(" # Temp = %d\n", ReadTemp(SensorID));
+    printc("\r # Temp = %d\n", ReadTemp(SensorID));
   
   RETURN_SUCCESS();
 }
