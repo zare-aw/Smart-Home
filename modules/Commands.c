@@ -419,7 +419,15 @@ Status_t Set_Temp_Alarm_Command(uint8 NoOfCommand, TempAlarm_t *TempAlarm_p)
 {
   Function_IN(SET_TEMP_ALARM_COMMAND);
   
-  if(TempAlarm_p -> AlarmID != 0)
+  COMMAND_DEBUG(printc("\r # Set_Temp_Alarm_Command() input parameters\n"));
+  COMMAND_DEBUG(printc("\r # SensorID = %u\n", TempAlarm_p -> SensorID));
+  COMMAND_DEBUG(printc("\r # AlarmID = %u\n", TempAlarm_p -> AlarmID));
+  COMMAND_DEBUG(printc("\r # Event = %u\n", TempAlarm_p -> Event));
+  COMMAND_DEBUG(printc("\r # State = %u\n", TempAlarm_p -> State));
+  COMMAND_DEBUG(printc("\r # Value = %d\n", TempAlarm_p -> Value));
+  COMMAND_DEBUG(printc("\r # Callback = %u\n", TempAlarm_p -> Callback));
+  
+  if(TempAlarm_p -> AlarmID != NO_ALARM_ID)
   {
     CONTROL(!Set_Temp_Alarm(TempAlarm_p), TEMP_SET_ALARM_ERROR);
     printc(" # Temp Alarm set\n");
@@ -431,15 +439,23 @@ Status_t Set_Temp_Alarm_Command(uint8 NoOfCommand, TempAlarm_t *TempAlarm_p)
        (TempAlarm_p -> Callback != NULL) &&
        (TempAlarm_p -> SensorID < NO_OF_TEMP_SENSORS))
     {
-      CONTROL(Register_Temp_Alarm(TempAlarm_p -> SensorID, TempAlarm_p -> Event, TempAlarm_p -> Value,
+      CONTROL(!Register_Temp_Alarm(TempAlarm_p -> SensorID, TempAlarm_p -> Event, TempAlarm_p -> Value,
                                   TempAlarm_p -> Callback, &(TempAlarm_p -> AlarmID)), TEMP_ALARM_REGISTER_ERROR);
-      printc(" # Temp Alarm Registered\n");
+      printc("\r # Temp Alarm Registered\n");
+    }
+    else
+    {
+      printc("\r # Temp Alarm Not Register\n");
     }
     
-    if((TempAlarm_p -> State != 0) && (TempAlarm_p -> SensorID < NO_OF_TEMP_SENSORS) && (TempAlarm_p -> AlarmID != 0))
+    if((TempAlarm_p -> State != 0) && (TempAlarm_p -> SensorID < NO_OF_TEMP_SENSORS) && (TempAlarm_p -> AlarmID != NO_ALARM_ID))
     {
-      CONTROL(Set_State_Temp_Alarm(TempAlarm_p -> SensorID, TempAlarm_p -> AlarmID, TempAlarm_p -> State), TEMP_ALARM_SET_STATE_ERROR);
-      printc(" # Temp Alarm state set\n");
+      CONTROL(!Set_State_Temp_Alarm(TempAlarm_p -> SensorID, TempAlarm_p -> AlarmID, TempAlarm_p -> State), TEMP_ALARM_SET_STATE_ERROR);
+      printc("\r # Temp Alarm state set\n");
+    }
+    else
+    {
+      printc("\r # Temp Alarm state not set\n");
     }
   }
   

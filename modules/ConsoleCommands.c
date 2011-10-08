@@ -500,18 +500,29 @@ Status_t Console_Set_Temp_Alarm(uint8 NoOfCommand)
   char *CommandString = NULL;
   
   TempAlarm_s.Value = -255;
+  TempAlarm_s.AlarmID = NO_ALARM_ID;
   
   CommandString = strstr(QueueConsoleCommand[NoOfCommand], "sensor=");
   if(CommandString != NULL)
   {
     if(!strncmp("int", CommandString + 7, 3))
-      TempAlarm_s.SensorID = 1;
+    {
+      if(Check_Sensor_Availability(0))
+        TempAlarm_s.SensorID = 0;
+      else
+        printc("\r # Internal Sensor not available\n");
+    }
     else if(!strncmp("ext", CommandString + 7, 3))
-      TempAlarm_s.SensorID = 2;
+    {
+      if(Check_Sensor_Availability(1))
+        TempAlarm_s.SensorID = 1;
+      else
+        printc("\r # External Sensor not available\n");
+    }
     else
     {
       printc(" # Invalid input parameters!\n");
-      printc(" # sensor parameters is: int, ext\n");
+      printc(" # Sensor parameters is: int, ext\n");
       printc(" # Alarm not set!\n");
       RETURN_SUCCESS_FUNC(CONSOLE_SET_TEMP_ALARM);
     }
