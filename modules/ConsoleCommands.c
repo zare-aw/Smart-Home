@@ -149,10 +149,9 @@ Status_t Console_Set_Ir(uint8 NoOfCommand)
 {
   Function_IN(CONSOLE_SET_IR);
   uint16 NoOfIRCommand;
-  uint8 Address = 0;
-  uint8 Command = 0;
   uint8 CommandUpdate = 1;
   char *CommandString = NULL;
+  ir_t  ir_s;
       
   CommandString = strstr(QueueConsoleCommand[NoOfCommand], "n=");
   if(CommandString != NULL)
@@ -229,14 +228,14 @@ Status_t Console_Set_Ir(uint8 NoOfCommand)
   
   CommandString = strstr(QueueConsoleCommand[NoOfCommand], "a=");
   if(CommandString != NULL)
-    Address = atoi(CommandString + 2);
+    ir_s.Address = atoi(CommandString + 2);
       
   CommandString = strstr(QueueConsoleCommand[NoOfCommand], "c=");
   if(CommandString != NULL)
-    Command = atoi(CommandString + 2);
+    ir_s.Command = atoi(CommandString + 2);
   
   if(CommandUpdate)
-    Set_IR_Commands_Command(NoOfCommand, NoOfIRCommand, Address, Command);
+    Set_IR_Commands_Command(NoOfCommand, NoOfIRCommand, &ir_s);
   
   RETURN_SUCCESS();
 }

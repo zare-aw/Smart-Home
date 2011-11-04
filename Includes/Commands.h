@@ -21,7 +21,7 @@ Status_t Set_Date_Command(uint8 NoOfCommand, uint8 d, uint8 m, uint16 y);
 Status_t Get_Configuration_Command(uint8 NoOfCommand);
 Status_t Set_Configurations_Command(uint8 NoOfCommand);
 Status_t Get_IR_Commands_Command(uint8 NoOfCommand);
-Status_t Set_IR_Commands_Command(uint8 NoOfCommand, uint16 NoOfIRCommand, uint8 Address, uint8 Command);
+Status_t Set_IR_Commands_Command(uint8 NoOfCommand, uint16 NoOfIRCommand, ir_t *ir_p);
 Status_t Get_Back_Light_Level_Command(uint8 NoOfCommand);
 Status_t Set_Back_Light_Level_Command(uint8 NoOfCommand, uint8 Level);
 Status_t Get_Lignt_Switch_Level_Command(uint8 NoOfCommand);

@@ -138,20 +138,20 @@ Status_t Get_IR_Commands_Command(uint8 NoOfCommand)
 * @in Command - Broj na IR komandata
                 Dokolku i Address i Command se NULL, togas input e IR
 *******************************************************************************/
-Status_t Set_IR_Commands_Command(uint8 NoOfCommand, uint16 NoOfIRCommand, uint8 Address, uint8 Command)
+Status_t Set_IR_Commands_Command(uint8 NoOfCommand, uint16 NoOfIRCommand, ir_t *ir_p)
 {
   Function_IN(SET_IR_COMMANDS_COMMAND);
 
-  if((Address == NULL) && (Command == NULL))
+  if((ir_p -> Address == NULL) && (ir_p -> Command == NULL))
   {
     CONTROL(!IR_Set_Command(NoOfIRCommand), IR_COMMAND_SET_ERROR);
     printc("\r # Waiting for Command from IR\n");
   }
   else
   {
-    CONTROL(!IR_Command_Init(NoOfIRCommand, Address, Command, NULL, NULL, NULL), IR_COMMAND_SET_ERROR);
+    CONTROL(!IR_Command_Init(NoOfIRCommand, ir_p -> Address, ir_p -> Command, NULL, NULL, NULL), IR_COMMAND_SET_ERROR);
     printc("\r # IR Command Set with parameters:\n");
-    printc(" # NoOfCommand = %u\tAddress = %u\tCommand = %u\n", NoOfIRCommand, Address, Command);
+    printc(" # NoOfCommand = %u\tAddress = %u\tCommand = %u\n", NoOfIRCommand, ir_p -> Address, ir_p -> Command);
   }
   
   RETURN_SUCCESS();
