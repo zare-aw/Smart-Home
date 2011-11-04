@@ -59,13 +59,13 @@ static Status_t IR_Ext_Interrupt_Init(void)
 * NOTE: Ako Address = 0, Command = 0, Callback = 0, CallMode = 0, Target = 0
 *       togas taa komanda ke se resetira
 *******************************************************************************/
-Status_t IR_Command_Init(uint16 NoOfCommand, uint8 Address, uint8 Command, uint8 CallMode, uint8 Target, void * Callback)
+Status_t IR_Command_Init(uint16 NoOfCommand, ir_t *ir_p)
 {
   Function_IN(IR_COMMAND_INIT);
   
   CONTROL((NoOfCommand < MAX_IR_COMMANDS) && (NoOfCommand > 0), IR_COMMAND_ERROR);
   
-  if((Address == NULL) && (Command == NULL) && (Callback == NULL) && (CallMode == NULL) && (Target == NULL))
+  if((ir_p -> Address == NULL) && (ir_p -> Command == NULL) && (ir_p -> Callback_p == NULL) && (ir_p -> CallMode == NULL) && (ir_p -> Target == NULL))
   {
     IR_Commands[NoOfCommand].Address = NULL;
     IR_Commands[NoOfCommand].Command = NULL;
@@ -75,16 +75,16 @@ Status_t IR_Command_Init(uint16 NoOfCommand, uint8 Address, uint8 Command, uint8
   }
   else
   {
-    if(Address != NULL)
-      IR_Commands[NoOfCommand].Address = Address;
-    if(Command != NULL)
-      IR_Commands[NoOfCommand].Command = Command;
-    if(CallMode != NULL)
-      IR_Commands[NoOfCommand].CallMode = CallMode;
-    if(Target != NULL)
-      IR_Commands[NoOfCommand].Target = Target;
-    if(Callback != NULL)
-      IR_Commands[NoOfCommand].Callback_p = (Status_t(*)(void*))Callback;
+    if(ir_p -> Address != NULL)
+      IR_Commands[NoOfCommand].Address = ir_p -> Address;
+    if(ir_p -> Command != NULL)
+      IR_Commands[NoOfCommand].Command = ir_p -> Command;
+    if(ir_p -> CallMode != NULL)
+      IR_Commands[NoOfCommand].CallMode = ir_p -> CallMode;
+    if(ir_p -> Target != NULL)
+      IR_Commands[NoOfCommand].Target = ir_p -> Target;
+    if(ir_p -> Callback_p != NULL)
+      IR_Commands[NoOfCommand].Callback_p = ir_p -> Callback_p;
   }
   
   RETURN_SUCCESS();

@@ -65,7 +65,7 @@ typedef struct ir_s
 
 __irq void Ext_Int_2_ISR(void);
 Status_t IR_Init(void);
-Status_t IR_Command_Init(uint16 NoOfCommand, uint8 Address, uint8 Command, uint8 CallMode, uint8 Target, void * Callback);
+Status_t IR_Command_Init(uint16 NoOfCommand, ir_t *ir_p);
 Status_t IR_Set_Command(uint16 NoOfCommand);
 Status_t IR_Get_Command(uint16 NoOfCommand, ir_t * IR_Command);
 __arm Status_t IR_Timer_ISR(void);

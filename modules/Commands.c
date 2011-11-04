@@ -144,14 +144,21 @@ Status_t Set_IR_Commands_Command(uint8 NoOfCommand, uint16 NoOfIRCommand, ir_t *
 
   if((ir_p -> Address == NULL) && (ir_p -> Command == NULL))
   {
+    CONTROL(!IR_Command_Init(NoOfIRCommand, ir_p), IR_COMMAND_SET_ERROR);
     CONTROL(!IR_Set_Command(NoOfIRCommand), IR_COMMAND_SET_ERROR);
     printc("\r # Waiting for Command from IR\n");
   }
   else
   {
-    CONTROL(!IR_Command_Init(NoOfIRCommand, ir_p -> Address, ir_p -> Command, NULL, NULL, NULL), IR_COMMAND_SET_ERROR);
+    CONTROL(!IR_Command_Init(NoOfIRCommand, ir_p), IR_COMMAND_SET_ERROR);
     printc("\r # IR Command Set with parameters:\n");
-    printc(" # NoOfCommand = %u\tAddress = %u\tCommand = %u\n", NoOfIRCommand, ir_p -> Address, ir_p -> Command);
+    printc(" # NoOfCommand = %u\n", NoOfIRCommand);
+    printc(" # Address = %u\n", ir_p -> Address);
+    printc(" # Command = %u\n", ir_p -> Command);
+    printc(" # CallMode = %u\n", ir_p -> CallMode);
+    printc(" # Target = %u\n", ir_p -> Target);
+    printc(" # Callback = %u\n", ir_p -> Callback_p);
+    
   }
   
   RETURN_SUCCESS();

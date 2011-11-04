@@ -8,30 +8,175 @@ Status_t Menu_Callbacks_Init(uint8 DisplayType, uint16 Xres, uint16 Yres)
 {
   Function_IN(MENU_CALLBACKS_INIT);
   
-  CONTROL(!IR_Command_Init(POWER_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Power_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(UP_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Up_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(DOWN_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Down_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(LEFT_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Left_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(RIGHT_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Right_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(ENTER_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Enter_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(CANCEL_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Cancel_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(MENU_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Menu_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(EXIT_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Exit_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(NUM1_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Num1_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(NUM2_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Num2_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(NUM3_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Num3_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(NUM4_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Num4_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(NUM5_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Num5_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(NUM6_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Num6_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(NUM7_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Num7_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(NUM8_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Num8_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(NUM9_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Num9_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(NUM0_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Num0_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(VOL_UP_KEY, NULL, NULL, REPETITIVE_CALL, 0, (void*)Vol_Up_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(VOL_DOWN_KEY, NULL, NULL, REPETITIVE_CALL, 0, (void*)Vol_Down_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(CH_UP_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Ch_Up_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(CH_DOWN_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Ch_Down_Key_Callback), IR_COMMAND_INIT_ERROR);
-  CONTROL(!IR_Command_Init(MUTE_KEY, NULL, NULL, SINGLE_CALL, 0, (void*)Mute_Key_Callback), IR_COMMAND_INIT_ERROR);
+  ir_t ir_s;
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Power_Key_Callback;
+  CONTROL(!IR_Command_Init(POWER_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Up_Key_Callback;
+  CONTROL(!IR_Command_Init(UP_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Down_Key_Callback;
+  CONTROL(!IR_Command_Init(DOWN_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Left_Key_Callback;
+  CONTROL(!IR_Command_Init(LEFT_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Right_Key_Callback;
+  CONTROL(!IR_Command_Init(RIGHT_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Enter_Key_Callback;
+  CONTROL(!IR_Command_Init(ENTER_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Cancel_Key_Callback;
+  CONTROL(!IR_Command_Init(CANCEL_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Menu_Key_Callback;
+  CONTROL(!IR_Command_Init(MENU_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Exit_Key_Callback;
+  CONTROL(!IR_Command_Init(EXIT_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Num1_Key_Callback;
+  CONTROL(!IR_Command_Init(NUM1_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Num2_Key_Callback;
+  CONTROL(!IR_Command_Init(NUM2_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Num3_Key_Callback;
+  CONTROL(!IR_Command_Init(NUM3_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Num4_Key_Callback;
+  CONTROL(!IR_Command_Init(NUM4_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Num5_Key_Callback;
+  CONTROL(!IR_Command_Init(NUM5_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Num6_Key_Callback;
+  CONTROL(!IR_Command_Init(NUM6_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Num7_Key_Callback;
+  CONTROL(!IR_Command_Init(NUM7_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Num8_Key_Callback;
+  CONTROL(!IR_Command_Init(NUM8_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Num9_Key_Callback;
+  CONTROL(!IR_Command_Init(NUM9_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Num0_Key_Callback;
+  CONTROL(!IR_Command_Init(NUM0_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = REPETITIVE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Vol_Up_Key_Callback;
+  CONTROL(!IR_Command_Init(VOL_UP_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = REPETITIVE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Vol_Down_Key_Callback;
+  CONTROL(!IR_Command_Init(VOL_DOWN_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Ch_Up_Key_Callback;
+  CONTROL(!IR_Command_Init(CH_UP_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Ch_Down_Key_Callback;
+  CONTROL(!IR_Command_Init(CH_DOWN_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = NULL;
+  ir_s.Command = NULL;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Mute_Key_Callback;
+  CONTROL(!IR_Command_Init(MUTE_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   
   
