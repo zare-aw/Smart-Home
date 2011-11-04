@@ -240,6 +240,24 @@ Status_t Console_Set_Ir(uint8 NoOfCommand)
   if(CommandString != NULL)
     ir_s.Command = atoi(CommandString + 2);
   
+  CommandString = strstr(QueueConsoleCommand[NoOfCommand], "m=");
+  if(NoOfIRCommand == NULL)
+  {
+    CommandString += 2;
+    
+    if(!strncmp("single", CommandString, 6))
+      ir_s.CallMode = SINGLE_CALL;
+    else if(!strncmp("repetitive", CommandString, 10))
+      ir_s.CallMode = REPETITIVE_CALL;
+    else
+    {
+      printc(" # Invalid input parameters!\n");
+      printc(" # CallMode parametar is invalid, see help for this command\n");
+      printc(" # IR Command not set!\n");
+      RETURN_SUCCESS_FUNC(CONSOLE_SET_IR);
+    }
+  } //  if(NoOfIRCommand == NULL)
+  
   CommandString = strstr(QueueConsoleCommand[NoOfCommand], "response=");
   if(NoOfIRCommand == NULL)
   {
