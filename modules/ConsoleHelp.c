@@ -95,8 +95,10 @@ Status_t Console_Help(uint8 NoOfCommand)
     else if(!strncmp("set-ir", QueueConsoleCommand[NoOfCommand], 6))
     {
       printc("\r # 'set-ir n=X' - Set IR command, X - number of command, command are get from IR receiver\n");
-      printc("\r # 'set-ir n=X a=Y c=Z' - Set IR command, X - number of command, Y - Address of command, Z - Command of command\n");
+      printc("\r # 'set-ir n=X a=Y c=Z m=U response=V' - Set IR command, X - number of command, Y - Address of command, Z - Command of command\n");
+      printc("\r # U - CallMode, single or repetitive, V - what to do on this IR command, out_1_ON, out_3_OFF, dummy, ...\n");
       printc("\r # Address and Command (Y and Z) are from RC5 protocol\n");
+      printc("\r # If Address and Command from RC5 are NULL, command are get from IR receiver, all other parameters are optional\n");
     }
     else if(!strncmp("becklight", QueueConsoleCommand[NoOfCommand], 13))
     {
