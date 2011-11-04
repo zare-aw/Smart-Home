@@ -2,6 +2,8 @@
 #define _ir_h
 
 //#define _IR_DEBUG
+#define _IR_INFO
+
 #define MAX_IR_COMMANDS       150
 #define RESERVED_IR_COMMANDS  50
 #define IR_BURST_T            889
@@ -41,6 +43,12 @@
 #define IR_DEBUG(a)
 #endif
 
+#ifdef _IR_INFO
+#define IR_INFO(a) a
+#else
+#define IR_INFO(a)
+#endif
+
 #define IR_PIN_INIT()     (PINSEL0_bit.P0_15 = 2, FIO0DIR_bit.P0_15 = 0)
 #define IR_PIN_READ()     FIO0PIN_bit.P0_15
 #define IR_INT_ENABLE()   (PINSEL0_bit.P0_15 = 2)
@@ -61,5 +69,6 @@ Status_t IR_Command_Init(uint16 NoOfCommand, uint8 Address, uint8 Command, uint8
 Status_t IR_Set_Command(uint16 NoOfCommand);
 Status_t IR_Get_Command(uint16 NoOfCommand, ir_t * IR_Command);
 __arm Status_t IR_Timer_ISR(void);
+Status_t IR_Dummy_Handler(void *Ptr);
 
 #endif

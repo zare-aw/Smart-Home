@@ -272,3 +272,13 @@ __irq void Ext_Int_2_ISR(void)
   EXTINT_bit.EINT2 = 1;   // Clear INT Flag
   VICVectAddr = 0;
 }
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+Status_t IR_Dummy_Handler(void *Ptr)
+{
+  IR_INFO(printc(" # IR dummy handler executed!\n"));
+  
+  return SUCCESS;
+}
