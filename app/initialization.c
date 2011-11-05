@@ -31,6 +31,7 @@ Status_t Initialization(void)
   RTC_Init(1);
   RTC_Enable();
   Menu_Init();
+  HD44780_PowerUpInit();
   
   __enable_interrupt();
   Temp_Init();
