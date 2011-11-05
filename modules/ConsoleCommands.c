@@ -241,7 +241,7 @@ Status_t Console_Set_Ir(uint8 NoOfCommand)
     ir_s.Command = atoi(CommandString + 2);
   
   CommandString = strstr(QueueConsoleCommand[NoOfCommand], "m=");
-  if(NoOfIRCommand == NULL)
+  if(CommandString != NULL)
   {
     CommandString += 2;
     
@@ -259,7 +259,7 @@ Status_t Console_Set_Ir(uint8 NoOfCommand)
   } //  if(NoOfIRCommand == NULL)
   
   CommandString = strstr(QueueConsoleCommand[NoOfCommand], "response=");
-  if(NoOfIRCommand == NULL)
+  if(CommandString != NULL)
   {
     CommandString += 9;
     
