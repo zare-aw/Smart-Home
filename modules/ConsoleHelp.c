@@ -80,7 +80,7 @@ Status_t Console_Help(uint8 NoOfCommand)
       printc("\r # 'set-date dd.mm.yyyy' - Set date\n");
       printc("\r # example: 'set-date 25.05.2011'\n");
     }
-    else if(!strncmp("config", QueueConsoleCommand[NoOfCommand], 10))
+    else if(!strncmp("config", QueueConsoleCommand[NoOfCommand], 6))
     {
       printc("\r # Not implemented\n");
     }
@@ -88,7 +88,7 @@ Status_t Console_Help(uint8 NoOfCommand)
     {
       printc("\r # Not implemented\n");
     }
-    else if(!strncmp("ir", QueueConsoleCommand[NoOfCommand], 6))
+    else if(!strncmp("ir", QueueConsoleCommand[NoOfCommand], 2))
     {
       printc("\r # ir - Get saved IR commands\n");
     }
@@ -100,7 +100,7 @@ Status_t Console_Help(uint8 NoOfCommand)
       printc("\r # Address and Command (Y and Z) are from RC5 protocol\n");
       printc("\r # If Address and Command from RC5 are NULL, command are get from IR receiver, all other parameters are optional\n");
     }
-    else if(!strncmp("becklight", QueueConsoleCommand[NoOfCommand], 13))
+    else if(!strncmp("becklight", QueueConsoleCommand[NoOfCommand], 9))
     {
       printc("\r # Not implemented\n");
     }
@@ -108,7 +108,7 @@ Status_t Console_Help(uint8 NoOfCommand)
     {
       printc("\r # Not implemented\n");
     }
-    else if(!strncmp("light-switch", QueueConsoleCommand[NoOfCommand], 16))
+    else if(!strncmp("light-switch", QueueConsoleCommand[NoOfCommand], 12))
     {
       printc("\r # Not implemented\n");
     }
@@ -116,7 +116,7 @@ Status_t Console_Help(uint8 NoOfCommand)
     {
       printc("\r # Not implemented\n");
     }
-    else if(!strncmp("out-switch", QueueConsoleCommand[NoOfCommand], 14))
+    else if(!strncmp("out-switch", QueueConsoleCommand[NoOfCommand], 10))
     {
       printc("\r # Not implemented\n");
     }
@@ -124,7 +124,7 @@ Status_t Console_Help(uint8 NoOfCommand)
     {
       printc("\r # Not implemented\n");
     }
-    else if(!strncmp("switch-setings", QueueConsoleCommand[NoOfCommand], 18))
+    else if(!strncmp("switch-setings", QueueConsoleCommand[NoOfCommand], 14))
     {
       printc("\r # Not implemented\n");
     }
@@ -148,7 +148,7 @@ Status_t Console_Help(uint8 NoOfCommand)
     {
       printc("\r # Not implemented\n");
     }
-    else if(!strncmp("get-temp-alarm", QueueConsoleCommand[NoOfCommand], 5))
+    else if(!strncmp("get-temp-alarm", QueueConsoleCommand[NoOfCommand], 14))
     {
       printc("\r # 'get-temp-alarm X' - X=int or X=ext\n");
       printc("\r # int - temp alarm on internal temperature sensor\n");
@@ -156,7 +156,7 @@ Status_t Console_Help(uint8 NoOfCommand)
       printc("\r # 'get-temp-alarm' - (without parameter) get temp alarms on all sensors\n");
       printc("\r # example: 'get-temp-alarm ext'\n");
     }
-    else if(!strncmp("set-temp-alarm", QueueConsoleCommand[NoOfCommand], 9))
+    else if(!strncmp("set-temp-alarm", QueueConsoleCommand[NoOfCommand], 14))
     {
       printc("\r # 'set-temp-alarm sensor=A temp=B event=C state=D alarmID=E response=F' - Set temperature alarm\n");
       printc("\r # sensor   A = int, ext. int - internal sensor, ext - external sensor\n");
