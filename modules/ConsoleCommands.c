@@ -273,6 +273,11 @@ Status_t Console_Set_Ir(uint8 NoOfCommand)
       ir_s.Callback_p = Out_1_Clr;
       ir_s.Target = IR_OUT_1_CLR;
     }
+    else if(!strncmp("out_1_toggle", CommandString, 12))
+    {
+      ir_s.Callback_p = Out_1_Toggle;
+      ir_s.Target = IR_OUT_1_TOGGLE;
+    }
     else if(!strncmp("out_2_ON", CommandString, 8))
     {
       ir_s.Callback_p = Out_2_Set;
@@ -282,6 +287,11 @@ Status_t Console_Set_Ir(uint8 NoOfCommand)
     {
       ir_s.Callback_p = Out_2_Clr;
       ir_s.Target = IR_OUT_2_CLR;
+    }
+    else if(!strncmp("out_2_toggle", CommandString, 12))
+    {
+      ir_s.Callback_p = Out_2_Toggle;
+      ir_s.Target = IR_OUT_2_TOGGLE;
     }
     else if(!strncmp("out_3_ON", CommandString, 8))
     {
@@ -293,6 +303,11 @@ Status_t Console_Set_Ir(uint8 NoOfCommand)
       ir_s.Callback_p = Out_3_Clr;
       ir_s.Target = IR_OUT_3_CLR;
     }
+    else if(!strncmp("out_3_toggle", CommandString, 12))
+    {
+      ir_s.Callback_p = Out_3_Toggle;
+      ir_s.Target = IR_OUT_3_TOGGLE;
+    }
     else if(!strncmp("out_4_ON", CommandString, 8))
     {
       ir_s.Callback_p = Out_4_Set;
@@ -302,6 +317,11 @@ Status_t Console_Set_Ir(uint8 NoOfCommand)
     {
       ir_s.Callback_p = Out_4_Clr;
       ir_s.Target = IR_OUT_4_CLR;
+    }
+    else if(!strncmp("out_4_toggle", CommandString, 12))
+    {
+      ir_s.Callback_p = Out_4_Toggle;
+      ir_s.Target = IR_OUT_4_TOGGLE;
     }
     else if(!strncmp("out_5_ON", CommandString, 8))
     {
@@ -313,6 +333,11 @@ Status_t Console_Set_Ir(uint8 NoOfCommand)
       ir_s.Callback_p = Out_5_Clr;
       ir_s.Target = IR_OUT_5_CLR;
     }
+    else if(!strncmp("out_5_toggle", CommandString, 12))
+    {
+      ir_s.Callback_p = Out_5_Toggle;
+      ir_s.Target = IR_OUT_5_TOGGLE;
+    }
     else if(!strncmp("out_6_ON", CommandString, 8))
     {
       ir_s.Callback_p = Out_6_Set;
@@ -322,6 +347,11 @@ Status_t Console_Set_Ir(uint8 NoOfCommand)
     {
       ir_s.Callback_p = Out_6_Clr;
       ir_s.Target = IR_OUT_6_CLR;
+    }
+    else if(!strncmp("out_6_toggle", CommandString, 12))
+    {
+      ir_s.Callback_p = Out_6_Toggle;
+      ir_s.Target = IR_OUT_6_TOGGLE;
     }
     else if(!strncmp("sound_alarm", CommandString, 11))
     {

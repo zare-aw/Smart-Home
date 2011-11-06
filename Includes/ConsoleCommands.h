@@ -16,7 +16,13 @@
 #define IR_OUT_4_CLR        11
 #define IR_OUT_5_CLR        12
 #define IR_OUT_6_CLR        13
-#define IR_SOUND_ALARM_ID   14
+#define IR_OUT_1_TOGGLE     14
+#define IR_OUT_2_TOGGLE     15
+#define IR_OUT_3_TOGGLE     16
+#define IR_OUT_4_TOGGLE     17
+#define IR_OUT_5_TOGGLE     18
+#define IR_OUT_6_TOGGLE     19
+#define IR_SOUND_ALARM_ID   20
 
 
 // Function
