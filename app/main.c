@@ -19,7 +19,7 @@ void main()
     Console_Command_Execute(0);
     Temp_Work();
     Update_Display_Panel(PULL);
-//    (void)Out_Sync();
+    (void)Out_Sync();
   } // while(1)
 }   // main()
 
