@@ -243,6 +243,25 @@ Status_t Out_Sync(void)
   RETURN_SUCCESS();
 }
 
+Status_t Out_Get_State(uint8 OutID, Out_t *Out_p)
+{
+  Function_IN(OUT_GET_STATE);
+  
+  switch(OutID)
+  {
+    case OUTS_TO_SET:
+      *Out_p = Out;
+      break;
+    case OUT_PINS:
+      *Out_p = OutState;
+      break;
+    default:
+      CONTROL(0, INVALID_INPUT_PARAMETER);
+  }
+  
+  RETURN_SUCCESS_FUNC(OUT_GET_STATE);
+}
+
 Status_t Out_1_Set(void * Ptr)
 {
   Out.S_1 = 1;

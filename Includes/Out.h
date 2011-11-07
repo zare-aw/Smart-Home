@@ -9,6 +9,12 @@
 #define OUT_INFO(a)
 #endif
 
+#define NO_OF_OUTS    6
+
+// @in OutID in function Out_Get_State(uint8 OutID, Out_t *Out)
+#define OUTS_TO_SET     1
+#define OUT_PINS        2
+
 /*******************************************************************************
 * Struktura vo koja ke se cuvaat parametrite za izlezite.
 *******************************************************************************/
@@ -96,6 +102,7 @@ typedef struct Out_s
 *******************************************************************************/
 Status_t Out_Init(void);
 Status_t Out_Sync(void);
+Status_t Out_Get_State(uint8 OutID, Out_t *Out);
 
 Status_t Out_1_Set(void * Ptr);
 Status_t Out_2_Set(void * Ptr);

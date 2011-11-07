@@ -237,6 +237,7 @@ extern uint8 FunctionInBeckupBuffer;
 // Out driver
 #define OUT_INIT                        10100
 #define OUT_SYNC                        10101
+#define OUT_GET_STATE                   10102
 
 #define MENU_CALLBACKS_INIT             10200
 #define POWER_KEY_CALLBACK              10201
