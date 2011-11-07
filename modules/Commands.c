@@ -221,7 +221,16 @@ Status_t Get_Out_Switch_Command(uint8 NoOfCommand)
 {
   Function_IN(GET_OUT_SWITCH_COMMAND);
   
-  printc(" # Get Out Switch Command Executed \n");
+  Out_t Out;
+  
+  Out_Get_State(OUTS_TO_SET, &Out);
+  
+  printc("\r # Out_1 = %u\n", Out.S_1);
+  printc("\r # Out_2 = %u\n", Out.S_2);
+  printc("\r # Out_3 = %u\n", Out.S_3);
+  printc("\r # Out_4 = %u\n", Out.S_4);
+  printc("\r # Out_5 = %u\n", Out.S_5);
+  printc("\r # Out_6 = %u\n", Out.S_6);
   
   RETURN_SUCCESS();
 }
