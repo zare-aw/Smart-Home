@@ -491,6 +491,7 @@ uint32 RTC_Check_Int_Type(void)
 __irq void RTC_ISR(void)
 {
   uint32 IntStatus;
+  RtcDateTime_t DateTime = {0};
   
   IntStatus = RTC_Check_Int_Type() & 0x3;
   if(RTC_Clear_Int(IntStatus) != SUCCESS)
@@ -498,14 +499,68 @@ __irq void RTC_ISR(void)
   
   if (IntStatus & RTCIncrementInt)	// Increment Interrupt
   {
-    for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Sec int
+    for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Second int
     {
       if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_SEC)
         ((void(*)(void))(Sys_Time_Update[i]))();
     }
-    // TODO: Add Implementation for other Interrupt types of incremental Interrupt.
     
-  }
+    RTC_Get_Date_Time(&DateTime);
+    
+    if(DateTime.Second == 0)
+    {
+      for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Minute int
+      {
+        if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_MIN)
+          ((void(*)(void))(Sys_Time_Update[i]))();
+      }
+    }
+    
+    if(DateTime.Minute == 0)
+    {
+      for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Hour int
+      {
+        if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_HOUR)
+          ((void(*)(void))(Sys_Time_Update[i]))();
+      }
+    }
+    
+    if(DateTime.Hour == 0)
+    {
+      for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Day int
+      {
+        if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_DAY)
+          ((void(*)(void))(Sys_Time_Update[i]))();
+      }
+    }
+    
+    if(DateTime.Day == 1)
+    {
+      for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Month int
+      {
+        if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_MON)
+          ((void(*)(void))(Sys_Time_Update[i]))();
+      }
+    }
+    
+    if(DateTime.Month == 1)
+    {
+      for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Year int
+      {
+        if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_YEAR)
+          ((void(*)(void))(Sys_Time_Update[i]))();
+      }
+    }
+    
+    if(DateTime.DoW == 1)
+    {
+      for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // DoW int
+      {
+        if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_DOW)
+          ((void(*)(void))(Sys_Time_Update[i]))();
+      }
+    }
+  } // if (IntStatus & RTCIncrementInt)
   
   if (IntStatus & RTCAlarmInt)	        // Alarm Interrupt
   {
