@@ -118,11 +118,12 @@ Status_t Console_Help(uint8 NoOfCommand)
     }
     else if(!strncmp("out-switch", QueueConsoleCommand[NoOfCommand], 10))
     {
-      printc("\r # Not implemented\n");
+      printc("\r # Print out switch state\n");
     }
     else if(!strncmp("set-out-switch", QueueConsoleCommand[NoOfCommand], 14))
     {
-      printc("\r # Not implemented\n");
+      printc("\r # For set out switch\n");
+      printc("\r # set-out-switch n=X v=Y, X - number of switch, 1, 2, ... , 6, Y - Value, 1 or 0\n");
     }
     else if(!strncmp("switch-setings", QueueConsoleCommand[NoOfCommand], 14))
     {
