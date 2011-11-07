@@ -525,10 +525,29 @@ Status_t Console_Out_Switch(uint8 NoOfCommand)
 Status_t Console_Set_Out_Switch(uint8 NoOfCommand)
 {
   Function_IN(CONSOLE_SET_OUT_SWITCH);
+  char *CommandString;
+  uint8 OutNumber;
+  uint8 OutValue;
   
-  //TODO: Dovrsi ja komandata.
-      
-  Set_Out_Switch_Command(NoOfCommand);
+  CommandString = strstr(QueueConsoleCommand[NoOfCommand], "n=");
+  if(CommandString != NULL)
+    OutNumber = atoi(CommandString + 2);
+  else
+  {
+    printc("\r # Missing 'n' input parameter!\n");
+    RETURN_SUCCESS_FUNC(CONSOLE_SET_OUT_SWITCH);
+  }
+  
+  CommandString = strstr(QueueConsoleCommand[NoOfCommand], "v=");
+  if(CommandString != NULL)
+    OutValue = atoi(CommandString + 2);
+  else
+  {
+    printc("\r # Missing 'v' input parameter!\n");
+    RETURN_SUCCESS_FUNC(CONSOLE_SET_OUT_SWITCH);
+  }
+  
+  Set_Out_Switch_Command(NoOfCommand, OutNumber, OutValue);
   
   RETURN_SUCCESS();
 }

@@ -27,7 +27,7 @@ Status_t Set_Back_Light_Level_Command(uint8 NoOfCommand, uint8 Level);
 Status_t Get_Lignt_Switch_Level_Command(uint8 NoOfCommand);
 Status_t Set_Lignt_Switch_Level_Command(uint8 NoOfCommand, uint8 Max, uint8 Min);
 Status_t Get_Out_Switch_Command(uint8 NoOfCommand);
-Status_t Set_Out_Switch_Command(uint8 NoOfCommand);
+Status_t Set_Out_Switch_Command(uint8 NoOfCommand, uint8 OutNumber, uint8 OutValue);
 Status_t Get_Switch_Setings_Command(uint8 NoOfCommand, uint8 Chanel);
 Status_t Set_Switch_Setings_Command(uint8 NoOfCommand, uint8 Chanel);
 Status_t Get_Temp_Command(uint8 NoOfCommand, uint8 SensorID);

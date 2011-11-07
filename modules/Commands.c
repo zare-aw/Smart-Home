@@ -238,13 +238,84 @@ Status_t Get_Out_Switch_Command(uint8 NoOfCommand)
 /*******************************************************************************
 * 
 *******************************************************************************/
-Status_t Set_Out_Switch_Command(uint8 NoOfCommand)
+Status_t Set_Out_Switch_Command(uint8 NoOfCommand, uint8 OutNumber, uint8 OutValue)
 {
   Function_IN(SET_OUT_SWITCH_COMMAND);
   
-  printc(" # Set Out Switch Command Executed \n");
+  switch(OutNumber)
+  {
+    case 1:
+      if(OutValue == 1)
+        Out_1_Set(NULL);
+      else if(OutValue == 0)
+        Out_1_Clr(NULL);
+      else
+      {
+        printc("\r # Invalid value for Out_1\n");
+        RETURN_SUCCESS_FUNC(SET_OUT_SWITCH_COMMAND);
+      }
+      break;
+    case 2:
+      if(OutValue == 1)
+        Out_2_Set(NULL);
+      else if(OutValue == 0)
+        Out_2_Clr(NULL);
+      else
+      {
+        printc("\r # Invalid value for Out_2\n");
+        RETURN_SUCCESS_FUNC(SET_OUT_SWITCH_COMMAND);
+      }
+      break;
+    case 3:
+      if(OutValue == 1)
+        Out_3_Set(NULL);
+      else if(OutValue == 0)
+        Out_3_Clr(NULL);
+      else
+      {
+        printc("\r # Invalid value for Out_3\n");
+        RETURN_SUCCESS_FUNC(SET_OUT_SWITCH_COMMAND);
+      }
+      break;
+    case 4:
+      if(OutValue == 1)
+        Out_4_Set(NULL);
+      else if(OutValue == 0)
+        Out_4_Clr(NULL);
+      else
+      {
+        printc("\r # Invalid value for Out_4\n");
+        RETURN_SUCCESS_FUNC(SET_OUT_SWITCH_COMMAND);
+      }
+      break;
+    case 5:
+      if(OutValue == 1)
+        Out_5_Set(NULL);
+      else if(OutValue == 0)
+        Out_5_Clr(NULL);
+      else
+      {
+        printc("\r # Invalid value for Out_5\n");
+        RETURN_SUCCESS_FUNC(SET_OUT_SWITCH_COMMAND);
+      }
+      break;
+    case 6:
+      if(OutValue == 1)
+        Out_6_Set(NULL);
+      else if(OutValue == 0)
+        Out_6_Clr(NULL);
+      else
+      {
+        printc("\r # Invalid value for Out_6\n");
+        RETURN_SUCCESS_FUNC(SET_OUT_SWITCH_COMMAND);
+      }
+      break;
+    default:
+      printc("\r # Invalid Switch number!\n");
+      RETURN_SUCCESS_FUNC(SET_OUT_SWITCH_COMMAND);
+  }
   
-  RETURN_SUCCESS();
+  RETURN_SUCCESS_FUNC(SET_OUT_SWITCH_COMMAND);
 }
 
 /*******************************************************************************
