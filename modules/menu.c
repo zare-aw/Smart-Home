@@ -287,8 +287,10 @@ Status_t Unregister_Menu_Temp(const uint8 Source)
 /*******************************************************************************
 * 
 *******************************************************************************/
-void Menu_Sec_Int_Callback(void)
+Status_t Menu_Sec_Int_Callback(void *Ptr)
 {
+  Function_IN(MENU_SEC_INT_CALLBACK);
+  
   RtcTime_t Time;
   RtcDate_t Date;
   int TempInt = NO_SENSOR;
@@ -308,4 +310,6 @@ void Menu_Sec_Int_Callback(void)
   
   if((Level == 0) && (Location[0] == 0))
     Display_Menu_Update(Level, Location);
+  
+  RETURN_SUCCESS_FUNC(MENU_SEC_INT_CALLBACK);
 }

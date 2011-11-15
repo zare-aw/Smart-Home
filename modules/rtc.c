@@ -5,8 +5,13 @@ uint8 IncIntType_Beckup = 0;
 
 void *Sys_Time_Update[RTC_INC_CALLBACKS] = {NULL};
 uint8 Sys_Time_Type[RTC_INC_CALLBACKS] = {0};
+RtcSwAlarm_t SwAlarm[NO_OF_SW_ALARMS] = {0};
+
+uint8 SwAlarmCount = 0;
+uint8 SwAlarmCallbackID = 255;
 
 void (*Alarm)(void) = NULL;
+Status_t RTC_SW_Alarm_Callback(void *InPtr);
 
 /*************************************************************************
  * Function Name: IsLeapYear
@@ -483,6 +488,144 @@ uint32 RTC_Check_Int_Type(void)
 }
 
 /*************************************************************************
+ * Function Name: RTC_Register_SW_Alarm
+ * @in: AlarmData_p - Data with alarm parameters
+ * @out: Status_t, AlarmID - ID on registered alarm
+ * Description: Register RTC software alarm.
+ *************************************************************************/
+Status_t RTC_Register_SW_Alarm(RtcSwAlarm_t *AlarmData_p, uint8 *AlarmID)
+{
+  Function_IN(RTC_REGISTER_SW_ALARM);
+  
+  for(int i = 0; i < NO_OF_SW_ALARMS; i++)
+  {
+    if(SwAlarm[i].State == NO_ALARM_SET)
+    {
+      SwAlarm[i] = *AlarmData_p;
+      *AlarmID = i;
+      break;
+    }
+  }
+  
+  CONTROL(*AlarmID < NO_OF_SW_ALARMS, RTC_SW_ALARM_SLOTS_ERROR);
+  
+  if(SwAlarmCount == 0)
+  {
+    SwAlarmCallbackID = RTC_Register_Inc_Int((void *)RTC_SW_Alarm_Callback, AlarmIntType_MIN);
+    RTC_DEBUG(printc("\r # Software Alarm callback registered on RTC icrement interrupt with ID = %d\n", SwAlarmCallbackID));
+  }
+  
+  SwAlarmCount++;
+  CONTROL(SwAlarmCount <= NO_OF_SW_ALARMS, RTC_SW_ALARM_SLOTS_ERROR);
+  
+  RETURN_SUCCESS_FUNC(RTC_REGISTER_SW_ALARM);
+}
+
+/*************************************************************************
+ * Function Name: RTC_Unregister_SW_Alarm
+ * @in: 
+ * @out: Status_t, AlarmID - ID on registered alarm
+ * Description: Register RTC software alarm.
+ *************************************************************************/
+Status_t RTC_Unregister_SW_Alarm(uint8 AlarmID)
+{
+  Function_IN(RTC_UNREGISTER_SW_ALARM);
+  CONTROL(SwAlarmCount > 0, RTC_GENERAL_ERROR);
+  
+  SwAlarm[AlarmID].State = NO_ALARM_SET;
+  
+  SwAlarmCount--;
+  
+  if(SwAlarmCount == 0)
+  {
+    RTC_Unregister_Inc_Int(SwAlarmCallbackID);
+    RTC_DEBUG(printc("\r # Software Alarm callback Unregistered on RTC icrement interrupt with ID = %d\n", SwAlarmCallbackID));
+  }
+  
+  RETURN_SUCCESS_FUNC(RTC_UNREGISTER_SW_ALARM);
+}
+
+/*************************************************************************
+ * Function Name: RTC_SW_Alarm_Callback
+ * @in: 
+ * @out: Status_t
+ * Description: RTC software alarm callback.
+ *************************************************************************/
+Status_t RTC_SW_Alarm_Callback(void *InPtr)
+{
+  Function_IN(RTC_SW_ALARM_CALLBACK);
+  RtcDateTime_t DateTime = {0};
+  
+  for(int i = 0; i < NO_OF_SW_ALARMS; i++)
+  {
+    if(SwAlarm[i].State == RTC_ALARM_ON)
+    {
+      CONTROL(RTC_Get_Date_Time(&DateTime), RTC_GENERAL_ERROR);
+      
+      if((SwAlarm[i].Minute == DateTime.Minute) && (SwAlarm[i].Hour == DateTime.Hour))
+      {
+        if(SwAlarm[i].Year != 0)
+        {
+          if((SwAlarm[i].Year == DateTime.Year) && (SwAlarm[i].Month == DateTime.Month) && (SwAlarm[i].Day == DateTime.Day))
+          {
+            CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+            SwAlarm[i].State = RTC_ALARM_OFF;
+          }
+        }
+        else
+        {
+          if(SwAlarm[i].Mode == SINGLE_ALARM)
+          {
+            CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+            SwAlarm[i].State = RTC_ALARM_OFF;
+          }
+          else if(SwAlarm[i].Mode == REPETITIVE_ALARM)
+          {
+            switch(DateTime.DoW)
+            {
+              case 1:
+                if(SwAlarm[i].DoW & MONDAY)
+                  CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                break;
+              case 2:
+                if(SwAlarm[i].DoW & TUESDAY)
+                  CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                break;
+              case 3:
+                if(SwAlarm[i].DoW & WEDNESDAY)
+                  CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                break;
+              case 4:
+                if(SwAlarm[i].DoW & THURSDAY)
+                  CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                break;
+              case 5:
+                if(SwAlarm[i].DoW & FRIDAY)
+                  CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                break;
+              case 6:
+                if(SwAlarm[i].DoW & SATURDAY)
+                  CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                break;
+              case 0:
+                if(SwAlarm[i].DoW & SUNDAY)
+                  CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                break;
+              default:
+                CONTROL(0, REGISTER_ERROR);
+            } // switch(DateTime.DoW)
+          }
+          else
+            CONTROL(0, RTC_GENERAL_ERROR);
+        }
+      }
+    }
+  } // for
+  
+  RETURN_SUCCESS_FUNC(RTC_SW_ALARM_CALLBACK);
+}
+
+/*************************************************************************
  * Function Name: RTC_ISR
  * @in:  void
  * @out: void
@@ -502,7 +645,7 @@ __irq void RTC_ISR(void)
     for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Second int
     {
       if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_SEC)
-        ((void(*)(void))(Sys_Time_Update[i]))();
+        CONTROL_ABORT(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
     }
     
     RTC_Get_Date_Time(&DateTime);
@@ -512,7 +655,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Minute int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_MIN)
-          ((void(*)(void))(Sys_Time_Update[i]))();
+          CONTROL_ABORT(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
       }
     }
     
@@ -521,7 +664,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Hour int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_HOUR)
-          ((void(*)(void))(Sys_Time_Update[i]))();
+          CONTROL_ABORT(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
       }
     }
     
@@ -530,7 +673,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Day int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_DAY)
-          ((void(*)(void))(Sys_Time_Update[i]))();
+          CONTROL_ABORT(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
       }
     }
     
@@ -539,7 +682,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Month int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_MON)
-          ((void(*)(void))(Sys_Time_Update[i]))();
+          CONTROL_ABORT(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
       }
     }
     
@@ -548,7 +691,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Year int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_YEAR)
-          ((void(*)(void))(Sys_Time_Update[i]))();
+          CONTROL_ABORT(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
       }
     }
     
@@ -557,7 +700,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // DoW int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_DOW)
-          ((void(*)(void))(Sys_Time_Update[i]))();
+          CONTROL_ABORT(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
       }
     }
   } // if (IntStatus & RTCIncrementInt)

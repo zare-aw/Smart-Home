@@ -7,6 +7,7 @@
 
 #define RTC_COUNT_PER_SEC   32768
 #define RTC_INC_CALLBACKS   10
+#define NO_OF_SW_ALARMS     20
 
 #define RTC_YEARMIN         1901
 #define RTC_YEARMAX         2099
@@ -56,35 +57,74 @@
 #define RTCAlarmInt	    0x2
 #define RTCALLInt	    0x3
 
-typedef struct {
-	uint16 Year;  // Year value
-	uint8 Month;  // Month value
-	uint8 Day;    // Day value
+ /* Alarm Mode */
+#define SINGLE_ALARM        0x1
+#define REPETITIVE_ALARM    0x2
 
-	/* the below member is used in get-operation */
-	uint8 DoW;    // Day of week
-	uint16 DoY;    // Day of year
+ /* Alarm State */
+#define NO_ALARM_SET        0x0
+#define RTC_ALARM_OFF       0x1
+#define RTC_ALARM_ON        0x2
+
+ /* Repetitive alarm masks */
+#define MONDAY              0x01
+#define TUESDAY             0x02
+#define WEDNESDAY           0x04
+#define THURSDAY            0x08
+#define FRIDAY              0x10
+#define SATURDAY            0x20
+#define SUNDAY              0x40
+
+typedef struct
+{
+  uint16 Year;  // Year value
+  uint8 Month;  // Month value
+  uint8 Day;    // Day value
+
+  /* the below member is used in get-operation */
+  uint8 DoW;    // Day of week
+  uint16 DoY;    // Day of year
 } RtcDate_t;
 
-typedef struct {
-	uint8 Hour;   // Hour value
-	uint8 Minute; // Minute value
-	uint8 Second; // Second value
+typedef struct
+{
+  uint8 Hour;   // Hour value
+  uint8 Minute; // Minute value
+  uint8 Second; // Second value
 } RtcTime_t;
 
-typedef struct {
-	uint16 Year;  // Year value
-	uint8 Month;  // Month value
-	uint8 Day;    // Day value
+typedef struct
+{
+  uint16 Year;  // Year value
+  uint8 Month;  // Month value
+  uint8 Day;    // Day value
 
-	uint8 Hour;   // Hour value
-	uint8 Minute; // Minute value
-	uint8 Second; // Second value
+  uint8 Hour;   // Hour value
+  uint8 Minute; // Minute value
+  uint8 Second; // Second value
 
-	/* the below member is used in get-operation */
-	uint8 DoW;    // Day of week
-	uint16 DoY;    // Day of year
+  /* the below member is used in get-operation */
+  uint8 DoW;    // Day of week
+  uint16 DoY;    // Day of year
 } RtcDateTime_t;
+
+typedef struct
+{
+  uint16 Year;
+  uint8 Month;
+  uint8 Day;
+  
+  uint8 Hour;
+  uint8 Minute;
+  
+  uint8 Mode;   // REPETITIVE, SINGLE. For repetitive is reading from DoW
+  uint8 State;  // OFF, ON or NO_ALARM_SET.
+  
+  void *Callback;
+  
+  uint8 DoW;    // Day of week, one bit is one day starting from bit 0 - Monday
+} RtcSwAlarm_t;
+  
 
 static RtcDateTime_t RTC_InitDateTime = {2011, 1, 1, 0, 0, 0};
 

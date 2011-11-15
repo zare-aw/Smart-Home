@@ -19,7 +19,7 @@ uint8 ReinitFlag = 0;
 
 uint8 FirstTemp[NO_OF_TEMP_SENSORS] = {1};
 
-void Temp_Callback(void);
+Status_t Temp_Callback(void *Ptr);
 
 /*******************************************************************************
 * 
@@ -463,9 +463,11 @@ Status_t Temp_Work(void)
 /*******************************************************************************
 * 
 *******************************************************************************/
-void Temp_Callback(void)
+Status_t Temp_Callback(void *Ptr)
 {
   TempUpdate = 1;
+  
+  return SUCCESS;
 }
 
 /*******************************************************************************

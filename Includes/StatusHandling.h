@@ -32,6 +32,17 @@ extern uint8 FunctionInBeckupBuffer;
          }\
      }while (0)
 
+#define CONTROL_ABORT(Condition, Status) \
+     do {\
+       if (!(Condition)) \
+         {\
+           if(Abort(Status)) \
+             {\
+               This_Function_OUT(); \
+             }\
+         }\
+     }while (0)
+
 #define CONTROL_EXIT(Condition, Status) \
      do {\
        if (!(Condition)) \
@@ -92,6 +103,7 @@ extern uint8 FunctionInBeckupBuffer;
 
 #define	MEMORY_ERROR                        15
 #define HEAP_ALLOCATION_ERROR               16
+#define REGISTER_ERROR                      17
 
 #define NOT_REGISTERED_ERROR                20
 
@@ -130,6 +142,7 @@ extern uint8 FunctionInBeckupBuffer;
 #define RTC_SET_ERROR                       252
 #define RTC_INVALID_DATE_ERROR              253
 #define RTC_INVALID_TIME_ERROR              254
+#define RTC_SW_ALARM_SLOTS_ERROR            255
 
 #define DS1820_NO_PRESENCE_ERROR            300
 #define DS1820_SHORT_CIRCUIT_ERROR          301
@@ -274,6 +287,9 @@ extern uint8 FunctionInBeckupBuffer;
 #define RTC_GET_DATE_TIME               10406
 #define RTC_ENABLE_ALARM                10407
 #define RTC_CLEAR_INT                   10408
+#define RTC_REGISTER_SW_ALARM           10409
+#define RTC_UNREGISTER_SW_ALARM         10410
+#define RTC_SW_ALARM_CALLBACK           10411
 
 #define FORMAT_DATE                     10430
 #define FORMAT_TIME                     10431
@@ -291,9 +307,10 @@ extern uint8 FunctionInBeckupBuffer;
 #define DISPLAY_TEMP_UPDATE             10604
 #define REGISTER_MENU_TEMP              10605
 #define UNREGISTER_MENU_TEMP            10606
-#define UPDATE_DISPLAY_PANEL            10607
-#define UPDATE_SURFACE_BUFFER           10608
-#define PRINTD                          10609
+#define MENU_SEC_INT_CALLBACK           10607
+#define UPDATE_DISPLAY_PANEL            10608
+#define UPDATE_SURFACE_BUFFER           10609
+#define PRINTD                          10610
 
 #define REGISTER_TEMP_SENSOR            10700
 #define UNREGISTER_TEMP_SENSOR          10701

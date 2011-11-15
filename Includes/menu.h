@@ -57,7 +57,7 @@ Status_t Menu_Init(void);
 Status_t Menu(uint32 Event);
 Status_t Register_Menu_Temp(const uint8 Source, const uint8 ID);
 Status_t Unregister_Menu_Temp(const uint8 Source);
-void Menu_Sec_Int_Callback(void);
+Status_t Menu_Sec_Int_Callback(void *Ptr);
 
 // MenuCallbacks Functions
 Status_t Menu_Callbacks_Init(uint8 DisplayType, uint16 Xres, uint16 Yres);
