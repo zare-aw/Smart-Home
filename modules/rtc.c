@@ -546,6 +546,31 @@ Status_t RTC_Unregister_SW_Alarm(uint8 AlarmID)
 }
 
 /*************************************************************************
+ * Function Name: RTC_Register_SW_Alarm
+ * @in: None
+ * @out: Status_t, NoOfAlarms
+ * @out: AlarmData_p - Array with data with alarm parameters. Size = NO_OF_SW_ALARMS
+ * Description: Register RTC software alarm.
+ *************************************************************************/
+Status_t RTC_Get_Registered_Sw_Alarms(RtcSwAlarm_t *AlarmData, uint8 *NoOfAlarms)
+{
+  Function_IN(RTC_GET_REGISTERED_SW_ALARM);
+  
+  *NoOfAlarms = 0;
+  
+  for(int i = 0; i < NO_OF_SW_ALARMS; i++)
+  {
+    if(SwAlarm[i].State != NO_ALARM_SET)
+    {
+      AlarmData[*NoOfAlarms] = SwAlarm[i];
+      *NoOfAlarms ++;
+    }
+  }
+  
+  RETURN_SUCCESS_FUNC(RTC_GET_REGISTERED_SW_ALARM);
+}
+  
+/*************************************************************************
  * Function Name: RTC_SW_Alarm_Callback
  * @in: 
  * @out: Status_t

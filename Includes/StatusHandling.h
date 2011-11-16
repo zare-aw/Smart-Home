@@ -289,7 +289,8 @@ extern uint8 FunctionInBeckupBuffer;
 #define RTC_CLEAR_INT                   10408
 #define RTC_REGISTER_SW_ALARM           10409
 #define RTC_UNREGISTER_SW_ALARM         10410
-#define RTC_SW_ALARM_CALLBACK           10411
+#define RTC_GET_REGISTERED_SW_ALARM     10411
+#define RTC_SW_ALARM_CALLBACK           10412
 
 #define FORMAT_DATE                     10430
 #define FORMAT_TIME                     10431

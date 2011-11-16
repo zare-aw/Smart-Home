@@ -182,6 +182,10 @@ void RTC_Disable_Alarm_Int(void);
 Status_t RTC_Clear_Int(uint32 IntType);
 uint32 RTC_Check_Int_Type(void);
 
+Status_t RTC_Register_SW_Alarm(RtcSwAlarm_t *AlarmData_p, uint8 *AlarmID);
+Status_t RTC_Unregister_SW_Alarm(uint8 AlarmID);
+Status_t RTC_Get_Registered_Sw_Alarms(RtcSwAlarm_t *AlarmData_p, uint8 *NoOfAlarms);
+
 Status_t Format_Date(uint8 Type, RtcDate_t *Date_p, char *s);
 Status_t Format_Time(uint8 Type, RtcTime_t *Time_p, char *s);
 
