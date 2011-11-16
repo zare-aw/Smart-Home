@@ -198,7 +198,7 @@ Status_t RTC_Init(uint8 ClkSource)
 
 //  RTC_Enable();
   
-  RETURN_SUCCESS();
+  RETURN_SUCCESS_FUNC(RTC_INIT);
 }
 
 /*************************************************************************
@@ -224,7 +224,7 @@ Status_t RTC_Set_Date(RtcDate_t *Date_p)
   DOW = Date_p -> DoW;
   DOY = Date_p -> DoY;
 
-  RETURN_SUCCESS();
+  RETURN_SUCCESS_FUNC(RTC_SET_DATE);
 }
 
 /*************************************************************************
@@ -275,7 +275,7 @@ Status_t RTC_Set_Date_Time(RtcDateTime_t *DateTime_p)
   MIN = DateTime_p -> Minute;
   SEC = DateTime_p -> Second;
 
-  RETURN_SUCCESS();
+  RETURN_SUCCESS_FUNC(RTC_SET_DATE_TIME);
 }
 
 /*************************************************************************
@@ -456,7 +456,7 @@ Status_t RTC_Enable_Alarm(uint8 AlarmIntType, RtcDateTime_t *DateTime_p, void *C
     AlarmIntType_Beckup = AlarmIntType;
   }
   
-  RETURN_SUCCESS();
+  RETURN_SUCCESS_FUNC(RTC_ENABLE_ALARM);
 }
 
 /*************************************************************************
