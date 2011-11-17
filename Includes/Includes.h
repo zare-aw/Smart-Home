@@ -64,8 +64,6 @@ typedef signed long long    sint64;
 #include "Console.h"
 #include "i2c.h"
 #include "menu.h"
-#include "lcd.h"
-#include "lcd_bukvi.h"
 #include "Temperature.h"
 #include "ir.h"
 #include "Commands.h"

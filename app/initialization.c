@@ -87,5 +87,5 @@ void Power_Init(void)
 *******************************************************************************/
 void Pin_MUX_Init(void)
 {
-  LCD_BECKLIGHT_GPIO_INIT(); 
+  
 }
