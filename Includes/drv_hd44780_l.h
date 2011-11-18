@@ -64,6 +64,14 @@
 #define HD44780_D1_CLR()
 #define HD44780_D0_CLR()
 
+#define HD44780_D7_READ()    ( FIO1PIN_bit.P1_20 )
+#define HD44780_D6_READ()    ( FIO0PIN_bit.P0_18 )
+#define HD44780_D5_READ()    ( FIO0PIN_bit.P0_17 )
+#define HD44780_D4_READ()    ( FIO0PIN_bit.P0_19 )
+#define HD44780_D3_READ()
+#define HD44780_D2_READ()
+#define HD44780_D1_READ()
+#define HD44780_D0_READ()
 
 void HD44780_IO_Init(void);
 void HD44780_Set_RS(uint8 Data);
@@ -71,7 +79,7 @@ void HD44780_Set_E(uint8 Data);
 void HD44780_Data_Out(void);
 void HD44780_Data_In(void);
 void HD44780_Write_IO(uint8 Data);
-#if HD4780_WR > 0
+#if HD44780_WR > 0
 void HD44780_Set_RW(uint8 Data);
 uint8 HD44780_Read_IO(void);
 #endif

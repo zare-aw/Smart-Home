@@ -664,7 +664,7 @@ HD44780_ERROR_CODE_DEF HD44780_StrShow(HD44780_XY_DEF X, HD44780_XY_DEF Y,  HD44
   }
   /* Set Address to DDRAM */
   HD44780_Write_Command(HD44780_SET_DDRAM_ADD + DDRamAdd);
-#if HD4780_WR == 0
+#if HD44780_WR == 0
   DataRamAddHold = DDRamAdd;
 #endif
   if (HD44780_BusyCheck(&DDRamAdd,HD44780_SECOND_COMM_DLY) != HD44780_OK)
@@ -676,7 +676,7 @@ HD44780_ERROR_CODE_DEF HD44780_StrShow(HD44780_XY_DEF X, HD44780_XY_DEF Y,  HD44
   {
     ErrorRes |= HD44780_CheckVisual(DDRamAdd);
     HD44780_Write_Data(*DataStr);
-#if HD4780_WR == 0
+#if HD44780_WR == 0
     if(HD4478_Ctrl.AC_Direction)
     {
       if((++DataRamAddHold > HD44780_MAX_LINE1_ADD) && (Y == 1))
@@ -708,7 +708,7 @@ HD44780_ERROR_CODE_DEF HD44780_StrShow(HD44780_XY_DEF X, HD44780_XY_DEF Y,  HD44
     if((Y == 1) && DDRamAdd > HD44780_MAX_LINE1_ADD)
     {
       HD44780_Write_Command(HD44780_SET_DDRAM_ADD+HD44780_MIN_LINE1_ADD);
-    #if HD4780_WR == 0
+    #if HD44780_WR == 0
       DataRamAddHold = HD44780_MIN_LINE1_ADD;
     #endif
       if (HD44780_BusyCheck(&DDRamAdd,HD44780_SECOND_COMM_DLY) != HD44780_OK)
@@ -719,7 +719,7 @@ HD44780_ERROR_CODE_DEF HD44780_StrShow(HD44780_XY_DEF X, HD44780_XY_DEF Y,  HD44
     else if ((Y == 2) && DDRamAdd < HD44780_MIN_LINE2_ADD)
     {
       HD44780_Write_Command(HD44780_SET_DDRAM_ADD+HD44780_MIN_LINE2_ADD);
-    #if HD4780_WR == 0
+    #if HD44780_WR == 0
       DataRamAddHold = HD44780_MIN_LINE2_ADD;
     #endif
       if (HD44780_BusyCheck(&DDRamAdd,HD44780_SECOND_COMM_DLY) != HD44780_OK)

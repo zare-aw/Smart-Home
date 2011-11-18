@@ -16,6 +16,11 @@ void HD44780_IO_Init(void)
   HD44780_D6_INIT();
   HD44780_D5_INIT();
   HD44780_D4_INIT();
+  HD44780_D3_INIT();
+  HD44780_D2_INIT();
+  HD44780_D1_INIT();
+  HD44780_D0_INIT();
+  
 }
 
 /*************************************************************************
@@ -91,7 +96,7 @@ void HD44780_Data_In(void)
 void HD44780_Write_IO(uint8 Data)
 {
   HD44780_Data_Out();
-#if HD4780_WR > 0
+#if HD44780_WR > 0
   HD44780_Set_RW(0);
 #endif
   // Write Data
@@ -144,7 +149,7 @@ void HD44780_Write_IO(uint8 Data)
   HD44780_Set_E(0);
 }
 
-#if HD4780_WR > 0
+#if HD44780_WR > 0
 /*************************************************************************
 * Function Name: HD44780_Set_RW
 * @in: uint8 Data

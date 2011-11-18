@@ -5,11 +5,11 @@
 
 /* HD44780 DRV Default setup data */
 // The R/W signal is connected when is > 0 to LCD module
-#define HD4780_WR                 0
-// Interface type 4/8bit
+#define HD44780_WR                0
+// Interface type 4/8 bit
 #define HD44780_BUS_WIDTH         4
 /* Horizontal Size of display 8/16 symbols */
-#define HD44780_HORIZONTAL_SIZE   16
+#define HD44780_HORIZONTAL_SIZE   20
 /* Address counter direction
  for correct operation of HD44780_StrShow must be HD44780_AC_INCREMENT */
 #define HD44780_AC_DIR            HD44780_AC_INCREMENT
