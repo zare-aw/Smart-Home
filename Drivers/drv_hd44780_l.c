@@ -180,7 +180,12 @@ uint8 HD44780_Read_IO(void)
   HD44780_Set_E(1);
   HD44780_BUS_DLY();
   
-  //Data = (IO1PIN >> 16) & 0xFF;
+  Data = (HD44780_D7_READ() << 3) | (HD44780_D6_READ() << 2) | (HD44780_D5_READ() << 1) | (HD44780_D4_READ() << 0);
+  
+#if HD44780_BUS_WIDTH == 8
+  Data <<= 4;
+  Data |= (HD44780_D3_READ() << 3) | (HD44780_D2_READ() << 2) | (HD44780_D1_READ() << 1) | HD44780_D0_READ();
+#endif
   
   HD44780_Set_E(0);
   
