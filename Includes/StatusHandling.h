@@ -324,6 +324,10 @@ extern uint8 FunctionInBeckupBuffer;
 #define TEMP_REINIT                     10708
 #define TEMP_WORK                       10709
 
+// PWM
+#define PWM_INIT                        10800
+#define PWM_SET_DUTY_CYCLE              10801
+
 
 // Functions
 void Function_IN(Function_t Function);

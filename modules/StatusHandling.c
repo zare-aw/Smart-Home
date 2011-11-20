@@ -363,6 +363,19 @@ void Print_Function_History(void)
     case (OUT_SYNC | 800000):
       printc(" - Out_Sync OUT\n");
       break;
+      
+    case (PWM_INIT):
+      printc(" - Pwm_Init IN\n");
+      break;
+    case (PWM_INIT | 800000):
+      printc(" - Pwm_Init OUT\n");
+      break;
+    case (PWM_SET_DUTY_CYCLE):
+      printc(" - Pwm_Set_Duty_Cycle IN\n");
+      break;
+    case (PWM_SET_DUTY_CYCLE | 800000):
+      printc(" - Pwm_Set_Duty_Cycle OUT\n");
+      break;
     
       
     default:

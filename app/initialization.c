@@ -71,7 +71,7 @@ void Power_Init(void)
   PCONP_bit.PCTIM1  = 1;
   PCONP_bit.PCURT0  = 1;
   PCONP_bit.PCURT1  = 1;
-  PCONP_bit.PCPWM0  = 0;
+  PCONP_bit.PCPWM0  = 1;
   PCONP_bit.PCI2C0  = 1;
   PCONP_bit.PCSPI0  = 1;
   PCONP_bit.PCRTC   = 1;
