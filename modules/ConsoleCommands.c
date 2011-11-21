@@ -382,9 +382,9 @@ Status_t Console_Set_Ir(uint8 NoOfCommand)
 /*******************************************************************************
 * 
 *******************************************************************************/
-Status_t Console_Becklight(uint8 NoOfCommand)
+Status_t Console_Backlight(uint8 NoOfCommand)
 {
-  Function_IN(CONSOLE_BECKLIGHT);
+  Function_IN(CONSOLE_BACKLIGHT);
   
   Get_Back_Light_Level_Command(NoOfCommand);
   
@@ -394,9 +394,9 @@ Status_t Console_Becklight(uint8 NoOfCommand)
 /*******************************************************************************
 * 
 *******************************************************************************/
-Status_t Console_Set_Becklight(uint8 NoOfCommand)
+Status_t Console_Set_Backlight(uint8 NoOfCommand)
 {
-  Function_IN(CONSOLE_SET_BECKLIGHT);  
+  Function_IN(CONSOLE_SET_BACKLIGHT);  
   uint8 Level = 50;
       
   if(QueueConsoleCommand[NoOfCommand][15] == ' ' || QueueConsoleCommand[NoOfCommand][15] == 0)

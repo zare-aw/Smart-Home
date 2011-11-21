@@ -6,6 +6,8 @@ typedef unsigned long Function_t;
 
 #define MAX_FUNCTION_IN_BECKUP_BUFFER  10
 
+#define FUNC_OUT_MASK     0x80000000
+
 //#define _STATUS_DEBUG
 
 #ifdef _STATUS_DEBUG
@@ -161,26 +163,29 @@ extern uint8 FunctionInBeckupBuffer;
 /*******************************************************************************
 * Function code definition
 *******************************************************************************/
+// System
 #define INITIALIZATION                10
 #define PLL_INIT                      12
 #define MAM_INIT                      13
 
+// UART
 #define UART_0_INIT                   110
 #define UART_1_INIT                   111
-
 #define SET_INTERRUPT_STATE_UART_0    114
 #define SET_INTERRUPT_STATE_UART_1    115
-
 #define SET_TRIGGER_UART_0            118
 #define SET_TRIGGER_UART_1            119
 
+// Console
 #define CONSOLE_COMMAND_EXECUTE       200
 #define CONSOLE_SERVER_INIT           201
 #define CONSOLE_PRINT_PULL            202
 #define CONSOLE_ISR                   203
 
+// Delay
 #define DLY                           400
 
+// ConsoleHelp
 #define CONSOLE_HELP                  1250
 #define CONSOLE_STATUS                1251
 #define CONSOLE_LIST                  1252
@@ -193,8 +198,8 @@ extern uint8 FunctionInBeckupBuffer;
 #define CONSOLE_SET_CONFIG            1259
 #define CONSOLE_IR                    1260
 #define CONSOLE_SET_IR                1261
-#define CONSOLE_BECKLIGHT             1262
-#define CONSOLE_SET_BECKLIGHT         1263
+#define CONSOLE_BACKLIGHT             1262
+#define CONSOLE_SET_BACKLIGHT         1263
 #define CONSOLE_LIGHT_SWITCH          1264
 #define CONSOLE_SET_LIGHT_SWITCH      1265
 #define CONSOLE_OUT_SWITCH            1266
@@ -207,10 +212,11 @@ extern uint8 FunctionInBeckupBuffer;
 #define CONSOLE_TEMP_ALARM            1273
 #define CONSOLE_SET_TEMP_ALARM        1274
 
-// Debug Commands
+// Debug Commands help
 #define CONSOLE_DUMP_DISPLAY          1500
 #define CONSOLE_UPDATE_DISPLAY        1501
 
+// Console Commands
 #define GET_TIME_COMMAND                2001
 #define SET_TIME_COMMAND                2002
 #define GET_DATE_COMMAND                2003
@@ -237,7 +243,7 @@ extern uint8 FunctionInBeckupBuffer;
 #define DISPLAY_DUMP_COMMAND            2500
 #define DISPLAY_UPDATE_COMMAND          2501
 
-// IR driver
+// IR Driver
 #define IR_INIT                         10000
 #define IR_COMMAND_INIT                 10001
 #define IR_SET_COMMAND                  10002
@@ -247,11 +253,12 @@ extern uint8 FunctionInBeckupBuffer;
 #define IR_EXT_INTERRUPT_ISR            10006
 #define IR_EXT_INTERRUPT_INIT           10007
 
-// Out driver
+// Out Driver
 #define OUT_INIT                        10100
 #define OUT_SYNC                        10101
 #define OUT_GET_STATE                   10102
 
+// Menu Callbacks
 #define MENU_CALLBACKS_INIT             10200
 #define POWER_KEY_CALLBACK              10201
 #define UP_KEY_CALLBACK                 10202
@@ -278,6 +285,7 @@ extern uint8 FunctionInBeckupBuffer;
 #define CH_DOWN_KEY_CALLBACK            10224
 #define MUTE_KEY_CALLBACK               10225
 
+// RTC
 #define RTC_INIT                        10400
 #define RTC_SET_DATE                    10401
 #define RTC_SET_TIME                    10402
@@ -295,12 +303,14 @@ extern uint8 FunctionInBeckupBuffer;
 #define FORMAT_DATE                     10430
 #define FORMAT_TIME                     10431
 
+// DS1820 Driver
 #define DS1820_INIT                     10500
 #define DS1820_START_CONVERSION         10501
 #define DS1820_READ_TEMP                10502
 #define DS1820_READ_SN                  10503
 #define DS_RESET                        10520
 
+// Menu
 #define MENU_INIT                       10600
 #define MENU                            10601
 #define DISPLAY_MENU_UPDATE             10602
@@ -313,6 +323,7 @@ extern uint8 FunctionInBeckupBuffer;
 #define UPDATE_SURFACE_BUFFER           10609
 #define PRINTD                          10610
 
+// Temperature
 #define REGISTER_TEMP_SENSOR            10700
 #define UNREGISTER_TEMP_SENSOR          10701
 #define REGISTER_TEMP_ALARM             10702
@@ -335,9 +346,5 @@ void Function_OUT(Function_t Function);
 void This_Function_OUT(void);
 uint8 Abort(Status_t Status);
 void Print_Function_History(void);
-
-
-
-
 
 #endif

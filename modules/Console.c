@@ -297,10 +297,10 @@ Status_t Console_Command_Execute(uint8 NoOfCommand)
        CONTROL(!Console_Ir(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
   else if(!strncmp( "set-ir", QueueConsoleCommand[NoOfCommand], 6))
        CONTROL(!Console_Set_Ir(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "becklight", QueueConsoleCommand[NoOfCommand], 9))
-       CONTROL(!Console_Becklight(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "set-becklight", QueueConsoleCommand[NoOfCommand], 13))
-       CONTROL(!Console_Set_Becklight(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
+  else if(!strncmp( "backlight", QueueConsoleCommand[NoOfCommand], 9))
+       CONTROL(!Console_Backlight(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
+  else if(!strncmp( "set-backlight", QueueConsoleCommand[NoOfCommand], 13))
+       CONTROL(!Console_Set_Backlight(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
   else if(!strncmp( "light-switch", QueueConsoleCommand[NoOfCommand], 12))
        CONTROL(!Console_Light_Switch(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
   else if(!strncmp( "set-light-switch", QueueConsoleCommand[NoOfCommand], 16))
