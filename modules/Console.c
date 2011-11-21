@@ -5,14 +5,18 @@
 char InputString[MAX_CONSOLE_COMMAND_LENGTH] = {0};
 char Console_Queue[CONSOLE_QUEUE_SIZE] = {0};
 char QueueConsoleCommand[MAX_CONSOLE_COMMAND_IN_QUEUE][MAX_CONSOLE_COMMAND_LENGTH] = {0};
+char ConsoleCommandHistory[MAX_CONSOLE_COMMAND_HISTORY][MAX_CONSOLE_COMMAND_LENGTH] = {0};
 
 uint32 Console_Queue_Cnt = 0;
 uint32 Console_Queue_Add_Cnt = 0;
 uint32 Console_Queue_Print_Cnt = 0;
 uint8 InputCharCnt = 0;
 uint8 ConsoleCommandsInQueue = 0;
+uint8 ConsoleCommandsInHistory = 0;
 uint8 Console_Mode = MODE_POOLING;
 uint8 ConsoleChanel = UART_0;
+
+static Status_t Add_Console_Command_In_History(char *InputString);
 
 /*******************************************************************************
 * Definicija na funkciski pokazuvaci
@@ -131,7 +135,10 @@ __arm Status_t Console_ISR(void)
     InputString[InputCharCnt] = '\0';
     
     if(strlen(InputString) != 0)
+    {
       Add_Console_Command_In_Queue(InputString);
+      Add_Console_Command_In_History(InputString);
+    }
     
     InputCharCnt = 0;
     break;
@@ -240,10 +247,28 @@ Status_t Add_Console_Command_In_Queue(char *InputString)
   CONTROL(InputString != NULL, INVALID_INPUT_POINTER);
   CONTROL(ConsoleCommandsInQueue <= MAX_CONSOLE_COMMAND_IN_QUEUE, CONSOLE_COMMANDS_OVERFLOW);
   
-  strcpy(QueueConsoleCommand[ConsoleCommandsInQueue], InputString);      
+  strcpy(QueueConsoleCommand[ConsoleCommandsInQueue], InputString);
   ConsoleCommandsInQueue++;
 
   return SUCCESS;
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+static Status_t Add_Console_Command_In_History(char *InputString)
+{
+  Function_IN(ADD_CONSOLE_COMMAND_IN_HISTORY);
+  CONTROL(InputString != NULL, INVALID_INPUT_POINTER);
+  
+  if(ConsoleCommandsInHistory >= MAX_CONSOLE_COMMAND_HISTORY)
+    ConsoleCommandsInHistory = 0;
+  
+  strcpy(ConsoleCommandHistory[ConsoleCommandsInHistory], InputString);
+  
+  ConsoleCommandsInHistory ++;
+  
+  RETURN_SUCCESS_FUNC(ADD_CONSOLE_COMMAND_IN_HISTORY);
 }
 
 /*******************************************************************************
@@ -261,7 +286,7 @@ Status_t Remove_Console_Command_From_Queue(uint8 NoOfCommand)
   ConsoleCommandsInQueue--;
   Console_Return_Old_Interrupt_State();
   
-  return  SUCCESS;
+  return SUCCESS;
 }
 
 /*******************************************************************************

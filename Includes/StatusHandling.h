@@ -181,6 +181,7 @@ extern uint8 FunctionInBeckupBuffer;
 #define CONSOLE_SERVER_INIT           201
 #define CONSOLE_PRINT_PULL            202
 #define CONSOLE_ISR                   203
+#define ADD_CONSOLE_COMMAND_IN_HISTORY  204
 
 // Delay
 #define DLY                           400
