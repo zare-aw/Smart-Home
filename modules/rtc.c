@@ -585,7 +585,7 @@ Status_t RTC_SW_Alarm_Callback(void *InPtr)
   {
     if(SwAlarm[i].State == RTC_ALARM_ON)
     {
-      CONTROL(RTC_Get_Date_Time(&DateTime), RTC_GENERAL_ERROR);
+      CONTROL(!RTC_Get_Date_Time(&DateTime), RTC_GENERAL_ERROR);
       
       if((SwAlarm[i].Minute == DateTime.Minute) && (SwAlarm[i].Hour == DateTime.Hour))
       {
@@ -593,7 +593,7 @@ Status_t RTC_SW_Alarm_Callback(void *InPtr)
         {
           if((SwAlarm[i].Year == DateTime.Year) && (SwAlarm[i].Month == DateTime.Month) && (SwAlarm[i].Day == DateTime.Day))
           {
-            CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+            CONTROL(!((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
             SwAlarm[i].State = RTC_ALARM_OFF;
           }
         }
@@ -601,7 +601,7 @@ Status_t RTC_SW_Alarm_Callback(void *InPtr)
         {
           if(SwAlarm[i].Mode == SINGLE_ALARM)
           {
-            CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+            CONTROL(!((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
             SwAlarm[i].State = RTC_ALARM_OFF;
           }
           else if(SwAlarm[i].Mode == REPETITIVE_ALARM)
@@ -610,15 +610,15 @@ Status_t RTC_SW_Alarm_Callback(void *InPtr)
             {
               case 1:
                 if(SwAlarm[i].DoW & MONDAY)
-                  CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                  CONTROL(!((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
                 break;
               case 2:
                 if(SwAlarm[i].DoW & TUESDAY)
-                  CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                  CONTROL(!((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
                 break;
               case 3:
                 if(SwAlarm[i].DoW & WEDNESDAY)
-                  CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                  CONTROL(!((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
                 break;
               case 4:
                 if(SwAlarm[i].DoW & THURSDAY)
@@ -626,15 +626,15 @@ Status_t RTC_SW_Alarm_Callback(void *InPtr)
                 break;
               case 5:
                 if(SwAlarm[i].DoW & FRIDAY)
-                  CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                  CONTROL(!((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
                 break;
               case 6:
                 if(SwAlarm[i].DoW & SATURDAY)
-                  CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                  CONTROL(!((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
                 break;
               case 0:
                 if(SwAlarm[i].DoW & SUNDAY)
-                  CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                  CONTROL(!((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
                 break;
               default:
                 CONTROL(0, REGISTER_ERROR);
@@ -670,7 +670,7 @@ __irq void RTC_ISR(void)
     for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Second int
     {
       if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_SEC)
-        CONTROL_ABORT(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
+        CONTROL_ABORT(!((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
     }
     
     RTC_Get_Date_Time(&DateTime);
@@ -680,7 +680,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Minute int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_MIN)
-          CONTROL_ABORT(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
+          CONTROL_ABORT(!((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
       }
     }
     
@@ -689,7 +689,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Hour int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_HOUR)
-          CONTROL_ABORT(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
+          CONTROL_ABORT(!((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
       }
     }
     
@@ -698,7 +698,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Day int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_DAY)
-          CONTROL_ABORT(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
+          CONTROL_ABORT(!((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
       }
     }
     
@@ -707,7 +707,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Month int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_MON)
-          CONTROL_ABORT(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
+          CONTROL_ABORT(!((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
       }
     }
     
@@ -716,7 +716,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Year int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_YEAR)
-          CONTROL_ABORT(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
+          CONTROL_ABORT(!((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
       }
     }
     
@@ -725,7 +725,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // DoW int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_DOW)
-          CONTROL_ABORT(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
+          CONTROL_ABORT(!((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
       }
     }
   } // if (IntStatus & RTCIncrementInt)

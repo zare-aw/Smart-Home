@@ -117,10 +117,10 @@ typedef struct
   uint8 Hour;
   uint8 Minute;
   
-  uint8 Mode;   // REPETITIVE, SINGLE. For repetitive is reading from DoW
-  uint8 State;  // OFF, ON or NO_ALARM_SET.
+  uint8 Mode;   // REPETITIVE_ALARM, SINGLE_ALARM. For repetitive is reading from DoW
+  uint8 State;  // RTC_ALARM_OFF, RTC_ALARM_ON or NO_ALARM_SET.
   
-  void *Callback;
+  void *Callback;   // Return Status_t and get void pointer
   
   uint8 DoW;    // Day of week, one bit is one day starting from bit 0 - Monday
 } RtcSwAlarm_t;
