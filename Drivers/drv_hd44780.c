@@ -1,7 +1,4 @@
 #include "Includes.h"
-#include "drv_hd44780.h"
-#include "drv_hd44780_cnfg.h"
-#include "drv_hd44780_l.h"
 
 #if (HD44780_BUS_WIDTH != 4) && (HD44780_BUS_WIDTH != 8)
 #error The HD44780_BUS_WIDTH must be 8 or 4!
@@ -577,7 +574,7 @@ HD44780_ERROR_CODE_DEF HD44780_RdCGRAM(HD44780_STRING_DEF * CG_Data, uint8 CGRAM
   }
   for ( ;Counter; --Counter)
   {
-    *CG_Data = HD44780RdData();
+    *CG_Data = HD44780_Read_Data();
     if (HD44780_BusyCheck(NULL,HD44780_SECOND_COMM_DLY) != HD44780_OK)
     {
       break;

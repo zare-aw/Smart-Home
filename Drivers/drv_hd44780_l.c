@@ -1,5 +1,4 @@
-#include "drv_hd44780_cnfg.h"
-#include "drv_hd44780_l.h"
+#include "Includes.h"
 
 /*************************************************************************
 * Function Name: HD44780_IO_Init
@@ -180,11 +179,17 @@ uint8 HD44780_Read_IO(void)
   HD44780_Set_E(1);
   HD44780_BUS_DLY();
   
-  Data = (HD44780_D7_READ() << 3) | (HD44780_D6_READ() << 2) | (HD44780_D5_READ() << 1) | (HD44780_D4_READ() << 0);
+  Data = (HD44780_D7_READ() << 3);
+  Data |= (HD44780_D6_READ() << 2);
+  Data |= (HD44780_D5_READ() << 1);
+  Data |= (HD44780_D4_READ() << 0);
   
 #if HD44780_BUS_WIDTH == 8
   Data <<= 4;
-  Data |= (HD44780_D3_READ() << 3) | (HD44780_D2_READ() << 2) | (HD44780_D1_READ() << 1) | HD44780_D0_READ();
+  Data |= (HD44780_D3_READ() << 3);
+  Data |= (HD44780_D2_READ() << 2);
+  Data |= (HD44780_D1_READ() << 1);
+  Data |= (HD44780_D0_READ() << 0);
 #endif
   
   HD44780_Set_E(0);
