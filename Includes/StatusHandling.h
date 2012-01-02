@@ -339,6 +339,9 @@ extern uint8 FunctionInBeckupBuffer;
 #define PWM_INIT                        10800
 #define PWM_SET_DUTY_CYCLE              10801
 
+// Backlight
+#define BACKLIGHT_INIT                  10900
+#define SET_BACKLIGHT_INTENSITY         10901
 
 // Functions
 void Function_IN(Function_t Function);

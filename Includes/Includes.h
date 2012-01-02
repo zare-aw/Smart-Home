@@ -75,5 +75,6 @@ typedef signed long long    sint64;
 #include "drv_hd44780_cnfg.h"
 #include "drv_hd44780_l.h"
 #include "PWM.h"
+#include "Backlight.h"
 
 #endif
