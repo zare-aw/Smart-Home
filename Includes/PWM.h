@@ -5,6 +5,14 @@
 #define SINGLE_EDGE_CONTROL   1
 #define DOUBLE_EDGE_CONTROL   2
 
+#define _PWM_DEBUG
+
+#ifdef _PWM_DEBUG
+#define PWM_DEBUG(a) a
+#else
+#define PWM_DEBUG(a)
+#endif
+
 #define PWM_OUT_1_ON    0x01
 #define PWM_OUT_2_ON    0x02
 #define PWM_OUT_3_ON    0x04

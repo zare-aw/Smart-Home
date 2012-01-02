@@ -42,6 +42,8 @@ Status_t Pwm_Init(uint8 Mode, uint32 Freq, uint8 OutEnable, PwmOutD_t *PwmOutD)
     PWMMCR_bit.MR1STOP = 0;   // Disabled Timer stop on Match 1
     
     PWMPCR_bit.SEL1 = 0;      // Single Mode PWM Match 1
+
+    PWM_DEBUG(printc("\r # PWM out 1 initialized with initial DutyCycle = %d\n", PwmOutD -> Out1D));
   }
   
   if(OutEnable & PWM_OUT_2_ON)
@@ -59,6 +61,8 @@ Status_t Pwm_Init(uint8 Mode, uint32 Freq, uint8 OutEnable, PwmOutD_t *PwmOutD)
     PWMMCR_bit.MR2STOP = 0;   // Disabled Timer stop on Match 2
     
     PWMPCR_bit.SEL2 = 0;      // Single Mode PWM Match 2
+
+    PWM_DEBUG(printc("\r # PWM out 2 initialized with initial DutyCycle = %d\n", PwmOutD -> Out2D));
   }
   
   if(OutEnable & PWM_OUT_3_ON)
@@ -76,6 +80,8 @@ Status_t Pwm_Init(uint8 Mode, uint32 Freq, uint8 OutEnable, PwmOutD_t *PwmOutD)
     PWMMCR_bit.MR3STOP = 0;   // Disabled Timer stop on Match 3
     
     PWMPCR_bit.SEL3 = 0;      // Single Mode PWM Match 3
+
+    PWM_DEBUG(printc("\r # PWM out 3 initialized with initial DutyCycle = %d\n", PwmOutD -> Out3D));
   }
   
   if(OutEnable & PWM_OUT_4_ON)
@@ -93,6 +99,8 @@ Status_t Pwm_Init(uint8 Mode, uint32 Freq, uint8 OutEnable, PwmOutD_t *PwmOutD)
     PWMMCR_bit.MR4STOP = 0;   // Disabled Timer stop on Match 4
     
     PWMPCR_bit.SEL4 = 0;      // Single Mode PWM Match 4
+
+    PWM_DEBUG(printc("\r # PWM out 4 initialized with initial DutyCycle = %d\n", PwmOutD -> Out4D));
   }
   
   if(OutEnable & PWM_OUT_5_ON)
@@ -110,6 +118,8 @@ Status_t Pwm_Init(uint8 Mode, uint32 Freq, uint8 OutEnable, PwmOutD_t *PwmOutD)
     PWMMCR_bit.MR5STOP = 0;   // Disabled Timer stop on Match 5
     
     PWMPCR_bit.SEL5 = 0;      // Single Mode PWM Match 5
+
+    PWM_DEBUG(printc("\r # PWM out 5 initialized with initial DutyCycle = %d\n", PwmOutD -> Out5D));
   }
   
   if(OutEnable & PWM_OUT_6_ON)
@@ -127,6 +137,8 @@ Status_t Pwm_Init(uint8 Mode, uint32 Freq, uint8 OutEnable, PwmOutD_t *PwmOutD)
     PWMMCR_bit.MR6STOP = 0;   // Disabled Timer stop on Match 6
     
     PWMPCR_bit.SEL6 = 0;      // Single Mode PWM Match 6
+
+    PWM_DEBUG(printc("\r # PWM out 6 initialized with initial DutyCycle = %d\n", PwmOutD -> Out6D));
   }
   
   PWMTCR_bit.CE = 1;          // Timer Counter Enabled
@@ -151,22 +163,40 @@ Status_t Pwm_Set_Duty_Cycle(uint8 Out, uint16 DutyCycle)
   switch(Out)
   {
     case 1:
+      PWMLER_bit.EM1L = 0;
       PWMMR1 = DutyRatio * DutyCycle;
+      PWMLER_bit.EM1L = 1;
+      PWM_DEBUG(printc("\r # PWM out 1 set DutyCycle = %d\n", DutyCycle));
       break;
     case 2:
+      PWMLER_bit.EM2L = 0;
       PWMMR2 = DutyRatio * DutyCycle;
+      PWMLER_bit.EM2L = 1;
+      PWM_DEBUG(printc("\r # PWM out 2 set DutyCycle = %d\n", DutyCycle));
       break;
     case 3:
+      PWMLER_bit.EM3L = 0;
       PWMMR3 = DutyRatio * DutyCycle;
+      PWMLER_bit.EM3L = 1;
+      PWM_DEBUG(printc("\r # PWM out 3 set DutyCycle = %d\n", DutyCycle));
       break;
     case 4:
+      PWMLER_bit.EM4L = 0;
       PWMMR4 = DutyRatio * DutyCycle;
+      PWMLER_bit.EM4L = 1;
+      PWM_DEBUG(printc("\r # PWM out 4 set DutyCycle = %d\n", DutyCycle));
       break;
     case 5:
+      PWMLER_bit.EM5L = 0;
       PWMMR5 = DutyRatio * DutyCycle;
+      PWMLER_bit.EM5L = 1;
+      PWM_DEBUG(printc("\r # PWM out 5 set DutyCycle = %d\n", DutyCycle));
       break;
     case 6:
+      PWMLER_bit.EM6L = 0;
       PWMMR6 = DutyRatio * DutyCycle;
+      PWMLER_bit.EM6L = 1;
+      PWM_DEBUG(printc("\r # PWM out 6 set DutyCycle = %d\n", DutyCycle));
       break;
     default:
       CONTROL(0, INVALID_INPUT_PARAMETER);
