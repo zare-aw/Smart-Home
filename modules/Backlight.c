@@ -16,6 +16,8 @@ Status_t Backlight_Init(uint16 StartIntensity)
 
   Pwm_Init(SINGLE_EDGE_CONTROL, BACKLIGHT_FREQ, BACKLIGHT_OUT, &BacklightStartIntensity);
 
+  BACKLIGHT_DEBUG(printc("\r # Backlight Initialized with Initial Intensity = %d\n", StartIntensity));
+
   RETURN_SUCCESS_FUNC(BACKLIGHT_INIT);
 }
 
@@ -31,6 +33,8 @@ Status_t Set_Backlight_Intensity(uint16 Intensity)
   Function_IN(SET_BACKLIGHT_INTENSITY);
 
   Pwm_Set_Duty_Cycle(BACKLIGHT_OUT_NUMBER, Intensity);
+
+  BACKLIGHT_DEBUG(printc("\r # Backlight: Set new Intensity = %d\n", Intensity));
 
   RETURN_SUCCESS_FUNC(SET_BACKLIGHT_INTENSITY);
 }
