@@ -75,6 +75,28 @@ void Add_Char_In_Console_Queue(char Input)
 }
 
 /*******************************************************************************
+* Dodava string vo console queue
+* @in: char *Input - Pinter kon string koj ke se dodade vo Queue
+* @out Status_t
+*******************************************************************************/
+Status_t Add_String_In_Console_Queue(char *Input)
+{
+  Function_IN(ADD_STRING_IN_CONSOLE_QUEUE);
+  uint16 Cnt = 0;
+  CONTROL(Input != NULL, INVALID_INPUT_POINTER);
+  
+  while(Input[Cnt] != '\0')
+  {
+    Add_Char_In_Console_Queue(Input[Cnt]);
+	Cnt++;
+	
+	CONTROL(Cnt < MAX_CONSOLE_COMMAND_LENGTH, INVALID_INPUT_PARAMETER);
+  }
+  
+  RETURN_SUCCESS_FUNC(ADD_STRING_IN_CONSOLE_QUEUE);
+}
+
+/*******************************************************************************
 * Funkcija koja se povikuva periodicno vo glavna jamka
 * i pecati toa sto ima vo queue
 * @in NONE
