@@ -127,11 +127,11 @@ __arm Status_t Console_ISR(void)
   switch(Ch)
   {
   case 0x0D:  // Enter
-    Console_Put_Char(Ch, 0x3FFFFFFF);
-    Console_Put_Char(0x0A, 0x3FFFFFFF);   // LF
-    Console_Put_Char(0x7E, 0x3FFFFFFF);   // '~'
-    Console_Put_Char(0x24, 0x3FFFFFFF);   // '$'
-    Console_Put_Char(0x20, 0x3FFFFFFF);   // SPACE
+    Add_Char_In_Console_Queue(Ch);
+    Add_Char_In_Console_Queue(0x0A);   // LF
+    Add_Char_In_Console_Queue(0x7E);   // '~'
+    Add_Char_In_Console_Queue(0x24);   // '$'
+    Add_Char_In_Console_Queue(0x20);   // SPACE
     InputString[InputCharCnt] = '\0';
     
     if(strlen(InputString) != 0)
@@ -146,18 +146,18 @@ __arm Status_t Console_ISR(void)
     if(InputCharCnt > 0)
     {
       InputCharCnt --;
-      Console_Put_Char(Ch, 0x3FFFFFFF);
+      Add_Char_In_Console_Queue(Ch);
     }
     break;
   case 0x7F:  // Delete
     if(InputCharCnt > 0)
     {
       InputCharCnt --;
-      Console_Put_Char(Ch, 0x3FFFFFFF);
+      Add_Char_In_Console_Queue(Ch);
     }
     break;
   default:
-    Console_Put_Char(Ch, 0x3FFFFFFF);
+    Add_Char_In_Console_Queue(Ch);
     InputString[InputCharCnt] = Ch;
     InputCharCnt ++;
     break;
