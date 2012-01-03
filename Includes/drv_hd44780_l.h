@@ -1,6 +1,8 @@
 #ifndef  __DRV_HD44780_L_H
 #define  __DRV_HD44780_L_H
 
+#include "drv_hd44780_cnfg.h"
+
 /* Delay macro */
 #define HD44780_BUS_DLY()      for(volatile int dly = 10; dly; --dly)
 
@@ -11,10 +13,18 @@
 #define HD44780_D6_INIT()   ( PINSEL1_bit.P0_18 = 0, FIO0CLR_bit.P0_18 = 1, FIO0DIR_bit.P0_18 = 1 )
 #define HD44780_D5_INIT()   ( PINSEL1_bit.P0_17 = 0, FIO0CLR_bit.P0_17 = 1, FIO0DIR_bit.P0_17 = 1 )
 #define HD44780_D4_INIT()   ( PINSEL1_bit.P0_19 = 0, FIO0CLR_bit.P0_19 = 1, FIO0DIR_bit.P0_19 = 1 )
+
+#if HD44780_BUS_WIDTH == 8
 #define HD44780_D3_INIT()
 #define HD44780_D2_INIT()
 #define HD44780_D1_INIT()
 #define HD44780_D0_INIT()
+#else
+#define HD44780_D3_INIT()
+#define HD44780_D2_INIT()
+#define HD44780_D1_INIT()
+#define HD44780_D0_INIT()
+#endif
 
 #define HD44780_RS_OUT()    ( FIO1DIR_bit.P1_21 = 1 )
 #define HD44780_RW_OUT()    ( FIO0DIR_bit.P0_20 = 1 )
@@ -23,10 +33,18 @@
 #define HD44780_D6_OUT()    ( FIO0DIR_bit.P0_18 = 1 )
 #define HD44780_D5_OUT()    ( FIO0DIR_bit.P0_17 = 1 )
 #define HD44780_D4_OUT()    ( FIO0DIR_bit.P0_19 = 1 )
+
+#if HD44780_BUS_WIDTH == 8
 #define HD44780_D3_OUT()
 #define HD44780_D2_OUT()
 #define HD44780_D1_OUT()
 #define HD44780_D0_OUT()
+#else
+#define HD44780_D3_OUT()
+#define HD44780_D2_OUT()
+#define HD44780_D1_OUT()
+#define HD44780_D0_OUT()
+#endif
 
 #define HD44780_RS_IN()     ( FIO1DIR_bit.P1_21 = 0 )
 #define HD44780_RW_IN()     ( FIO0DIR_bit.P0_20 = 0 )
@@ -35,10 +53,18 @@
 #define HD44780_D6_IN()     ( FIO0DIR_bit.P0_18 = 0 )
 #define HD44780_D5_IN()     ( FIO0DIR_bit.P0_17 = 0 )
 #define HD44780_D4_IN()     ( FIO0DIR_bit.P0_19 = 0 )
+
+#if HD44780_BUS_WIDTH == 8
 #define HD44780_D3_IN()
 #define HD44780_D2_IN()
 #define HD44780_D1_IN()
 #define HD44780_D0_IN()
+#else
+#define HD44780_D3_IN()
+#define HD44780_D2_IN()
+#define HD44780_D1_IN()
+#define HD44780_D0_IN()
+#endif
 
 #define HD44780_RS_SET()    ( FIO1SET_bit.P1_21 = 1 )
 #define HD44780_RW_SET()    ( FIO0SET_bit.P0_20 = 1 )
@@ -47,10 +73,18 @@
 #define HD44780_D6_SET()    ( FIO0SET_bit.P0_18 = 1 )
 #define HD44780_D5_SET()    ( FIO0SET_bit.P0_17 = 1 )
 #define HD44780_D4_SET()    ( FIO0SET_bit.P0_19 = 1 )
+
+#if HD44780_BUS_WIDTH == 8
 #define HD44780_D3_SET()
 #define HD44780_D2_SET()
 #define HD44780_D1_SET()
 #define HD44780_D0_SET()
+#else
+#define HD44780_D3_SET()
+#define HD44780_D2_SET()
+#define HD44780_D1_SET()
+#define HD44780_D0_SET()
+#endif
 
 #define HD44780_RS_CLR()    ( FIO1CLR_bit.P1_21 = 1 )
 #define HD44780_RW_CLR()    ( FIO0CLR_bit.P0_20 = 1 )
@@ -59,19 +93,35 @@
 #define HD44780_D6_CLR()    ( FIO0CLR_bit.P0_18 = 1 )
 #define HD44780_D5_CLR()    ( FIO0CLR_bit.P0_17 = 1 )
 #define HD44780_D4_CLR()    ( FIO0CLR_bit.P0_19 = 1 )
+
+#if HD44780_BUS_WIDTH == 8
 #define HD44780_D3_CLR()
 #define HD44780_D2_CLR()
 #define HD44780_D1_CLR()
 #define HD44780_D0_CLR()
+#else
+#define HD44780_D3_CLR()
+#define HD44780_D2_CLR()
+#define HD44780_D1_CLR()
+#define HD44780_D0_CLR()
+#endif
 
 #define HD44780_D7_READ()    ( FIO1PIN_bit.P1_20 )
 #define HD44780_D6_READ()    ( FIO0PIN_bit.P0_18 )
 #define HD44780_D5_READ()    ( FIO0PIN_bit.P0_17 )
 #define HD44780_D4_READ()    ( FIO0PIN_bit.P0_19 )
-#define HD44780_D3_READ()
-#define HD44780_D2_READ()
-#define HD44780_D1_READ()
-#define HD44780_D0_READ()
+
+#if HD44780_BUS_WIDTH == 8
+#define HD44780_D3_READ()     0
+#define HD44780_D2_READ()     0
+#define HD44780_D1_READ()     0
+#define HD44780_D0_READ()     0
+#else
+#define HD44780_D3_READ()     0
+#define HD44780_D2_READ()     0
+#define HD44780_D1_READ()     0
+#define HD44780_D0_READ()     0
+#endif
 
 void HD44780_IO_Init(void);
 void HD44780_Set_RS(uint8 Data);

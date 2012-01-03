@@ -1,7 +1,4 @@
 #include "Includes.h"
-#include "drv_hd44780.h"
-#include "drv_hd44780_cnfg.h"
-#include "drv_hd44780_l.h"
 
 #if (HD44780_BUS_WIDTH != 4) && (HD44780_BUS_WIDTH != 8)
 #error The HD44780_BUS_WIDTH must be 8 or 4!
@@ -67,7 +64,7 @@ HD44780_CTRL_DEF HD4478_Ctrl =
   HD44780_CURSOR_MODE,  /* Cursor mode Blink or not */
 };
 
-#if HD4780_WR == 0
+#if HD44780_WR == 0
 sint8 DataRamAddHold = 0;
 #endif
 
@@ -94,7 +91,7 @@ void HD44780_Write_Data(uint8 Data)
 #endif
 }
 
-#if HD4780_WR > 0
+#if HD44780_WR > 0
 /*************************************************************************
 * Function Name: HD44780_Read_Data
 * @in: None
@@ -132,7 +129,7 @@ void HD44780_Write_Command(uint8 Command)
 #endif
 }
 
-#if HD4780_WR > 0
+#if HD44780_WR > 0
 /*************************************************************************
 * Function Name: HD44780_Read_Status
 * @in: None
@@ -237,12 +234,12 @@ HD44780_ERROR_CODE_DEF HD44780_CheckVisual(uint8 DDRamAdd)
  *************************************************************************/
 HD44780_ERROR_CODE_DEF HD44780_BusyCheck(uint8 * AddCount, uint32 MaxDly)
 {
-#if HD4780_WR > 0
+#if HD44780_WR > 0
 uint8 AddHold;
 #endif
   for (;MaxDly;--MaxDly)
   {
-#if HD4780_WR > 0
+#if HD44780_WR > 0
     AddHold = HD44780_Read_Status();
     if ((AddHold & HD44780_STATUS_BUSY_MASK) == 0)
     {
@@ -261,7 +258,7 @@ uint8 AddHold;
 #endif
     Dly(100, 'u', NULL);
   }
-#if HD4780_WR > 0
+#if HD44780_WR > 0
   return HD44780_BUSY_TO_ERROR;
 #else
   if(AddCount != NULL)
@@ -328,7 +325,7 @@ HD44780_ERROR_CODE_DEF HD44780_PowerUpInit(void)
   {
     return HD44780_ERROR;
   }
-#if HD4780_WR == 0
+#if HD44780_WR == 0
   DataRamAddHold = 0;
 #endif
   /* Set entry mode */
@@ -400,7 +397,7 @@ HD44780_ERROR_CODE_DEF HD44780_SetMode(void)
  *************************************************************************/
 HD44780_ERROR_CODE_DEF HD44780_ClearDisplay (void)
 {
-#if HD4780_WR == 0
+#if HD44780_WR == 0
   DataRamAddHold = 0;
 #endif
   HD4478_Ctrl.DisplayPos = 0;
@@ -419,7 +416,7 @@ HD44780_ERROR_CODE_DEF HD44780_ClearDisplay (void)
  *************************************************************************/
 HD44780_ERROR_CODE_DEF HD44780_ReturnToHome(void)
 {
-#if HD4780_WR == 0
+#if HD44780_WR == 0
   DataRamAddHold = 0;
 #endif
   HD4478_Ctrl.DisplayPos = 0;
@@ -520,7 +517,7 @@ HD44780_ERROR_CODE_DEF HD44780_CursorPosSet (uint8 CursorOn, uint8 CursorBlink, 
   }
   /* Set Address to DDRAM */
   HD44780_Write_Command(HD44780_SET_DDRAM_ADD + CursorPos);
-#if HD4780_WR == 0
+#if HD44780_WR == 0
   DataRamAddHold = CursorPos;
 #endif
   if (HD44780_BusyCheck(NULL,HD44780_SECOND_COMM_DLY) != HD44780_OK)
@@ -533,7 +530,7 @@ HD44780_ERROR_CODE_DEF HD44780_CursorPosSet (uint8 CursorOn, uint8 CursorBlink, 
   return HD44780_SetMode();
 }
 
-#if HD4780_WR > 0
+#if HD44780_WR > 0
 /*************************************************************************
  * Function Name: HD44780_RdCGRAM
  * Parameters: HD44780_STRING_DEF * CG_Data,
@@ -577,7 +574,7 @@ HD44780_ERROR_CODE_DEF HD44780_RdCGRAM(HD44780_STRING_DEF * CG_Data, uint8 CGRAM
   }
   for ( ;Counter; --Counter)
   {
-    *CG_Data = HD44780RdData();
+    *CG_Data = HD44780_Read_Data();
     if (HD44780_BusyCheck(NULL,HD44780_SECOND_COMM_DLY) != HD44780_OK)
     {
       break;
