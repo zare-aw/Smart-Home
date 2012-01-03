@@ -274,6 +274,26 @@ static Status_t Add_Console_Command_In_History(char *InputString)
 /*******************************************************************************
 * 
 *******************************************************************************/
+static Status_t Get_Console_Command_From_History(uint8 NoOfPreviousCommand, char *CommandString)
+{
+  Function_IN(GET_CONSOLE_COMMAND_FROM_HISTORY);
+  CONTROL(CommandString != NULL, INVALID_INPUT_POINTER);
+  
+  int Command = (int)(ConsoleCommandsInHistory - 1);
+  
+  Command -= NoOfPreviousCommand;
+  
+  if(Command < 0)
+    Command = MAX_CONSOLE_COMMAND_HISTORY + Command;
+  
+  strcpy(InputString, ConsoleCommandHistory[Command]);
+
+  RETURN_SUCCESS_FUNC(GET_CONSOLE_COMMAND_FROM_HISTORY);
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
 Status_t Remove_Console_Command_From_Queue(uint8 NoOfCommand)
 {
   CONTROL(NoOfCommand < ConsoleCommandsInQueue, INVALID_INPUT_PARAMETER);
