@@ -8,19 +8,21 @@
 
 #pragma section=".cmd"
 
-typedef struct CmdTbl_s
+
+
+typedef struct Cmd_Tbl_s
 {
   char *Name;         // Command name
   uint8 MaxArgs;      // Maximum number of arguments
-  Status_t (*Cmd)(struct CmdTbl_s *, uint32, uint32, char *[]);  // Implementation function
+  Status_t (*Cmd)(struct Cmd_Tbl_s *, uint32, uint32, char *[]);  // Implementation function
   char *Usage;        // Usage message
 #ifdef CFG_HELP
   char *Help;         // Help message
 #endif
-} CmdTbl_t;
+} Cmd_Tbl_t;
 
 #define CMD_CREATE(Name, MaxArgs, Cmd, Usage, Help) \
-__root __packed CmdTbl_t Cmd_##Name @ ".cmd" = {#Name, MaxArgs, Cmd, Usage, Help}
+__root __packed Cmd_Tbl_t Cmd_##Name @ ".cmd" = {#Name, MaxArgs, Cmd, Usage, Help}
 
 
 #endif
