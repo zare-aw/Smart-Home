@@ -9,6 +9,10 @@
 #pragma section=".cmd"
 
 
+// State defines
+// Find_Cmd()
+#define POSSIBLE_CMD                0x05000001
+#define CMD_NOT_FOUND               0x05000002
 
 typedef struct Cmd_Tbl_s
 {
@@ -24,8 +28,11 @@ typedef struct Cmd_Tbl_s
 #define CMD_CREATE(Name, MaxArgs, Cmd, Usage, Help) \
 __root __packed Cmd_Tbl_t Cmd_##Name @ ".cmd" = {#Name, MaxArgs, Cmd, Usage, Help}
 
+
+// Functions
 Cmd_Tbl_t *Get_Cmd_Section_Begin(void);
 Cmd_Tbl_t *Get_Cmd_Section_End(void);
 uint32 Get_Cmd_Section_Size(void);
+Status_t Find_Cmd(const char *Cmd, Cmd_Tbl_t **Cmd_Tbl_p);
 
 #endif
