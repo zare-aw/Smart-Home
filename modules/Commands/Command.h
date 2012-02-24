@@ -2,10 +2,9 @@
 #define _Command_h
 
 #include "Command_Defines.h"
+#include "Command_Debug.h"
 
 #define CFG_HELP
-
-typedef unsigned int Status_t;
 
 #pragma section=".cmd"
 
