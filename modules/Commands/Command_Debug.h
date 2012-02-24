@@ -5,6 +5,10 @@
 
 typedef unsigned int Status_t;
 
+#ifndef NULL
+#define NULL  0
+#endif
+
 // Cmd Global error state defines
 #define CMD_SUCCESS                             0x00
 #define CMD_ERROR                               0x01
@@ -20,11 +24,22 @@ typedef unsigned int Status_t;
 #ifdef _StatusHandling_h
 #include "StatusHandling.h"
 #define FUNCTION_IN(Function) Function_In(Function)
+#define FUNCTION_OUT(Function) Function_OUT(Function)
 #define CMD_RETURN_SUCCESS(Function) RETURN_SUCCESS_FUNC(Function)
 #endif
 #else
-#define FUNCTION_IN(Function) 0
+#define FUNCTION_IN(Function)
+#define FUNCTION_OUT(Function)
 #define CMD_RETURN_SUCCESS(Function) return CMD_SUCCESS;
 #endif
+
+#define FATAL_ABORT(Status, Function) \
+  do {\
+    if(Abort(Status)) \
+    {\
+      Function_OUT(Function); \
+      return Status;\
+    }\
+  }while (0)
 
 #endif
