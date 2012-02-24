@@ -3,7 +3,11 @@
 
 #define COMMAND_DEBUG
 
+#ifdef COMMAND_DEBUG
+#include "StatusHandling.h"
+#else
 typedef unsigned int Status_t;
+#endif
 
 #ifndef NULL
 #define NULL  0
@@ -21,25 +25,29 @@ typedef unsigned int Status_t;
 
 
 #ifdef COMMAND_DEBUG
-#ifdef _StatusHandling_h
-#include "StatusHandling.h"
-#define FUNCTION_IN(Function) Function_In(Function)
+#define FUNCTION_IN(Function) Function_IN(Function)
 #define FUNCTION_OUT(Function) Function_OUT(Function)
-#define CMD_RETURN_SUCCESS(Function) RETURN_SUCCESS_FUNC(Function)
-#endif
+#define RET_SUCCESS(Function) RETURN_SUCCESS_FUNC(Function)
 #else
 #define FUNCTION_IN(Function)
 #define FUNCTION_OUT(Function)
-#define CMD_RETURN_SUCCESS(Function) return CMD_SUCCESS;
+#define RET_SUCCESS(Function) return CMD_SUCCESS;
 #endif
 
 #define FATAL_ABORT(Status, Function) \
   do {\
     if(Abort(Status)) \
     {\
-      Function_OUT(Function); \
+      FUNCTION_OUT(Function); \
       return Status;\
     }\
   }while (0)
+
+#define FUNC_EXIT(Status, Function) \
+  do {\
+    FUNCTION_OUT(Function); \
+    return Status;\
+  }while (0)
+
 
 #endif
