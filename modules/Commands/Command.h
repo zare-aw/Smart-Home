@@ -24,5 +24,8 @@ typedef struct Cmd_Tbl_s
 #define CMD_CREATE(Name, MaxArgs, Cmd, Usage, Help) \
 __root __packed Cmd_Tbl_t Cmd_##Name @ ".cmd" = {#Name, MaxArgs, Cmd, Usage, Help}
 
+Cmd_Tbl_t *Get_Cmd_Section_Begin(void);
+Cmd_Tbl_t *Get_Cmd_Section_End(void);
+uint32 Get_Cmd_Section_Size(void);
 
 #endif
