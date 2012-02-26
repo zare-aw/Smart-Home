@@ -1682,6 +1682,30 @@
   </group>
   <group>
     <name>modules</name>
+    <group>
+      <name>Commands</name>
+      <group>
+        <name>cmd_src</name>
+      </group>
+      <group>
+        <name>include</name>
+      </group>
+      <file>
+        <name>$PROJ_DIR$\modules\Commands\Command.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modules\Commands\Command.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modules\Commands\Command_Debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modules\Commands\Command_Defconfig.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modules\Commands\Command_Defines.h</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$\modules\Commands.c</name>
     </file>
