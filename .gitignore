@@ -1,6 +1,4 @@
 Debug/*
-*.ewd
-*.eww
 *.dep
 *.log
 settings/*
