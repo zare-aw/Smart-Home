@@ -1705,6 +1705,9 @@
       <file>
         <name>$PROJ_DIR$\modules\Commands\Command_Defines.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\modules\Commands\Command_Func.h</name>
+      </file>
     </group>
     <file>
       <name>$PROJ_DIR$\modules\Commands.c</name>
