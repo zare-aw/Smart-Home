@@ -1,7 +1,7 @@
 #ifndef _StatusHandling_h
 #define _StatusHandling_h
 
-typedef unsigned int Status_t;
+typedef int Status_t;
 typedef unsigned long Function_t;
 
 #define MAX_FUNCTION_IN_BECKUP_BUFFER  10
