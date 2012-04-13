@@ -1708,6 +1708,9 @@
       <file>
         <name>$PROJ_DIR$\modules\Commands\Command_Func.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\modules\Commands\How_To_Create_Command_README.txt</name>
+      </file>
     </group>
     <file>
       <name>$PROJ_DIR$\modules\Commands.c</name>
