@@ -3,16 +3,26 @@
 
 #include "Command_Defines.h"
 #include "Command_Debug.h"
+#include "StatusHandling.h"
 
 #define CFG_HELP
 
 #pragma section=".cmd"
 
+/**** Cmd Global error state defines ****/
+#define CMD_SUCCESS                             COMMANDS_OFFSET | 0x00
+#define CMD_ERROR                               COMMANDS_OFFSET | 0x01
+#define CMD_GENERAL_ERROR                       COMMANDS_OFFSET | 0x02
+#define CMD_FATAL_ERROR                         COMMANDS_OFFSET | 0x03
+#define	CMD_UNKNOWN_ERROR		        COMMANDS_OFFSET | 0x04
+#define CMD_INVALID_INPUT_PARAMETER             COMMANDS_OFFSET | 0x05
+#define CMD_INVALID_INIT_INPUT_PARAMETER        COMMANDS_OFFSET | 0x06
+#define CMD_INVALID_INPUT_POINTER               COMMANDS_OFFSET | 0x07
 
-// State defines
+/**** State defines *****/
 // Find_Cmd()
-#define POSSIBLE_CMD                0x05000001
-#define CMD_NOT_FOUND               0x05000002
+#define POSSIBLE_CMD                COMMANDS_OFFSET | 0x01
+#define CMD_NOT_FOUND               COMMANDS_OFFSET | 0x02
 
 typedef struct Cmd_Tbl_s
 {
