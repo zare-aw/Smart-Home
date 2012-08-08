@@ -18,11 +18,16 @@
 #define CMD_INVALID_INPUT_PARAMETER             COMMANDS_OFFSET | 0x05
 #define CMD_INVALID_INIT_INPUT_PARAMETER        COMMANDS_OFFSET | 0x06
 #define CMD_INVALID_INPUT_POINTER               COMMANDS_OFFSET | 0x07
-
-/**** State defines *****/
+#define CMD_INVALID_FUNCTION_POINTER            COMMANDS_OFFSET | 0x08
 // Find_Cmd()
-#define POSSIBLE_CMD                COMMANDS_OFFSET | 0x01
-#define CMD_NOT_FOUND               COMMANDS_OFFSET | 0x02
+#define CMD_POSSIBLE_CMD                        COMMANDS_OFFSET | 0x10
+#define CMD_NOT_FOUND                           COMMANDS_OFFSET | 0x11
+// Run_Command()
+#define CMD_EMPTY_COMMAND                       COMMANDS_OFFSET | 0x12
+#define CMD_NOT_EXECUTED                        COMMANDS_OFFSET | 0x13
+// Parse_Line()
+#define CMD_TOO_MANY_ARGUMENTS                  COMMANDS_OFFSET | 0x15
+#define CMD_ILEGAL_COMMAND_PARAMETER            COMMANDS_OFFSET | 0x16
 
 typedef struct Cmd_Tbl_s
 {
@@ -40,9 +45,6 @@ __root __packed Cmd_Tbl_t Cmd_##Name @ ".cmd" = {#Name, MaxArgs, Cmd, Usage, Hel
 
 
 // Functions
-Cmd_Tbl_t *Get_Cmd_Section_Begin(void);
-Cmd_Tbl_t *Get_Cmd_Section_End(void);
-uint32 Get_Cmd_Section_Size(void);
-Status_t Find_Cmd(const char *Cmd, Cmd_Tbl_t **Cmd_Tbl_p);
+Status_t Run_Command(const char *Cmd);
 
 #endif
