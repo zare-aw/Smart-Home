@@ -1,9 +1,9 @@
 #ifndef _Command_Debug_h
 #define _Command_Debug_h
 
-#define COMMAND_DEBUG
+#define __COMMAND_DEBUG
 
-#ifdef COMMAND_DEBUG
+#ifdef __COMMAND_DEBUG
 #include "StatusHandling.h"
 #else
 typedef int Status_t;

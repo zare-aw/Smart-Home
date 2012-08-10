@@ -1,4 +1,5 @@
 #include "Includes.h"
+#include "Command.h"
 
 void Pin_MUX_Init(void);
 
@@ -37,6 +38,10 @@ Status_t Initialization(void)
   Temp_Init();
   HD44780_PowerUpInit();
   __disable_interrupt();
+  
+  Cmd_Init_Parameters_t Cmd_Init_Parameters;
+  Cmd_Init_Parameters.putscmd = &puts;
+  (void)Commands_Init(&Cmd_Init_Parameters);
   
   RETURN_SUCCESS();
 }

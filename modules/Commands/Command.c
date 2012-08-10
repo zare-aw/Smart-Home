@@ -16,7 +16,7 @@ Status_t (*putscmd)(const char *) = NULL;
 /*******************************************************************************
 * Function for get start address of command section
 *******************************************************************************/
-static inline Cmd_Tbl_t *Get_Cmd_Section_Begin(void)
+inline Cmd_Tbl_t *Get_Cmd_Section_Begin(void)
 {
   return __section_begin(".cmd");
 }
@@ -24,7 +24,7 @@ static inline Cmd_Tbl_t *Get_Cmd_Section_Begin(void)
 /*******************************************************************************
 * Function for get end address of command section
 *******************************************************************************/
-static inline Cmd_Tbl_t *Get_Cmd_Section_End(void)
+inline Cmd_Tbl_t *Get_Cmd_Section_End(void)
 {
   return __section_end(".cmd");
 }
@@ -32,15 +32,18 @@ static inline Cmd_Tbl_t *Get_Cmd_Section_End(void)
 /*******************************************************************************
 * Function for get size on command section
 *******************************************************************************/
-static inline uint32 Get_Cmd_Section_Size(void)
+uint32 Get_Cmd_Section_Size(void)
 {
   return __section_size(".cmd");
 }
 
 /*******************************************************************************
 * Function for find command table entry for a command
+* @in *Cmd - Char pointer with command string
+* @out **Cmd_Tbl_p - Double pointer for returning Cmd_Tbl structire of the CMD
+* @out Status_t - Status
 *******************************************************************************/
-static Status_t Find_Cmd(const char *Cmd, Cmd_Tbl_t **Cmd_Tbl_p)
+Status_t Find_Cmd(const char *Cmd, Cmd_Tbl_t **Cmd_Tbl_p)
 {
   FUNCTION_IN(FIND_CMD);
   Cmd_Tbl_t *Cmd_Section_Begin = Get_Cmd_Section_Begin();
@@ -81,13 +84,15 @@ static Status_t Find_Cmd(const char *Cmd, Cmd_Tbl_t **Cmd_Tbl_p)
 
 /*******************************************************************************
 * Function for run command
+* @in *Cmd - Pointer to command string together with all arguments
+* @out Status_t - Status of execution of the requested command
 *******************************************************************************/
 Status_t Run_Command(const char *Cmd)
 {
   FUNCTION_IN(RUN_COMMAND);
   Status_t Status;
   char *CmdStr;
-  Cmd_Tbl_t *Cmd_Tbl;
+  Cmd_Tbl_t *Cmd_Tbl_p;
   char CmdBuffer[CMD_BUFFER_SIZE] = {0};
   uint32 argc = 0;
   char *argv[CFG_MAX_ARGUMENTS];
@@ -102,7 +107,7 @@ Status_t Run_Command(const char *Cmd)
   
   if(CmdStr != 0)
   {
-    Status = Find_Cmd(CmdStr, &Cmd_Tbl);
+    Status = Find_Cmd(CmdStr, &Cmd_Tbl_p);
     if(Status < CMD_SUCCESS)
       FATAL_ABORT(Status, RUN_COMMAND);
   }
@@ -112,36 +117,45 @@ Status_t Run_Command(const char *Cmd)
   switch(Status)
   {
     case CMD_SUCCESS:
-      
-      Status = Parse_Line(CmdBuffer, &argc, Cmd_Tbl->MaxArgs, argv);
-      if(Status < 0)
+      strcpy(CmdBuffer, Cmd);
+      Status = Parse_Line(CmdBuffer, &argc, Cmd_Tbl_p->MaxArgs, argv);
+      if(Status < CMD_SUCCESS)
         FATAL_ABORT(Status, RUN_COMMAND);
       else if(Status == CMD_TOO_MANY_ARGUMENTS)
       {
-        printcmd("Usage:\n%s\n", Cmd_Tbl->Usage);
+        printcmd("Usage:\n%s\n", Cmd_Tbl_p->Usage);
         break;
       }
       
       // Run Command
-      Status = (Cmd_Tbl->Cmd)(Cmd_Tbl, NULL, argc, argv);
+      Status = (Cmd_Tbl_p->Cmd)(Cmd_Tbl_p, NULL, argc, argv);
       if(Status != CMD_SUCCESS)
         FUNC_EXIT(CMD_NOT_EXECUTED, RUN_COMMAND);
       break;
     case CMD_POSSIBLE_CMD:
-      printcmd("Did you mean: %s\n", Cmd_Tbl->Name);
+      printcmd("Did you mean: %s\n", Cmd_Tbl_p->Name);
       break;
     case CMD_NOT_FOUND:
       printcmd("Command '%s' not found! Try 'help'", CmdStr);
       break;
     default:
       break;
-  }
+  } // sitch(Status)
 
   FUNC_EXIT(CMD_SUCCESS, RUN_COMMAND);
 }
 
 /*******************************************************************************
 * Function for printing back to standard output which calling commands
+* @in format - String for printing together with all formating characters
+* @in ... - Aditional parameters
+* @out Status_t - Status
+*      CMD_SUCCESS                  - Successfully printed input string.
+*      CMD_INVALID_FUNCTION_POINTER - Function pointer for return printing
+*                                     function is NULL. This function pointer
+*                                     should be initialized before use.
+*                                     That is done in 'Commands_Init' function.
+*      Status                       - Other status returned from other function.
 *******************************************************************************/
 Status_t printcmd(const char *format, ...)
 {
@@ -168,6 +182,16 @@ Status_t printcmd(const char *format, ...)
 
 /*******************************************************************************
 * Function for parsing arguments on one line
+* @in *Line - Char pointer to the string. Function is modify this string!!!
+* @out *argc - Pointer to uint32 where this function is writing back
+*              number of arguments
+* @in MaxArguments - Maximum number of arguments for current command
+* @out *argv[] - list of char pointers to the arguments
+* @out Status_t - Status
+*      CMD_SUCCESS                   - line is parsed successfully
+*      CMD_TOO_MANY_ARGUMENTS        - Too many input arguments in input line
+*      CMD_ILEGAL_COMMAND_PARAMETERS - The command itself is with
+*                                      wrong arguments.
 *******************************************************************************/
 static Status_t Parse_Line(char *Line, uint32 *argc, uint32 MaxArguments, char *argv[])
 {
@@ -187,4 +211,19 @@ static Status_t Parse_Line(char *Line, uint32 *argc, uint32 MaxArguments, char *
     FUNC_EXIT(CMD_TOO_MANY_ARGUMENTS, PARSE_LINE);
   
   FUNC_EXIT(CMD_SUCCESS, PARSE_LINE);
+}
+
+/*******************************************************************************
+* Function for parsing arguments on one line
+* @in *Cmd_Init_Parameters_p - Structure pointer with needed function pointers
+* @out Status_t - Status
+*      CMD_SUCCESS - Commands server successfully initialized!
+*******************************************************************************/
+Status_t Commands_Init(Cmd_Init_Parameters_t *Cmd_Init_Parameters_p)
+{
+  FUNCTION_IN(COMMANDS_INIT);
+  
+  putscmd = Cmd_Init_Parameters_p->putscmd;
+  
+  FUNC_EXIT(CMD_SUCCESS, COMMANDS_INIT);
 }

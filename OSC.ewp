@@ -309,7 +309,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -318,7 +318,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -1686,6 +1686,12 @@
       <name>Commands</name>
       <group>
         <name>cmd_src</name>
+        <file>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_help.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_info.c</name>
+        </file>
       </group>
       <group>
         <name>include</name>

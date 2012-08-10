@@ -1,6 +1,7 @@
 #include "Includes.h"
 #include "ConsoleHelp.h"
 #include "ConsoleCommands.h"
+#include "Command.h"
 
 char InputString[MAX_CONSOLE_COMMAND_LENGTH] = {0};
 char Console_Queue[CONSOLE_QUEUE_SIZE] = {0};
@@ -51,6 +52,25 @@ void printc(const char *format, ...)
     i++;
   }
   va_end(args);
+}
+
+/*******************************************************************************
+* Funkcija za prakanje na string na konzola.
+* @in Line - string koj sakame da go pecatime
+* @out Status
+*******************************************************************************/
+Status_t puts(const char *Line)
+{
+  uint32 i;
+  
+  for(i = 0; Line[i]; i++)
+  {
+    Add_Char_In_Console_Queue(Line[i]);
+    if(Line[i] == 0x0A)
+      Add_Char_In_Console_Queue(0x0D);
+  }
+  
+  return SUCCESS;
 }
 
 /*******************************************************************************
@@ -272,7 +292,10 @@ Status_t Console_Command_Execute(uint8 NoOfCommand)
   Function_IN(CONSOLE_COMMAND_EXECUTE);
   if(NoOfCommand >= ConsoleCommandsInQueue)
     RETURN_SUCCESS();   // No Console Commands in Queue
+  
+  CONTROL(!Run_Command(QueueConsoleCommand[NoOfCommand]), CONSOLE_COMMAND_EXECUTE_ERROR);
 
+#if 0
   if(!strncmp("help", QueueConsoleCommand[NoOfCommand], 4))
        CONTROL(!Console_Help(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
   else if(!strncmp( "status", QueueConsoleCommand[NoOfCommand], 6))
@@ -328,8 +351,9 @@ Status_t Console_Command_Execute(uint8 NoOfCommand)
   else if(!strncmp( "dd", QueueConsoleCommand[NoOfCommand], 2))
        CONTROL(!Console_Dump_Display(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
   else if(!strncmp( "du", QueueConsoleCommand[NoOfCommand], 2))
+#endif
+
        CONTROL(!Console_Update_Display(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  
   CONTROL(!Remove_Console_Command_From_Queue(NoOfCommand), CONSOLE_COMMAND_ERROR);
   RETURN_SUCCESS();
 }

@@ -27,6 +27,7 @@ extern uint8 ConsoleChanel;
 extern unsigned int Console_Queue_Cnt;
 
 void printc(const char *format, ...);
+Status_t puts(const char *Line);
 void Add_Char_In_Console_Queue(char Input);
 Status_t Console_Print_Pull(void);
 Status_t Console_Server_Init(uint8 Chanell, unsigned int Speed, uint8 Mode);

@@ -3,11 +3,8 @@
 
 #include "Command_Defines.h"
 #include "Command_Debug.h"
+#include "Command_Defconfig.h"
 #include "StatusHandling.h"
-
-#define CFG_HELP
-
-#pragma section=".cmd"
 
 /**** Cmd Global error state defines ****/
 #define CMD_SUCCESS                             COMMANDS_OFFSET | 0x00
@@ -19,15 +16,20 @@
 #define CMD_INVALID_INIT_INPUT_PARAMETER        COMMANDS_OFFSET | 0x06
 #define CMD_INVALID_INPUT_POINTER               COMMANDS_OFFSET | 0x07
 #define CMD_INVALID_FUNCTION_POINTER            COMMANDS_OFFSET | 0x08
-// Find_Cmd()
+
 #define CMD_POSSIBLE_CMD                        COMMANDS_OFFSET | 0x10
 #define CMD_NOT_FOUND                           COMMANDS_OFFSET | 0x11
-// Run_Command()
+
 #define CMD_EMPTY_COMMAND                       COMMANDS_OFFSET | 0x12
 #define CMD_NOT_EXECUTED                        COMMANDS_OFFSET | 0x13
-// Parse_Line()
+
 #define CMD_TOO_MANY_ARGUMENTS                  COMMANDS_OFFSET | 0x15
 #define CMD_ILEGAL_COMMAND_PARAMETER            COMMANDS_OFFSET | 0x16
+
+typedef struct Cmd_Init_Parameters_s
+{
+  Status_t (*putscmd)(const char *);  // Function pointer for return string
+} Cmd_Init_Parameters_t;
 
 typedef struct Cmd_Tbl_s
 {
@@ -40,11 +42,18 @@ typedef struct Cmd_Tbl_s
 #endif
 } Cmd_Tbl_t;
 
+#pragma section=".cmd"
+
 #define CMD_CREATE(Name, MaxArgs, Cmd, Usage, Help) \
 __root __packed Cmd_Tbl_t Cmd_##Name @ ".cmd" = {#Name, MaxArgs, Cmd, Usage, Help}
 
-
 // Functions
+inline Cmd_Tbl_t *Get_Cmd_Section_Begin(void);
+inline Cmd_Tbl_t *Get_Cmd_Section_End(void);
+uint32 Get_Cmd_Section_Size(void);
+Status_t Find_Cmd(const char *Cmd, Cmd_Tbl_t **Cmd_Tbl_p);
 Status_t Run_Command(const char *Cmd);
+Status_t printcmd(const char *format, ...);
+Status_t Commands_Init(Cmd_Init_Parameters_t *Cmd_Init_Parameters_p);
 
 #endif
