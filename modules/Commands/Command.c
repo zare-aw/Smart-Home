@@ -91,7 +91,7 @@ Status_t Find_Cmd(const char *Cmd, Cmd_Tbl_t **Cmd_Tbl_p)
 Status_t Run_Command(const char *Cmd)
 {
   FUNCTION_IN(RUN_COMMAND);
-  Status_t Status;
+  Status_t Status = CMD_GENERAL_ERROR;
   char *CmdStr;
   Cmd_Tbl_t *Cmd_Tbl_p;
   char CmdBuffer[CMD_BUFFER_SIZE] = {0};
@@ -120,9 +120,11 @@ Status_t Run_Command(const char *Cmd)
     case CMD_SUCCESS:
       strcpy(CmdBuffer, Cmd);
       Status = Parse_Line(CmdBuffer, &argc, Cmd_Tbl_p->MaxArgs, argv);
+      
       if(Status < CMD_SUCCESS)
         FATAL_ABORT(Status, RUN_COMMAND);
-      else if(Status == CMD_TOO_MANY_ARGUMENTS)
+      
+      if(Status == CMD_TOO_MANY_ARGUMENTS)
       {
         printcmd("Too many arguments!\n");
         printcmd("Usage:\n%s\n", Cmd_Tbl_p->Usage);
@@ -221,11 +223,15 @@ static Status_t Parse_Line(char *Line, uint32 *argc, uint32 MaxArguments, char *
   strtok(Line, " ");
   
   // Count and copy the arguments
-  for(*argc = 0; (argv[*argc] != NULL) && (*argc < MaxArguments) && (*argc < CFG_MAX_ARGUMENTS); (*argc)++)
+  for(*argc = 0; (*argc < MaxArguments) && (*argc < CFG_MAX_ARGUMENTS); (*argc)++)
+  {
     argv[*argc] = strtok(NULL, " ");
+    if(argv[*argc] == NULL)
+      break;
+  }
   
   if(*argc == CFG_MAX_ARGUMENTS)
-    FATAL_ABORT(CMD_ILEGAL_COMMAND_PARAMETER, PARSE_LINE);
+    FATAL_ABORT(-CMD_ILEGAL_COMMAND_PARAMETER, PARSE_LINE);
   
   if(*argc > MaxArguments)
     FUNC_EXIT(CMD_TOO_MANY_ARGUMENTS, PARSE_LINE);
