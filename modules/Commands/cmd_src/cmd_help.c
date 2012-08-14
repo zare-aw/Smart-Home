@@ -12,21 +12,23 @@ Status_t Do_Help(Cmd_Tbl_t *Cmd_Tbl, uint32 flag, uint32 argc, char *argv[])
   
   if(argc == 0)
   {
-    uint32 Cmd_Tbl_Size = Get_Cmd_Section_Size();
     Cmd_Tbl_t *Cmd_Tbl_p = Get_Cmd_Section_Begin();
+    Cmd_Tbl_t *Cmd_Tbl_End_p = Get_Cmd_Section_End();
     
     printcmd("\n # Smart Home system console\n");
-    printcmd("\n # Supported commands:\n");
+    printcmd(" # Supported commands:\n");
     
-    for(uint32 i = 0; i < Cmd_Tbl_Size; i++, Cmd_Tbl_p++)
+    while(Cmd_Tbl_p != Cmd_Tbl_End_p)
     {
       if(Cmd_Tbl_p->Name == NULL)
-        FATAL_ABORT(CMD_ILEGAL_COMMAND_PARAMETER, DO_HELP);
+        FATAL_ABORT(-CMD_ILEGAL_COMMAND_PARAMETER, DO_HELP);
       
       if(Cmd_Tbl_p->Usage == NULL)
         printcmd(" - %s, Usage: No usage details\n", Cmd_Tbl_p->Name);
       else
         printcmd(" - %s, Usage: %s\n", Cmd_Tbl_p->Name, Cmd_Tbl_p->Usage);
+      
+      Cmd_Tbl_p++;
     }
     
     printcmd("\n");
