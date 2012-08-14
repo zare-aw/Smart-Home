@@ -4,6 +4,7 @@
 #include "Command.h"
 #include "Command_Func.h"
 #include "Command_Defconfig.h"
+#include "StatusHandling.h"
 
 Status_t printcmd(const char *format, ...);
 static Status_t Parse_Line(char *Line, uint32 *argc, uint32 MaxArguments, char *argv[]);
@@ -123,6 +124,7 @@ Status_t Run_Command(const char *Cmd)
         FATAL_ABORT(Status, RUN_COMMAND);
       else if(Status == CMD_TOO_MANY_ARGUMENTS)
       {
+        printcmd("Too many arguments!\n");
         printcmd("Usage:\n%s\n", Cmd_Tbl_p->Usage);
         break;
       }
@@ -130,7 +132,25 @@ Status_t Run_Command(const char *Cmd)
       // Run Command
       Status = (Cmd_Tbl_p->Cmd)(Cmd_Tbl_p, NULL, argc, argv);
       if(Status != CMD_SUCCESS)
+      {
+        switch(Status)
+        {
+          case CMD_INVALID_ARGUMENT:
+            printcmd("Invalid argument!\n");
+            printcmd("Usage:\n%s\n", Cmd_Tbl_p->Usage);
+            break;
+          case CMD_MISSING_ARGUMENT:
+            printcmd("Missing argument!\n");
+            printcmd("Usage:\n%s\n", Cmd_Tbl_p->Usage);
+            break;
+          default:
+            printcmd("Unknown error!\n");
+            printcmd("Usage:\n%s\n", Cmd_Tbl_p->Usage);
+            break;
+        }
+        
         FUNC_EXIT(CMD_NOT_EXECUTED, RUN_COMMAND);
+      }
       break;
     case CMD_POSSIBLE_CMD:
       printcmd("Did you mean: %s\n", Cmd_Tbl_p->Name);
@@ -172,7 +192,7 @@ Status_t printcmd(const char *format, ...)
   else
     FATAL_ABORT(CMD_INVALID_FUNCTION_POINTER, PRINTCMD);
   
-  if(Status < CMD_SUCCESS)
+  if(Status < SUCCESS)
     FATAL_ABORT(Status, PRINTCMD);
 
   va_end(args);
@@ -207,7 +227,7 @@ static Status_t Parse_Line(char *Line, uint32 *argc, uint32 MaxArguments, char *
   if(*argc == CFG_MAX_ARGUMENTS)
     FATAL_ABORT(CMD_ILEGAL_COMMAND_PARAMETER, PARSE_LINE);
   
-  if(*argc == MaxArguments)
+  if(*argc > MaxArguments)
     FUNC_EXIT(CMD_TOO_MANY_ARGUMENTS, PARSE_LINE);
   
   FUNC_EXIT(CMD_SUCCESS, PARSE_LINE);

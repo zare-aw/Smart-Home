@@ -13,7 +13,7 @@ typedef int Status_t;
 #define NULL  0
 #endif
 
-#ifdef COMMAND_DEBUG
+#ifdef __COMMAND_DEBUG
 #define FUNCTION_IN(Function) Function_IN(Function)
 #define FUNCTION_OUT(Function) Function_OUT(Function)
 #define RET_SUCCESS(Function) RETURN_SUCCESS_FUNC(Function)

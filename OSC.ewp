@@ -1692,6 +1692,12 @@
         <file>
           <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_info.c</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_set_time.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_time.c</name>
+        </file>
       </group>
       <group>
         <name>include</name>

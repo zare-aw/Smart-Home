@@ -23,8 +23,10 @@
 #define CMD_EMPTY_COMMAND                       COMMANDS_OFFSET | 0x12
 #define CMD_NOT_EXECUTED                        COMMANDS_OFFSET | 0x13
 
-#define CMD_TOO_MANY_ARGUMENTS                  COMMANDS_OFFSET | 0x15
-#define CMD_ILEGAL_COMMAND_PARAMETER            COMMANDS_OFFSET | 0x16
+#define CMD_INVALID_ARGUMENT                    COMMANDS_OFFSET | 0x14
+#define CMD_MISSING_ARGUMENT                    COMMANDS_OFFSET | 0x15
+#define CMD_TOO_MANY_ARGUMENTS                  COMMANDS_OFFSET | 0x16
+#define CMD_ILEGAL_COMMAND_PARAMETER            COMMANDS_OFFSET | 0x17
 
 typedef struct Cmd_Init_Parameters_s
 {

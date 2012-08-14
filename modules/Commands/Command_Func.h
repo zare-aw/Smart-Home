@@ -17,4 +17,12 @@
 #define INFO_OFFSET     0x0200
 #define DO_INFO         COMMANDS_OFFSET | INFO_OFFSET | 0x01
 
+// cmd_time.c
+#define TIME_OFFSET     0x0300
+#define DO_TIME         COMMANDS_OFFSET | TIME_OFFSET | 0x01
+
+// cmd_set-time.c
+#define SET_TIME_OFFSET 0x0400
+#define DO_SET_TIME     COMMANDS_OFFSET | SET_TIME_OFFSET | 0x01
+
 #endif
