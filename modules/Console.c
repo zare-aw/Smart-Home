@@ -6,14 +6,20 @@
 char InputString[MAX_CONSOLE_COMMAND_LENGTH] = {0};
 char Console_Queue[CONSOLE_QUEUE_SIZE] = {0};
 char QueueConsoleCommand[MAX_CONSOLE_COMMAND_IN_QUEUE][MAX_CONSOLE_COMMAND_LENGTH] = {0};
+char ConsoleCommandHistory[MAX_CONSOLE_COMMAND_HISTORY][MAX_CONSOLE_COMMAND_LENGTH] = {0};
 
 uint32 Console_Queue_Cnt = 0;
 uint32 Console_Queue_Add_Cnt = 0;
 uint32 Console_Queue_Print_Cnt = 0;
 uint8 InputCharCnt = 0;
 uint8 ConsoleCommandsInQueue = 0;
+uint8 ConsoleCommandsInHistory = 0;
 uint8 Console_Mode = MODE_POOLING;
 uint8 ConsoleChanel = UART_0;
+uint8 ConsoleHistoryCnt = 0;
+
+static Status_t Add_Console_Command_In_History(char *InputString);
+static Status_t Get_Console_Command_From_History(uint8 NoOfPreviousCommand, char *CommandString);
 
 /*******************************************************************************
 * Definicija na funkciski pokazuvaci
@@ -91,6 +97,28 @@ void Add_Char_In_Console_Queue(char Input)
 }
 
 /*******************************************************************************
+* Dodava string vo console queue
+* @in: char *Input - Pinter kon string koj ke se dodade vo Queue
+* @out Status_t
+*******************************************************************************/
+Status_t Add_String_In_Console_Queue(char *Input)
+{
+  Function_IN(ADD_STRING_IN_CONSOLE_QUEUE);
+  uint16 Cnt = 0;
+  CONTROL(Input != NULL, INVALID_INPUT_POINTER);
+  
+  while(Input[Cnt] != '\0')
+  {
+    Add_Char_In_Console_Queue(Input[Cnt]);
+	Cnt++;
+	
+	CONTROL(Cnt < MAX_CONSOLE_COMMAND_LENGTH, INVALID_INPUT_PARAMETER);
+  }
+  
+  RETURN_SUCCESS_FUNC(ADD_STRING_IN_CONSOLE_QUEUE);
+}
+
+/*******************************************************************************
 * Funkcija koja se povikuva periodicno vo glavna jamka
 * i pecati toa sto ima vo queue
 * @in NONE
@@ -143,15 +171,18 @@ __arm Status_t Console_ISR(void)
   switch(Ch)
   {
   case 0x0D:  // Enter
-    Console_Put_Char(Ch, 0x3FFFFFFF);
-    Console_Put_Char(0x0A, 0x3FFFFFFF);   // LF
-    Console_Put_Char(0x7E, 0x3FFFFFFF);   // '~'
-    Console_Put_Char(0x24, 0x3FFFFFFF);   // '$'
-    Console_Put_Char(0x20, 0x3FFFFFFF);   // SPACE
+    Add_Char_In_Console_Queue(Ch);
+    Add_Char_In_Console_Queue(0x0A);   // LF
+    Add_Char_In_Console_Queue(0x7E);   // '~'
+    Add_Char_In_Console_Queue(0x24);   // '$'
+    Add_Char_In_Console_Queue(0x20);   // SPACE
     InputString[InputCharCnt] = '\0';
     
     if(strlen(InputString) != 0)
+    {
       Add_Console_Command_In_Queue(InputString);
+      Add_Console_Command_In_History(InputString);
+    }
     
     InputCharCnt = 0;
     break;
@@ -159,18 +190,45 @@ __arm Status_t Console_ISR(void)
     if(InputCharCnt > 0)
     {
       InputCharCnt --;
-      Console_Put_Char(Ch, 0x3FFFFFFF);
+      Add_Char_In_Console_Queue(Ch);
     }
     break;
   case 0x7F:  // Delete
     if(InputCharCnt > 0)
     {
       InputCharCnt --;
-      Console_Put_Char(Ch, 0x3FFFFFFF);
+      Add_Char_In_Console_Queue(Ch);
     }
     break;
+  case '8':  // Up    TODO: Check the value
+    if(ConsoleHistoryCnt <= MAX_CONSOLE_COMMAND_HISTORY)
+      ConsoleHistoryCnt++;
+	Get_Console_Command_From_History(ConsoleHistoryCnt, InputString);
+	InputCharCnt = strlen(InputString);
+	Add_String_In_Console_Queue("\r~$ ");
+	Add_String_In_Console_Queue(InputString);
+    break;
+  case '2':  // Down    TODO: Check the value
+    if(ConsoleHistoryCnt >= 1)
+      ConsoleHistoryCnt--;
+	
+	if((ConsoleHistoryCnt > 0) && (ConsoleHistoryCnt <= MAX_CONSOLE_COMMAND_HISTORY))
+	{
+	  Get_Console_Command_From_History(ConsoleHistoryCnt, InputString);
+	  InputCharCnt = strlen(InputString);
+	  Add_String_In_Console_Queue("\r~$ ");
+	  Add_String_In_Console_Queue(InputString);
+	}
+	else
+	{
+	  InputString[0] = '\0';
+	  InputCharCnt = 0;
+	  Add_String_In_Console_Queue("\r~$ ");
+	}
+	
+    break;
   default:
-    Console_Put_Char(Ch, 0x3FFFFFFF);
+    Add_Char_In_Console_Queue(Ch);
     InputString[InputCharCnt] = Ch;
     InputCharCnt ++;
     break;
@@ -260,10 +318,48 @@ Status_t Add_Console_Command_In_Queue(char *InputString)
   CONTROL(InputString != NULL, INVALID_INPUT_POINTER);
   CONTROL(ConsoleCommandsInQueue <= MAX_CONSOLE_COMMAND_IN_QUEUE, CONSOLE_COMMANDS_OVERFLOW);
   
-  strcpy(QueueConsoleCommand[ConsoleCommandsInQueue], InputString);      
+  strcpy(QueueConsoleCommand[ConsoleCommandsInQueue], InputString);
   ConsoleCommandsInQueue++;
 
   return SUCCESS;
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+static Status_t Add_Console_Command_In_History(char *InputString)
+{
+  Function_IN(ADD_CONSOLE_COMMAND_IN_HISTORY);
+  CONTROL(InputString != NULL, INVALID_INPUT_POINTER);
+  
+  if(ConsoleCommandsInHistory >= MAX_CONSOLE_COMMAND_HISTORY)
+    ConsoleCommandsInHistory = 0;
+  
+  strcpy(ConsoleCommandHistory[ConsoleCommandsInHistory], InputString);
+  
+  ConsoleCommandsInHistory ++;
+  
+  RETURN_SUCCESS_FUNC(ADD_CONSOLE_COMMAND_IN_HISTORY);
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+static Status_t Get_Console_Command_From_History(uint8 NoOfPreviousCommand, char *CommandString)
+{
+  Function_IN(GET_CONSOLE_COMMAND_FROM_HISTORY);
+  CONTROL(CommandString != NULL, INVALID_INPUT_POINTER);
+  
+  int Command = (int)(ConsoleCommandsInHistory - 1);
+  
+  Command -= NoOfPreviousCommand;
+  
+  if(Command < 0)
+    Command = MAX_CONSOLE_COMMAND_HISTORY + Command;
+  
+  strcpy(InputString, ConsoleCommandHistory[Command]);
+
+  RETURN_SUCCESS_FUNC(GET_CONSOLE_COMMAND_FROM_HISTORY);
 }
 
 /*******************************************************************************
@@ -281,7 +377,7 @@ Status_t Remove_Console_Command_From_Queue(uint8 NoOfCommand)
   ConsoleCommandsInQueue--;
   Console_Return_Old_Interrupt_State();
   
-  return  SUCCESS;
+  return SUCCESS;
 }
 
 /*******************************************************************************

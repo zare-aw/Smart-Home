@@ -198,7 +198,13 @@ void Print_Function_History(void)
     case (CONSOLE_ISR | FUNC_OUT_MASK):
       printc(" - Console_ISR OUT\n");
       break;
-      
+    case (ADD_CONSOLE_COMMAND_IN_HISTORY):
+      printc(" - Add_Console_Command_In_History IN\n");
+      break;
+    case (ADD_CONSOLE_COMMAND_IN_HISTORY | FUNC_OUT_MASK):
+      printc(" - Add_Console_Command_In_History OUT\n");
+      break;
+    
       // Delay
     case (DLY):
       printc(" - Dly IN\n");

@@ -185,6 +185,8 @@ extern uint8 FunctionInBeckupBuffer;
 #define CONSOLE_SERVER_INIT           201
 #define CONSOLE_PRINT_PULL            202
 #define CONSOLE_ISR                   203
+#define ADD_CONSOLE_COMMAND_IN_HISTORY    204
+#define GET_CONSOLE_COMMAND_FROM_HISTORY  205
 
 // Delay
 #define DLY                           400
@@ -215,6 +217,7 @@ extern uint8 FunctionInBeckupBuffer;
 #define CONSOLE_SET_ALARM             1272
 #define CONSOLE_TEMP_ALARM            1273
 #define CONSOLE_SET_TEMP_ALARM        1274
+#define ADD_STRING_IN_CONSOLE_QUEUE   1275
 
 // Debug Commands help
 #define CONSOLE_DUMP_DISPLAY          1500

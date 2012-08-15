@@ -7,6 +7,7 @@
 #define CONSOLE_QUEUE_SIZE                 4096
 #define MAX_CONSOLE_COMMAND_IN_QUEUE       4
 #define VS_BUFFER_SIZE                     256
+#define MAX_CONSOLE_COMMAND_HISTORY        5
 
 #define CONSOLE_CHANELL     UART_0
 #define CONSOLE_SPEED       115200
