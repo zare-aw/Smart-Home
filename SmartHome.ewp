@@ -516,7 +516,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state>OSC.hex</state>
+          <state>SmartHome.hex</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -558,7 +558,7 @@
         <debug>1</debug>
         <option>
           <name>IlinkOutputFile</name>
-          <state>OSC.out</state>
+          <state>SmartHome.out</state>
         </option>
         <option>
           <name>IlinkLibIOConfig</name>

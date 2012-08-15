@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\OSC.ewp</path>
+    <path>$WS_DIR$\SmartHome.ewp</path>
   </project>
   <batchBuild/>
 </workspace>
