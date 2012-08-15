@@ -1,7 +1,7 @@
-#ifndef  __DRV_HD44780_L_H
-#define  __DRV_HD44780_L_H
+#ifndef  __HD44780_L_H
+#define  __HD44780_L_H
 
-#include "drv_hd44780_cnfg.h"
+#include "HD44780_cnfg.h"
 
 /* Delay macro */
 #define HD44780_BUS_DLY()      for(volatile int dly = 10; dly; --dly)

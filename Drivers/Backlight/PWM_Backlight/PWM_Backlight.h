@@ -1,5 +1,5 @@
-#ifndef _Backlight_h
-#define _Backlight_h
+#ifndef _PWM_Backlight_h
+#define _PWM_Backlight_h
 
 // Backlight Freq
 #define BACKLIGHT_FREQ              128

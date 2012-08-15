@@ -1,5 +1,5 @@
-#ifndef _UART0Zare_h
-#define _UART0Zare_h
+#ifndef _UART_LPC214X_h
+#define _UART_LPC214X_h
 
 extern unsigned int UART_Flag1;
 extern unsigned int UART_Flag2;

@@ -279,12 +279,30 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$\app\</state>
-          <state>$PROJ_DIR$\modules\</state>
+          <state>$PROJ_DIR$\App\</state>
+          <state>$PROJ_DIR$\Modules\</state>
+          <state>$PROJ_DIR$\Modules\Commands\</state>
+          <state>$PROJ_DIR$\Modules\Console\</state>
+          <state>$PROJ_DIR$\Modules\Debug\</state>
+          <state>$PROJ_DIR$\Modules\Delay\</state>
+          <state>$PROJ_DIR$\Modules\Display\</state>
+          <state>$PROJ_DIR$\Modules\Menu\</state>
+          <state>$PROJ_DIR$\Modules\Temperature\</state>
           <state>$PROJ_DIR$\Includes\</state>
-          <state>$PROJ_DIR$\Drivers</state>
-          <state>$PROJ_DIR$\modules\Commands\</state>
-          <state>$PROJ_DIR$\modules\Commands\Include</state>
+          <state>$PROJ_DIR$\Drivers\</state>
+          <state>$PROJ_DIR$\Drivers\Backlight\PWM_Backlight\</state>
+          <state>$PROJ_DIR$\Drivers\Display_HD44780\</state>
+          <state>$PROJ_DIR$\Drivers\IR\</state>
+          <state>$PROJ_DIR$\Drivers\Switches\</state>
+          <state>$PROJ_DIR$\Drivers\Temperature_Sensors\</state>
+          <state>$PROJ_DIR$\SOC_HAL\CLK_Reset\</state>
+          <state>$PROJ_DIR$\SOC_HAL\I2C\</state>
+          <state>$PROJ_DIR$\SOC_HAL\MAM\</state>
+          <state>$PROJ_DIR$\SOC_HAL\PWM\</state>
+          <state>$PROJ_DIR$\SOC_HAL\RTC\</state>
+          <state>$PROJ_DIR$\SOC_HAL\Timers\</state>
+          <state>$PROJ_DIR$\SOC_HAL\UART\</state>
+          <state>$PROJ_DIR$\SOC_HAL\VIC\</state>
           <state>$PROJ_DIR$\</state>
         </option>
         <option>
@@ -1585,33 +1603,84 @@
     </settings>
   </configuration>
   <group>
+    <name>App</name>
+    <file>
+      <name>$PROJ_DIR$\App\cstartup.asm</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\App\initialization.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\App\Initialization.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\App\main.c</name>
+    </file>
+  </group>
+  <group>
     <name>Drivers</name>
-    <file>
-      <name>$PROJ_DIR$\Drivers\Backlight.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\drv_hd44780.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\drv_hd44780_l.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\DS1820.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\ir.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Drivers\Out.c</name>
-    </file>
+    <group>
+      <name>Backlight</name>
+      <group>
+        <name>PWM_Backlight</name>
+        <file>
+          <name>$PROJ_DIR$\Drivers\Backlight\PWM_Backlight\PWM_Backlight.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\Drivers\Backlight\PWM_Backlight\PWM_Backlight.h</name>
+        </file>
+      </group>
+    </group>
+    <group>
+      <name>Display_HD44780</name>
+      <file>
+        <name>$PROJ_DIR$\Drivers\Display_HD44780\HD44780.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\Display_HD44780\HD44780.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\Display_HD44780\HD44780_cnfg.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\Display_HD44780\HD44780_l.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\Display_HD44780\HD44780_l.h</name>
+      </file>
+    </group>
+    <group>
+      <name>IR</name>
+      <file>
+        <name>$PROJ_DIR$\Drivers\IR\TSOP1738.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\IR\TSOP1738.h</name>
+      </file>
+    </group>
+    <group>
+      <name>Switches</name>
+      <file>
+        <name>$PROJ_DIR$\Drivers\Switches\Out.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\Switches\Out.h</name>
+      </file>
+    </group>
+    <group>
+      <name>Temperature_Sensors</name>
+      <file>
+        <name>$PROJ_DIR$\Drivers\Temperature_Sensors\DS1820.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\Temperature_Sensors\DS1820.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>Includes</name>
     <file>
       <name>$PROJ_DIR$\Includes\Commands.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\Console.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\Includes\ConsoleCommands.h</name>
@@ -1620,71 +1689,17 @@
       <name>$PROJ_DIR$\Includes\ConsoleHelp.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\Includes\DlyZare.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\drv_hd44780.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\drv_hd44780_cnfg.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\drv_hd44780_l.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\DS1820.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\Includes\Global_Defines.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\i2c.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\Includes\Includes.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\Includes\InitializationZare.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\ir.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\menu.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\Out.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\PWM.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\rtc.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\Includes\StatusHandling.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\SurfaceFlinger.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\SystemZare.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\Temperature.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\TimerZare.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\UART0Zare.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\VICZare.h</name>
     </file>
   </group>
   <group>
-    <name>modules</name>
+    <name>Modules</name>
     <group>
       <name>Commands</name>
       <group>
@@ -1701,9 +1716,6 @@
         <file>
           <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_time.c</name>
         </file>
-      </group>
-      <group>
-        <name>include</name>
       </group>
       <file>
         <name>$PROJ_DIR$\Modules\Commands\Command.c</name>
@@ -1728,7 +1740,19 @@
       </file>
     </group>
     <group>
+      <name>Console</name>
+      <file>
+        <name>$PROJ_DIR$\Modules\Console\Console.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Modules\Console\Console.h</name>
+      </file>
+    </group>
+    <group>
       <name>Debug</name>
+      <file>
+        <name>$PROJ_DIR$\Modules\Debug\Exception.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$\Modules\Debug\Func_Trace.c</name>
       </file>
@@ -1736,11 +1760,47 @@
         <name>$PROJ_DIR$\Modules\Debug\Func_Trace.h</name>
       </file>
     </group>
+    <group>
+      <name>Delay</name>
+      <file>
+        <name>$PROJ_DIR$\Modules\Delay\Delay.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Modules\Delay\Delay.h</name>
+      </file>
+    </group>
+    <group>
+      <name>Display</name>
+      <file>
+        <name>$PROJ_DIR$\Modules\Display\SurfaceFlinger.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Modules\Display\SurfaceFlinger.h</name>
+      </file>
+    </group>
+    <group>
+      <name>Menu</name>
+      <file>
+        <name>$PROJ_DIR$\Modules\Menu\Menu.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Modules\Menu\Menu.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Modules\Menu\MenuCallbacks.c</name>
+      </file>
+    </group>
+    <group>
+      <name>Temperature</name>
+      <file>
+        <name>$PROJ_DIR$\Modules\Temperature\Temperature.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Modules\Temperature\Temperature.h</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$\Modules\Commands.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\modules\Console.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\Modules\ConsoleCommands.c</name>
@@ -1749,60 +1809,84 @@
       <name>$PROJ_DIR$\Modules\ConsoleHelp.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\modules\Dly.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\modules\i2c.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\modules\menu.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\modules\MenuCallbacks.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\modules\PWM.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\modules\rtc.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\Modules\StatusHandling.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\modules\SurfaceFlinger.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\modules\System.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\modules\Temperature.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\modules\Timer.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\modules\UART_Zare.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\modules\VIC.c</name>
     </file>
   </group>
   <group>
-    <name>UserFunc</name>
-    <file>
-      <name>$PROJ_DIR$\App\initialization.c</name>
-    </file>
+    <name>SOC_HAL</name>
+    <group>
+      <name>CLK_Reset</name>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\CLK_Reset\CLK_Reset.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\CLK_Reset\CLK_Reset.h</name>
+      </file>
+    </group>
+    <group>
+      <name>I2C</name>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\I2C\I2C.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\I2C\I2C.h</name>
+      </file>
+    </group>
+    <group>
+      <name>MAM</name>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\MAM\MAM.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\MAM\MAM.h</name>
+      </file>
+    </group>
+    <group>
+      <name>PWM</name>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\PWM\PWM.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\PWM\PWM.h</name>
+      </file>
+    </group>
+    <group>
+      <name>RTC</name>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\RTC\RTC.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\RTC\RTC.h</name>
+      </file>
+    </group>
+    <group>
+      <name>Timers</name>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\Timers\Timer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\Timers\Timer.h</name>
+      </file>
+    </group>
+    <group>
+      <name>UART</name>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\UART\UART_LPC214X.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\UART\UART_LPC214X.h</name>
+      </file>
+    </group>
+    <group>
+      <name>VIC</name>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\VIC\VIC.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\VIC\VIC.h</name>
+      </file>
+    </group>
   </group>
-  <file>
-    <name>$PROJ_DIR$\App\cstartup.asm</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\app\exception.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\App\main.c</name>
-  </file>
 </project>
 
 

@@ -1,5 +1,5 @@
-#ifndef _menu_h
-#define _menu_h
+#ifndef _Menu_h
+#define _Menu_h
 
 #define _MENU_DEBUG
 #define _MENU_INFO

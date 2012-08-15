@@ -1,5 +1,5 @@
-#ifndef _ir_h
-#define _ir_h
+#ifndef _TSOP1738_h
+#define _TSOP1738_h
 
 //#define _IR_DEBUG
 #define _IR_INFO

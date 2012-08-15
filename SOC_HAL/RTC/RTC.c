@@ -1,5 +1,5 @@
 #include "Global_Defines.h"
-#include "rtc.h"
+#include "RTC.h"
 
 uint8 AlarmIntType_Beckup = 0;
 uint8 IncIntType_Beckup = 0;

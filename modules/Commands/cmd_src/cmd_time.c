@@ -2,7 +2,7 @@
 #include "Command.h"
 #include "Command_Func.h"
 #include "Command_Debug.h"
-#include "rtc.h"
+#include "RTC.h"
 #include "StatusHandling.h"
 
 Status_t Do_Time(Cmd_Tbl_t *Cmd_Tbl, uint32 flag, uint32 argc, char *argv[])

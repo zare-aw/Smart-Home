@@ -1,7 +1,7 @@
 #include "Includes.h"
 
-#ifndef  __DRV_HD44780_H
-#define  __DRV_HD44780_H
+#ifndef  __HD44780_H
+#define  __HD44780_H
 
 typedef uint8 HD44780_XY_DEF;
 typedef uint8 HD44780_STRING_DEF;

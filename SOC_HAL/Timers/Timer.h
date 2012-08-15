@@ -1,5 +1,5 @@
-#ifndef __TimerZare_h
-#define __TimerZare_h
+#ifndef __Timer_h
+#define __Timer_h
 
 void Timer_0_Init(void);
 void Timer_1_Init(void);

@@ -1,5 +1,5 @@
-#ifndef _DlyZare_h
-#define _DlyZare_h
+#ifndef _Delay_h
+#define _Delay_h
 
 #define FREE    1
 #define BUSY    2

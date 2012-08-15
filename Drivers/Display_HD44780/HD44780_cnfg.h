@@ -1,5 +1,5 @@
-#ifndef  __DRV_HD44780_CNFG_H
-#define  __DRV_HD44780_CNFG_H
+#ifndef  __HD44780_CNFG_H
+#define  __HD44780_CNFG_H
 
 #include "Includes.h"
 
