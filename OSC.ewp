@@ -1690,54 +1690,63 @@
       <group>
         <name>cmd_src</name>
         <file>
-          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_help.c</name>
+          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_help.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_info.c</name>
+          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_info.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_set_time.c</name>
+          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_set_time.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_time.c</name>
+          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_time.c</name>
         </file>
       </group>
       <group>
         <name>include</name>
       </group>
       <file>
-        <name>$PROJ_DIR$\modules\Commands\Command.c</name>
+        <name>$PROJ_DIR$\Modules\Commands\Command.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\modules\Commands\Command.h</name>
+        <name>$PROJ_DIR$\Modules\Commands\Command.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\modules\Commands\Command_Debug.h</name>
+        <name>$PROJ_DIR$\Modules\Commands\Command_Debug.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\modules\Commands\Command_Defconfig.h</name>
+        <name>$PROJ_DIR$\Modules\Commands\Command_Defconfig.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\modules\Commands\Command_Defines.h</name>
+        <name>$PROJ_DIR$\Modules\Commands\Command_Defines.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\modules\Commands\Command_Func.h</name>
+        <name>$PROJ_DIR$\Modules\Commands\Command_Func.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\modules\Commands\How_To_Create_Command_README.txt</name>
+        <name>$PROJ_DIR$\Modules\Commands\How_To_Create_Command_README.txt</name>
+      </file>
+    </group>
+    <group>
+      <name>Debug</name>
+      <file>
+        <name>$PROJ_DIR$\Modules\Debug\Func_Trace.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Modules\Debug\Func_Trace.h</name>
       </file>
     </group>
     <file>
-      <name>$PROJ_DIR$\modules\Commands.c</name>
+      <name>$PROJ_DIR$\Modules\Commands.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\modules\Console.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\modules\ConsoleCommands.c</name>
+      <name>$PROJ_DIR$\Modules\ConsoleCommands.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\modules\ConsoleHelp.c</name>
+      <name>$PROJ_DIR$\Modules\ConsoleHelp.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\modules\Dly.c</name>
@@ -1758,7 +1767,7 @@
       <name>$PROJ_DIR$\modules\rtc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\modules\StatusHandling.c</name>
+      <name>$PROJ_DIR$\Modules\StatusHandling.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\modules\SurfaceFlinger.c</name>
@@ -1782,17 +1791,17 @@
   <group>
     <name>UserFunc</name>
     <file>
-      <name>$PROJ_DIR$\app\initialization.c</name>
+      <name>$PROJ_DIR$\App\initialization.c</name>
     </file>
   </group>
   <file>
-    <name>$PROJ_DIR$\app\cstartup.asm</name>
+    <name>$PROJ_DIR$\App\cstartup.asm</name>
   </file>
   <file>
     <name>$PROJ_DIR$\app\exception.c</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\app\main.c</name>
+    <name>$PROJ_DIR$\App\main.c</name>
   </file>
 </project>
 

@@ -13,6 +13,10 @@ typedef signed long long    sint64;
 /*******************************************************************************
 * Global Defines
 *******************************************************************************/
+#ifndef NULL
+#define NULL      0
+#endif
+
 #ifndef DISABLE
 #define DISABLE   0
 #endif
