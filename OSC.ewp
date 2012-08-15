@@ -1635,6 +1635,9 @@
       <name>$PROJ_DIR$\Includes\DS1820.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\Includes\Global_Defines.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\Includes\i2c.h</name>
     </file>
     <file>

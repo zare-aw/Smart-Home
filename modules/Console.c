@@ -1,3 +1,4 @@
+#include "Global_Defines.h"
 #include "Includes.h"
 #include "ConsoleHelp.h"
 #include "ConsoleCommands.h"

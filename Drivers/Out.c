@@ -1,3 +1,4 @@
+#include "Global_Defines.h"
 #include "Includes.h"
 
 // Ovaa struktura bi trebalo da se naoga vo RTC RAM. RAM so se napojuva od Baterija

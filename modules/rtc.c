@@ -1,3 +1,4 @@
+#include "Global_Defines.h"
 #include "rtc.h"
 
 uint8 AlarmIntType_Beckup = 0;

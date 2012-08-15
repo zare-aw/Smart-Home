@@ -1,3 +1,4 @@
+#include "Global_Defines.h"
 #include "Includes.h"
 
 char SurfaceBuffer_1[Y_SIZE][X_SIZE] = {0};

@@ -1,3 +1,4 @@
+#include "Global_Defines.h"
 #include "Includes.h"
 
 __arm __noreturn void Undefined_Instructions_Handler(uint32 Address, uint32 Instruction)

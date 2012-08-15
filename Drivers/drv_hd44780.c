@@ -1,3 +1,4 @@
+#include "Global_Defines.h"
 #include "Includes.h"
 
 #if (HD44780_BUS_WIDTH != 4) && (HD44780_BUS_WIDTH != 8)

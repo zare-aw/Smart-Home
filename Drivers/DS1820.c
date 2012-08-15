@@ -1,3 +1,4 @@
+#include "Global_Defines.h"
 #include "Includes.h"
 
 static Status_t DS_Reset(int Ch);

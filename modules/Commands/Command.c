@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+#include "Global_Defines.h"
 #include "Command.h"
 #include "Command_Func.h"
 #include "Command_Defconfig.h"

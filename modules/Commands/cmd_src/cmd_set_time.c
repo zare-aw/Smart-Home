@@ -1,3 +1,4 @@
+#include "Global_Defines.h"
 #include "Command.h"
 #include "Command_Func.h"
 #include "Command_Debug.h"

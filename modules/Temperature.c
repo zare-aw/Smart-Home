@@ -1,3 +1,4 @@
+#include "Global_Defines.h"
 #include "Includes.h"
 
 uint8 TempSensorSN[NO_OF_TEMP_SENSORS][8] = {0};
