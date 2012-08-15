@@ -15,8 +15,10 @@ uint8 ConsoleCommandsInQueue = 0;
 uint8 ConsoleCommandsInHistory = 0;
 uint8 Console_Mode = MODE_POOLING;
 uint8 ConsoleChanel = UART_0;
+uint8 ConsoleHistoryCnt = 0;
 
 static Status_t Add_Console_Command_In_History(char *InputString);
+static Status_t Get_Console_Command_From_History(uint8 NoOfPreviousCommand, char *CommandString);
 
 /*******************************************************************************
 * Definicija na funkciski pokazuvaci
@@ -177,6 +179,33 @@ __arm Status_t Console_ISR(void)
       InputCharCnt --;
       Add_Char_In_Console_Queue(Ch);
     }
+    break;
+  case '8':  // Up    TODO: Check the value
+    if(ConsoleHistoryCnt <= MAX_CONSOLE_COMMAND_HISTORY)
+      ConsoleHistoryCnt++;
+	Get_Console_Command_From_History(ConsoleHistoryCnt, InputString);
+	InputCharCnt = strlen(InputString);
+	Add_String_In_Console_Queue("\r~$ ");
+	Add_String_In_Console_Queue(InputString);
+    break;
+  case '2':  // Down    TODO: Check the value
+    if(ConsoleHistoryCnt >= 1)
+      ConsoleHistoryCnt--;
+	
+	if((ConsoleHistoryCnt > 0) && (ConsoleHistoryCnt <= MAX_CONSOLE_COMMAND_HISTORY))
+	{
+	  Get_Console_Command_From_History(ConsoleHistoryCnt, InputString);
+	  InputCharCnt = strlen(InputString);
+	  Add_String_In_Console_Queue("\r~$ ");
+	  Add_String_In_Console_Queue(InputString);
+	}
+	else
+	{
+	  InputString[0] = '\0';
+	  InputCharCnt = 0;
+	  Add_String_In_Console_Queue("\r~$ ");
+	}
+	
     break;
   default:
     Add_Char_In_Console_Queue(Ch);
