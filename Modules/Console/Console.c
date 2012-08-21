@@ -1,5 +1,6 @@
 #include "Global_Defines.h"
 #include "Includes.h"
+#include "Console_Defconfig.h"
 #include "ConsoleHelp.h"
 #include "ConsoleCommands.h"
 #include "Command.h"
