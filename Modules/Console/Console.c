@@ -1,6 +1,7 @@
 #include "Global_Defines.h"
 #include "Includes.h"
 #include "Console_Defconfig.h"
+#include "Console_Func.h"
 #include "ConsoleHelp.h"
 #include "ConsoleCommands.h"
 #include "Command.h"
@@ -157,7 +158,7 @@ Status_t Console_Print_Pull(void)
       goto Exit;
 
 Exit:
-  RETURN_SUCCESS();
+  RETURN_SUCCESS_FUNC(CONSOLE_PRINT_PULL);
 }
 
 /*******************************************************************************
@@ -236,7 +237,7 @@ __arm Status_t Console_ISR(void)
     break;
   }
   
-  RETURN_SUCCESS();
+  RETURN_SUCCESS_FUNC(CONSOLE_ISR);
 }
 
 /*******************************************************************************
@@ -309,7 +310,7 @@ Status_t Console_Server_Init(uint8 Chanell, unsigned int Speed, uint8 Mode)
       break;
   }
   
-  RETURN_SUCCESS();
+  RETURN_SUCCESS_FUNC(CONSOLE_SERVER_INIT);
 }
 
 /*******************************************************************************
@@ -317,13 +318,15 @@ Status_t Console_Server_Init(uint8 Chanell, unsigned int Speed, uint8 Mode)
 *******************************************************************************/
 Status_t Add_Console_Command_In_Queue(char *InputString)
 {
+  Function_IN(ADD_CONSOLE_COMMAND_IN_QUEUE);
+  
   CONTROL(InputString != NULL, INVALID_INPUT_POINTER);
   CONTROL(ConsoleCommandsInQueue <= MAX_CONSOLE_COMMAND_IN_QUEUE, CONSOLE_COMMANDS_OVERFLOW);
   
   strcpy(QueueConsoleCommand[ConsoleCommandsInQueue], InputString);
   ConsoleCommandsInQueue++;
 
-  return SUCCESS;
+  RETURN_SUCCESS_FUNC(ADD_CONSOLE_COMMAND_IN_QUEUE);
 }
 
 /*******************************************************************************
@@ -369,6 +372,7 @@ static Status_t Get_Console_Command_From_History(uint8 NoOfPreviousCommand, char
 *******************************************************************************/
 Status_t Remove_Console_Command_From_Queue(uint8 NoOfCommand)
 {
+  Function_IN(REMOVE_CONSOLE_COMMAND_FROM_QUEUE);
   CONTROL(NoOfCommand < ConsoleCommandsInQueue, INVALID_INPUT_PARAMETER);
   
   Console_Set_Interrupt_State(DISABLE, NO_CHANGE);
@@ -379,7 +383,7 @@ Status_t Remove_Console_Command_From_Queue(uint8 NoOfCommand)
   ConsoleCommandsInQueue--;
   Console_Return_Old_Interrupt_State();
   
-  return SUCCESS;
+  RETURN_SUCCESS_FUNC(REMOVE_CONSOLE_COMMAND_FROM_QUEUE);
 }
 
 /*******************************************************************************
@@ -451,7 +455,8 @@ Status_t Console_Command_Execute(uint8 NoOfCommand)
   else if(!strncmp( "du", QueueConsoleCommand[NoOfCommand], 2))
 #endif
 
-       CONTROL(!Console_Update_Display(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
+  CONTROL(!Console_Update_Display(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
   CONTROL(!Remove_Console_Command_From_Queue(NoOfCommand), CONSOLE_COMMAND_ERROR);
-  RETURN_SUCCESS();
+  
+  RETURN_SUCCESS_FUNC(CONSOLE_COMMAND_EXECUTE);
 }

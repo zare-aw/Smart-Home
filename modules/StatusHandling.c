@@ -2,6 +2,7 @@
 #include "Includes.h"
 
 
+
 Function_t FunctionBuffer[MAX_FUNCTION_IN_BECKUP_BUFFER] = {0};
 uint8 FunctionInBeckupBuffer = 0;
 
@@ -172,38 +173,6 @@ void Print_Function_History(void)
       break;
     case (SET_TRIGGER_UART_1 | FUNC_OUT_MASK):
       printc(" - Set_Trigger_UART_1 OUT\n");
-      break;
-      
-      // Console
-    case (CONSOLE_COMMAND_EXECUTE):
-      printc(" - Console_Command_Execute IN\n");
-      break;
-    case (CONSOLE_COMMAND_EXECUTE | FUNC_OUT_MASK):
-      printc(" - Console_Command_Execute OUT\n");
-      break;
-    case (CONSOLE_SERVER_INIT):
-      printc(" - Console_Server_Init IN\n");
-      break;
-    case (CONSOLE_SERVER_INIT | FUNC_OUT_MASK):
-      printc(" - Console_Server_Init OUT\n");
-      break;
-    case (CONSOLE_PRINT_PULL):
-      printc(" - Console_Print_Pull IN\n");
-      break;
-    case (CONSOLE_PRINT_PULL | FUNC_OUT_MASK):
-      printc(" - Console_Print_Pull OUT\n");
-      break;
-    case (CONSOLE_ISR):
-      printc(" - Console_ISR IN\n");
-      break;
-    case (CONSOLE_ISR | FUNC_OUT_MASK):
-      printc(" - Console_ISR OUT\n");
-      break;
-    case (ADD_CONSOLE_COMMAND_IN_HISTORY):
-      printc(" - Add_Console_Command_In_History IN\n");
-      break;
-    case (ADD_CONSOLE_COMMAND_IN_HISTORY | FUNC_OUT_MASK):
-      printc(" - Add_Console_Command_In_History OUT\n");
       break;
     
       // Delay

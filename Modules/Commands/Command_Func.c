@@ -6,7 +6,7 @@
 #include "StatusHandling.h"
 
 
-Status_t Get_Func_String(Func_t Function, char *FuncString)
+Status_t Get_Command_Func_String(Func_t Function, char *FuncString)
 {
   if(COMMANDS_OFFSET != (Function & 0xFF000000))
     return -INVALID_INPUT_PARAMETER;
