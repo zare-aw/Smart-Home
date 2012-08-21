@@ -9,10 +9,6 @@
 typedef int Status_t;
 #endif
 
-#ifndef NULL
-#define NULL  0
-#endif
-
 #ifdef __COMMAND_DEBUG
 #define FUNCTION_IN(Function) Function_IN(Function)
 #define FUNCTION_OUT(Function) Function_OUT(Function)

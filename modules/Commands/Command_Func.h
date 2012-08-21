@@ -1,7 +1,10 @@
 #ifndef _Command_Func_h
 #define _Command_Func_h
 
+#include "Func_Trace.h"
 #include "StatusHandling.h"
+
+Status_t Get_Func_String(Func_t Function, char *FuncString);
 
 #define FIND_CMD        COMMANDS_OFFSET | 0x01
 #define RUN_COMMAND     COMMANDS_OFFSET | 0x02
@@ -10,19 +13,19 @@
 #define COMMANDS_INIT   COMMANDS_OFFSET | 0x05
 
 // cmd_help.c
-#define HELP_OFFSET     0x0100
-#define DO_HELP         COMMANDS_OFFSET | HELP_OFFSET | 0x01
+#define HELP_OFFSET                                     0x0100
+#define DO_HELP         COMMANDS_OFFSET | HELP_OFFSET | 0x0001
 
 // cmd_info.c
-#define INFO_OFFSET     0x0200
-#define DO_INFO         COMMANDS_OFFSET | INFO_OFFSET | 0x01
+#define INFO_OFFSET                                     0x0200
+#define DO_INFO         COMMANDS_OFFSET | INFO_OFFSET | 0x0001
 
 // cmd_time.c
-#define TIME_OFFSET     0x0300
-#define DO_TIME         COMMANDS_OFFSET | TIME_OFFSET | 0x01
+#define TIME_OFFSET                                     0x0300
+#define DO_TIME         COMMANDS_OFFSET | TIME_OFFSET | 0x0001
 
-// cmd_set-time.c
-#define SET_TIME_OFFSET 0x0400
-#define DO_SET_TIME     COMMANDS_OFFSET | SET_TIME_OFFSET | 0x01
+// cmd_set_time.c
+#define SET_TIME_OFFSET                                     0x0400
+#define DO_SET_TIME     COMMANDS_OFFSET | SET_TIME_OFFSET | 0x0001
 
 #endif

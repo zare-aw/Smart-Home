@@ -1730,7 +1730,7 @@
         <name>$PROJ_DIR$\Modules\Commands\Command_Defconfig.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Commands\Command_Defines.h</name>
+        <name>$PROJ_DIR$\Modules\Commands\Command_Func.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\Modules\Commands\Command_Func.h</name>

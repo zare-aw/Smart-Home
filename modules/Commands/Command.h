@@ -1,10 +1,9 @@
 #ifndef _Command_h
 #define _Command_h
 
-#include "Command_Defines.h"
 #include "Command_Debug.h"
 #include "Command_Defconfig.h"
-#include "StatusHandling.h"
+#include "Func_Trace.h"
 
 /**** Cmd Global error state defines ****/
 #define CMD_SUCCESS                             COMMANDS_OFFSET | 0x00

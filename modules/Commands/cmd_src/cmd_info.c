@@ -20,5 +20,5 @@ Status_t Do_Info(Cmd_Tbl_t *Cmd_Tbl, uint32 flag, uint32 argc, char *argv[])
 CMD_CREATE(
   info, 0, Do_Info,
   "info - print system info\n",
-  NULL
+  ""
 );

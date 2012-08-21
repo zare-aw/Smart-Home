@@ -21,6 +21,7 @@
  * Includes
  *****************************************************************************/
 #include "Global_Defines.h"
+#include "Func_Trace.h"
 
 /******************************************************************************
  * Defines
@@ -29,14 +30,9 @@
 #define FUNC_OUT_MASK                  0x80000000
 
 /******************************************************************************
- * Typedefs
- *****************************************************************************/
-typedef unsigned long Function_t;
-
-/******************************************************************************
  * Global variables
  *****************************************************************************/
-Function_t FunctionsBuffer[MAX_FUNCTION_IN_BECKUP_BUFFER] = {0};
+Func_t FunctionsBuffer[MAX_FUNCTION_IN_BECKUP_BUFFER] = {0};
 uint8 FunctionsInBuffer = 0;
 
 /*******************************************************************************
@@ -45,7 +41,7 @@ uint8 FunctionsInBuffer = 0;
  * @in Function - Function code
  * @out void
  ******************************************************************************/
-void FuncIN(Function_t Function)
+void FuncIN(Func_t Function)
 {
   if(FunctionsInBuffer >= MAX_FUNCTION_IN_BECKUP_BUFFER)
     FunctionsInBuffer = 0;
@@ -60,7 +56,7 @@ void FuncIN(Function_t Function)
  * @in Function - Function code
  * @out void
  ******************************************************************************/
-void FuncOUT(Function_t Function)
+void FuncOUT(Func_t Function)
 {
   if(FunctionsInBuffer >= MAX_FUNCTION_IN_BECKUP_BUFFER)
     FunctionsInBuffer = 0;
@@ -75,9 +71,9 @@ void FuncOUT(Function_t Function)
  * @in NoOfFunc - Which function from function buffer to return
  *                -1 - return latest function
  *                -X - return X function previous in function buffer
- * @out Function_t - Return requested function
+ * @out Func_t - Return requested function
  ******************************************************************************/
-Function_t Get_Func(int NoOfFunc)
+Func_t Get_Func(int NoOfFunc)
 {
   if((-NoOfFunc) > MAX_FUNCTION_IN_BECKUP_BUFFER)
     return NULL;
