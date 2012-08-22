@@ -22,27 +22,22 @@ extern Function_t FunctionBuffer[MAX_FUNCTION_IN_BECKUP_BUFFER];
 extern uint8 FunctionInBeckupBuffer;
 
 /*******************************************************************************
+ * Functions definitions
+*******************************************************************************/
+void Function_IN(Function_t Function);
+void Function_OUT(Function_t Function);
+void This_Function_OUT(void);
+uint8 Abort(Status_t Status);
+void Print_Function_History(void);
+
+/*******************************************************************************
 * Macro definitions
 *******************************************************************************/
-#define VERIFY(Condition, Label, Status) \
+#define VERIFY(Status, Error) \
   do { \
-    if (Condition != SUCCESS) \
+    if (Status < SUCCESS) \
     { \
-      if (Condition < SUCCESS) \
-      { \
-        Abort(Status); \
-      } \
-      else \
-      { \
-        if (Label == NULL) \
-        { \
-          ABORT(Status); \
-        } \
-        else \
-        { \
-          goto Label; \
-        } \
-      } \
+      Abort(Error); \
     } \
   }while (0)
 
@@ -174,11 +169,6 @@ extern uint8 FunctionInBeckupBuffer;
 
 #define DLY_BUSY_ERROR                      140
 #define DLY_TIMER_UNAVAILABLE_ERROR         141
-
-#define CONSOLE_COMMANDS_OVERFLOW           151
-#define CONSOLE_COMMAND_ERROR               152
-#define CONSOLE_COMMAND_EXECUTE_ERROR       153
-#define CONSOLE_CHANNEL_INIT_ERROR          154
 
 #define IR_GENERAL_ERROR                    200
 #define IR_COMMAND_ERROR                    201
@@ -385,12 +375,5 @@ extern uint8 FunctionInBeckupBuffer;
 // Backlight
 #define BACKLIGHT_INIT                  10900
 #define SET_BACKLIGHT_INTENSITY         10901
-
-// Functions
-void Function_IN(Function_t Function);
-void Function_OUT(Function_t Function);
-void This_Function_OUT(void);
-uint8 Abort(Status_t Status);
-void Print_Function_History(void);
 
 #endif

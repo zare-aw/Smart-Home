@@ -106,19 +106,20 @@ void Add_Char_In_Console_Queue(char Input)
 *******************************************************************************/
 Status_t Add_String_In_Console_Queue(char *Input)
 {
-  Function_IN(ADD_STRING_IN_CONSOLE_QUEUE);
+  FuncIN(ADD_STRING_IN_CONSOLE_QUEUE);
+  
   uint16 Cnt = 0;
-  CONTROL(Input != NULL, INVALID_INPUT_POINTER);
+  ASSERT(Input != NULL, -INVALID_INPUT_POINTER);
   
   while(Input[Cnt] != '\0')
   {
     Add_Char_In_Console_Queue(Input[Cnt]);
-	Cnt++;
-	
-	CONTROL(Cnt < MAX_CONSOLE_COMMAND_LENGTH, INVALID_INPUT_PARAMETER);
+    Cnt++;
+    
+    ASSERT(Cnt < MAX_CONSOLE_COMMAND_LENGTH, -INVALID_INPUT_PARAMETER);
   }
   
-  RETURN_SUCCESS_FUNC(ADD_STRING_IN_CONSOLE_QUEUE);
+  EXIT_SUCCESS_FUNC(ADD_STRING_IN_CONSOLE_QUEUE);
 }
 
 /*******************************************************************************
@@ -129,36 +130,37 @@ Status_t Add_String_In_Console_Queue(char *Input)
 *******************************************************************************/
 Status_t Console_Print_Pull(void)
 {
-  Function_IN(CONSOLE_PRINT_PULL);
+  FuncIN(CONSOLE_PRINT_PULL);
+  
   uint8 Status = 0;
   uint8 i;
   
   if(Console_Mode == MODE_INTERRUPT)
-    RETURN_SUCCESS();
+    EXIT_SUCCESS_FUNC(CONSOLE_PRINT_PULL);
   
   if(Console_Queue_Cnt == 0)   // Nema karakteri za pecatenje
-    RETURN_SUCCESS();                 
+    EXIT_SUCCESS_FUNC(CONSOLE_PRINT_PULL);
   
   Console_Check_TX_FIFO(&Status);
   
-    if(Status == 1)
+  if(Status == 1)
+  {
+    for(i = 0; i < 16; i++)
     {
-      for(i = 0; i < 16; i++)
-      {
-        Console_Write_Char(Console_Queue[Console_Queue_Print_Cnt]);
-        Console_Queue_Print_Cnt ++;
-        if(Console_Queue_Print_Cnt == CONSOLE_QUEUE_SIZE)
-          Console_Queue_Print_Cnt = 0;
-        Console_Queue_Cnt --;
-        if(Console_Queue_Cnt == 0)
-          goto Exit;
-      }
+      Console_Write_Char(Console_Queue[Console_Queue_Print_Cnt]);
+      Console_Queue_Print_Cnt ++;
+      if(Console_Queue_Print_Cnt == CONSOLE_QUEUE_SIZE)
+        Console_Queue_Print_Cnt = 0;
+      Console_Queue_Cnt --;
+      if(Console_Queue_Cnt == 0)
+        goto Exit;
     }
-    else
-      goto Exit;
+  }
+  else
+    goto Exit;
 
 Exit:
-  RETURN_SUCCESS_FUNC(CONSOLE_PRINT_PULL);
+  EXIT_SUCCESS_FUNC(CONSOLE_PRINT_PULL);
 }
 
 /*******************************************************************************
@@ -166,7 +168,8 @@ Exit:
 *******************************************************************************/
 __arm Status_t Console_ISR(void)
 {
-  Function_IN(CONSOLE_ISR);
+  FuncIN(CONSOLE_ISR);
+
   uint8 Ch = NULL;
   
   Console_Get_Char(&Ch, 0x05);
@@ -237,7 +240,7 @@ __arm Status_t Console_ISR(void)
     break;
   }
   
-  RETURN_SUCCESS_FUNC(CONSOLE_ISR);
+  EXIT_SUCCESS_FUNC(CONSOLE_ISR);
 }
 
 /*******************************************************************************
@@ -249,7 +252,10 @@ __arm Status_t Console_ISR(void)
 *******************************************************************************/
 Status_t Console_Server_Init(uint8 Chanell, unsigned int Speed, uint8 Mode)
 {
-  Function_IN(CONSOLE_SERVER_INIT);
+  FuncIN(CONSOLE_SERVER_INIT);
+  
+  Status_t Status = GENERAL_ERROR;
+  
   switch(Chanell)
   {
     case UART_0:
@@ -289,13 +295,24 @@ Status_t Console_Server_Init(uint8 Chanell, unsigned int Speed, uint8 Mode)
       Console_Put_String = NULL;
       Console_Check_TX_FIFO = NULL;
       Console_Return_Old_Interrupt_State = NULL;
-      CONTROL(0, INVALID_INIT_INPUT_PARAMETER);
+      ASSERT(0, -INVALID_INIT_INPUT_PARAMETER);
       break;
   }
   
-  CONTROL(!Console_Chanell_Init(Speed), CONSOLE_CHANNEL_INIT_ERROR);
-  CONTROL(!Console_Set_Interrupt_State(ENABLE, DISABLE), CONSOLE_CHANNEL_INIT_ERROR);
-  CONTROL(!Console_Set_RX_Trigger(BYTE_1), CONSOLE_CHANNEL_INIT_ERROR);
+  Status = Console_Chanell_Init(Speed);
+  VERIFY(Status, -CONSOLE_CHANNEL_INIT_ERROR);
+  if(Status > SUCCESS)
+    EXIT_FUNC(CONSOLE_CHANNEL_INIT_ERROR, CONSOLE_SERVER_INIT);
+  
+  Status = Console_Set_Interrupt_State(ENABLE, DISABLE);
+  VERIFY(Status, -CONSOLE_CHANNEL_INIT_ERROR);
+  if(Status > SUCCESS)
+    EXIT_FUNC(CONSOLE_CHANNEL_INIT_ERROR, CONSOLE_SERVER_INIT);
+  
+  Status = Console_Set_RX_Trigger(BYTE_1);
+  VERIFY(Status, -CONSOLE_CHANNEL_INIT_ERROR);
+  if(Status > SUCCESS)
+    EXIT_FUNC(CONSOLE_CHANNEL_INIT_ERROR, CONSOLE_SERVER_INIT);
   
   switch(Mode)
   {
@@ -306,11 +323,11 @@ Status_t Console_Server_Init(uint8 Chanell, unsigned int Speed, uint8 Mode)
       Console_Mode = MODE_INTERRUPT;
       break;
     default:
-      CONTROL(0, INVALID_INIT_INPUT_PARAMETER);
+      ASSERT(0, -INVALID_INIT_INPUT_PARAMETER);
       break;
   }
   
-  RETURN_SUCCESS_FUNC(CONSOLE_SERVER_INIT);
+  EXIT_SUCCESS_FUNC(CONSOLE_SERVER_INIT);
 }
 
 /*******************************************************************************
@@ -318,15 +335,15 @@ Status_t Console_Server_Init(uint8 Chanell, unsigned int Speed, uint8 Mode)
 *******************************************************************************/
 Status_t Add_Console_Command_In_Queue(char *InputString)
 {
-  Function_IN(ADD_CONSOLE_COMMAND_IN_QUEUE);
+  FuncIN(ADD_CONSOLE_COMMAND_IN_QUEUE);
   
-  CONTROL(InputString != NULL, INVALID_INPUT_POINTER);
-  CONTROL(ConsoleCommandsInQueue <= MAX_CONSOLE_COMMAND_IN_QUEUE, CONSOLE_COMMANDS_OVERFLOW);
+  ASSERT(InputString != NULL, -INVALID_INPUT_POINTER);
+  ASSERT(ConsoleCommandsInQueue <= MAX_CONSOLE_COMMAND_IN_QUEUE, -CONSOLE_COMMANDS_OVERFLOW);
   
   strcpy(QueueConsoleCommand[ConsoleCommandsInQueue], InputString);
   ConsoleCommandsInQueue++;
 
-  RETURN_SUCCESS_FUNC(ADD_CONSOLE_COMMAND_IN_QUEUE);
+  EXIT_SUCCESS_FUNC(ADD_CONSOLE_COMMAND_IN_QUEUE);
 }
 
 /*******************************************************************************
@@ -334,8 +351,8 @@ Status_t Add_Console_Command_In_Queue(char *InputString)
 *******************************************************************************/
 static Status_t Add_Console_Command_In_History(char *InputString)
 {
-  Function_IN(ADD_CONSOLE_COMMAND_IN_HISTORY);
-  CONTROL(InputString != NULL, INVALID_INPUT_POINTER);
+  FuncIN(ADD_CONSOLE_COMMAND_IN_HISTORY);
+  ASSERT(InputString != NULL, -INVALID_INPUT_POINTER);
   
   if(ConsoleCommandsInHistory >= MAX_CONSOLE_COMMAND_HISTORY)
     ConsoleCommandsInHistory = 0;
@@ -344,7 +361,7 @@ static Status_t Add_Console_Command_In_History(char *InputString)
   
   ConsoleCommandsInHistory ++;
   
-  RETURN_SUCCESS_FUNC(ADD_CONSOLE_COMMAND_IN_HISTORY);
+  EXIT_SUCCESS_FUNC(ADD_CONSOLE_COMMAND_IN_HISTORY);
 }
 
 /*******************************************************************************
@@ -352,8 +369,8 @@ static Status_t Add_Console_Command_In_History(char *InputString)
 *******************************************************************************/
 static Status_t Get_Console_Command_From_History(uint8 NoOfPreviousCommand, char *CommandString)
 {
-  Function_IN(GET_CONSOLE_COMMAND_FROM_HISTORY);
-  CONTROL(CommandString != NULL, INVALID_INPUT_POINTER);
+  FuncIN(GET_CONSOLE_COMMAND_FROM_HISTORY);
+  ASSERT(CommandString != NULL, -INVALID_INPUT_POINTER);
   
   int Command = (int)(ConsoleCommandsInHistory - 1);
   
@@ -364,7 +381,7 @@ static Status_t Get_Console_Command_From_History(uint8 NoOfPreviousCommand, char
   
   strcpy(InputString, ConsoleCommandHistory[Command]);
 
-  RETURN_SUCCESS_FUNC(GET_CONSOLE_COMMAND_FROM_HISTORY);
+  EXIT_SUCCESS_FUNC(GET_CONSOLE_COMMAND_FROM_HISTORY);
 }
 
 /*******************************************************************************
@@ -372,8 +389,8 @@ static Status_t Get_Console_Command_From_History(uint8 NoOfPreviousCommand, char
 *******************************************************************************/
 Status_t Remove_Console_Command_From_Queue(uint8 NoOfCommand)
 {
-  Function_IN(REMOVE_CONSOLE_COMMAND_FROM_QUEUE);
-  CONTROL(NoOfCommand < ConsoleCommandsInQueue, INVALID_INPUT_PARAMETER);
+  FuncIN(REMOVE_CONSOLE_COMMAND_FROM_QUEUE);
+  ASSERT(NoOfCommand < ConsoleCommandsInQueue, -INVALID_INPUT_PARAMETER);
   
   Console_Set_Interrupt_State(DISABLE, NO_CHANGE);
   
@@ -383,7 +400,7 @@ Status_t Remove_Console_Command_From_Queue(uint8 NoOfCommand)
   ConsoleCommandsInQueue--;
   Console_Return_Old_Interrupt_State();
   
-  RETURN_SUCCESS_FUNC(REMOVE_CONSOLE_COMMAND_FROM_QUEUE);
+  EXIT_SUCCESS_FUNC(REMOVE_CONSOLE_COMMAND_FROM_QUEUE);
 }
 
 /*******************************************************************************
@@ -391,11 +408,14 @@ Status_t Remove_Console_Command_From_Queue(uint8 NoOfCommand)
 *******************************************************************************/
 Status_t Console_Command_Execute(uint8 NoOfCommand)
 {     
-  Function_IN(CONSOLE_COMMAND_EXECUTE);
-  if(NoOfCommand >= ConsoleCommandsInQueue)
-    RETURN_SUCCESS();   // No Console Commands in Queue
+  FuncIN(CONSOLE_COMMAND_EXECUTE);
   
-  CONTROL(CMD_SUCCESS == Run_Command(QueueConsoleCommand[NoOfCommand]), CONSOLE_COMMAND_EXECUTE_ERROR);
+  Status_t Status = GENERAL_ERROR;
+  
+  if(NoOfCommand >= ConsoleCommandsInQueue)
+    EXIT_SUCCESS_FUNC(CONSOLE_COMMAND_EXECUTE);   // No Console Commands in Queue
+  
+  ASSERT(CMD_SUCCESS == Run_Command(QueueConsoleCommand[NoOfCommand]), -CONSOLE_COMMAND_EXECUTE_ERROR);
 
 #if 0
   if(!strncmp("help", QueueConsoleCommand[NoOfCommand], 4))
@@ -454,9 +474,16 @@ Status_t Console_Command_Execute(uint8 NoOfCommand)
        CONTROL(!Console_Dump_Display(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
   else if(!strncmp( "du", QueueConsoleCommand[NoOfCommand], 2))
 #endif
-
-  CONTROL(!Console_Update_Display(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  CONTROL(!Remove_Console_Command_From_Queue(NoOfCommand), CONSOLE_COMMAND_ERROR);
   
-  RETURN_SUCCESS_FUNC(CONSOLE_COMMAND_EXECUTE);
+  Status = Console_Update_Display(NoOfCommand);
+  VERIFY(Status, -CONSOLE_COMMAND_EXECUTE_ERROR);
+  if(Status > SUCCESS)
+    EXIT_FUNC(CONSOLE_COMMAND_EXECUTE_ERROR, CONSOLE_COMMAND_EXECUTE);
+  
+  Status = Remove_Console_Command_From_Queue(NoOfCommand);
+  VERIFY(Status, -CONSOLE_COMMAND_ERROR);
+  if(Status > SUCCESS)
+    EXIT_FUNC(CONSOLE_COMMAND_ERROR, CONSOLE_COMMAND_EXECUTE);
+  
+  EXIT_SUCCESS_FUNC(CONSOLE_COMMAND_EXECUTE);
 }

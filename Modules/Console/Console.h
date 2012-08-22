@@ -4,6 +4,14 @@
 #include "StatusHandling.h"
 #include "Console_Defconfig.h"
 
+/*******************************************************************************
+* Function flags for console module
+*******************************************************************************/
+#define CONSOLE_COMMANDS_OVERFLOW           CONSOLE_OFFSET | 0x01
+#define CONSOLE_COMMAND_ERROR               CONSOLE_OFFSET | 0x02
+#define CONSOLE_COMMAND_EXECUTE_ERROR       CONSOLE_OFFSET | 0x03
+#define CONSOLE_CHANNEL_INIT_ERROR          CONSOLE_OFFSET | 0x04
+
 extern char InputString[MAX_CONSOLE_COMMAND_LENGTH];
 extern char QueueConsoleCommand[MAX_CONSOLE_COMMAND_IN_QUEUE][MAX_CONSOLE_COMMAND_LENGTH];
 
