@@ -1714,6 +1714,9 @@
           <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_info.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_ir.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_set_date.c</name>
         </file>
         <file>

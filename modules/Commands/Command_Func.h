@@ -35,4 +35,9 @@ Status_t Get_Command_Func_String(Func_t Function, char *FuncString);
 // cmd_set_date.c
 #define SET_DATE_OFFSET                                     0x0600
 #define DO_SET_DATE     COMMANDS_OFFSET | SET_DATE_OFFSET | 0x0001
+
+// cmd_ir.c
+#define IR_OFFSET                                           0x0700
+#define DO_IR           COMMANDS_OFFSET | IR_OFFSET |       0x0001
+
 #endif

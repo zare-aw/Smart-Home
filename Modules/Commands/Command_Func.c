@@ -65,7 +65,12 @@ Status_t Get_Command_Func_String(Func_t Function, char *FuncString)
     case DO_SET_DATE:
       strcpy(FuncString, "Do_Set_Date");
       break;
-     
+    
+    // cmd_ir.c
+    case DO_IR:
+      strcpy(FuncString, "Do_Ir");
+      break;
+    
     default:
       sprintf(FuncString, "Function not found! Module Command. Function No = %X.", (Function & 0x00FFFFFF));
       break;
