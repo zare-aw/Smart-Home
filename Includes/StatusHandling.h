@@ -1,6 +1,8 @@
 #ifndef _StatusHandling_h
 #define _StatusHandling_h
 
+#include "Func_Trace.h"
+
 typedef int Status_t;
 typedef unsigned long Function_t;
 
@@ -18,6 +20,54 @@ typedef unsigned long Function_t;
 
 extern Function_t FunctionBuffer[MAX_FUNCTION_IN_BECKUP_BUFFER];
 extern uint8 FunctionInBeckupBuffer;
+
+/*******************************************************************************
+* Macro definitions
+*******************************************************************************/
+#define VERIFY(Condition, Label, Status) \
+  do { \
+    if (Condition != SUCCESS) \
+    { \
+      if (Condition < SUCCESS) \
+      { \
+        Abort(Status); \
+      } \
+      else \
+      { \
+        if (Label == NULL) \
+        { \
+          ABORT(Status); \
+        } \
+        else \
+        { \
+          goto Label; \
+        } \
+      } \
+    } \
+  }while (0)
+
+#define ASSERT(Condition, Status) \
+  do { \
+    if (!(Condition)) \
+    {\
+      Abort(Status); \
+    }\
+  }while (0)
+
+
+
+#define EXIT_FUNC(Status, Function) \
+  do {\
+    FuncOUT(Function); \
+    return Status;\
+  }while (0)
+
+#define EXIT_SUCCESS_FUNC(Func)\
+  do {\
+    FuncOUT(Func); \
+    return SUCCESS; \
+  }while(0)
+
 
 /*******************************************************************************
 * Macro definitions
