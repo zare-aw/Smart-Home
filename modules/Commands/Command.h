@@ -6,7 +6,7 @@
 #include "Func_Trace.h"
 
 /**** Cmd Global error state defines ****/
-#define CMD_SUCCESS                             COMMANDS_OFFSET | 0x00
+#define CMD_SUCCESS                             0x00
 #define CMD_ERROR                               COMMANDS_OFFSET | 0x01
 #define CMD_GENERAL_ERROR                       COMMANDS_OFFSET | 0x02
 #define CMD_FATAL_ERROR                         COMMANDS_OFFSET | 0x03
