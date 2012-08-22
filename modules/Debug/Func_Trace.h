@@ -38,5 +38,6 @@ __root __packed Func_Tbl_t Func_##Name @ ".func" = {Func, #Name}
 *******************************************************************************/
 void FuncIN(Func_t Function);
 void FuncOUT(Func_t Function);
+void Print_Func_History(void);
 
 #endif

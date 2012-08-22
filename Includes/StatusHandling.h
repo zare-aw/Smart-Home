@@ -27,6 +27,7 @@ extern uint8 FunctionInBeckupBuffer;
 void Function_IN(Function_t Function);
 void Function_OUT(Function_t Function);
 void This_Function_OUT(void);
+void Fatal_Abort(Status_t Status);
 uint8 Abort(Status_t Status);
 void Print_Function_History(void);
 
@@ -37,7 +38,7 @@ void Print_Function_History(void);
   do { \
     if (Status < SUCCESS) \
     { \
-      Abort(Error); \
+      Fatal_Abort(Error); \
     } \
   }while (0)
 
@@ -45,15 +46,15 @@ void Print_Function_History(void);
   do { \
     if (!(Condition)) \
     {\
-      Abort(Status); \
+      Fatal_Abort(Status); \
     }\
   }while (0)
 
 
 
-#define EXIT_FUNC(Status, Function) \
+#define EXIT_FUNC(Status, Func) \
   do {\
-    FuncOUT(Function); \
+    FuncOUT(Func); \
     return Status;\
   }while (0)
 

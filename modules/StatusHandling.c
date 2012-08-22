@@ -1,7 +1,6 @@
 #include "Global_Defines.h"
+#include "StatusHandling.h"
 #include "Includes.h"
-
-
 
 Function_t FunctionBuffer[MAX_FUNCTION_IN_BECKUP_BUFFER] = {0};
 uint8 FunctionInBeckupBuffer = 0;
@@ -35,8 +34,35 @@ void This_Function_OUT(void)
     Function_OUT(FunctionBuffer[MAX_FUNCTION_IN_BECKUP_BUFFER - 1]);
   else
     Function_OUT(FunctionBuffer[FunctionInBeckupBuffer - 1]);
-}    
+}
 
+/*******************************************************************************
+ * Function for handle Fatal Error. This function prints error and
+ *   function history. There is no return from this function!
+ * @in Status - Error which cause Fatal Abort!
+ * @out void
+ ******************************************************************************/
+void Fatal_Abort(Status_t Status)
+{
+  printc("\n # ABORT !!!\n");
+  if(Status < SUCCESS)
+    printc(" # ERROR: -0x%08X\n", -Status);
+  else
+    printc(" # ERROR: 0x%08X\n", Status);
+  
+  Print_Func_History();
+  
+  __disable_interrupt();
+  
+  while(1)
+  {
+    Console_Print_Pull();
+  } // while(1)
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
 uint8 Abort(Status_t Status)
 {
   Function_t Function;
