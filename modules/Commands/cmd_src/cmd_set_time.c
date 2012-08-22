@@ -34,6 +34,6 @@ Status_t Do_Set_Time(Cmd_Tbl_t *Cmd_Tbl, uint32 flag, uint32 argc, char *argv[])
 
 CMD_CREATE(
   set_time, 1, Do_Set_Time,
-  "'set-time hh:mm:ss' - Set time in 24h format. Ex: 'set-time 14:02:55'\n",
+  "'set_time hh:mm:ss' - Set time in 24h format. Ex: 'set_time 14:02:55'\n",
   ""
 );
