@@ -14,6 +14,20 @@ typedef unsigned long Func_t;
 #define COMMANDS_OFFSET         0x05000000
 
 /*******************************************************************************
+* 
+*******************************************************************************/
+typedef struct Func_Tbl_s
+{
+  Func_t Func;        // Function flag
+  char *Name;         // Function name
+} Func_Tbl_t;
+
+#pragma section=".func"
+
+#define FUNC_REGISTER(Func, Name) \
+__root __packed Func_Tbl_t Func_##Name @ ".Func" = {Func, #Name}
+
+/*******************************************************************************
 * Functions
 *******************************************************************************/
 void FuncIN(Func_t Function);
