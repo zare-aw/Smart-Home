@@ -1,15 +1,15 @@
 #include "Global_Defines.h"
 #include "Command.h"
 #include "Command_Func.h"
-#include "Command_Debug.h"
+#include "Func_Trace.h"
 
 Status_t Do_Help(Cmd_Tbl_t *Cmd_Tbl, uint32 flag, uint32 argc, char *argv[])
 {
-  FUNCTION_IN(DO_HELP);
-  Status_t Status = CMD_GENERAL_ERROR; 
+  FuncIN(DO_HELP);
   
-  if(argc > Cmd_Tbl->MaxArgs)
-    FATAL_ABORT(-CMD_INVALID_INPUT_PARAMETER, DO_HELP);
+  Status_t Status = GENERAL_ERROR; 
+  
+  ASSERT(argc <= Cmd_Tbl->MaxArgs, -INVALID_INPUT_PARAMETER);
   
   if(argc == 0)
   {
@@ -21,8 +21,7 @@ Status_t Do_Help(Cmd_Tbl_t *Cmd_Tbl, uint32 flag, uint32 argc, char *argv[])
     
     while(Cmd_Tbl_p != Cmd_Tbl_End_p)
     {
-      if(Cmd_Tbl_p->Name == NULL)
-        FATAL_ABORT(-CMD_ILEGAL_COMMAND_PARAMETER, DO_HELP);
+      ASSERT(Cmd_Tbl_p->Name != NULL, -CMD_ILEGAL_COMMAND_PARAMETER);
       
       if(Cmd_Tbl_p->Usage == NULL)
         printcmd(" - %s, Usage: No usage details\n", Cmd_Tbl_p->Name);
@@ -38,12 +37,11 @@ Status_t Do_Help(Cmd_Tbl_t *Cmd_Tbl, uint32 flag, uint32 argc, char *argv[])
   {
     Cmd_Tbl_t *Cmd_Tbl_p;
     Status = Find_Cmd(argv[0], &Cmd_Tbl_p);
-    if(Status < CMD_SUCCESS)
-      FATAL_ABORT(Status, DO_HELP);
+    VERIFY(Status, Status);
     
     switch(Status)
     {
-      case CMD_SUCCESS:
+      case SUCCESS:
 #ifdef CFG_HELP
         printcmd("%s\nUsage:\n%s\nHelp:\n%s\n\n", Cmd_Tbl_p->Name, Cmd_Tbl_p->Usage, Cmd_Tbl_p->Help);
 #else
@@ -61,8 +59,9 @@ Status_t Do_Help(Cmd_Tbl_t *Cmd_Tbl, uint32 flag, uint32 argc, char *argv[])
     } // sitch(Status) 
   } // else
   
-  FUNC_EXIT(CMD_SUCCESS, DO_HELP);
+  EXIT_SUCCESS_FUNC(DO_HELP);
 }
+FUNC_REGISTER(DO_HELP, Do_Help);
 
 CMD_CREATE(
   help, 1, Do_Help,

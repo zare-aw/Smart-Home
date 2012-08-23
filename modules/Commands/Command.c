@@ -47,7 +47,8 @@ uint32 Get_Cmd_Section_Size(void)
 *******************************************************************************/
 Status_t Find_Cmd(const char *Cmd, Cmd_Tbl_t **Cmd_Tbl_p)
 {
-  FUNCTION_IN(FIND_CMD);
+  FuncIN(FIND_CMD);
+  
   Cmd_Tbl_t *Cmd_Section_Begin = Get_Cmd_Section_Begin();
   Cmd_Tbl_t *Cmd_Section_End = Get_Cmd_Section_End();
   Cmd_Tbl_t *Cmd_Tbl;
@@ -55,8 +56,7 @@ Status_t Find_Cmd(const char *Cmd, Cmd_Tbl_t **Cmd_Tbl_p)
   int Len;
   int N_Found = 0;
   
-  if((Cmd == NULL) || (Cmd_Tbl_p == NULL))
-    FATAL_ABORT(-CMD_INVALID_INPUT_POINTER, FIND_CMD);
+  ASSERT((Cmd != NULL) && (Cmd_Tbl_p != NULL), -INVALID_INPUT_POINTER);
   
   Len = strlen(Cmd);
   
@@ -67,7 +67,7 @@ Status_t Find_Cmd(const char *Cmd, Cmd_Tbl_t **Cmd_Tbl_p)
       if (Len == strlen(Cmd_Tbl -> Name))
       {
         *Cmd_Tbl_p = Cmd_Tbl;   // Full match
-        FUNC_EXIT(CMD_SUCCESS, FIND_CMD);
+        EXIT_SUCCESS_FUNC(FIND_CMD);
       }
       
       Cmd_Tbl_Temp = Cmd_Tbl;
@@ -78,11 +78,12 @@ Status_t Find_Cmd(const char *Cmd, Cmd_Tbl_t **Cmd_Tbl_p)
   if(N_Found == 1)
   {
     *Cmd_Tbl_p = Cmd_Tbl_Temp;
-    FUNC_EXIT(CMD_POSSIBLE_CMD, FIND_CMD);
+    EXIT_FUNC(CMD_POSSIBLE_CMD, FIND_CMD);
   }
   
-  FUNC_EXIT(CMD_NOT_FOUND, FIND_CMD);
+  EXIT_FUNC(CMD_NOT_FOUND, FIND_CMD);
 }
+FUNC_REGISTER(FIND_CMD, Find_Cmd);
 
 /*******************************************************************************
 * Function for run command
@@ -91,9 +92,10 @@ Status_t Find_Cmd(const char *Cmd, Cmd_Tbl_t **Cmd_Tbl_p)
 *******************************************************************************/
 Status_t Run_Command(const char *Cmd)
 {
-  FUNCTION_IN(RUN_COMMAND);
-  Status_t Status = CMD_GENERAL_ERROR;
-  Status_t FindCmd_Status = CMD_GENERAL_ERROR;
+  FuncIN(RUN_COMMAND);
+  
+  Status_t Status = GENERAL_ERROR;
+  Status_t FindCmd_Status = GENERAL_ERROR;
   char *CmdStr;
   Cmd_Tbl_t *Cmd_Tbl_p;
   char CmdBuffer[CMD_BUFFER_SIZE] = {0};
@@ -102,8 +104,7 @@ Status_t Run_Command(const char *Cmd)
   
   strcpy(CmdBuffer, Cmd);
   
-  if((Cmd == NULL))
-    FATAL_ABORT(-CMD_INVALID_INPUT_POINTER, RUN_COMMAND);
+  ASSERT((Cmd != NULL), -INVALID_INPUT_POINTER);
 
   // Extract first word from line. That will be the command word.
   CmdStr = strtok(CmdBuffer, " ");
@@ -111,22 +112,20 @@ Status_t Run_Command(const char *Cmd)
   if(CmdStr != 0)
   {
     FindCmd_Status = Find_Cmd(CmdStr, &Cmd_Tbl_p);
-    if(FindCmd_Status < CMD_SUCCESS)
-      FATAL_ABORT(FindCmd_Status, RUN_COMMAND);
+    VERIFY(FindCmd_Status, FindCmd_Status);
   }
   else
-    FUNC_EXIT(CMD_EMPTY_COMMAND, RUN_COMMAND);
+    EXIT_FUNC(CMD_EMPTY_COMMAND, RUN_COMMAND);
 
   switch(FindCmd_Status)
   {
-    case CMD_SUCCESS:
+    case SUCCESS:
       strcpy(CmdBuffer, Cmd);
       Status = Parse_Line(CmdBuffer, &argc, Cmd_Tbl_p->MaxArgs, argv);
       
-      if(Status < CMD_SUCCESS)
-        FATAL_ABORT(Status, RUN_COMMAND);
+      VERIFY(Status, Status);
       
-      if(Status > CMD_SUCCESS)
+      if(Status > SUCCESS)
       {
         printcmd("Too many arguments!\n");
         printcmd("Usage:\n%s\n", Cmd_Tbl_p->Usage);
@@ -135,7 +134,7 @@ Status_t Run_Command(const char *Cmd)
       
       // Run Command
       Status = (Cmd_Tbl_p->Cmd)(Cmd_Tbl_p, NULL, argc, argv);
-      if(Status != CMD_SUCCESS)
+      if(Status != SUCCESS)
       {
         switch(Status)
         {
@@ -153,7 +152,7 @@ Status_t Run_Command(const char *Cmd)
             break;
         }
         
-        FUNC_EXIT(CMD_NOT_EXECUTED, RUN_COMMAND);
+        EXIT_FUNC(CMD_NOT_EXECUTED, RUN_COMMAND);
       }
       break;
     case CMD_POSSIBLE_CMD:
@@ -166,15 +165,16 @@ Status_t Run_Command(const char *Cmd)
       break;
   } // sitch(FindCmd_Status)
 
-  FUNC_EXIT(CMD_SUCCESS, RUN_COMMAND);
+  EXIT_SUCCESS_FUNC(RUN_COMMAND);
 }
+FUNC_REGISTER(RUN_COMMAND, Run_Command);
 
 /*******************************************************************************
 * Function for printing back to standard output which calling commands
 * @in format - String for printing together with all formating characters
 * @in ... - Aditional parameters
 * @out Status_t - Status
-*      CMD_SUCCESS                  - Successfully printed input string.
+*      SUCCESS                      - Successfully printed input string.
 *      CMD_INVALID_FUNCTION_POINTER - Function pointer for return printing
 *                                     function is NULL. This function pointer
 *                                     should be initialized before use.
@@ -183,26 +183,26 @@ Status_t Run_Command(const char *Cmd)
 *******************************************************************************/
 Status_t printcmd(const char *format, ...)
 {
-  FUNCTION_IN(PRINTCMD);
-  Status_t Status = CMD_GENERAL_ERROR;
+  FuncIN(PRINTCMD);
+  
+  Status_t Status = GENERAL_ERROR;
   char VsBuffer[CMD_BUFFER_SIZE] = {0};
   va_list args;
   
   va_start(args, format);
   vsprintf(VsBuffer, format, args);
   
-  if(putscmd != NULL)
-    Status = putscmd(VsBuffer);
-  else
-    FATAL_ABORT(CMD_INVALID_FUNCTION_POINTER, PRINTCMD);
+  ASSERT(putscmd != NULL, -CMD_INVALID_FUNCTION_POINTER);
   
-  if(Status < SUCCESS)
-    FATAL_ABORT(Status, PRINTCMD);
+  Status = putscmd(VsBuffer);
+  
+  VERIFY(Status, Status);
 
   va_end(args);
 
-  FUNC_EXIT(CMD_SUCCESS, PRINTCMD);
+  EXIT_SUCCESS_FUNC(PRINTCMD);
 }
+FUNC_REGISTER(PRINTCMD, printcmd);
 
 /*******************************************************************************
 * Function for parsing arguments on one line
@@ -212,14 +212,14 @@ Status_t printcmd(const char *format, ...)
 * @in MaxArguments - Maximum number of arguments for current command
 * @out *argv[] - list of char pointers to the arguments
 * @out Status_t - Status
-*      CMD_SUCCESS                   - line is parsed successfully
+*      SUCCESS                       - line is parsed successfully
 *      CMD_TOO_MANY_ARGUMENTS        - Too many input arguments in input line
 *      CMD_ILEGAL_COMMAND_PARAMETERS - The command itself is with
 *                                      wrong arguments.
 *******************************************************************************/
 static Status_t Parse_Line(char *Line, uint32 *argc, uint32 MaxArguments, char *argv[])
 {
-  FUNCTION_IN(PARSE_LINE);
+  FuncIN(PARSE_LINE);
   
   // Eliminate command word
   strtok(Line, " ");
@@ -232,29 +232,30 @@ static Status_t Parse_Line(char *Line, uint32 *argc, uint32 MaxArguments, char *
       break;
     else
       if(*argc == MaxArguments)
-        FUNC_EXIT(CMD_TOO_MANY_ARGUMENTS, PARSE_LINE);
+        EXIT_FUNC(CMD_TOO_MANY_ARGUMENTS, PARSE_LINE);
   }
   
-  if(*argc == CFG_MAX_ARGUMENTS)
-    FATAL_ABORT(-CMD_ILEGAL_COMMAND_PARAMETER, PARSE_LINE);
+  ASSERT(*argc < CFG_MAX_ARGUMENTS, -CMD_ILEGAL_COMMAND_PARAMETER);
   
   if(*argc > MaxArguments)
-    FUNC_EXIT(CMD_TOO_MANY_ARGUMENTS, PARSE_LINE);
+    EXIT_FUNC(CMD_TOO_MANY_ARGUMENTS, PARSE_LINE);
   
-  FUNC_EXIT(CMD_SUCCESS, PARSE_LINE);
+  EXIT_SUCCESS_FUNC(PARSE_LINE);
 }
+FUNC_REGISTER(PARSE_LINE, Parse_Line);
 
 /*******************************************************************************
 * Function for parsing arguments on one line
 * @in *Cmd_Init_Parameters_p - Structure pointer with needed function pointers
 * @out Status_t - Status
-*      CMD_SUCCESS - Commands server successfully initialized!
+*      SUCCESS - Commands server successfully initialized!
 *******************************************************************************/
 Status_t Commands_Init(Cmd_Init_Parameters_t *Cmd_Init_Parameters_p)
 {
-  FUNCTION_IN(COMMANDS_INIT);
+  FuncIN(COMMANDS_INIT);
   
   putscmd = Cmd_Init_Parameters_p->putscmd;
   
-  FUNC_EXIT(CMD_SUCCESS, COMMANDS_INIT);
+  EXIT_SUCCESS_FUNC(COMMANDS_INIT);
 }
+FUNC_REGISTER(COMMANDS_INIT, Commands_Init);

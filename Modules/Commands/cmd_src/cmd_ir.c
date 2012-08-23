@@ -1,13 +1,13 @@
 #include "Global_Defines.h"
 #include "Command.h"
 #include "Command_Func.h"
-#include "Command_Debug.h"
+#include "Func_Trace.h"
 #include "StatusHandling.h"
 #include "TSOP1738.h"
 
 Status_t Do_Ir(Cmd_Tbl_t *Cmd_Tbl, uint32 flag, uint32 argc, char *argv[])
 {
-  FUNCTION_IN(DO_IR);
+  FuncIN(DO_IR);
   
   ir_t IR_Command = {0};
   uint16 i;
@@ -24,8 +24,9 @@ Status_t Do_Ir(Cmd_Tbl_t *Cmd_Tbl, uint32 flag, uint32 argc, char *argv[])
   
   printcmd("\r # Other IR Commands are empty \n");
   
-  FUNC_EXIT(SUCCESS, DO_IR);
+  EXIT_SUCCESS_FUNC(DO_IR);
 }
+FUNC_REGISTER(DO_IR, Do_Ir);
 
 CMD_CREATE(
   ir, 0, Do_Ir,

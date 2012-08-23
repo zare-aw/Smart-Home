@@ -1,13 +1,14 @@
 #include "Global_Defines.h"
 #include "Command.h"
 #include "Command_Func.h"
-#include "Command_Debug.h"
+#include "Func_Trace.h"
 #include "RTC.h"
 #include "StatusHandling.h"
 
 Status_t Do_Time(Cmd_Tbl_t *Cmd_Tbl, uint32 flag, uint32 argc, char *argv[])
 {
-  FUNCTION_IN(DO_TIME);
+  FuncIN(DO_TIME);
+  
   char String[32] = {0};
   RtcTime_t Time;
   
@@ -16,17 +17,18 @@ Status_t Do_Time(Cmd_Tbl_t *Cmd_Tbl, uint32 flag, uint32 argc, char *argv[])
   if(argc > 0)
   {
     if(strstr(argv[0], "-a") != NULL)
-      CONTROL(!Format_Time(2, &Time, String), RTC_GENERAL_ERROR);
+      ASSERT(SUCCESS == Format_Time(2, &Time, String), -RTC_GENERAL_ERROR);
     else
-      FUNC_EXIT(CMD_INVALID_ARGUMENT, DO_TIME);
+      EXIT_FUNC(CMD_INVALID_ARGUMENT, DO_TIME);
   }
   else
-    CONTROL(!Format_Time(1, &Time, String), RTC_GENERAL_ERROR);
+    ASSERT(SUCCESS == Format_Time(1, &Time, String), -RTC_GENERAL_ERROR);
   
   printcmd("\r # %s\n", String);
   
-  FUNC_EXIT(CMD_SUCCESS, DO_TIME);
+  EXIT_SUCCESS_FUNC(DO_TIME);
 }
+FUNC_REGISTER(DO_TIME, Do_Time);
 
 CMD_CREATE(
   time, 1, Do_Time,

@@ -1,9 +1,9 @@
 #ifndef _Command_h
 #define _Command_h
 
-#include "Command_Debug.h"
 #include "Command_Defconfig.h"
 #include "Func_Trace.h"
+#include "StatusHandling.h"
 
 /**** Cmd Global error state defines ****/
 #define CMD_SUCCESS                             0x00
