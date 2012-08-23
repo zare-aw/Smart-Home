@@ -86,7 +86,7 @@ void Power_Init(void)
   PCONP_bit.PCAD0   = 0;
   PCONP_bit.PCAD1   = 0;
   PCONP_bit.PCI2C1  = 0;
-  PCONP_bit.PUSB    = 0;
+  PCONP_bit.PUSB    = 1;
 }
 
 /*******************************************************************************

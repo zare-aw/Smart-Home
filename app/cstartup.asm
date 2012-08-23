@@ -100,6 +100,16 @@ MAMTIM   DEFINE 0xE01FC004      ; MAM Timing register
                 ldr   r2,=2
                 str   r2,[r0]
 
+; Enable USB peripherial to be able to use USB SRAM
+; Default value in PCONP is 0x001817BE, we are enabling MSB (add 0x80000000) for USB peripherial
+; We need to enable USB SRAM before initialize it after executing startup file (this file)
+PCONP       DEFINE  0xE01FC0C4      ; PCONP - Power control register
+PCONP_VAL   DEFINE  0x801817BE      ; Initial value for PCONP
+
+                ldr r0, =PCONP
+                ldr r1, =PCONP_VAL
+                str r1, [r0]
+
 ;
 ; Initialize the stack pointers.
 ; The pattern below can be used for any of the exception stacks:
