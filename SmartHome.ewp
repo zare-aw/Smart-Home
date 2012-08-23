@@ -1754,9 +1754,6 @@
         <name>$PROJ_DIR$\Modules\Console\Console_Defconfig.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Console\Console_Func.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$\Modules\Console\Console_Func.h</name>
       </file>
     </group>

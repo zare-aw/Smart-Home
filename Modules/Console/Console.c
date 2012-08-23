@@ -1,5 +1,6 @@
 #include "Global_Defines.h"
 #include "Includes.h"
+#include "Func_Trace.h"
 #include "Console_Defconfig.h"
 #include "Console_Func.h"
 #include "ConsoleHelp.h"
@@ -121,6 +122,7 @@ Status_t Add_String_In_Console_Queue(char *Input)
   
   EXIT_SUCCESS_FUNC(ADD_STRING_IN_CONSOLE_QUEUE);
 }
+FUNC_REGISTER(ADD_STRING_IN_CONSOLE_QUEUE, Add_String_In_Console_Queue);
 
 /*******************************************************************************
 * Funkcija koja se povikuva periodicno vo glavna jamka
@@ -162,6 +164,7 @@ Status_t Console_Print_Pull(void)
 Exit:
   EXIT_SUCCESS_FUNC(CONSOLE_PRINT_PULL);
 }
+FUNC_REGISTER(CONSOLE_PRINT_PULL, Console_Print_Pull);
 
 /*******************************************************************************
 * ISR rutina za Console
@@ -242,6 +245,7 @@ __arm Status_t Console_ISR(void)
   
   EXIT_SUCCESS_FUNC(CONSOLE_ISR);
 }
+FUNC_REGISTER(CONSOLE_ISR, Console_ISR);
 
 /*******************************************************************************
 * Funkcija za inicijalizacija na Console server
@@ -323,12 +327,13 @@ Status_t Console_Server_Init(uint8 Chanell, unsigned int Speed, uint8 Mode)
       Console_Mode = MODE_INTERRUPT;
       break;
     default:
-      ASSERT(0, -INVALID_INIT_INPUT_PARAMETER);
+      Fatal_Abort(-INVALID_INIT_INPUT_PARAMETER);
       break;
   }
   
   EXIT_SUCCESS_FUNC(CONSOLE_SERVER_INIT);
 }
+FUNC_REGISTER(CONSOLE_SERVER_INIT, Console_Server_Init);
 
 /*******************************************************************************
 * 
@@ -345,6 +350,7 @@ Status_t Add_Console_Command_In_Queue(char *InputString)
 
   EXIT_SUCCESS_FUNC(ADD_CONSOLE_COMMAND_IN_QUEUE);
 }
+FUNC_REGISTER(ADD_CONSOLE_COMMAND_IN_QUEUE, Add_Console_Command_In_Queue);
 
 /*******************************************************************************
 * 
@@ -363,6 +369,7 @@ static Status_t Add_Console_Command_In_History(char *InputString)
   
   EXIT_SUCCESS_FUNC(ADD_CONSOLE_COMMAND_IN_HISTORY);
 }
+FUNC_REGISTER(ADD_CONSOLE_COMMAND_IN_HISTORY, Add_Console_Command_In_History);
 
 /*******************************************************************************
 * 
@@ -383,6 +390,7 @@ static Status_t Get_Console_Command_From_History(uint8 NoOfPreviousCommand, char
 
   EXIT_SUCCESS_FUNC(GET_CONSOLE_COMMAND_FROM_HISTORY);
 }
+FUNC_REGISTER(GET_CONSOLE_COMMAND_FROM_HISTORY, Get_Console_Command_From_History);
 
 /*******************************************************************************
 * 
@@ -402,6 +410,7 @@ Status_t Remove_Console_Command_From_Queue(uint8 NoOfCommand)
   
   EXIT_SUCCESS_FUNC(REMOVE_CONSOLE_COMMAND_FROM_QUEUE);
 }
+FUNC_REGISTER(REMOVE_CONSOLE_COMMAND_FROM_QUEUE, Remove_Console_Command_From_Queue);
 
 /*******************************************************************************
 * 
@@ -487,3 +496,5 @@ Status_t Console_Command_Execute(uint8 NoOfCommand)
   
   EXIT_SUCCESS_FUNC(CONSOLE_COMMAND_EXECUTE);
 }
+FUNC_REGISTER(CONSOLE_COMMAND_EXECUTE, Console_Command_Execute);
+
