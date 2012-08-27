@@ -189,7 +189,6 @@ void Print_Function_History(void);
 *******************************************************************************/
 // System
 #define INITIALIZATION                10
-#define PLL_INIT                      12
 
 // Delay
 #define DLY                           400

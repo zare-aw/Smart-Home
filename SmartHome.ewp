@@ -1831,6 +1831,12 @@
       <file>
         <name>$PROJ_DIR$\SOC_HAL\CLK_Reset\CLK_Reset.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\CLK_Reset\CLK_Reset_Defconfig.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\CLK_Reset\CLK_Reset_Func.h</name>
+      </file>
     </group>
     <group>
       <name>I2C</name>
@@ -1849,6 +1855,9 @@
       <file>
         <name>$PROJ_DIR$\SOC_HAL\MAM\MAM.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\MAM\MAM_Func.h</name>
+      </file>
     </group>
     <group>
       <name>PWM</name>
@@ -1857,6 +1866,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$\SOC_HAL\PWM\PWM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\PWM\PWM_Debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\PWM\PWM_Func.h</name>
       </file>
     </group>
     <group>
@@ -1893,6 +1908,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$\SOC_HAL\UART\UART_LPC214X.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\UART\UART_LPC214X_Func.h</name>
       </file>
     </group>
     <group>

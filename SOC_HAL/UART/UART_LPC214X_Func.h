@@ -2,7 +2,7 @@
 #define _UART_LPC214X_Func_h
 
 // UART_LPC214X.c
-#define URT_0_INIT                    UART_OFFSET | 0x01
+#define UART_0_INIT                    UART_OFFSET | 0x01
 #define UART_1_INIT                   UART_OFFSET | 0x02
 #define SET_INTERRUPT_STATE_UART_0    UART_OFFSET | 0x03
 #define SET_INTERRUPT_STATE_UART_1    UART_OFFSET | 0x04

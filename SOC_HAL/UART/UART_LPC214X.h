@@ -1,6 +1,8 @@
 #ifndef _UART_LPC214X_h
 #define _UART_LPC214X_h
 
+#include "StatusHandling.h"
+
 extern unsigned int UART_Flag1;
 extern unsigned int UART_Flag2;
 

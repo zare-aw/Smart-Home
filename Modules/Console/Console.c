@@ -424,7 +424,7 @@ Status_t Console_Command_Execute(uint8 NoOfCommand)
   if(NoOfCommand >= ConsoleCommandsInQueue)
     EXIT_SUCCESS_FUNC(CONSOLE_COMMAND_EXECUTE);   // No Console Commands in Queue
   
-  ASSERT(CMD_SUCCESS == Run_Command(QueueConsoleCommand[NoOfCommand]), -CONSOLE_COMMAND_EXECUTE_ERROR);
+  VERIFY(Run_Command(QueueConsoleCommand[NoOfCommand]), -CONSOLE_COMMAND_EXECUTE_ERROR);
 
 #if 0
   if(!strncmp("help", QueueConsoleCommand[NoOfCommand], 4))

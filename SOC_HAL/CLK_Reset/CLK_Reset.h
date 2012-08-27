@@ -6,7 +6,7 @@
 
 Status_t PLL_Init(uint8 a);
 uint32 Read_CPU_CLK(void);
-void PCLK_Init(uint8 a);
+Status_t PCLK_Init(uint8 a);
 uint32 Read_PER_CLK(void);
 void Print_Reset_Source(void);
 

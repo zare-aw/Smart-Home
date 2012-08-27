@@ -275,7 +275,7 @@ Status_t RTC_Set_Date_Time(RtcDateTime_t *DateTime_p)
 {
   FuncIN(RTC_SET_DATE_TIME);
   
-  ASSERT(Date_Time_p != NULL, -INVALID_INPUT_POINTER);
+  ASSERT(DateTime_p != NULL, -INVALID_INPUT_POINTER);
   
   // Valid Judge
   if(Is_Valid_Day(DateTime_p -> Year, DateTime_p -> Month, DateTime_p -> Day) != TRUE)
@@ -451,7 +451,8 @@ Status_t RTC_Register_Inc_Int(void *Callback_p, uint32 Type, uint8 *Alarm_ID)
     {
       Sys_Time_Update[i] = Callback_p;
       Sys_Time_Type[i] = Type;
-      RTC_Enable_Inc_Int(Type); 
+      RTC_Enable_Inc_Int(Type);
+      *Alarm_ID = i;
       RTC_DEBUG(printc("\r # RTC increment interrupt callback registered, Type = %d, ID = %d\n", Type, i));
       break;
     }
@@ -461,7 +462,7 @@ Status_t RTC_Register_Inc_Int(void *Callback_p, uint32 Type, uint8 *Alarm_ID)
   
   RETURN_SUCCESS_FUNC(RTC_REGISTER_INC_INT);
 }
-FUNC_REGISTER(RTC_REGISTER_INC_INT, RTC_Register_Inc_Int)
+FUNC_REGISTER(RTC_REGISTER_INC_INT, RTC_Register_Inc_Int);
 
 /*************************************************************************
  * 
@@ -486,7 +487,7 @@ Status_t RTC_Unregister_Inc_Int(uint8 Alarm_ID)
   
   EXIT_SUCCESS_FUNC(RTC_UNREGISTER_INC_INT);
 }
-FUNC_REGISTER(RTC_UNREGISTER_INC_INT);
+FUNC_REGISTER(RTC_UNREGISTER_INC_INT, RTC_Unregister_Inc_Int);
 
 /*************************************************************************
  * Function Name: RTC_Disable_Alarm
@@ -567,7 +568,7 @@ Status_t RTC_Clear_Int(uint32 IntType)
     case RTCALLInt:
       break;
     default:
-      Fatal_Abort(-INVALIND_INPUT_PARAMETER);
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
       break;
   }
   
@@ -706,7 +707,7 @@ Status_t RTC_SW_Alarm_Callback(void *InPtr)
         {
           if((SwAlarm[i].Year == DateTime.Year) && (SwAlarm[i].Month == DateTime.Month) && (SwAlarm[i].Day == DateTime.Day))
           {
-            VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
+            VERIFY(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), -RTC_GENERAL_ERROR);
             SwAlarm[i].State = RTC_ALARM_OFF;
           }
         }
@@ -714,7 +715,7 @@ Status_t RTC_SW_Alarm_Callback(void *InPtr)
         {
           if(SwAlarm[i].Mode == SINGLE_ALARM)
           {
-            VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
+            VERIFY(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), -RTC_GENERAL_ERROR);
             SwAlarm[i].State = RTC_ALARM_OFF;
           }
           else if(SwAlarm[i].Mode == REPETITIVE_ALARM)
@@ -723,31 +724,31 @@ Status_t RTC_SW_Alarm_Callback(void *InPtr)
             {
               case 1:
                 if(SwAlarm[i].DoW & MONDAY)
-                  VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
+                  VERIFY(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), -RTC_GENERAL_ERROR);
                 break;
               case 2:
                 if(SwAlarm[i].DoW & TUESDAY)
-                  VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
+                  VERIFY(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), -RTC_GENERAL_ERROR);
                 break;
               case 3:
                 if(SwAlarm[i].DoW & WEDNESDAY)
-                  VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
+                  VERIFY(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), -RTC_GENERAL_ERROR);
                 break;
               case 4:
                 if(SwAlarm[i].DoW & THURSDAY)
-                  VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
+                  VERIFY(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), -RTC_GENERAL_ERROR);
                 break;
               case 5:
                 if(SwAlarm[i].DoW & FRIDAY)
-                  VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
+                  VERIFY(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), -RTC_GENERAL_ERROR);
                 break;
               case 6:
                 if(SwAlarm[i].DoW & SATURDAY)
-                  VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
+                  VERIFY(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), -RTC_GENERAL_ERROR);
                 break;
               case 0:
                 if(SwAlarm[i].DoW & SUNDAY)
-                  VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
+                  VERIFY(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), -RTC_GENERAL_ERROR);
                 break;
               default:
                 Fatal_Abort(-REGISTER_ERROR);
@@ -770,7 +771,7 @@ FUNC_REGISTER(RTC_SW_ALARM_CALLBACK, RTC_SW_Alarm_Callback);
  * @out: void
  * Description: Rtc interrupt subroutine
  *************************************************************************/
-__irq void RTC_ISR(void)
+__irq __arm void RTC_Isr(void)
 {
   FuncIN(RTC_ISR);
   
@@ -786,7 +787,7 @@ __irq void RTC_ISR(void)
     for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Second int
     {
       if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_SEC)
-        VERIFY((Status_t(*)(void *))(Sys_Time_Update[i])(NULL), -RTC_GENERAL_ERROR);
+        VERIFY(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), -RTC_GENERAL_ERROR);
     }
     
     RTC_Get_Date_Time(&DateTime);
@@ -796,7 +797,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Minute int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_MIN)
-          VERIFY((Status_t(*)(void *))(Sys_Time_Update[i])(NULL), -RTC_GENERAL_ERROR);
+          VERIFY(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), -RTC_GENERAL_ERROR);
       }
     }
     
@@ -805,7 +806,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Hour int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_HOUR)
-          VERIFY((Status_t(*)(void *))(Sys_Time_Update[i])(NULL), -RTC_GENERAL_ERROR);
+          VERIFY(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), -RTC_GENERAL_ERROR);
       }
     }
     
@@ -814,7 +815,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Day int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_DAY)
-          VERIFY((Status_t(*)(void *))(Sys_Time_Update[i])(NULL), -RTC_GENERAL_ERROR);
+          VERIFY(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), -RTC_GENERAL_ERROR);
       }
     }
     
@@ -823,7 +824,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Month int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_MON)
-          VERIFY((Status_t(*)(void *))(Sys_Time_Update[i])(NULL), -RTC_GENERAL_ERROR);
+          VERIFY(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), -RTC_GENERAL_ERROR);
       }
     }
     
@@ -832,7 +833,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Year int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_YEAR)
-          VERIFY((Status_t(*)(void *))(Sys_Time_Update[i])(NULL), -RTC_GENERAL_ERROR);
+          VERIFY(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), -RTC_GENERAL_ERROR);
       }
     }
     
@@ -841,7 +842,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // DoW int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_DOW)
-          VERIFY((Status_t(*)(void *))(Sys_Time_Update[i])(NULL), -RTC_GENERAL_ERROR);
+          VERIFY(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), -RTC_GENERAL_ERROR);
       }
     }
   } // if (IntStatus & RTCIncrementInt)
@@ -856,7 +857,7 @@ __irq void RTC_ISR(void)
   
   VICVectAddr = 0;
 }
-FUNC_REGISTER(RTC_ISR, RTC_ISR);
+FUNC_REGISTER(RTC_ISR, RTC_Isr);
 
 /*************************************************************************
  * Function Name: FormatDate
@@ -972,7 +973,7 @@ Status_t Format_Time(uint8 Type, RtcTime_t *Time_p, char *String)
       String[7] = Second % 10 + '0';
       break;
     default:
-      Fatal_Abort(-INVALIID_INPUT_PARAMETER);
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
       break;        
   } // switch
   

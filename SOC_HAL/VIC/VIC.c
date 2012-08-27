@@ -13,7 +13,7 @@ __irq void Ext_Int_1_ISR(void);
 __irq void Ext_Int_2_ISR(void);
 __irq void Ext_Int_3_ISR(void);
 __irq void I2C0_ISR(void);
-__irq void RTC_ISR(void);
+__irq void RTC_Isr(void);
 
 
 /*******************************************************************************
@@ -76,7 +76,7 @@ void VICInit(void)
   VICVectCntl8_bit.ENABLED = 1;               // Ovozmozi go INTERRUPT-ot od slot 8
   VICIntEnable_bit.INT9 = 1;                  // Vkluci go I2C0 Interrupt
   
-  VICVectAddr9 = (unsigned int)RTC_ISR;       // Stavi ja adresata na servisnata rutina na slot 9
+  VICVectAddr9 = (unsigned int)RTC_Isr;       // Stavi ja adresata na servisnata rutina na slot 9
   VICVectCntl9_bit.NUMBER = 13;               // Postavi go RTC na slot 9
   VICVectCntl9_bit.ENABLED = 1;               // Ovozmozi go INTERRUPT-ot od slot 9
   VICIntEnable_bit.INT13 = 1;                 // Vkluci go RTC Interrupt

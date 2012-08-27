@@ -1,7 +1,7 @@
 #include "Global_Defines.h"
 #include "Func_Trace.h"
-#include "UART_LPC_214X.h"
-#include "UART_LPC_214X_Func.h"
+#include "UART_LPC214X.h"
+#include "UART_LPC214X_Func.h"
 #include "Includes.h"
 
 unsigned int UART_Flag1 = 0;

@@ -62,7 +62,7 @@ uint32 Read_CPU_CLK(void)
     2 za PCLK = CCLK/2
     4 za PCLK = CCLK/4
 *******************************************************************************/
-void PCLK_Init(uint8 a)
+Status_t PCLK_Init(uint8 a)
 {
   FuncIN(PCLK_INIT);
   
@@ -129,7 +129,7 @@ void Print_Reset_Source(void)
   
   RSIR = 0x0F;    // Reset reset source register
   
-  EXIT_SUCCESS_FUNC(PRINT_RESET_SOURCE);
+  FuncOUT(PRINT_RESET_SOURCE);
 }
 FUNC_REGISTER(PRINT_RESET_SOURCE, Print_Reset_Source);
 

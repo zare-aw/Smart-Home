@@ -150,56 +150,6 @@ void Print_Function_History(void)
     case (INITIALIZATION | FUNC_OUT_MASK):
       printc(" - Initialization OUT\n");
       break;
-    case (PLL_INIT):
-      printc(" - PLL_Init IN\n");
-      break;
-    case (PLL_INIT | FUNC_OUT_MASK):
-      printc(" - PLL_Init OUT\n");
-      break;
-    case (MAM_INIT):
-      printc(" - MAM_Init IN\n");
-      break;
-    case (MAM_INIT | FUNC_OUT_MASK):
-      printc(" - MAM_Init OUT\n");
-      break;
-      
-      // UART
-    case (UART_0_INIT):
-      printc(" - UART_0_Init IN\n");
-      break;
-    case (UART_0_INIT | FUNC_OUT_MASK):
-      printc(" - UART_0_Init OUT\n");
-      break;
-    case (UART_1_INIT):
-      printc(" - UART_1_Init IN\n");
-      break;
-    case (UART_1_INIT | FUNC_OUT_MASK):
-      printc(" - UART_1_Init OUT\n");
-      break;
-    case (SET_INTERRUPT_STATE_UART_0):
-      printc(" - Set_Interrupt_State_UART_0 IN\n");
-      break;
-    case (SET_INTERRUPT_STATE_UART_0 | FUNC_OUT_MASK):
-      printc(" - Set_Interrupt_State_UART_0 OUT\n");
-      break;
-    case (SET_INTERRUPT_STATE_UART_1):
-      printc(" - Set_Interrupt_State_UART_1 IN\n");
-      break;
-    case (SET_INTERRUPT_STATE_UART_1 | FUNC_OUT_MASK):
-      printc(" - Set_Interrupt_State_UART_1 OUT\n");
-      break;
-    case (SET_TRIGGER_UART_0):
-      printc(" - Set_Trigger_UART_0 IN\n");
-      break;
-    case (SET_TRIGGER_UART_0 | FUNC_OUT_MASK):
-      printc(" - Set_Trigger_UART_0 OUT\n");
-      break;
-    case (SET_TRIGGER_UART_1):
-      printc(" - Set_Trigger_UART_1 IN\n");
-      break;
-    case (SET_TRIGGER_UART_1 | FUNC_OUT_MASK):
-      printc(" - Set_Trigger_UART_1 OUT\n");
-      break;
     
       // Delay
     case (DLY):
@@ -901,21 +851,6 @@ void Print_Function_History(void)
       printc(" - Temp_Work OUT\n");
       break;
     
-      
-      // PWM Module
-    case (PWM_INIT):
-      printc(" - Pwm_Init IN\n");
-      break;
-    case (PWM_INIT | FUNC_OUT_MASK):
-      printc(" - Pwm_Init OUT\n");
-      break;
-    case (PWM_SET_DUTY_CYCLE):
-      printc(" - Pwm_Set_Duty_Cycle IN\n");
-      break;
-    case (PWM_SET_DUTY_CYCLE | FUNC_OUT_MASK):
-      printc(" - Pwm_Set_Duty_Cycle OUT\n");
-      break;
-      
     default:
       printc("\r - ??? Function ID = %u\n", FunctionBuffer[FunctionInBeckupBuffer]);
       break;
