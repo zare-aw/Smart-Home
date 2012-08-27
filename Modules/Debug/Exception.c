@@ -23,13 +23,12 @@ __arm __noreturn void Software_Interrupt_Handler(uint32 Address, uint32 Instruct
   while(1);
 }
 
-__arm __noreturn void Prefetch_Abort_Handler(uint32 Address, uint32 Instruction)
+__arm __noreturn void Prefetch_Abort_Handler(uint32 Address)
 {
   printc("\r>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
   printc("\r>>> Prefetch Abort ABORT !!!\n");
   printc("\r>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
   printc("\r>>> Prefetch Abort Address = %X\n", Address);
-  printc("\r>>> Prefetch Abort Instruction = %X\n", Instruction);
   Abort(PREFETCH_ABORT_EXCEPTION);
   while(1);
 }

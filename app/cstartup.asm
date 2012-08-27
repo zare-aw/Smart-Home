@@ -68,7 +68,6 @@ __software_interrupt:
         bx      r2
 __prefetch_abort:
         sub     r0, lr, #8              ;; Address of latest instruntion
-        ldr     r1, [r0]                ;; Instruction
         ldr     r2,=Prefetch_Abort_Handler
         bx      r2
 __data_abort:
