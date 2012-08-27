@@ -6,11 +6,22 @@
 *******************************************************************************/
 
 /*******************************************************************************
-* Modules offsets
+* Offsets
 *******************************************************************************/
+// Modules
 #define FUNC_TRACE_OFFSET       0x01000000
 #define CONSOLE_OFFSET          0x04000000
 #define COMMANDS_OFFSET         0x05000000
+
+// SOC_HAL
+#define CLK_RESET_OFFSET        0x21000000
+#define MAM_OFFSET              0x22000000
+#define VIC_OFFSET              0x23000000
+#define TIMERS_OFFSET           0x24000000
+#define RTC_OFFSET              0x25000000
+#define PWM_OFFSET              0x26000000
+#define UART_OFFSET             0x27000000
+#define I2C_OFFSET              0x28000000
 
 /*******************************************************************************
 * Func_Trace status

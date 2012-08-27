@@ -3,35 +3,22 @@
 
 #include "Includes.h"
 
-#define _RTC_DEBUG          1
+/*******************************************************************************
+ * RTC Status defines
+ ******************************************************************************/
+#define RTC_GENERAL_ERROR             RTC_OFFSET | 0x01
+#define RTC_INIT_ERROR                RTC_OFFSET | 0x02
+#define RTC_SET_ERROR                 RTC_OFFSET | 0x03
+#define RTC_INVALID_DATE_ERROR        RTC_OFFSET | 0x04
+#define RTC_INVALID_TIME_ERROR        RTC_OFFSET | 0x05
+#define RTC_SW_ALARM_SLOTS_ERROR      RTC_OFFSET | 0x06
+#define RTC_SW_ALARM_NOT_VALID        RTC_OFFSET | 0x07
+#define RTC_INC_INT_SLOTS_ERROR       RTC_OFFSET | 0x08
+#define RTC_INC_INT_NOT_VALID         RTC_OFFSET | 0x09
 
-#define RTC_COUNT_PER_SEC   32768
-#define RTC_INC_CALLBACKS   10
-#define NO_OF_SW_ALARMS     20
-
-#define RTC_YEARMIN         1901
-#define RTC_YEARMAX         2099
-
-// 1901.1.1 DOW = 2
-#define RTC_BASEYEAR        1901
-#define RTC_BASEMONTH       1
-#define RTC_BASEDAY         1
-#define RTC_BASEDOW         2
-
-/* RTC Interrupt location register bit descriptions */
-#define ILR_CIF_BIT         0
-#define ILR_ALF_BIT         1
-
-/* RTC Clock control register bit descriptions */
-#define CCR_CLKEN_BIT       0
-#define CCR_CTCRST_BIT      1
-
-#ifdef _RTC_DEBUG
-#define RTC_DEBUG(a) a
-#else
-#define RTC_DEBUG(a)
-#endif
-
+/*******************************************************************************
+ * RTC Types
+ ******************************************************************************/
 /* RTC Increment Interrupt Type */
 #define IncIntType_SEC	    0x1
 #define IncIntType_MIN	    0x2
@@ -52,11 +39,6 @@
 #define AlarmIntType_DOW    0x10
 #define AlarmIntType_DOY    0x20
 
- /* RTC interrupt type */
-#define RTCIncrementInt	    0x1
-#define RTCAlarmInt	    0x2
-#define RTCALLInt	    0x3
-
  /* Alarm Mode */
 #define SINGLE_ALARM        0x1
 #define REPETITIVE_ALARM    0x2
@@ -75,6 +57,9 @@
 #define SATURDAY            0x20
 #define SUNDAY              0x40
 
+/*******************************************************************************
+ * Typedefs and Structures
+ ******************************************************************************/
 typedef struct
 {
   uint16 Year;  // Year value
@@ -124,40 +109,9 @@ typedef struct
   
   uint8 DoW;    // Day of week, one bit is one day starting from bit 0 - Monday
 } RtcSwAlarm_t;
-  
-
-static RtcDateTime_t RTC_InitDateTime = {2011, 1, 1, 0, 0, 0};
-
-static char *RTC_DOWTbl[] = {
-	"Sunday ",
-	"Monday ",
-	"Tuesday ",
-	"Wednesday ",
-	"Thursday ",
-	"Friday ",
-	"Saturday "
-};
-
-static char *RTC_MonthTbl[] = {
-	"",
-	"January ",
-	"February ",
-	"Match ",
-	"April ",
-	"May ",
-	"June ",
-	"July ",
-	"August ",
-	"September ",
-	"October ",
-	"November ",
-	"December "
-};
-
-static int RTC_MonthVal[]={0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-
-
-/* Declare functions */
+/**************************************************************
+ * Functions Declarations
+ *************************************************************/
 void RTC_Enable(void);
 void RTC_Disable(void);
 
@@ -171,10 +125,8 @@ Status_t RTC_Get_Date(RtcDate_t *Date_p);
 Status_t RTC_Get_Time(RtcTime_t *Time_p);
 Status_t RTC_Get_Date_Time(RtcDateTime_t *DateTime_p);
 
-void RTC_Enable_Inc_Int(uint8 IncIntType);
-uint8 RTC_Register_Inc_Int(void *Callback_p, uint32 Type);
-void RTC_Unregister_Inc_Int(uint8 ID);
-void RTC_Disable_Inc_Int(void);
+Status_t RTC_Register_Inc_Int(void *Callback_p, uint32 Type, uint8 *Alarm_ID);
+Status_t RTC_Unregister_Inc_Int(uint8 Alarm_ID);
 
 Status_t RTC_Enable_Alarm(uint8 AlarmIntType, RtcDateTime_t *DateTime_p, void *Callback_p);
 void RTC_Disable_Alarm_Int(void);
@@ -190,3 +142,4 @@ Status_t Format_Date(uint8 Type, RtcDate_t *Date_p, char *s);
 Status_t Format_Time(uint8 Type, RtcTime_t *Time_p, char *s);
 
 #endif  // _RTC_H
+

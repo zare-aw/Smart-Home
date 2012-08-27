@@ -30,10 +30,10 @@ Status_t Do_Set_Time(Cmd_Tbl_t *Cmd_Tbl, uint32 flag, uint32 argc, char *argv[])
   
   VERIFY(Status, Status);
   
-  if(Status == RTC_INVALID_TIME_ERROR)
-    printcmd("\r # Invalid Time!\n");
-  else if(Status == SUCCESS)
+  if(Status == SUCCESS)
     printcmd("\r # Time Set!\n");
+  else if(Status == RTC_INVALID_TIME_ERROR)
+    printcmd("\r # Invalid Time!\n");
   else
     printcmd("\r # Time Not Set! Unknown Error\n");
   

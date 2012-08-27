@@ -56,7 +56,7 @@ Status_t Register_Temp_Sensor(uint8 Ch, uint8 *SerialNumber, uint8 *SensorID)
   
   if(CallbackID == 255)
   {
-    CallbackID = RTC_Register_Inc_Int((void *)Temp_Callback, IncIntType_SEC);
+    RTC_Register_Inc_Int((void *)Temp_Callback, IncIntType_SEC, &CallbackID);
     TEMP_DEBUG(printc("\r # Temp callback registered on RTC icrement interrupt with ID = %d\n", CallbackID));
   }
   

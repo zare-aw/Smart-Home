@@ -30,10 +30,10 @@ Status_t Do_Set_Date(Cmd_Tbl_t *Cmd_Tbl, uint32 flag, uint32 argc, char *argv[])
   
   VERIFY(Status, Status);
   
-  if(Status == RTC_INVALID_DATE_ERROR)
-    printcmd("\r # Invalid Date!\n");
-  else if(Status == SUCCESS)
+  if(Status == SUCCESS)
     printcmd("\r # Date Set\n");
+  else if(Status == RTC_INVALID_DATE_ERROR)
+    printcmd("\r # Invalid Date!\n");
   else
     printcmd("\r # Date Not Set! Unknown Error\n");
   

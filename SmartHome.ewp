@@ -1867,6 +1867,15 @@
       <file>
         <name>$PROJ_DIR$\SOC_HAL\RTC\RTC.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\RTC\RTC_Debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\RTC\RTC_Defconfig.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\RTC\RTC_Func.h</name>
+      </file>
     </group>
     <group>
       <name>Timers</name>

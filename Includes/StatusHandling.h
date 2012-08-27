@@ -179,13 +179,6 @@ void Print_Function_History(void);
 #define IR_COMMAND_GET_ERROR                205
 #define IR_COMMAND_INIT_ERROR               206
 
-#define RTC_GENERAL_ERROR                   250
-#define RTC_INIT_ERROR                      251
-#define RTC_SET_ERROR                       252
-#define RTC_INVALID_DATE_ERROR              253
-#define RTC_INVALID_TIME_ERROR              254
-#define RTC_SW_ALARM_SLOTS_ERROR            255
-
 #define DS1820_NO_PRESENCE_ERROR            300
 #define DS1820_SHORT_CIRCUIT_ERROR          301
 #define DS1820_UNABLE_TO_READ_DATA_ERROR    302
@@ -318,24 +311,6 @@ void Print_Function_History(void);
 #define CH_UP_KEY_CALLBACK              10223
 #define CH_DOWN_KEY_CALLBACK            10224
 #define MUTE_KEY_CALLBACK               10225
-
-// RTC
-#define RTC_INIT                        10400
-#define RTC_SET_DATE                    10401
-#define RTC_SET_TIME                    10402
-#define RTC_SET_DATE_TIME               10403
-#define RTC_GET_DATE                    10404
-#define RTC_GET_TIME                    10405
-#define RTC_GET_DATE_TIME               10406
-#define RTC_ENABLE_ALARM                10407
-#define RTC_CLEAR_INT                   10408
-#define RTC_REGISTER_SW_ALARM           10409
-#define RTC_UNREGISTER_SW_ALARM         10410
-#define RTC_GET_REGISTERED_SW_ALARM     10411
-#define RTC_SW_ALARM_CALLBACK           10412
-
-#define FORMAT_DATE                     10430
-#define FORMAT_TIME                     10431
 
 // DS1820 Driver
 #define DS1820_INIT                     10500

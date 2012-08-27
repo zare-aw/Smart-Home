@@ -24,8 +24,7 @@ Status_t Menu_Init(void)
     for(int j = 0; j < MAIN_VIEW_BUFFER_COL; j++)
       MainViewBuffer[i][j] = '\0';
   
-  RTC_Enable_Inc_Int(IncIntType_SEC);
-  Sec_Callback_ID = RTC_Register_Inc_Int((void *)Menu_Sec_Int_Callback, IncIntType_SEC);
+  RTC_Register_Inc_Int((void *)Menu_Sec_Int_Callback, IncIntType_SEC, &Sec_Callback_ID);
   
   RETURN_SUCCESS();
 }

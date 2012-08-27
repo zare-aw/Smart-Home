@@ -1,8 +1,16 @@
 #include "Global_Defines.h"
 #include "RTC.h"
+#include "RTC_Debug.h"
+#include "RTC_Defconfig.h"
+#include "RTC_Func.h"
+
+
+ /* RTC interrupt type */
+#define RTCIncrementInt  0x1
+#define RTCAlarmInt      0x2
+#define RTCALLInt        0x3
 
 uint8 AlarmIntType_Beckup = 0;
-uint8 IncIntType_Beckup = 0;
 
 void *Sys_Time_Update[RTC_INC_CALLBACKS] = {NULL};
 uint8 Sys_Time_Type[RTC_INC_CALLBACKS] = {0};
@@ -20,7 +28,7 @@ Status_t RTC_SW_Alarm_Callback(void *InPtr);
  * @out: uint8
  * Description: Judge whether the specifying year is leap year. 
  *************************************************************************/
-static uint8 Is_Leap_Year (uint16 Year)
+static uint8 Is_Leap_Year(uint16 Year)
 {
   if (!(Year % 4) && (Year % 100) || !(Year % 400))
     return TRUE;
@@ -81,7 +89,7 @@ static uint8 Get_DoW(uint16 Year, uint8 Month, uint8 Day)
  * @in: uint8 Month
  * @in: uint8 Day
  * @out: uint8  false -- not valid day
- *		true -- valid day
+ *        true -- valid day
  * Description: Check if the specify day is valid
  * NOTE: Year is not smaller than RTC_YEARMIN (1901).
  *************************************************************************/
@@ -162,11 +170,11 @@ void RTC_Disable(void)
  *************************************************************************/
 Status_t RTC_Init(uint8 ClkSource)
 {
-  Function_IN(RTC_INIT);
+  FuncIN(RTC_INIT);
   unsigned int PreInt;
   
   if(CCR_bit.CLKEN == TRUE && ClkSource == FALSE)
-    RETURN_SUCCESS();
+    EXIT_SUCCESS_FUNC(RTC_INIT);
   
   RTC_Disable();
   
@@ -174,8 +182,8 @@ Status_t RTC_Init(uint8 ClkSource)
   {
     // initialize prescaler of RTC
     PreInt = (int)(30000000 / RTC_COUNT_PER_SEC) - 1;
-    CONTROL(PreInt > 0, RTC_INIT_ERROR);
-	
+    ASSERT(PreInt > 0, -RTC_INIT_ERROR);
+    
     PREINT = PreInt;
     PREFRAC = 30000000 - (PreInt + 1) * RTC_COUNT_PER_SEC;
     CCR_bit.CLKSRC = 0;   // AHB Clk source
@@ -193,14 +201,15 @@ Status_t RTC_Init(uint8 ClkSource)
   CIIR_bit.IMSEC = 1;
 
   ILR = 0x3;    // clear all interrupt of RTC
-	
+    
   // initialize Date and Time
-  CONTROL(!RTC_Set_Date_Time(&RTC_InitDateTime), RTC_SET_ERROR);
+  VERIFY(RTC_Set_Date_Time(&RTC_InitDateTime), -RTC_SET_ERROR);
 
 //  RTC_Enable();
   
-  RETURN_SUCCESS_FUNC(RTC_INIT);
+  EXIT_SUCCESS_FUNC(RTC_INIT);
 }
+FUNC_REGISTER(RTC_INIT, RTC_Init);
 
 /*************************************************************************
  * Function Name: RTC_SetDate
@@ -210,10 +219,13 @@ Status_t RTC_Init(uint8 ClkSource)
  *************************************************************************/
 Status_t RTC_Set_Date(RtcDate_t *Date_p)
 {
-  Function_IN(RTC_SET_DATE);
+  FuncIN(RTC_SET_DATE);
+  
+  ASSERT(Date_p != NULL, -INVALID_INPUT_POINTER);
   
   // Valid Judge
-  CONTROL(Is_Valid_Day(Date_p -> Year, Date_p -> Month, Date_p -> Day) == TRUE, RTC_INVALID_DATE_ERROR);
+  if(Is_Valid_Day(Date_p -> Year, Date_p -> Month, Date_p -> Day) != TRUE)
+    EXIT_FUNC(RTC_INVALID_DATE_ERROR, RTC_SET_DATE);
 
   // Calculate DOW, DOY
   Date_p -> DoY = Get_DoY(Date_p -> Year, Date_p -> Month, Date_p -> Day);
@@ -225,8 +237,9 @@ Status_t RTC_Set_Date(RtcDate_t *Date_p)
   DOW = Date_p -> DoW;
   DOY = Date_p -> DoY;
 
-  RETURN_SUCCESS_FUNC(RTC_SET_DATE);
+  EXIT_SUCCESS_FUNC(RTC_SET_DATE);
 }
+FUNC_REGISTER(RTC_SET_DATE, RTC_Set_Date);
 
 /*************************************************************************
  * Function Name: RTC_Set_Time
@@ -236,17 +249,21 @@ Status_t RTC_Set_Date(RtcDate_t *Date_p)
  *************************************************************************/
 Status_t RTC_Set_Time(RtcTime_t *Time_p)
 {
-  Function_IN(RTC_SET_TIME);
+  FuncIN(RTC_SET_TIME);
+  
+  ASSERT(Time_p != NULL, -INVALID_INPUT_POINTER);
   
   // Valid Judge
-  CONTROL(!(Time_p -> Hour > 23 || Time_p -> Minute > 59 || Time_p -> Second > 59), RTC_INVALID_TIME_ERROR);
+  if(Time_p -> Hour > 23 || Time_p -> Minute > 59 || Time_p -> Second > 59)
+    EXIT_FUNC(RTC_INVALID_TIME_ERROR, RTC_SET_TIME);
   
   HOUR = Time_p -> Hour;
   MIN = Time_p -> Minute;
   SEC = Time_p -> Second;
 
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(RTC_SET_TIME);
 }
+FUNC_REGISTER(RTC_SET_TIME, RTC_Set_Time);
 
 /*************************************************************************
  * Function Name: RTC_Set_Date_Time
@@ -256,16 +273,20 @@ Status_t RTC_Set_Time(RtcTime_t *Time_p)
  *************************************************************************/
 Status_t RTC_Set_Date_Time(RtcDateTime_t *DateTime_p)
 {
-  Function_IN(RTC_SET_DATE_TIME);
+  FuncIN(RTC_SET_DATE_TIME);
+  
+  ASSERT(Date_Time_p != NULL, -INVALID_INPUT_POINTER);
   
   // Valid Judge
-  CONTROL(Is_Valid_Day(DateTime_p -> Year, DateTime_p -> Month, DateTime_p -> Day) == TRUE, RTC_INVALID_DATE_ERROR);
-  CONTROL(!(DateTime_p -> Hour > 23 || DateTime_p -> Minute > 59 || DateTime_p -> Second > 59), RTC_INVALID_TIME_ERROR);
+  if(Is_Valid_Day(DateTime_p -> Year, DateTime_p -> Month, DateTime_p -> Day) != TRUE)
+    EXIT_FUNC(RTC_INVALID_DATE_ERROR, RTC_SET_DATE_TIME);
+  if(DateTime_p -> Hour > 23 || DateTime_p -> Minute > 59 || DateTime_p -> Second > 59)
+    EXIT_FUNC(RTC_INVALID_TIME_ERROR, RTC_SET_DATE_TIME);
 
   // Calculate DoW, DoY
   DateTime_p -> DoY = Get_DoY(DateTime_p -> Year, DateTime_p -> Month, DateTime_p -> Day);
   DateTime_p -> DoW = Get_DoW(DateTime_p -> Year, DateTime_p -> Month, DateTime_p -> Day);
-	
+    
   DOM = DateTime_p -> Day;
   MONTH = DateTime_p -> Month;
   YEAR = DateTime_p -> Year;
@@ -276,8 +297,9 @@ Status_t RTC_Set_Date_Time(RtcDateTime_t *DateTime_p)
   MIN = DateTime_p -> Minute;
   SEC = DateTime_p -> Second;
 
-  RETURN_SUCCESS_FUNC(RTC_SET_DATE_TIME);
+  EXIT_SUCCESS_FUNC(RTC_SET_DATE_TIME);
 }
+FUNC_REGISTER(RTC_SET_DATE_TIME, RTC_Set_Date_Time);
 
 /*************************************************************************
  * Function Name: RTC_Get_Date
@@ -287,7 +309,9 @@ Status_t RTC_Set_Date_Time(RtcDateTime_t *DateTime_p)
  *************************************************************************/
 Status_t RTC_Get_Date(RtcDate_t *Date_p)
 {
-  Function_IN(RTC_GET_DATE);
+  FuncIN(RTC_GET_DATE);
+  
+  ASSERT(Date_p != NULL, -INVALID_INPUT_POINTER);
   
   Date_p -> Day = DOM;
   Date_p -> Month = MONTH;
@@ -296,8 +320,9 @@ Status_t RTC_Get_Date(RtcDate_t *Date_p)
   Date_p -> DoW = DOW;
   Date_p -> DoY = DOY;
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(RTC_GET_DATE);
 }
+FUNC_REGISTER(RTC_GET_DATE, RTC_Get_Date);
 
 /*************************************************************************
  * Function Name: RTC_Get_Time
@@ -307,14 +332,17 @@ Status_t RTC_Get_Date(RtcDate_t *Date_p)
  *************************************************************************/
 Status_t RTC_Get_Time(RtcTime_t *Time_p)
 {
-  Function_IN(RTC_GET_TIME);
+  FuncIN(RTC_GET_TIME);
+  
+  ASSERT(Time_p != NULL, -INVALID_INPUT_POINTER);
   
   Time_p -> Hour = HOUR;
   Time_p -> Minute = MIN;
   Time_p -> Second = SEC;
 
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(RTC_GET_TIME);
 }
+FUNC_REGISTER(RTC_GET_TIME, RTC_Get_Time);
 
 /*************************************************************************
  * Function Name: RTC_Get_Date_Time
@@ -324,7 +352,9 @@ Status_t RTC_Get_Time(RtcTime_t *Time_p)
  *************************************************************************/
 Status_t RTC_Get_Date_Time(RtcDateTime_t *DateTime_p)
 {
-  Function_IN(RTC_GET_DATE_TIME);
+  FuncIN(RTC_GET_DATE_TIME);
+  
+  ASSERT(DateTime_p != NULL, -INVALID_INPUT_POINTER);
   
   DateTime_p -> Day = DOM;
   DateTime_p -> Month = MONTH;
@@ -337,57 +367,41 @@ Status_t RTC_Get_Date_Time(RtcDateTime_t *DateTime_p)
   DateTime_p -> DoW = DOW;
   DateTime_p -> DoY = DOY;
 
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(RTC_GET_DATE_TIME);
 }
+FUNC_REGISTER(RTC_GET_DATE_TIME, RTC_Get_Date_Time);
 
 /*************************************************************************
- * Function Name: RTC_Set_Inct_Int
+ * Function Name: RTC_Enable_Inct_Int
  * @in: uint8 IncIntType
  * @in: void* Callback_p
  * @out: void 
  * Description: Set increment interrupt type
  *************************************************************************/
-void RTC_Enable_Inc_Int(uint8 IncIntType)
+static Status_t RTC_Enable_Inc_Int(uint8 IncIntType)
 {
-  if(IncIntType != NULL)
-    CIIR = IncIntType & 0xFF;
-  else
+  FuncIN(RTC_ENABLE_INC_INT);
+  
+  switch(IncIntType)
   {
-    CIIR = IncIntType_Beckup & 0xFF;
-    IncIntType_Beckup = IncIntType;
+    case IncIntType_SEC:
+    case IncIntType_MIN:
+    case IncIntType_HOUR:
+    case IncIntType_DAY:
+    case IncIntType_MON:
+    case IncIntType_YEAR:
+    case IncIntType_DOW:
+    case IncIntType_DOY:
+      break;
+    default:
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
   }
   
-  return;
-}
-
-/*************************************************************************
- * 
-*************************************************************************/
-uint8 RTC_Register_Inc_Int(void *Callback_p, uint32 Type)
-{
-  int i;
-  for(i = 0; i < RTC_INC_CALLBACKS; i++)
-    if(Sys_Time_Update[i] == NULL)
-    {
-      Sys_Time_Update[i] = Callback_p;
-      Sys_Time_Type[i] = Type;
-      RTC_DEBUG(printc("\r # RTC increment interrupt callback registered, Type = %d, ID = %d\n", Type, i));
-      break;
-    }
+  CIIR |= IncIntType;
   
-  if(i == RTC_INC_CALLBACKS)
-    return 255;
-  else
-    return i;
+  EXIT_SUCCESS_FUNC(RTC_ENABLE_INC_INT);
 }
-
-/*************************************************************************
- * 
-*************************************************************************/
-void RTC_Unregister_Inc_Int(uint8 ID)
-{
-  Sys_Time_Update[ID] = NULL;
-}
+FUNC_REGISTER(RTC_ENABLE_INC_INT, RTC_Enable_Inc_Int);
 
 /*************************************************************************
  * Function Name: RTC_Disable_Inc_Int
@@ -395,11 +409,84 @@ void RTC_Unregister_Inc_Int(uint8 ID)
  * @out: void 
  * Description: Disable RTC increment interrupt.
  *************************************************************************/
-void RTC_Disable_Inc_Int(void)
+static Status_t RTC_Disable_Inc_Int(uint8 IncIntType)
 {
-  CIIR = 0;
-  return ;
+  FuncIN(RTC_DISABLE_INC_INT);
+  
+  switch(IncIntType)
+  {
+    case IncIntType_SEC:
+    case IncIntType_MIN:
+    case IncIntType_HOUR:
+    case IncIntType_DAY:
+    case IncIntType_MON:
+    case IncIntType_YEAR:
+    case IncIntType_DOW:
+    case IncIntType_DOY:
+      break;
+    default:
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
+  }
+  
+  CIIR &= ~IncIntType;
+  
+  EXIT_SUCCESS_FUNC(RTC_DISABLE_INC_INT);
 }
+FUNC_REGISTER(RTC_DISABLE_INC_INT, RTC_Disable_Inc_Int);
+
+/*************************************************************************
+ * 
+*************************************************************************/
+Status_t RTC_Register_Inc_Int(void *Callback_p, uint32 Type, uint8 *Alarm_ID)
+{
+  FuncIN(RTC_REGISTER_INC_INT);
+  
+  int i;
+  
+  ASSERT(Callback_p != NULL, -INVALID_INPUT_POINTER);
+  ASSERT(Alarm_ID != NULL, -INVALID_INPUT_POINTER);
+  
+  for(i = 0; i < RTC_INC_CALLBACKS; i++)
+    if(Sys_Time_Update[i] == NULL)
+    {
+      Sys_Time_Update[i] = Callback_p;
+      Sys_Time_Type[i] = Type;
+      RTC_Enable_Inc_Int(Type); 
+      RTC_DEBUG(printc("\r # RTC increment interrupt callback registered, Type = %d, ID = %d\n", Type, i));
+      break;
+    }
+  
+  if(i >= RTC_INC_CALLBACKS)
+    EXIT_FUNC(RTC_INC_INT_SLOTS_ERROR, RTC_REGISTER_INC_INT);
+  
+  RETURN_SUCCESS_FUNC(RTC_REGISTER_INC_INT);
+}
+FUNC_REGISTER(RTC_REGISTER_INC_INT, RTC_Register_Inc_Int)
+
+/*************************************************************************
+ * 
+*************************************************************************/
+Status_t RTC_Unregister_Inc_Int(uint8 Alarm_ID)
+{
+  FuncIN(RTC_UNREGISTER_INC_INT);
+  
+  int i;
+  
+  if(Sys_Time_Update[Alarm_ID] == NULL)
+    EXIT_FUNC(RTC_INC_INT_NOT_VALID, RTC_UNREGISTER_INC_INT);
+  
+  Sys_Time_Update[Alarm_ID] = NULL;
+  
+  for(i = 0; i < RTC_INC_CALLBACKS; i++)
+    if(Sys_Time_Type[i] == Sys_Time_Type[Alarm_ID])
+      break;
+  
+  if(i >= RTC_INC_CALLBACKS)
+    RTC_Disable_Inc_Int(Sys_Time_Type[Alarm_ID]);
+  
+  EXIT_SUCCESS_FUNC(RTC_UNREGISTER_INC_INT);
+}
+FUNC_REGISTER(RTC_UNREGISTER_INC_INT);
 
 /*************************************************************************
  * Function Name: RTC_Disable_Alarm
@@ -423,13 +510,15 @@ void RTC_Disable_Alarm(void)
  *************************************************************************/
 Status_t RTC_Enable_Alarm(uint8 AlarmIntType, RtcDateTime_t *DateTime_p, void *Callback_p)
 {
-  Function_IN(RTC_ENABLE_ALARM);
+  FuncIN(RTC_ENABLE_ALARM);
   
   if(DateTime_p != NULL)
   {
     // Valid Judge
-    CONTROL(Is_Valid_Day(DateTime_p -> Year, DateTime_p -> Month, DateTime_p -> Day) == TRUE, RTC_INVALID_DATE_ERROR);
-    CONTROL(!(DateTime_p -> Hour > 23 || DateTime_p -> Minute > 59 || DateTime_p -> Second > 59), RTC_INVALID_TIME_ERROR);
+    if(Is_Valid_Day(DateTime_p -> Year, DateTime_p -> Month, DateTime_p -> Day) != TRUE)
+      EXIT_FUNC(RTC_INVALID_DATE_ERROR, RTC_ENABLE_ALARM);
+    if(DateTime_p -> Hour > 23 || DateTime_p -> Minute > 59 || DateTime_p -> Second > 59)
+      EXIT_FUNC(RTC_INVALID_TIME_ERROR, RTC_ENABLE_ALARM);
     
     // Calculate DoW, DoY
     DateTime_p -> DoY = Get_DoY(DateTime_p -> Year, DateTime_p -> Month, DateTime_p -> Day);
@@ -457,8 +546,9 @@ Status_t RTC_Enable_Alarm(uint8 AlarmIntType, RtcDateTime_t *DateTime_p, void *C
     AlarmIntType_Beckup = AlarmIntType;
   }
   
-  RETURN_SUCCESS_FUNC(RTC_ENABLE_ALARM);
+  EXIT_SUCCESS_FUNC(RTC_ENABLE_ALARM);
 }
+FUNC_REGISTER(RTC_ENABLE_ALARM, RTC_Enable_Alarm);
 
 /*************************************************************************
  * Function Name: RTC_Clear Int
@@ -468,14 +558,24 @@ Status_t RTC_Enable_Alarm(uint8 AlarmIntType, RtcDateTime_t *DateTime_p, void *C
  *************************************************************************/
 Status_t RTC_Clear_Int(uint32 IntType)
 {
-  Function_IN(RTC_CLEAR_INT);
+  FuncIN(RTC_CLEAR_INT);
   
-  CONTROL(!(IntType < 1 || IntType > 3), RTC_GENERAL_ERROR);
+  switch(IntType)
+  {
+    case RTCIncrementInt:
+    case RTCAlarmInt:
+    case RTCALLInt:
+      break;
+    default:
+      Fatal_Abort(-INVALIND_INPUT_PARAMETER);
+      break;
+  }
   
   ILR = (IntType & 0x3);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(RTC_CLEAR_INT);
 }
+FUNC_REGISTER(RTC_CLEAR_INT, RTC_Clear_Int);
 
 /*************************************************************************
  * Function Name: RTC_Check_Int_Type
@@ -496,9 +596,11 @@ uint32 RTC_Check_Int_Type(void)
  *************************************************************************/
 Status_t RTC_Register_SW_Alarm(RtcSwAlarm_t *AlarmData_p, uint8 *AlarmID)
 {
-  Function_IN(RTC_REGISTER_SW_ALARM);
+  FuncIN(RTC_REGISTER_SW_ALARM);
   
-  for(int i = 0; i < NO_OF_SW_ALARMS; i++)
+  int i;
+  
+  for(i = 0; i < NO_OF_SW_ALARMS; i++)
   {
     if(SwAlarm[i].State == NO_ALARM_SET)
     {
@@ -508,19 +610,21 @@ Status_t RTC_Register_SW_Alarm(RtcSwAlarm_t *AlarmData_p, uint8 *AlarmID)
     }
   }
   
-  CONTROL(*AlarmID < NO_OF_SW_ALARMS, RTC_SW_ALARM_SLOTS_ERROR);
+  if(i >= NO_OF_SW_ALARMS)
+    EXIT_FUNC(RTC_SW_ALARM_SLOTS_ERROR, RTC_REGISTER_SW_ALARM);
   
   if(SwAlarmCount == 0)
   {
-    SwAlarmCallbackID = RTC_Register_Inc_Int((void *)RTC_SW_Alarm_Callback, AlarmIntType_MIN);
+    RTC_Register_Inc_Int((void *)RTC_SW_Alarm_Callback, AlarmIntType_MIN, &SwAlarmCallbackID);
     RTC_DEBUG(printc("\r # Software Alarm callback registered on RTC icrement interrupt with ID = %d\n", SwAlarmCallbackID));
   }
   
   SwAlarmCount++;
-  CONTROL(SwAlarmCount <= NO_OF_SW_ALARMS, RTC_SW_ALARM_SLOTS_ERROR);
+  ASSERT(SwAlarmCount <= NO_OF_SW_ALARMS, -RTC_SW_ALARM_SLOTS_ERROR);
   
-  RETURN_SUCCESS_FUNC(RTC_REGISTER_SW_ALARM);
+  EXIT_SUCCESS_FUNC(RTC_REGISTER_SW_ALARM);
 }
+FUNC_REGISTER(RTC_REGISTER_SW_ALARM, RTC_Register_SW_Alarm);
 
 /*************************************************************************
  * Function Name: RTC_Unregister_SW_Alarm
@@ -530,8 +634,13 @@ Status_t RTC_Register_SW_Alarm(RtcSwAlarm_t *AlarmData_p, uint8 *AlarmID)
  *************************************************************************/
 Status_t RTC_Unregister_SW_Alarm(uint8 AlarmID)
 {
-  Function_IN(RTC_UNREGISTER_SW_ALARM);
-  CONTROL(SwAlarmCount > 0, RTC_GENERAL_ERROR);
+  FuncIN(RTC_UNREGISTER_SW_ALARM);
+  
+  if(SwAlarmCount == 0)
+    EXIT_FUNC(RTC_SW_ALARM_NOT_VALID, RTC_UNREGISTER_SW_ALARM);
+  
+  if(SwAlarm[AlarmID].State == NO_ALARM_SET)
+    EXIT_FUNC(RTC_SW_ALARM_NOT_VALID, RTC_UNREGISTER_SW_ALARM);
   
   SwAlarm[AlarmID].State = NO_ALARM_SET;
   
@@ -543,8 +652,9 @@ Status_t RTC_Unregister_SW_Alarm(uint8 AlarmID)
     RTC_DEBUG(printc("\r # Software Alarm callback Unregistered on RTC icrement interrupt with ID = %d\n", SwAlarmCallbackID));
   }
   
-  RETURN_SUCCESS_FUNC(RTC_UNREGISTER_SW_ALARM);
+  EXIT_SUCCESS_FUNC(RTC_UNREGISTER_SW_ALARM);
 }
+FUNC_REGISTER(RTC_UNREGISTER_SW_ALARM, RTC_Unregister_SW_Alarm);
 
 /*************************************************************************
  * Function Name: RTC_Register_SW_Alarm
@@ -555,7 +665,7 @@ Status_t RTC_Unregister_SW_Alarm(uint8 AlarmID)
  *************************************************************************/
 Status_t RTC_Get_Registered_Sw_Alarms(RtcSwAlarm_t *AlarmData, uint8 *NoOfAlarms)
 {
-  Function_IN(RTC_GET_REGISTERED_SW_ALARM);
+  FuncIN(RTC_GET_REGISTERED_SW_ALARM);
   
   *NoOfAlarms = 0;
   
@@ -568,8 +678,9 @@ Status_t RTC_Get_Registered_Sw_Alarms(RtcSwAlarm_t *AlarmData, uint8 *NoOfAlarms
     }
   }
   
-  RETURN_SUCCESS_FUNC(RTC_GET_REGISTERED_SW_ALARM);
+  EXIT_SUCCESS_FUNC(RTC_GET_REGISTERED_SW_ALARM);
 }
+FUNC_REGISTER(RTC_GET_REGISTERED_SW_ALARM, RTC_Get_Registered_Sw_Alarms);
   
 /*************************************************************************
  * Function Name: RTC_SW_Alarm_Callback
@@ -579,14 +690,15 @@ Status_t RTC_Get_Registered_Sw_Alarms(RtcSwAlarm_t *AlarmData, uint8 *NoOfAlarms
  *************************************************************************/
 Status_t RTC_SW_Alarm_Callback(void *InPtr)
 {
-  Function_IN(RTC_SW_ALARM_CALLBACK);
+  FuncIN(RTC_SW_ALARM_CALLBACK);
+  
   RtcDateTime_t DateTime = {0};
   
   for(int i = 0; i < NO_OF_SW_ALARMS; i++)
   {
     if(SwAlarm[i].State == RTC_ALARM_ON)
     {
-      CONTROL(!RTC_Get_Date_Time(&DateTime), RTC_GENERAL_ERROR);
+      RTC_Get_Date_Time(&DateTime);
       
       if((SwAlarm[i].Minute == DateTime.Minute) && (SwAlarm[i].Hour == DateTime.Hour))
       {
@@ -594,7 +706,7 @@ Status_t RTC_SW_Alarm_Callback(void *InPtr)
         {
           if((SwAlarm[i].Year == DateTime.Year) && (SwAlarm[i].Month == DateTime.Month) && (SwAlarm[i].Day == DateTime.Day))
           {
-            CONTROL(!((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+            VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
             SwAlarm[i].State = RTC_ALARM_OFF;
           }
         }
@@ -602,7 +714,7 @@ Status_t RTC_SW_Alarm_Callback(void *InPtr)
         {
           if(SwAlarm[i].Mode == SINGLE_ALARM)
           {
-            CONTROL(!((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+            VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
             SwAlarm[i].State = RTC_ALARM_OFF;
           }
           else if(SwAlarm[i].Mode == REPETITIVE_ALARM)
@@ -611,45 +723,46 @@ Status_t RTC_SW_Alarm_Callback(void *InPtr)
             {
               case 1:
                 if(SwAlarm[i].DoW & MONDAY)
-                  CONTROL(!((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                  VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
                 break;
               case 2:
                 if(SwAlarm[i].DoW & TUESDAY)
-                  CONTROL(!((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                  VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
                 break;
               case 3:
                 if(SwAlarm[i].DoW & WEDNESDAY)
-                  CONTROL(!((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                  VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
                 break;
               case 4:
                 if(SwAlarm[i].DoW & THURSDAY)
-                  CONTROL(((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                  VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
                 break;
               case 5:
                 if(SwAlarm[i].DoW & FRIDAY)
-                  CONTROL(!((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                  VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
                 break;
               case 6:
                 if(SwAlarm[i].DoW & SATURDAY)
-                  CONTROL(!((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                  VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
                 break;
               case 0:
                 if(SwAlarm[i].DoW & SUNDAY)
-                  CONTROL(!((Status_t(*)(void *))(SwAlarm[i].Callback))(NULL), RTC_GENERAL_ERROR);
+                  VERIFY((Status_t(*)(void *))(SwAlarm[i].Callback)(NULL), -RTC_GENERAL_ERROR);
                 break;
               default:
-                CONTROL(0, REGISTER_ERROR);
+                Fatal_Abort(-REGISTER_ERROR);
             } // switch(DateTime.DoW)
           }
           else
-            CONTROL(0, RTC_GENERAL_ERROR);
+            Fatal_Abort(-RTC_GENERAL_ERROR);
         }
       }
     }
   } // for
   
-  RETURN_SUCCESS_FUNC(RTC_SW_ALARM_CALLBACK);
+  EXIT_SUCCESS_FUNC(RTC_SW_ALARM_CALLBACK);
 }
+FUNC_REGISTER(RTC_SW_ALARM_CALLBACK, RTC_SW_Alarm_Callback);
 
 /*************************************************************************
  * Function Name: RTC_ISR
@@ -659,19 +772,21 @@ Status_t RTC_SW_Alarm_Callback(void *InPtr)
  *************************************************************************/
 __irq void RTC_ISR(void)
 {
+  FuncIN(RTC_ISR);
+  
   uint32 IntStatus;
   RtcDateTime_t DateTime = {0};
   
-  IntStatus = RTC_Check_Int_Type() & 0x3;
+  IntStatus = RTC_Check_Int_Type();
   if(RTC_Clear_Int(IntStatus) != SUCCESS)
     RTC_Clear_Int(RTCALLInt);
   
-  if (IntStatus & RTCIncrementInt)	// Increment Interrupt
+  if(IntStatus & RTCIncrementInt)    // Increment Interrupt
   {
     for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Second int
     {
       if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_SEC)
-        CONTROL_ABORT(!((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
+        VERIFY((Status_t(*)(void *))(Sys_Time_Update[i])(NULL), -RTC_GENERAL_ERROR);
     }
     
     RTC_Get_Date_Time(&DateTime);
@@ -681,7 +796,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Minute int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_MIN)
-          CONTROL_ABORT(!((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
+          VERIFY((Status_t(*)(void *))(Sys_Time_Update[i])(NULL), -RTC_GENERAL_ERROR);
       }
     }
     
@@ -690,7 +805,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Hour int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_HOUR)
-          CONTROL_ABORT(!((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
+          VERIFY((Status_t(*)(void *))(Sys_Time_Update[i])(NULL), -RTC_GENERAL_ERROR);
       }
     }
     
@@ -699,7 +814,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Day int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_DAY)
-          CONTROL_ABORT(!((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
+          VERIFY((Status_t(*)(void *))(Sys_Time_Update[i])(NULL), -RTC_GENERAL_ERROR);
       }
     }
     
@@ -708,7 +823,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Month int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_MON)
-          CONTROL_ABORT(!((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
+          VERIFY((Status_t(*)(void *))(Sys_Time_Update[i])(NULL), -RTC_GENERAL_ERROR);
       }
     }
     
@@ -717,7 +832,7 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Year int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_YEAR)
-          CONTROL_ABORT(!((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
+          VERIFY((Status_t(*)(void *))(Sys_Time_Update[i])(NULL), -RTC_GENERAL_ERROR);
       }
     }
     
@@ -726,19 +841,22 @@ __irq void RTC_ISR(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // DoW int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_DOW)
-          CONTROL_ABORT(!((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), RTC_GENERAL_ERROR);
+          VERIFY((Status_t(*)(void *))(Sys_Time_Update[i])(NULL), -RTC_GENERAL_ERROR);
       }
     }
   } // if (IntStatus & RTCIncrementInt)
   
-  if (IntStatus & RTCAlarmInt)	        // Alarm Interrupt
+  if (IntStatus & RTCAlarmInt)            // Alarm Interrupt
   {
     if(Alarm != NULL)
       Alarm();
   }
   
+  FuncOUT(RTC_ISR);
+  
   VICVectAddr = 0;
 }
+FUNC_REGISTER(RTC_ISR, RTC_ISR);
 
 /*************************************************************************
  * Function Name: FormatDate
@@ -747,60 +865,64 @@ __irq void RTC_ISR(void)
  * @in: char *s
  * @out: Status_t
  * Description: Format the current date into an ASCII string according to the Type.
- *		Type = 1, "DD-MM-YYYY" (11 chars)
- *		Type = 2, "DOW, DD Month  YYYY" (30 chars)
+ *        Type = 1, "DD-MM-YYYY" (11 chars)
+ *        Type = 2, "DOW, DD Month  YYYY" (30 chars)
  *  
  *************************************************************************/
-Status_t Format_Date(uint8 Type, RtcDate_t *Date_p, char *s)
+Status_t Format_Date(uint8 Type, RtcDate_t *Date_p, char *String)
 {
-  Function_IN(FORMAT_DATE);
+  FuncIN(FORMAT_DATE);
+  
   uint16 Year;
   uint8 Month, Day, DoW;
   char Str[5];
   
-  CONTROL(Date_p != NULL, INVALID_INPUT_POINTER);
+  ASSERT(Date_p != NULL, -INVALID_INPUT_POINTER);
+  ASSERT(String != NULL, -INVALID_INPUT_POINTER);
   
   Year = Date_p -> Year;
   Month = Date_p -> Month;
   Day = Date_p -> Day;
   DoW = Date_p -> DoW;
 //  DoY = pDate->DoY;
-	
+    
   switch(Type)
   {
-  case 1:
-    strcpy(s, "DD-MM-YYYY");
-    s[6] = Year / 1000 + '0';
-    Year = Year % 1000;
-    s[7] = Year / 100 + '0';
-    Year = Year % 100;
-    s[8] = Year / 10 + '0';
-    s[9] = Year % 10 + '0';
-    s[3] = Month / 10 + '0';
-    s[4] = Month % 10 + '0';
-    s[0] = Day / 10 + '0';
-    s[1] = Day % 10 + '0';
-    break;
-  case 2:
-    strcpy(s, RTC_DOWTbl[DoW]);
-    strcat(s, " ");
-    
-    Str[0] = Day / 10 + '0';
-    Str[1] = Day % 10 + '0';
-    Str[2] = '\0';
-    strcat(s, Str);
-    strcat(s, ", ");
-    
-    strcat(s, RTC_MonthTbl[Month]);
-    sprintf(Str,"%d",Year);
-    strcat(s, Str);
-    break;		
-  default:
-    strcpy(s,"?");
-    break;
+    case 1:
+      strcpy(String, "DD-MM-YYYY");
+      String[6] = Year / 1000 + '0';
+      Year = Year % 1000;
+      String[7] = Year / 100 + '0';
+      Year = Year % 100;
+      String[8] = Year / 10 + '0';
+      String[9] = Year % 10 + '0';
+      String[3] = Month / 10 + '0';
+      String[4] = Month % 10 + '0';
+      String[0] = Day / 10 + '0';
+      String[1] = Day % 10 + '0';
+      break;
+    case 2:
+      strcpy(String, RTC_DOWTbl[DoW]);
+      strcat(String, " ");
+      
+      Str[0] = Day / 10 + '0';
+      Str[1] = Day % 10 + '0';
+      Str[2] = '\0';
+      strcat(String, Str);
+      strcat(String, ", ");
+      
+      strcat(String, RTC_MonthTbl[Month]);
+      sprintf(Str,"%d",Year);
+      strcat(String, Str);
+      break;        
+    default:
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
+      break;
   } // switch
-  RETURN_SUCCESS();
+  
+  EXIT_SUCCESS_FUNC(FORMAT_DATE);
 }
+FUNC_REGISTER(FORMAT_DATE, Format_Date);
 
 /*************************************************************************
  * Function Name: FormatTime
@@ -809,47 +931,51 @@ Status_t Format_Date(uint8 Type, RtcDate_t *Date_p, char *s)
  * @in: char *s
  * @out: Status_t
  * Description: Format the current time into an ASCII string according to the Type.
- *		Type = 1, "HH:MM:SS" (9 chars)
- *		Type = 2, "HH:MM:SS AM" (13 chars)
+ *        Type = 1, "HH:MM:SS" (9 chars)
+ *        Type = 2, "HH:MM:SS AM" (13 chars)
  *************************************************************************/
-Status_t Format_Time(uint8 Type, RtcTime_t *Time_p, char *s)
+Status_t Format_Time(uint8 Type, RtcTime_t *Time_p, char *String)
 {
-  Function_IN(FORMAT_TIME);
+  FuncIN(FORMAT_TIME);
+  
   uint8 Hour, Minute, Second;
 
-  CONTROL(Time_p != NULL, INVALID_INPUT_POINTER);
+  ASSERT(Time_p != NULL, -INVALID_INPUT_POINTER);
+  ASSERT(String != NULL, -INVALID_INPUT_POINTER);
   
   Hour = Time_p -> Hour;
   Minute = Time_p -> Minute;
   Second = Time_p -> Second;
-	
+    
   switch(Type)
   {
-  case 1:
-    strcpy(s, "HH:MM:SS");
-    s[0] = Hour / 10 + '0';
-    s[1] = Hour % 10 + '0';
-    s[3] = Minute / 10 + '0';
-    s[4] = Minute % 10 + '0';
-    s[6] = Second / 10 + '0';
-    s[7] = Second % 10 + '0';
-    break;
-  case 2:
-    strcpy(s, "HH:MM:SS AM");
-    s[9] = (Hour>=12) ? 'P' : 'A';
-    if (Hour>12)
-      Hour = Hour -12;	
-			
-    s[0] = Hour / 10 + '0';
-    s[1] = Hour % 10 + '0';
-    s[3] = Minute / 10 + '0';
-    s[4] = Minute % 10 + '0';
-    s[6] = Second / 10 + '0';
-    s[7] = Second % 10 + '0';
-    break;
-  default:
-    strcpy(s,"?");
-    break;		
+    case 1:
+      strcpy(String, "HH:MM:SS");
+      String[0] = Hour / 10 + '0';
+      String[1] = Hour % 10 + '0';
+      String[3] = Minute / 10 + '0';
+      String[4] = Minute % 10 + '0';
+      String[6] = Second / 10 + '0';
+      String[7] = Second % 10 + '0';
+      break;
+    case 2:
+      strcpy(String, "HH:MM:SS AM");
+      String[9] = (Hour>=12) ? 'P' : 'A';
+      if (Hour>12)
+      Hour = Hour -12;    
+      
+      String[0] = Hour / 10 + '0';
+      String[1] = Hour % 10 + '0';
+      String[3] = Minute / 10 + '0';
+      String[4] = Minute % 10 + '0';
+      String[6] = Second / 10 + '0';
+      String[7] = Second % 10 + '0';
+      break;
+    default:
+      Fatal_Abort(-INVALIID_INPUT_PARAMETER);
+      break;        
   } // switch
-  RETURN_SUCCESS();
+  
+  EXIT_SUCCESS_FUNC(FORMAT_TIME);
 }
+FUNC_REGISTER(FORMAT_TIME, Format_Time);
