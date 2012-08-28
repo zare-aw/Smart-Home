@@ -15,6 +15,14 @@ extern unsigned int UART_Flag2;
 
 #define NO_CHANGE 9
 
+// UART Error definitions
+#define UART0_SEND_ERROR          UART_OFFSET | 0x01
+#define UART1_SEND_ERROR          UART_OFFSET | 0x02
+#define UART_0_RX_FIFO_ERROR      UART_OFFSET | 0x03
+#define UART_1_RX_FIFO_ERROR      UART_OFFSET | 0x04
+#define UART0_RECEIVE_ERROR       UART_OFFSET | 0x05
+#define UART1_RECEIVE_ERROR       UART_OFFSET | 0x06
+
 Status_t UART_0_Init(unsigned int baud);
 
 Status_t Get_Char_UART_0(unsigned char *ReceiveByte, unsigned int TimeOut);

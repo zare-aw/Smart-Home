@@ -1,8 +1,11 @@
 #include "Global_Defines.h"
-#include    "Includes.h"
+#include "Func_Trace.h"
+#include "UART_LPC_214X.h"
+#include "UART_LPC_214X_Func.h"
+#include "Includes.h"
 
-  unsigned int UART_Flag1 = 0;
-  unsigned int UART_Flag2 = 0;
+unsigned int UART_Flag1 = 0;
+unsigned int UART_Flag2 = 0;
 
 uint8 Old_Receive_INT_State_UART_0 = 0;
 uint8 Old_Transmit_INT_State_UART_0 = 0;
@@ -15,7 +18,8 @@ uint8 Old_Transmit_INT_State_UART_1 = 0;
 *******************************************************************************/
 Status_t UART_0_Init(unsigned int baud)
 {
-  Function_IN(UART_0_INIT);
+  FuncIN(UART_0_INIT);
+  
   unsigned int PCLK_temp;
   
   PINSEL0_bit.P0_0 = 1;       // Dodeli gi soodvetnite pinovi na UART 0
@@ -25,34 +29,34 @@ Status_t UART_0_Init(unsigned int baud)
   {
     switch (VPBDIV)
     {
-    case 0:
-      PCLK_temp = ((PLLSTAT_bit.MSEL+1)*12000000)/4;  
-      break;
-    case 1:
-      PCLK_temp = ((PLLSTAT_bit.MSEL+1)*12000000);
-      break;
-    case 2:
-      PCLK_temp = ((PLLSTAT_bit.MSEL+1)*12000000)/2;
-      break;
-    default:
-      CONTROL(0, PCLKSEL_ERROR);
+      case 0:
+        PCLK_temp = ((PLLSTAT_bit.MSEL+1)*12000000)/4;  
+        break;
+      case 1:
+        PCLK_temp = ((PLLSTAT_bit.MSEL+1)*12000000);
+        break;
+      case 2:
+        PCLK_temp = ((PLLSTAT_bit.MSEL+1)*12000000)/2;
+        break;
+      default:
+        Fatal_Abort(-PCLKSEL_ERROR);
     }
   }
   else
   {
     switch (VPBDIV)
     {
-    case 0:
-      PCLK_temp = 12000000/4;  
-      break;
-    case 1:
-      PCLK_temp = 12000000;
-      break;
-    case 2:
-      PCLK_temp = 12000000/2;
-      break;
-    default:
-      break;
+      case 0:
+        PCLK_temp = 12000000/4;  
+        break;
+      case 1:
+        PCLK_temp = 12000000;
+        break;
+      case 2:
+        PCLK_temp = 12000000/2;
+        break;
+      default:
+        break;
     }
   }
   
@@ -94,7 +98,7 @@ Status_t UART_0_Init(unsigned int baud)
           U0FDR_bit.MULVAL = 14;
           break;
         default:
-          CONTROL(0, INVALID_INPUT_PARAMETER);
+          Fatal_Abort(-INVALID_INPUT_PARAMETER);
       }
     break;
     case 30000000:
@@ -131,7 +135,7 @@ Status_t UART_0_Init(unsigned int baud)
           U0FDR_bit.MULVAL = 14;
           break;
         default:
-          CONTROL(0, INVALID_INPUT_PARAMETER);
+          Fatal_Abort(-INVALID_INPUT_PARAMETER);
       }
     break;
     case 15000000:
@@ -168,7 +172,7 @@ Status_t UART_0_Init(unsigned int baud)
           U0FDR_bit.MULVAL = 14;
           break;
         default:
-          CONTROL(0, INVALID_INPUT_PARAMETER);
+          Fatal_Abort(-INVALID_INPUT_PARAMETER);
       }
     break;
     case 12000000:
@@ -205,11 +209,11 @@ Status_t UART_0_Init(unsigned int baud)
           U0FDR_bit.MULVAL = 12;
           break;
         default:
-          CONTROL(0, INVALID_INPUT_PARAMETER);
+          Fatal_Abort(-INVALID_INPUT_PARAMETER);
       }
     break;
     default:
-      CONTROL(0, PCLKSEL_ERROR);
+      Fatal_Abort(-PCLKSEL_ERROR);
   }
   
     
@@ -232,15 +236,16 @@ Status_t UART_0_Init(unsigned int baud)
   U0IER_bit.ABTOINTEN = 0;// Onevozmozi prekin pri auto-baud time out
   U0IER_bit.ABEOINTEN = 0;// Onevozmozi prekin pri kraj na auto-baud
 
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(UART_0_INIT);
 }
+FUNC_REGISTER(UART_0_INIT, UART_0_Init);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Set_Interrupt_State_UART_0(uint8 Received, uint8 THREmpty)
 {
-  Function_IN(SET_INTERRUPT_STATE_UART_0);
+  FuncIN(SET_INTERRUPT_STATE_UART_0);
 
   Old_Receive_INT_State_UART_0 = U0IER_bit.RDAIE;
   Old_Transmit_INT_State_UART_0 = U0IER_bit.THREIE;
@@ -256,7 +261,7 @@ Status_t Set_Interrupt_State_UART_0(uint8 Received, uint8 THREmpty)
     case NO_CHANGE:
       break;
     default:
-      CONTROL(0, INVALID_INPUT_PARAMETER);
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
   }
   
   switch(THREmpty)
@@ -270,18 +275,19 @@ Status_t Set_Interrupt_State_UART_0(uint8 Received, uint8 THREmpty)
   case NO_CHANGE:
     break;
   default:
-    CONTROL(0, INVALID_INPUT_PARAMETER);
+    Fatal_Abort(-INVALID_INPUT_PARAMETER);
   }
   
-  RETURN_SUCCESS();
-}    
+  EXIT_SUCCESS_FUNC(SET_INTERRUPT_STATE_UART_0);
+}
+FUNC_REGISTER(SET_INTERRUPT_STATE_UART_0, Set_Interrupt_State_UART_0);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Set_Interrupt_State_UART_1(uint8 Received, uint8 THREmpty)
 {
-  Function_IN(SET_INTERRUPT_STATE_UART_1);
+  FuncIN(SET_INTERRUPT_STATE_UART_1);
   
   Old_Receive_INT_State_UART_1 = U1IER_bit.RDAIE;
   Old_Transmit_INT_State_UART_1 = U1IER_bit.THREIE;
@@ -297,7 +303,7 @@ Status_t Set_Interrupt_State_UART_1(uint8 Received, uint8 THREmpty)
   case NO_CHANGE:
     break;
   default:
-    CONTROL(0, INVALID_INPUT_PARAMETER);
+    Fatal_Abort(-INVALID_INPUT_PARAMETER);
   }
   
   switch(THREmpty)
@@ -311,11 +317,12 @@ Status_t Set_Interrupt_State_UART_1(uint8 Received, uint8 THREmpty)
   case NO_CHANGE:
     break;
   default:
-    CONTROL(0, INVALID_INPUT_PARAMETER);
+    Fatal_Abort(-INVALID_INPUT_PARAMETER);
   } 
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(SET_INTERRUPT_STATE_UART_1);
 }
+FUNC_REGISTER(SET_INTERRUPT_STATE_UART_1, Set_Interrupt_State_UART_1);
 
 /*******************************************************************************
 * 
@@ -343,28 +350,29 @@ Status_t Return_Old_Interrupt_State_UART_1(void)
 *******************************************************************************/
 Status_t Set_Trigger_UART_0(uint8 Trigger)
 {
-  Function_IN(SET_TRIGGER_UART_0);
+  FuncIN(SET_TRIGGER_UART_0);
   
   switch(Trigger)
   {
-  case BYTE_1:
-    U0FCR_bit.RTLS = 0;     // TRIGGER na sekoj stasan bajt
-    break;
-  case BYTE_4:
-    U0FCR_bit.RTLS = 1;     // TRIGGER na sekoi 4 bajti
-    break;
-  case BYTE_8:
-    U0FCR_bit.RTLS = 2;     // TRIGGER na sekoi 8 bajti
-    break;
-  case BYTE_14:
-    U0FCR_bit.RTLS = 3;     // TRIGGER na sekoi 14 bajti
-    break;
-  default:
-    CONTROL(0, INVALID_INPUT_PARAMETER);
+    case BYTE_1:
+      U0FCR_bit.RTLS = 0;     // TRIGGER na sekoj stasan bajt
+      break;
+    case BYTE_4:
+      U0FCR_bit.RTLS = 1;     // TRIGGER na sekoi 4 bajti
+      break;
+    case BYTE_8:
+      U0FCR_bit.RTLS = 2;     // TRIGGER na sekoi 8 bajti
+      break;
+    case BYTE_14:
+      U0FCR_bit.RTLS = 3;     // TRIGGER na sekoi 14 bajti
+      break;
+    default:
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
   }
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(SET_TRIGGER_UART_0);
 }
+FUNC_REGISTER(SET_TRIGGER_UART_0, Set_Trigger_UART_0);
 
 /*******************************************************************************
 * Postavuva broj na stasani bajti vo RX FIFO na UART1
@@ -372,28 +380,29 @@ Status_t Set_Trigger_UART_0(uint8 Trigger)
 *******************************************************************************/
 Status_t Set_Trigger_UART_1(uint8 Trigger)
 {
-  Function_IN(SET_TRIGGER_UART_1);
+  FuncIN(SET_TRIGGER_UART_1);
 
   switch(Trigger)
   {
-  case BYTE_1:
-    U1FCR_bit.RTLS = 0;     // TRIGGER na sekoj stasan bajt
-    break;
-  case BYTE_4:
-    U1FCR_bit.RTLS = 1;     // TRIGGER na sekoi 4 bajti
-    break;
-  case BYTE_8:
-    U1FCR_bit.RTLS = 2;     // TRIGGER na sekoi 8 bajti
-    break;
-  case BYTE_14:
-    U1FCR_bit.RTLS = 3;     // TRIGGER na sekoi 14 bajti
-    break;
-  default:
-    CONTROL(0, INVALID_INPUT_PARAMETER);
+    case BYTE_1:
+      U1FCR_bit.RTLS = 0;     // TRIGGER na sekoj stasan bajt
+      break;
+    case BYTE_4:
+      U1FCR_bit.RTLS = 1;     // TRIGGER na sekoi 4 bajti
+      break;
+    case BYTE_8:
+      U1FCR_bit.RTLS = 2;     // TRIGGER na sekoi 8 bajti
+      break;
+    case BYTE_14:
+      U1FCR_bit.RTLS = 3;     // TRIGGER na sekoi 14 bajti
+      break;
+    default:
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
   }
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(SET_TRIGGER_UART_1);
 }
+FUNC_REGISTER(SET_TRIGGER_UART_1, Set_Trigger_UART_1);
 
 /*******************************************************************************
 * Function for write 1 byte UART 0 transmit FIFO
@@ -417,13 +426,16 @@ void Write_Char_UART_1(unsigned char ch)
 Status_t Put_Char_UART_0(unsigned char ch, unsigned int TimeOut)      // Praka int promenliva preku UART 0
 {
   int i = 0;
+  
   while(!U0LSR_bit.THRE)
   {
     i++;
     if(i == TimeOut)
       return UART0_SEND_ERROR;
   }
+  
   U0THR = ch;
+  
   return SUCCESS;
 }
 
@@ -433,13 +445,16 @@ Status_t Put_Char_UART_0(unsigned char ch, unsigned int TimeOut)      // Praka i
 Status_t Put_Char_UART_1(unsigned char ch, unsigned int TimeOut)      // Praka int promenliva preku UART 1
 {
   int i = 0;
+  
   while(!U1LSR_bit.THRE)
   {
     i++;
     if(i == TimeOut)
       return UART0_SEND_ERROR;
   }
+  
   U1THR = ch;
+  
   return SUCCESS;
 }
 
@@ -449,13 +464,16 @@ Status_t Put_Char_UART_1(unsigned char ch, unsigned int TimeOut)      // Praka i
 Status_t Get_Char_UART_0(unsigned char *ReceiveByte, unsigned int TimeOut)         // Ceka podatok od UART 0 i koga ke go dobie go vraka
 {
   int i = 0;
+  
   while (!U0LSR_bit.DR)
   {
     i++;
     if(i == TimeOut)
       return UART0_RECEIVE_ERROR;
   }
+  
   *ReceiveByte = U0RBR;
+  
   return SUCCESS;
 }
 
@@ -465,13 +483,16 @@ Status_t Get_Char_UART_0(unsigned char *ReceiveByte, unsigned int TimeOut)      
 Status_t Get_Char_UART_1(unsigned char *ReceiveByte, unsigned int TimeOut)         // Ceka podatok od UART 1 i koga ke go dobie go vraka
 {
   int i = 0;
+  
   while (!U1LSR_bit.DR)
   {
     i++;
     if(i == TimeOut)
       return UART1_RECEIVE_ERROR;
   }
+  
   *ReceiveByte = U1RBR;
+  
   return SUCCESS;
 }
 
@@ -482,6 +503,7 @@ Status_t Clear_RX_FIFO_UART_0(const unsigned int TimeOut)
 {
   volatile uint8 Temp;
   unsigned int i = 0;
+  
   while (U0LSR_bit.DR)
   {
     Temp = U0RBR;
@@ -489,6 +511,7 @@ Status_t Clear_RX_FIFO_UART_0(const unsigned int TimeOut)
     if(i == TimeOut)
       return UART_0_RX_FIFO_ERROR;
   }
+  
   return SUCCESS;
 }
 
@@ -499,6 +522,7 @@ Status_t Clear_RX_FIFO_UART_1(const unsigned int TimeOut)
 {
   volatile uint8 Temp;
   unsigned int i = 0;
+  
   while (U1LSR_bit.DR)
   {
     Temp = U1RBR;
@@ -506,6 +530,7 @@ Status_t Clear_RX_FIFO_UART_1(const unsigned int TimeOut)
     if(i == TimeOut)
       return UART_1_RX_FIFO_ERROR;
   }
+  
   return SUCCESS;
 }
 
@@ -515,6 +540,7 @@ Status_t Clear_RX_FIFO_UART_1(const unsigned int TimeOut)
 Status_t Check_TX_Status_UART_0(uint8 * Status)
 {
   *Status = (uint8)U0LSR_bit.THRE;
+  
   return SUCCESS;
 }
 
@@ -524,6 +550,7 @@ Status_t Check_TX_Status_UART_0(uint8 * Status)
 Status_t Check_TX_Status_UART_1(uint8 * Status)
 {
   *Status = (uint8)U1LSR_bit.THRE;
+  
   return SUCCESS;
 }
 
@@ -534,12 +561,14 @@ Status_t Put_String_UART_0(char *Buf)
 {
   Status_t Status = GENERAL_ERROR;
   char *pBuf = Buf;
+  
   while (*pBuf)
   {
     Status = Put_Char_UART_0(*pBuf++, 0xFFFFFFF);
     if(Status != SUCCESS)
       return Status;
   }
+  
   return Status;
 }
 
@@ -550,12 +579,14 @@ Status_t Put_String_UART_1(char *Buf)
 {
   Status_t Status = GENERAL_ERROR;
   char *pBuf = Buf;
+  
   while (*pBuf)
   {
     Status = Put_Char_UART_1(*pBuf++, 0xFFFFFFF);
     if(Status != SUCCESS)
       return Status;
   }
+  
   return Status;
 }
 
@@ -573,6 +604,5 @@ __irq void UART0_ISR(void)    // Interrupt servisna rutina na UART 0
 
 __irq void UART1_ISR(void)    // Interrupt servisna rutina na UART 1
 {
-  
   VICVectAddr = 0; 
 }
