@@ -1,5 +1,7 @@
 #include "Global_Defines.h"
-#include    "Includes.h"
+#include "CLK_Reset_Func.h"
+#include "CLK_Reset_Defconfig.h"
+#include "Includes.h"
 
 uint32 CpuClk = OSC_CLK;
 uint32 PerClk = OSC_CLK;
@@ -11,6 +13,8 @@ uint32 PerClk = OSC_CLK;
 *******************************************************************************/
 Status_t PLL_Init(uint8 a)
 {
+  FuncIN(PLL_INIT);
+  
   switch(a) 
   {
   case DISABLE:
@@ -37,11 +41,12 @@ Status_t PLL_Init(uint8 a)
     CpuClk = OSC_CLK * 5;
     break;
   default:
-    CONTROL(0, INVALID_INIT_INPUT_PARAMETER);
+    Fatal_Abort(-INVALID_INIT_INPUT_PARAMETER);
   }
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(PLL_INIT);
 }
+FUNC_REGISTER(PLL_INIT, PLL_Init);
 
 /*******************************************************************************
 * 
@@ -59,24 +64,30 @@ uint32 Read_CPU_CLK(void)
 *******************************************************************************/
 void PCLK_Init(uint8 a)
 {
+  FuncIN(PCLK_INIT);
+  
   switch(a)
   {
-  case 1:
-    VPBDIV = 1;
-    PerClk = CpuClk;
-    break;
-  case 2:
-    VPBDIV = 2;
-    PerClk = CpuClk / 2;
-    break;
-  case 4:
-    VPBDIV = 0;
-    PerClk = CpuClk / 4;
-    break;
-  default:
-    break;
+    case 1:
+      VPBDIV = 1;
+      PerClk = CpuClk;
+      break;
+    case 2:
+      VPBDIV = 2;
+      PerClk = CpuClk / 2;
+      break;
+    case 4:
+      VPBDIV = 0;
+      PerClk = CpuClk / 4;
+      break;
+    default:
+      Fatal_Abort(-INVALID_INIT_INPUT_PARAMETER);
+      break;
   }
+  
+  EXIT_SUCCESS_FUNC(PCLK_INIT);
 }
+FUNC_REGISTER(PCLK_INIT, PCLK_Init);
 
 /*******************************************************************************
 * 
@@ -91,8 +102,12 @@ uint32 Read_PER_CLK(void)
 *******************************************************************************/
 void Print_Reset_Source(void)
 {
+  FuncIN(PRINT_RESET_SOURCE);
+  
   uint8 Rsir = RSIR;
+  
   printc("\r # Reset reason: ");
+  
   switch(Rsir)
   {
     case 0x01:
@@ -113,4 +128,8 @@ void Print_Reset_Source(void)
   }
   
   RSIR = 0x0F;    // Reset reset source register
+  
+  EXIT_SUCCESS_FUNC(PRINT_RESET_SOURCE);
 }
+FUNC_REGISTER(PRINT_RESET_SOURCE, Print_Reset_Source);
+
