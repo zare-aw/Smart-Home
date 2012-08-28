@@ -1,4 +1,7 @@
 #include "Global_Defines.h"
+#include "Func_Trace.h"
+#include "PWM_Debug.h"
+#include "PWM_Func.h"
 #include "Includes.h"
 
 uint32 DutyRatio;
@@ -14,8 +17,23 @@ uint32 DutyRatio;
 *******************************************************************************/
 Status_t Pwm_Init(uint8 Mode, uint32 Freq, uint8 OutEnable, PwmOutD_t *PwmOutD)
 {
-  Function_IN(PWM_INIT);
+  FuncIN(PWM_INIT);
   // TODO: Add Implementation for double edge controlled PWM outputs
+  
+  ASSERT(Freq != 0, -INVALID_INPUT_PARAMETER);
+  switch(OutEnable)
+  {
+    case PWM_OUT_1_ON:
+    case PWM_OUT_2_ON:
+    case PWM_OUT_3_ON:
+    case PWM_OUT_4_ON:
+    case PWM_OUT_5_ON:
+    case PWM_OUT_6_ON:
+      break;
+    default:
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
+      break;
+  }
   
   PWMMR0 = Read_PER_CLK() / Freq;
   PWMPR = 0x00000000;       // Prescaler register
@@ -145,8 +163,9 @@ Status_t Pwm_Init(uint8 Mode, uint32 Freq, uint8 OutEnable, PwmOutD_t *PwmOutD)
   PWMTCR_bit.CE = 1;          // Timer Counter Enabled
   PWMTCR_bit.PWMEN  = 1;      // PWM Enabled 
   
-  RETURN_SUCCESS_FUNC(PWM_INIT);
+  EXIT_SUCCESS_FUNC(PWM_INIT);
 }
+FUNC_REGISTER(PWM_INIT, Pwm_Init);
 
 /*******************************************************************************
  * Function Name: Pwm_Set_Duty_Cycle
@@ -157,9 +176,9 @@ Status_t Pwm_Init(uint8 Mode, uint32 Freq, uint8 OutEnable, PwmOutD_t *PwmOutD)
 *******************************************************************************/
 Status_t Pwm_Set_Duty_Cycle(uint8 Out, uint16 DutyCycle)
 {
-  Function_IN(PWM_SET_DUTY_CYCLE);
+  FuncIN(PWM_SET_DUTY_CYCLE);
   
-  CONTROL(DutyCycle <= 1024, INVALID_INPUT_PARAMETER);
+  ASSERT(DutyCycle <= 1024, -INVALID_INPUT_PARAMETER);
   
   switch(Out)
   {
@@ -200,8 +219,10 @@ Status_t Pwm_Set_Duty_Cycle(uint8 Out, uint16 DutyCycle)
       PWM_DEBUG(printc("\r # PWM out 6 set DutyCycle = %d\n", DutyCycle));
       break;
     default:
-      CONTROL(0, INVALID_INPUT_PARAMETER);
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
   }
   
-  RETURN_SUCCESS_FUNC(PWM_SET_DUTY_CYCLE);
+  EXIT_SUCCESS_FUNC(PWM_SET_DUTY_CYCLE);
 }
+FUNC_REGISTER(PWM_SET_DUTY_CYCLE, Pwm_Set_Duty_Cycle);
+

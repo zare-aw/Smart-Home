@@ -157,15 +157,6 @@ void Print_Function_History(void);
 #define BUS_ERROR                           31
 #define PCLKSEL_ERROR                       32
 
-#define UART0_SEND_ERROR                    110
-#define UART1_SEND_ERROR                    111
-
-#define UART_0_RX_FIFO_ERROR                114
-#define UART_1_RX_FIFO_ERROR                115
-
-#define UART0_RECEIVE_ERROR                 118
-#define UART1_RECEIVE_ERROR                 119
-
 #define TIMER_CLOCK_ERROR                   130
 
 #define DLY_BUSY_ERROR                      140
@@ -199,15 +190,6 @@ void Print_Function_History(void);
 // System
 #define INITIALIZATION                10
 #define PLL_INIT                      12
-#define MAM_INIT                      13
-
-// UART
-#define UART_0_INIT                   110
-#define UART_1_INIT                   111
-#define SET_INTERRUPT_STATE_UART_0    114
-#define SET_INTERRUPT_STATE_UART_1    115
-#define SET_TRIGGER_UART_0            118
-#define SET_TRIGGER_UART_1            119
 
 // Delay
 #define DLY                           400
@@ -343,10 +325,6 @@ void Print_Function_History(void);
 #define TEMP_INIT                       10707
 #define TEMP_REINIT                     10708
 #define TEMP_WORK                       10709
-
-// PWM
-#define PWM_INIT                        10800
-#define PWM_SET_DUTY_CYCLE              10801
 
 // Backlight
 #define BACKLIGHT_INIT                  10900
