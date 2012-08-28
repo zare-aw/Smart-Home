@@ -453,7 +453,7 @@ Status_t RTC_Register_Inc_Int(void *Callback_p, uint32 Type, uint8 *Alarm_ID)
       Sys_Time_Type[i] = Type;
       RTC_Enable_Inc_Int(Type);
       *Alarm_ID = i;
-      RTC_DEBUG(printc("\r # RTC increment interrupt callback registered, Type = %d, ID = %d\n", Type, i));
+      RTC_DEBUG(printc("\r # RTC increment interrupt callback registered, Address = 0x%08X, Type = 0x%X, ID = %d\n", Callback_p, Type, i));
       break;
     }
   
@@ -782,12 +782,17 @@ __irq __arm void RTC_Isr(void)
   if(RTC_Clear_Int(IntStatus) != SUCCESS)
     RTC_Clear_Int(RTCALLInt);
   
+  RTC_LL_DEBUG(printc(" # (%s) IntStatus = 0x%X\n", __func__, IntStatus));
+  
   if(IntStatus & RTCIncrementInt)    // Increment Interrupt
   {
     for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Second int
     {
       if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_SEC)
+      {
+        RTC_LL_DEBUG(printc(" # (%s) Calling Seconds callback at Address = 0x%08X\n", __func__, Sys_Time_Update[i]));
         VERIFY(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), -RTC_GENERAL_ERROR);
+      }
     }
     
     RTC_Get_Date_Time(&DateTime);
@@ -797,7 +802,10 @@ __irq __arm void RTC_Isr(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Minute int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_MIN)
+        {
+          RTC_LL_DEBUG(printc(" # (%s) Calling Minutes callback at Address = 0x%08X\n", __func__, Sys_Time_Update[i]));
           VERIFY(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), -RTC_GENERAL_ERROR);
+        }
       }
     }
     
@@ -806,7 +814,10 @@ __irq __arm void RTC_Isr(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Hour int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_HOUR)
+        {
+          RTC_LL_DEBUG(printc(" # (%s) Calling Hours callback at Address = 0x%08X\n", __func__, Sys_Time_Update[i]));
           VERIFY(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), -RTC_GENERAL_ERROR);
+        }
       }
     }
     
@@ -815,7 +826,10 @@ __irq __arm void RTC_Isr(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Day int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_DAY)
+        {
+          RTC_LL_DEBUG(printc(" # (%s) Calling Days callback at Address = 0x%08X\n", __func__, Sys_Time_Update[i]));
           VERIFY(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), -RTC_GENERAL_ERROR);
+        }
       }
     }
     
@@ -824,7 +838,10 @@ __irq __arm void RTC_Isr(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Month int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_MON)
+        {
+          RTC_LL_DEBUG(printc(" # (%s) Calling Month callback at Address = 0x%08X\n", __func__, Sys_Time_Update[i]));
           VERIFY(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), -RTC_GENERAL_ERROR);
+        }
       }
     }
     
@@ -833,7 +850,10 @@ __irq __arm void RTC_Isr(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // Year int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_YEAR)
+        {
+          RTC_LL_DEBUG(printc(" # (%s) Calling Years callback at Address = 0x%08X\n", __func__, Sys_Time_Update[i]));
           VERIFY(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), -RTC_GENERAL_ERROR);
+        }
       }
     }
     
@@ -842,7 +862,10 @@ __irq __arm void RTC_Isr(void)
       for(int i = 0; i < RTC_INC_CALLBACKS; i++)  // DoW int
       {
         if((Sys_Time_Update[i] != NULL) && Sys_Time_Type[i] == IncIntType_DOW)
+        {
+          RTC_LL_DEBUG(printc(" # (%s) Calling DoW callback at Address = 0x%08X\n", __func__, Sys_Time_Update[i]));
           VERIFY(((Status_t(*)(void *))(Sys_Time_Update[i]))(NULL), -RTC_GENERAL_ERROR);
+        }
       }
     }
   } // if (IntStatus & RTCIncrementInt)
@@ -850,7 +873,10 @@ __irq __arm void RTC_Isr(void)
   if (IntStatus & RTCAlarmInt)            // Alarm Interrupt
   {
     if(Alarm != NULL)
+    {
+      RTC_LL_DEBUG(printc(" # (%s) Calling Alarm callback at Address = 0x%08X\n", __func__, Alarm));
       Alarm();
+    }
   }
   
   FuncOUT(RTC_ISR);
