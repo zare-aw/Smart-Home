@@ -47,5 +47,6 @@ typedef struct
 
 Status_t Pwm_Init(uint8 Mode, uint32 Freq, uint8 OutEnable, PwmOutD_t *PwmOutD);
 Status_t Pwm_Set_Duty_Cycle(uint8 Out, uint16 DutyCycle);
+Status_t Pwm_Get_Duty_Cycle(uint8 Out, uint16 *DutyCycle);
 
 #endif

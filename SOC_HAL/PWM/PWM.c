@@ -226,3 +226,44 @@ Status_t Pwm_Set_Duty_Cycle(uint8 Out, uint16 DutyCycle)
 }
 FUNC_REGISTER(PWM_SET_DUTY_CYCLE, Pwm_Set_Duty_Cycle);
 
+/*******************************************************************************
+ * Function Name: Pwm_Get_Duty_Cycle
+ * @in: uint8 Out - PWM output select
+ * @out: uint16 *DutyCycle - PWM DutyCycle
+ * @out: Status_t
+ * Description: Get DutyCycle on Selected Output
+*******************************************************************************/
+Status_t Pwm_Get_Duty_Cycle(uint8 Out, uint16 *DutyCycle)
+{
+  FuncIN(PWM_GET_DUTY_CYCLE);
+  
+  ASSERT(DutyCycle != NULL, -INVALID_INPUT_POINTER);
+  
+  switch(Out)
+  {
+    case 1:
+      *DutyCycle = PWMMR1 / DutyRatio;
+      break;
+    case 2:
+      *DutyCycle = PWMMR2 / DutyRatio;
+      break;
+    case 3:
+      *DutyCycle = PWMMR3 / DutyRatio;
+      break;
+    case 4:
+      *DutyCycle = PWMMR4 / DutyRatio;
+      break;
+    case 5:
+      *DutyCycle = PWMMR5 / DutyRatio;
+      break;
+    case 6:
+      *DutyCycle = PWMMR6 / DutyRatio;
+      break;
+    default:
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
+  }
+  
+  EXIT_SUCCESS_FUNC(PWM_GET_DUTY_CYCLE);
+}
+FUNC_REGISTER(PWM_GET_DUTY_CYCLE, Pwm_Get_Duty_Cycle);
+

@@ -4,5 +4,6 @@
 // PWM.c
 #define PWM_INIT                  PWM_OFFSET | 0x01
 #define PWM_SET_DUTY_CYCLE        PWM_OFFSET | 0x02
+#define PWM_GET_DUTY_CYCLE        PWM_OFFSET | 0x03
 
 #endif
