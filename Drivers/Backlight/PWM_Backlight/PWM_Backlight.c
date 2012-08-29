@@ -44,3 +44,19 @@ Status_t Set_PWM_Backlight_Intensity(uint16 Intensity)
 }
 FUNC_REGISTER(SET_PWM_BACKLIGHT_INTENSITY, Set_Backlight_Intensity);
 
+/*******************************************************************************
+ * Function Name: Get_PWM_Backlight_Intensity
+ * @out: uint16 *Intensity - Get the desired Intensity
+ * @out: Status_t
+ * Description: Get Intensity
+*******************************************************************************/
+Status_t Get_PWM_Backlight_Intensity(uint16 *Intensity)
+{
+  FuncIN(GET_PWM_BACKLIGHT_INTENSITY);
+  
+  Pwm_Get_Duty_Cycle(BACKLIGHT_OUT_NUMBER, Intensity);
+  
+  EXIT_SUCCESS_FUNC(GET_PWM_BACKLIGHT_INTENSITY);
+}
+FUNC_REGISTER(GET_PWM_BACKLIGHT_INTENSITY, Get_Backlight_Intensity);
+
