@@ -39,7 +39,7 @@
 /*******************************************************************************
  * Global variables
  ******************************************************************************/
-Func_t FunctionsBuffer[MAX_FUNCTION_IN_BECKUP_BUFFER] = {0};
+Func_t FunctionsBuffer[MAX_FUNCTION_IN_BECKUP_BUFFER + 1] = {0};
 uint8 FunctionsInBuffer = 0;
 
 /*******************************************************************************
