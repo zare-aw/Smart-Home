@@ -16,7 +16,7 @@
 #define RTC_REGISTER_INC_INT            RTC_OFFSET | 0x0A
 #define RTC_UNREGISTER_INC_INT          RTC_OFFSET | 0x0B
 #define RTC_ENABLE_ALARM                RTC_OFFSET | 0x0C
-#define RTC_CLEAR_INT                   RTC_OFFSET | 0x0C
+#define RTC_CLEAR_INT                   RTC_OFFSET | 0x0D
 #define RTC_REGISTER_SW_ALARM           RTC_OFFSET | 0x0E
 #define RTC_UNREGISTER_SW_ALARM         RTC_OFFSET | 0x0F
 #define RTC_GET_REGISTERED_SW_ALARM     RTC_OFFSET | 0x10
