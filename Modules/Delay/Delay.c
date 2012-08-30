@@ -1,26 +1,30 @@
 #include "Global_Defines.h"
-#include    "Includes.h"
-
+#include "Func_Trace.h"
+#include "Delay.h"
+#include "Delay_Func.h"
+#include "Includes.h"
 
 unsigned int T0Flag = 0;
 uint8 DlyStatus = FREE;
 void *DlyCallback_p = NULL;
 
 /*******************************************************************************
-    Funkcija za docnenje
-    Kako prv argument se zadava vrednost
-    Kako vtor argument se zadava char i toa:
-      m - milisekundi
-      u - mikrosekundi
-      s - sekundi
-    Mora da se inicijalizita Timer0
-*******************************************************************************/
+ * Funkcija za docnenje
+ * Kako prv argument se zadava vrednost
+ * Kako vtor argument se zadava char i toa:
+ *    m - milisekundi
+ *    u - mikrosekundi
+ *    s - sekundi
+ * Mora da se inicijalizita Timer0
+ ******************************************************************************/
 Status_t Dly(unsigned int a, char c, void *Callback_p)
 {
-  Function_IN(DLY);
+  FuncIN(DLY);
+  
   unsigned int b;
   
-  CONTROL_EXIT(DlyStatus == FREE, DLY_BUSY_ERROR);
+  if(DlyStatus != FREE)
+    EXIT_FUNC(DLY_BUSY_ERROR, DLY);
   
   DlyStatus = BUSY;
   
@@ -28,52 +32,54 @@ Status_t Dly(unsigned int a, char c, void *Callback_p)
   {
     switch (VPBDIV)
     {
-    case 0:
-      b = ((PLLSTAT_bit.MSEL+1)*12000000)/4;  
-      break;
-    case 1:
-      b = ((PLLSTAT_bit.MSEL+1)*12000000);
-      break;
-    case 2:
-      b = ((PLLSTAT_bit.MSEL+1)*12000000)/2;
-      break;
-    default:
-      CONTROL(0, TIMER_CLOCK_ERROR);
-      break;
+      case 0:
+        b = ((PLLSTAT_bit.MSEL+1)*12000000)/4;  
+        break;
+      case 1:
+        b = ((PLLSTAT_bit.MSEL+1)*12000000);
+        break;
+      case 2:
+        b = ((PLLSTAT_bit.MSEL+1)*12000000)/2;
+        break;
+      default:
+        Fatal_Abort(-TIMER_CLOCK_ERROR);
+        break;
     }
   }
   else
   {
     switch (VPBDIV)
     {
-    case 0:
-      b = 12000000/4;  
-      break;
-    case 1:
-      b = 12000000;
-      break;
-    case 2:
-      b = 12000000/2;
-      break;
-    default:
-      break;
+      case 0:
+        b = 12000000/4;  
+        break;
+      case 1:
+        b = 12000000;
+        break;
+      case 2:
+        b = 12000000/2;
+        break;
+      default:
+        Fatal_Abort(-TIMER_CLOCK_ERROR);
+        break;
     }
   }
+  
   switch (c)
   {
-  case 'm':
-    b=b/1000;
-    break;
-  case 'u':
-    b=b/1000000;
-    break;
-  case 's':
-    b=b/1000;
-    a=a*1000;
-    break;
-  default:
-    CONTROL(0, INVALID_INPUT_PARAMETER);
-    break;
+    case 'm':
+      b = b / 1000;
+      break;
+    case 'u':
+      b = b / 1000000;
+      break;
+    case 's':
+      b = b / 1000;
+      a = a * 1000;
+      break;
+    default:
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
+      break;
   }
   
   T0MCR_bit.MR0STOP = 1;  // Zapri go TIMER0 na Match0
@@ -87,26 +93,39 @@ Status_t Dly(unsigned int a, char c, void *Callback_p)
   else 
     DlyCallback_p = Callback_p;
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(DLY);
 }
+FUNC_REGISTER(DLY, Dly);
 
 /*******************************************************************************
-* 
-*******************************************************************************/
+ * 
+ ******************************************************************************/
 __arm void Dly_ISR(void)
 {
+  FuncIN(DLY_ISR);
+  
   if(DlyCallback_p != NULL)
+  {
     ((Status_t (*)(void))DlyCallback_p)();
-  DlyCallback_p = NULL;
+    DlyCallback_p = NULL;
+  }
   
   DlyStatus = FREE;
   T0Flag = 0;
+  
+  FuncOUT(DLY_ISR);
 }
+FUNC_REGISTER(DLY_ISR, Dly_ISR);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
-void DlyStop(void)
+void Dly_Stop(void)
 {
+  FuncIN(DLY_STOP);
+  
   Timer_0_Stop();
+  
+  FuncOUT(DLY_STOP);
 }
+FUNC_REGISTER(DLY_STOP, Dly_Stop);

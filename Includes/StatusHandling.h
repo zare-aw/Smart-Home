@@ -159,9 +159,6 @@ void Print_Function_History(void);
 
 #define TIMER_CLOCK_ERROR                   130
 
-#define DLY_BUSY_ERROR                      140
-#define DLY_TIMER_UNAVAILABLE_ERROR         141
-
 #define IR_GENERAL_ERROR                    200
 #define IR_COMMAND_ERROR                    201
 #define IR_CALLBACK_ERROR                   202
@@ -189,9 +186,6 @@ void Print_Function_History(void);
 *******************************************************************************/
 // System
 #define INITIALIZATION                10
-
-// Delay
-#define DLY                           400
 
 // ConsoleHelp
 #define CONSOLE_HELP                  1250

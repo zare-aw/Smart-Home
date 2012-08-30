@@ -1777,6 +1777,9 @@
       <file>
         <name>$PROJ_DIR$\Modules\Delay\Delay.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\Modules\Delay\Delay_Func.h</name>
+      </file>
     </group>
     <group>
       <name>Display</name>

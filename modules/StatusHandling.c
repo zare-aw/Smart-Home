@@ -151,14 +151,6 @@ void Print_Function_History(void)
       printc(" - Initialization OUT\n");
       break;
     
-      // Delay
-    case (DLY):
-      printc(" - Dly IN\n");
-      break;
-    case (DLY | FUNC_OUT_MASK):
-      printc(" - Dly OUT\n");
-      break;
-      
       // ConsoleHelp
     case (CONSOLE_HELP):
       printc(" - Console_Help IN\n");
