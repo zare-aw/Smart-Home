@@ -3,7 +3,7 @@
 
 
 #define _RTC_DEBUG            1
-#define _RTC_LOW_LEVEL_DEBUG  1
+//#define _RTC_LOW_LEVEL_DEBUG  1
 
 #ifdef _RTC_DEBUG
 #define RTC_DEBUG(a) a
