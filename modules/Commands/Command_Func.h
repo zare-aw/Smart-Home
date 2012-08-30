@@ -38,4 +38,8 @@
 #define IR_OFFSET                                           0x0700
 #define DO_IR           COMMANDS_OFFSET | IR_OFFSET |       0x0001
 
+// cmd_bl.c
+#define BL_OFFSET                                           0x0800
+#define DO_BL           COMMANDS_OFFSET | BL_OFFSET |       0x0001
+
 #endif

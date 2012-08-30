@@ -1714,6 +1714,9 @@
       <group>
         <name>cmd_src</name>
         <file>
+          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_bl.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_date.c</name>
         </file>
         <file>
