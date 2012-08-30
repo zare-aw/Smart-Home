@@ -1,4 +1,5 @@
 #include "Global_Defines.h"
+#include "PWM_Backlight_Defconfig.h"
 #include "Includes.h"
 #include "Command.h"
 
@@ -33,7 +34,7 @@ Status_t Initialization(void)
   RTC_Init(1);
   RTC_Enable();
   Menu_Init();
-  Backlight_Init(BACKLIGHT_START_INTENSITY);
+  PWM_Backlight_Init(BACKLIGHT_START_INTENSITY);
   
   __enable_interrupt();
   Temp_Init();

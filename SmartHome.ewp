@@ -1629,6 +1629,15 @@
         <file>
           <name>$PROJ_DIR$\Drivers\Backlight\PWM_Backlight\PWM_Backlight.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$\Drivers\Backlight\PWM_Backlight\PWM_Backlight_Debug.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\Drivers\Backlight\PWM_Backlight\PWM_Backlight_Defconfig.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\Drivers\Backlight\PWM_Backlight\PWM_Backlight_Func.h</name>
+        </file>
       </group>
     </group>
     <group>

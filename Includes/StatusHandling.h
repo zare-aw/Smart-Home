@@ -319,8 +319,4 @@ void Print_Function_History(void);
 #define TEMP_REINIT                     10708
 #define TEMP_WORK                       10709
 
-// Backlight
-#define BACKLIGHT_INIT                  10900
-#define SET_BACKLIGHT_INTENSITY         10901
-
 #endif
