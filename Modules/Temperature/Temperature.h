@@ -8,6 +8,7 @@
 #define NO_OF_CHANNELS        2
 #define NO_OF_ALARMS          5
 
+#define TEMP_EMPTY_SLOT       -250
 #define SENSOR_REMOVED        -255
 
 #define NO_ALARM_ID           0xFF

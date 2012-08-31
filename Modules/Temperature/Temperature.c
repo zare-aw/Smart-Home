@@ -3,12 +3,12 @@
 
 uint8 TempSensorSN[NO_OF_TEMP_SENSORS][8] = {0};
 uint8 TempSensorCH[NO_OF_TEMP_SENSORS] = {0};
-int Temp[NO_OF_TEMP_SENSORS] = {-250};
-int TempBeckup[NO_OF_TEMP_SENSORS] = {-250};
+int Temp[NO_OF_TEMP_SENSORS] = {TEMP_EMPTY_SLOT};
+int TempBeckup[NO_OF_TEMP_SENSORS] = {TEMP_EMPTY_SLOT};
 
 uint8 AlarmEvent[NO_OF_TEMP_SENSORS][NO_OF_ALARMS] = {0};
 uint8 AlarmState[NO_OF_TEMP_SENSORS][NO_OF_ALARMS] = {0};
-int   AlarmValue[NO_OF_TEMP_SENSORS][NO_OF_ALARMS] = {-250};
+int   AlarmValue[NO_OF_TEMP_SENSORS][NO_OF_ALARMS] = {TEMP_EMPTY_SLOT};
 void *AlarmCallback[NO_OF_TEMP_SENSORS][NO_OF_ALARMS] = {0};
 
 uint8 SensorID_1 = 255;
@@ -27,6 +27,9 @@ Status_t Temp_Callback(void *Ptr);
 *******************************************************************************/
 int ReadTemp(uint8 SensorID)
 {
+  if(SensorID >= NO_OF_TEMP_SENSORS)
+    return TEMP_EMPTY_SLOT;
+  
   return Temp[SensorID];
 }
 
@@ -74,7 +77,7 @@ Status_t Unregister_Temp_Sensor(uint8 SensorID)
   
   TempSensorCH[SensorID] = 0;
   memset(TempSensorSN[SensorID], 0, 8);
-  Temp[SensorID] = -250;
+  Temp[SensorID] = TEMP_EMPTY_SLOT;
   
   for(i = 0; i < NO_OF_TEMP_SENSORS; i++)
     if(TempSensorCH[i] != 0)
@@ -181,7 +184,7 @@ Status_t Unregister_Temp_Alarm(uint8 SensorID, uint8 AlarmID)
   
   AlarmEvent[SensorID][AlarmID] = 0;
   AlarmState[SensorID][AlarmID] = ALARM_OFF;
-  AlarmValue[SensorID][AlarmID] = -250;
+  AlarmValue[SensorID][AlarmID] = TEMP_EMPTY_SLOT;
   AlarmCallback[SensorID][AlarmID] = NULL;
   
   TEMP_DEBUG(printc("\r # Temp Alarm unregistered wih parameters:\n"));
@@ -247,7 +250,7 @@ Status_t Temp_Init(void)
   Status_t StatusReturn = GENERAL_ERROR;
   
   for(int i = 0; i < NO_OF_TEMP_SENSORS; i++)
-    Temp[i] = -250;
+    Temp[i] = TEMP_EMPTY_SLOT;
   
   for(int i = 0; i < NO_OF_TEMP_SENSORS; i++)
     for(int j = 0; j < NO_OF_ALARMS; j++)
