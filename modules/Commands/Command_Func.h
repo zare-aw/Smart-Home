@@ -42,4 +42,8 @@
 #define BL_OFFSET                                           0x0800
 #define DO_BL           COMMANDS_OFFSET | BL_OFFSET |       0x0001
 
+// cmd_temp.c
+#define TEMP_OFFSET                                         0x0900
+#define DO_TEMP         COMMANDS_OFFSET | TEMP_OFFSET |     0x0001
+
 #endif
