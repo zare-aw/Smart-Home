@@ -46,4 +46,8 @@
 #define TEMP_OFFSET                                         0x0900
 #define DO_TEMP         COMMANDS_OFFSET | TEMP_OFFSET |     0x0001
 
+// cmd_dd.c
+#define DD_OFFSET                                           0x0A00
+#define DO_DD           COMMANDS_OFFSET | DD_OFFSET |       0x0001
+
 #endif

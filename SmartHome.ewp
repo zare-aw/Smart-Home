@@ -1720,6 +1720,9 @@
           <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_date.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_dd.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_help.c</name>
         </file>
         <file>
