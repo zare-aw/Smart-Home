@@ -50,4 +50,8 @@
 #define DD_OFFSET                                           0x0A00
 #define DO_DD           COMMANDS_OFFSET | DD_OFFSET |       0x0001
 
+// cmd_du.c
+#define DU_OFFSET                                           0x0B00
+#define DO_DU           COMMANDS_OFFSET | DU_OFFSET |       0x0001
+
 #endif
