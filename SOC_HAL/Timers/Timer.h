@@ -1,6 +1,8 @@
 #ifndef __Timer_h
 #define __Timer_h
 
+void Wait(uint32 Time_uSec);
+
 void Timer_0_Init(void);
 void Timer_1_Init(void);
 

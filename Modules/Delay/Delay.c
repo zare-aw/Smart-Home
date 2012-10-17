@@ -15,7 +15,7 @@ Status_t uDelay(uint32 Delay)
 {
   FuncIN(UDELAY);
   
-  
+  Wait(Delay);
   
   EXIT_SUCCESS_FUNC(UDELAY);
 }
@@ -28,7 +28,7 @@ Status_t mDelay(uint32 Delay)
 {
   FuncIN(MDELAY);
   
-  
+  Wait(Delay * 1000);
   
   EXIT_SUCCESS_FUNC(MDELAY);
 }
@@ -41,7 +41,7 @@ Status_t sDelay(uint32 Delay)
 {
   FuncIN(SDELAY);
   
-  
+  Wait(Delay * 1000 * 1000);
   
   EXIT_SUCCESS_FUNC(SDELAY);
 }

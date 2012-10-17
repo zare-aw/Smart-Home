@@ -1,6 +1,22 @@
 #include "Global_Defines.h"
 #include "Includes.h"
 
+#define TIMER_0_RESET_VALUE     60000000
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
+#pragma optimize=speed
+#pragma inline=forced
+inline void Wait(uint32 Time_uSec)
+{
+  uint32 Time;
+  
+  if((Time = T0TC + Time_uSec) > TIMER_0_RESET_VALUE)
+    Time -= TIMER_0_RESET_VALUE;
+  
+  while(T0TC != Time);
+}
 
 
 void Timer_0_Init(void)
