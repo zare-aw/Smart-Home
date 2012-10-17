@@ -9,6 +9,45 @@ uint8 DlyStatus = FREE;
 void *DlyCallback_p = NULL;
 
 /*******************************************************************************
+ *
+ ******************************************************************************/
+Status_t uDelay(uint32 Delay)
+{
+  FuncIN(UDELAY);
+  
+  
+  
+  EXIT_SUCCESS_FUNC(UDELAY);
+}
+FUNC_REGISTER(UDELAY, uDelay);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
+Status_t mDelay(uint32 Delay)
+{
+  FuncIN(MDELAY);
+  
+  
+  
+  EXIT_SUCCESS_FUNC(MDELAY);
+}
+FUNC_REGISTER(MDELAY, mDelay);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
+Status_t sDelay(uint32 Delay)
+{
+  FuncIN(SDELAY);
+  
+  
+  
+  EXIT_SUCCESS_FUNC(SDELAY);
+}
+FUNC_REGISTER(SDELAY, sDelay);
+
+/*******************************************************************************
  * Funkcija za docnenje
  * Kako prv argument se zadava vrednost
  * Kako vtor argument se zadava char i toa:

@@ -11,6 +11,10 @@
 
 extern uint8 DlyStatus;
 
+Status_t uDelay(uint32 Delay);
+Status_t mDelay(uint32 Delay);
+Status_t sDelay(uint32 Delay);
+
 __arm void Dly_ISR(void);
 Status_t Dly(unsigned int a, char c, void *DlyCallback_p);
 void Dly_Stop(void);
