@@ -64,9 +64,7 @@ void Fatal_Abort(Status_t Status)
 * 
 *******************************************************************************/
 uint8 Abort(Status_t Status)
-{
-  Function_t Function;
-  
+{  
   switch(Status)
   {
   case INFO:
@@ -79,42 +77,6 @@ uint8 Abort(Status_t Status)
   case RTC_INVALID_TIME_ERROR:
     if(FunctionBuffer[FunctionInBeckupBuffer - 2] == SET_TIME_COMMAND)
       return 1;
-    break;
-  case DLY_TIMER_UNAVAILABLE_ERROR:
-    if(FunctionInBeckupBuffer == 0)
-      Function = MAX_FUNCTION_IN_BECKUP_BUFFER - 1;
-    else
-      Function = FunctionInBeckupBuffer - 1;
-    
-    if(FunctionBuffer[Function] == (DS1820_INIT | FUNC_OUT_MASK))
-    {
-      printc("\r # Unable to initialize DS1820. Error: DLY_TIMER_UNAVAILABLE_ERROR\n");
-      return 0;
-    }
-    break;
-  case DS1820_NO_PRESENCE_ERROR:
-    if(FunctionInBeckupBuffer == 0)
-      Function = MAX_FUNCTION_IN_BECKUP_BUFFER - 1;
-    else
-      Function = FunctionInBeckupBuffer - 1;
-    
-    if(FunctionBuffer[Function] == (DS1820_INIT | FUNC_OUT_MASK))
-    {
-      printc("\r # Unable to initialize DS1820. Error: DS1820_NO_PRESENCE_ERROR\n");
-      return 0;
-    }
-    break;
-  case DS1820_SHORT_CIRCUIT_ERROR:
-    if(FunctionInBeckupBuffer == 0)
-      Function = MAX_FUNCTION_IN_BECKUP_BUFFER - 1;
-    else
-      Function = FunctionInBeckupBuffer - 1;
-    
-    if(FunctionBuffer[Function] == (DS1820_INIT | FUNC_OUT_MASK))
-    {
-      printc("\r # Unable to initialize DS1820. Error: DS1820_SHORT_CIRCUIT_ERROR\n");
-      return 0;
-    }
     break;
   
   default:
@@ -679,38 +641,6 @@ void Print_Function_History(void)
       break;
     case (MUTE_KEY_CALLBACK | FUNC_OUT_MASK):
       printc(" - Mute_Key_Callback OUT\n");
-      break;
-    
-      // DS1820 Driver
-    case (DS1820_INIT):
-      printc(" - DS1820_Init IN\n");
-      break;
-    case (DS1820_INIT | FUNC_OUT_MASK):
-      printc(" - DS1820_Init OUT\n");
-      break;
-    case (DS1820_START_CONVERSION):
-      printc(" - DS1820_Start_Conversion IN\n");
-      break;
-    case (DS1820_START_CONVERSION | FUNC_OUT_MASK):
-      printc(" - DS1820_Start_Conversion OUT\n");
-      break;
-    case (DS1820_READ_TEMP):
-      printc(" - DS1820_Read_Temp IN\n");
-      break;
-    case (DS1820_READ_TEMP | FUNC_OUT_MASK):
-      printc(" - DS1820_Read_Temp OUT\n");
-      break;
-    case (DS1820_READ_SN):
-      printc(" - DS1820_Read_SN IN\n");
-      break;
-    case (DS1820_READ_SN | FUNC_OUT_MASK):
-      printc(" - DS1820_Read_SN OUT\n");
-      break;
-    case (DS_RESET):
-      printc(" - DS_Reset IN\n");
-      break;
-    case (DS_RESET | FUNC_OUT_MASK):
-      printc(" - DS_Reset OUT\n");
       break;
     
       // Menu

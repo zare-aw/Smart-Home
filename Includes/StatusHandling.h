@@ -167,10 +167,6 @@ void Print_Function_History(void);
 #define IR_COMMAND_GET_ERROR                205
 #define IR_COMMAND_INIT_ERROR               206
 
-#define DS1820_NO_PRESENCE_ERROR            300
-#define DS1820_SHORT_CIRCUIT_ERROR          301
-#define DS1820_UNABLE_TO_READ_DATA_ERROR    302
-
 #define MENU_ERROR                          350
 #define MENU_DISPLAY_ERROR                  351
 
@@ -286,13 +282,6 @@ void Print_Function_History(void);
 #define CH_UP_KEY_CALLBACK              10223
 #define CH_DOWN_KEY_CALLBACK            10224
 #define MUTE_KEY_CALLBACK               10225
-
-// DS1820 Driver
-#define DS1820_INIT                     10500
-#define DS1820_START_CONVERSION         10501
-#define DS1820_READ_TEMP                10502
-#define DS1820_READ_SN                  10503
-#define DS_RESET                        10520
 
 // Menu
 #define MENU_INIT                       10600

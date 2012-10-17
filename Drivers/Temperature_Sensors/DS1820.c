@@ -1,4 +1,9 @@
 #include "Global_Defines.h"
+#include "StatusHandling.h"
+#include "DS1820.h"
+#include "DS1820_HW.h"
+#include "DS1820_Pins.h"
+#include "DS1820_Func.h"
 #include "Includes.h"
 
 static Status_t DS_Reset(int Ch);
@@ -8,7 +13,8 @@ static Status_t DS_Reset(int Ch);
 *******************************************************************************/
 Status_t DS1820_Init(int Ch, char *SN)
 {
-  Function_IN(DS1820_INIT);
+  FuncIN(DS1820_INIT);
+  
   Status_t StatusReturn = GENERAL_ERROR;
   uint8 SerialNumber[8] = {0};
   
@@ -29,15 +35,17 @@ Status_t DS1820_Init(int Ch, char *SN)
   }
   printc("\n");
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(DS1820_INIT);
 }
+FUNC_REGISTER(DS1820_INIT, DS1820_Init);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 static Status_t DS_Reset(int Ch)
 {
-  Function_IN(DS_RESET);
+  FuncIN(DS_RESET);
+  
   uint8 Result;
   
   DS_WRITE_LOW(Ch);
@@ -51,8 +59,9 @@ static Status_t DS_Reset(int Ch)
   DS_READ(Ch, Result);
   CONTROL_EXIT_FUNC(Result == 1, DS1820_SHORT_CIRCUIT_ERROR, DS_RESET);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(DS_RESET);
 }
+FUNC_REGISTER(DS_RESET, DS_Reset);
 
 /*******************************************************************************
 * 
@@ -144,7 +153,8 @@ static Status_t DS_Read_Byte(uint8 *Result, int Ch)
 *******************************************************************************/
 Status_t DS1820_Start_Conversion(int Ch, uint8 *SerialNumber_p)
 {
-  Function_IN(DS1820_START_CONVERSION);
+  FuncIN(DS1820_START_CONVERSION);
+  
   Status_t StatusReturn = GENERAL_ERROR;
   int i;
   
@@ -170,15 +180,17 @@ Status_t DS1820_Start_Conversion(int Ch, uint8 *SerialNumber_p)
   StatusReturn = DS_Write_Byte(DS_CONVERT_TEMPERATURE_COMMAND, Ch);
   CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_START_CONVERSION);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(DS1820_START_CONVERSION);
 }
+FUNC_REGISTER(DS1820_START_CONVERSION, DS1820_Start_Conversion);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t DS1820_Read_Temp(int *Temp, int Ch, uint8 *SerialNumber_p)
 {
-  Function_IN(DS1820_READ_TEMP);
+  FuncIN(DS1820_READ_TEMP);
+  
   Status_t StatusReturn = GENERAL_ERROR;
   uint8 Scratchpad[2] = {0};
   int i;
@@ -213,15 +225,17 @@ Status_t DS1820_Read_Temp(int *Temp, int Ch, uint8 *SerialNumber_p)
   else
     *Temp = (Scratchpad[0] >> 1);    // Ako ne vrati ja celobrojnata vredonst za temperaturata
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(DS1820_READ_TEMP);
 }
+FUNC_REGISTER(DS1820_READ_TEMP, DS1820_Read_Temp);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t DS1820_Read_SN(uint8 *SerialNumber, int Ch)
 {
-  Function_IN(DS1820_READ_SN);
+  FuncIN(DS1820_READ_SN);
+  
   Status_t StatusReturn = GENERAL_ERROR;
   int i;
   
@@ -236,5 +250,7 @@ Status_t DS1820_Read_SN(uint8 *SerialNumber, int Ch)
   for(i = 0; i < 8; i++)
     CONTROL_EXIT_FUNC(DS_Read_Byte(&(SerialNumber[i]), Ch) == SUCCESS, DS1820_UNABLE_TO_READ_DATA_ERROR, DS1820_READ_SN);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(DS1820_READ_SN);
 }
+FUNC_REGISTER(DS1820_READ_SN, DS1820_Read_SN);
+
