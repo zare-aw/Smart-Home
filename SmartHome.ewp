@@ -1684,6 +1684,18 @@
       <file>
         <name>$PROJ_DIR$\Drivers\Temperature_Sensors\DS1820.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\Temperature_Sensors\DS1820_Debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\Temperature_Sensors\DS1820_Func.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\Temperature_Sensors\DS1820_HW.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\Temperature_Sensors\DS1820_Pins.h</name>
+      </file>
     </group>
   </group>
   <group>
