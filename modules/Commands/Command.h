@@ -49,8 +49,8 @@ typedef struct Cmd_Tbl_s
 __root __packed Cmd_Tbl_t Cmd_##Name @ ".cmd" = {#Name, MaxArgs, Cmd, Usage, Help}
 
 // Functions
-inline Cmd_Tbl_t *Get_Cmd_Section_Begin(void);
-inline Cmd_Tbl_t *Get_Cmd_Section_End(void);
+Cmd_Tbl_t *Get_Cmd_Section_Begin(void);
+Cmd_Tbl_t *Get_Cmd_Section_End(void);
 uint32 Get_Cmd_Section_Size(void);
 Status_t Find_Cmd(const char *Cmd, Cmd_Tbl_t **Cmd_Tbl_p);
 Status_t Run_Command(const char *Cmd);
