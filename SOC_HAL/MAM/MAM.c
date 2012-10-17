@@ -51,3 +51,4 @@ Status_t MAM_Init(unsigned int a)
   
   EXIT_SUCCESS_FUNC(MAM_INIT);
 }
+FUNC_REGISTER(MAM_INIT, MAM_Init);
