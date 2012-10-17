@@ -71,9 +71,6 @@ void FuncIN(Func_t Function)
   
   FunctionsBuffer[FunctionsInBuffer] = Function;
   FunctionsInBuffer ++;
-  
-  if(FunctionsInBuffer >= MAX_FUNCTION_IN_BECKUP_BUFFER)
-    FunctionsInBuffer = 0;
 }
 
 /*******************************************************************************
@@ -90,9 +87,6 @@ void FuncOUT(Func_t Function)
   FunctionsBuffer[FunctionsInBuffer] = Function;
   FunctionsBuffer[FunctionsInBuffer] |= FUNC_OUT_MASK;
   FunctionsInBuffer ++;
-  
-  if(FunctionsInBuffer >= MAX_FUNCTION_IN_BECKUP_BUFFER)
-    FunctionsInBuffer = 0;
 }
 
 /*******************************************************************************
