@@ -165,7 +165,7 @@ uint8 HD44780_Read_Status(void)
 HD44780_ERROR_CODE_DEF HD44780_GetDDRamAdd(HD44780_XY_DEF X, HD44780_XY_DEF Y, uint8 * DDAdd)
 {
   /* Find Address by coordinate */
-  if (Y > 2)
+  if (Y > 3)
   {
     return HD44780_ERROR;
   }
@@ -173,10 +173,22 @@ HD44780_ERROR_CODE_DEF HD44780_GetDDRamAdd(HD44780_XY_DEF X, HD44780_XY_DEF Y, u
   {
     return HD44780_ERROR;
   }
-  *DDAdd = X-1;
-  if (Y == 2)
+  *DDAdd = X;
+  if (Y > 0)
   {
-    * DDAdd += HD44780_MIN_LINE2_ADD;
+    switch(Y){
+      case 1:
+        * DDAdd += HD44780_MIN_LINE2_ADD;
+        break;
+      case 2:
+        * DDAdd += HD44780_MIN_LINE3_ADD;
+        break;
+      case 3:
+        * DDAdd += HD44780_MIN_LINE4_ADD;
+        break;
+      default:
+        break;
+    }
   }
   return HD44780_OK;
 }
@@ -195,18 +207,18 @@ HD44780_ERROR_CODE_DEF HD44780_GetDDRamAdd(HD44780_XY_DEF X, HD44780_XY_DEF Y, u
 HD44780_ERROR_CODE_DEF HD44780_CheckVisual(uint8 DDRamAdd)
 {
   uint8 LastPos = 0;
-  if (DDRamAdd > HD44780_MAX_LINE2_ADD)
+  if (DDRamAdd > HD44780_MAX_LINE4_ADD)
   {
     return HD44780_ERROR;
   }
-  if((DDRamAdd > HD44780_MAX_LINE1_ADD) && (DDRamAdd < HD44780_MIN_LINE2_ADD))
+  if((DDRamAdd > HD44780_MAX_LINE3_ADD) && (DDRamAdd < HD44780_MIN_LINE2_ADD))
   {
     return HD44780_ERROR;
   }
   if (DDRamAdd >= HD44780_MIN_LINE2_ADD)
   {
     /* Convert address to line 1 address */
-    DDRamAdd -= 0x40;
+    DDRamAdd %= 0x40;
   }
   LastPos = HD4478_Ctrl.DisplayPos+HD44780_HORIZONTAL_SIZE;
   if(LastPos > HD44780_MAX_LINE1_ADD)
@@ -672,27 +684,27 @@ HD44780_ERROR_CODE_DEF HD44780_StrShow(HD44780_XY_DEF X, HD44780_XY_DEF Y,  HD44
   /* Write zero terminate string int LCD */
   while (*DataStr)
   {
-    ErrorRes |= HD44780_CheckVisual(DDRamAdd);
+//    ErrorRes |= HD44780_CheckVisual(DDRamAdd);
     HD44780_Write_Data(*DataStr);
 #if HD44780_WR == 0
     if(HD4478_Ctrl.AC_Direction)
     {
-      if((++DataRamAddHold > HD44780_MAX_LINE1_ADD) && (Y == 1))
+      if((++DataRamAddHold > HD44780_MAX_LINE1_ADD) && (Y == 0))
       {
         DataRamAddHold = HD44780_MIN_LINE2_ADD;
       }
-      else if ((Y == 2) && (DataRamAddHold > HD44780_MAX_LINE2_ADD))
+      else if ((Y == 1) && (DataRamAddHold > HD44780_MAX_LINE2_ADD))
       {
         DataRamAddHold = HD44780_MIN_LINE1_ADD;
       }
     }
     else
     {
-      if((--DataRamAddHold < 0) && (Y == 1))
+      if((--DataRamAddHold < 0) && (Y == 0))
       {
         DataRamAddHold = HD44780_MAX_LINE2_ADD;
       }
-      else if ((Y == 2) && (DataRamAddHold < HD44780_MIN_LINE2_ADD))
+      else if ((Y == 1) && (DataRamAddHold < HD44780_MIN_LINE2_ADD))
       {
         DataRamAddHold = HD44780_MAX_LINE1_ADD;
       }
@@ -703,7 +715,7 @@ HD44780_ERROR_CODE_DEF HD44780_StrShow(HD44780_XY_DEF X, HD44780_XY_DEF Y,  HD44
       return HD44780_ERROR;
     }
     ++DataStr;
-    if((Y == 1) && DDRamAdd > HD44780_MAX_LINE1_ADD)
+    if((Y == 0) && DDRamAdd > HD44780_MAX_LINE1_ADD)
     {
       HD44780_Write_Command(HD44780_SET_DDRAM_ADD+HD44780_MIN_LINE1_ADD);
     #if HD44780_WR == 0
@@ -714,7 +726,7 @@ HD44780_ERROR_CODE_DEF HD44780_StrShow(HD44780_XY_DEF X, HD44780_XY_DEF Y,  HD44
         return HD44780_ERROR;
       }
     }
-    else if ((Y == 2) && DDRamAdd < HD44780_MIN_LINE2_ADD)
+    else if ((Y == 1) && DDRamAdd < HD44780_MIN_LINE2_ADD)
     {
       HD44780_Write_Command(HD44780_SET_DDRAM_ADD+HD44780_MIN_LINE2_ADD);
     #if HD44780_WR == 0
