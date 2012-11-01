@@ -3,13 +3,8 @@
 
 #include "StatusHandling.h"
 
-#define FREE    1
-#define BUSY    2
-
 /**** Delay Global error state defines ****/
 #define DELAY_QUEUE_FULL                    DELAY_OFFSET | 0x01
-
-extern uint8 DlyStatus;
 
 void uDelay(uint32 Delay);
 void mDelay(uint32 Delay);

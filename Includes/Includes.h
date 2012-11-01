@@ -18,7 +18,6 @@
 #include <stdarg.h>
 
 #include "StatusHandling.h"
-#include "Delay.h"
 #include "MAM.h"
 #include "CLK_Reset.h"
 #include "Timer.h"
