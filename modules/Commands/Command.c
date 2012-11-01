@@ -18,7 +18,7 @@ Status_t (*putscmd)(const char *) = NULL;
 /*******************************************************************************
 * Function for get start address of command section
 *******************************************************************************/
-Cmd_Tbl_t *Get_Cmd_Section_Begin(void)
+inline Cmd_Tbl_t *Get_Cmd_Section_Begin(void)
 {
   return __section_begin(".cmd");
 }
@@ -26,7 +26,7 @@ Cmd_Tbl_t *Get_Cmd_Section_Begin(void)
 /*******************************************************************************
 * Function for get end address of command section
 *******************************************************************************/
-Cmd_Tbl_t *Get_Cmd_Section_End(void)
+inline Cmd_Tbl_t *Get_Cmd_Section_End(void)
 {
   return __section_end(".cmd");
 }
