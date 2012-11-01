@@ -11,9 +11,7 @@ void (*Match_2_Callback)(void *);
 /*******************************************************************************
  *
  ******************************************************************************/
-#pragma optimize=speed
-#pragma inline=forced
-inline void Wait(uint32 Time_uSec)
+void Wait(uint32 Time_uSec)
 {
   uint32 Time;
   
