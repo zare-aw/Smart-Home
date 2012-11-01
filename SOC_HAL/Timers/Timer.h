@@ -1,6 +1,8 @@
 #ifndef __Timer_h
 #define __Timer_h
 
+#include "StatusHandling.h"
+
 #define DELAY_TIMER_RESET_VALUE     60000000
 
 #define DELAY_TIMER_GET_COUNTER() T0TC

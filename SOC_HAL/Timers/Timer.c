@@ -1,4 +1,5 @@
 #include "Global_Defines.h"
+#include "Timer.h"
 #include "Includes.h"
 #include <NXP/iolpc2148.h>
 #include "StatusHandling.h"

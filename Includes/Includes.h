@@ -20,7 +20,6 @@
 #include "StatusHandling.h"
 #include "MAM.h"
 #include "CLK_Reset.h"
-#include "Timer.h"
 #include "RTC.h"
 #include "UART_LPC214X.h"
 #include "VIC.h"
