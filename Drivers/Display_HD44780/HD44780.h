@@ -8,9 +8,13 @@ typedef uint8 HD44780_STRING_DEF;
 
 /* Display address range definition */
 #define HD44780_MIN_LINE1_ADD     0x00
-#define HD44780_MAX_LINE1_ADD     0x27
+#define HD44780_MAX_LINE1_ADD     0x13
 #define HD44780_MIN_LINE2_ADD     0x40
-#define HD44780_MAX_LINE2_ADD     0x67
+#define HD44780_MAX_LINE2_ADD     0x53
+#define HD44780_MIN_LINE3_ADD     0x14
+#define HD44780_MAX_LINE3_ADD     0x27
+#define HD44780_MIN_LINE4_ADD     0x54
+#define HD44780_MAX_LINE4_ADD     0x67
 /* Max DDRAM Address */
 #define HD44780_MAX_DDRAM         0x67
 /* Max CGRAM Address */
@@ -24,6 +28,8 @@ typedef uint8 HD44780_STRING_DEF;
 /* Number of line 1/2 definition */
 #define HD44780_1_LINE            0
 #define HD44780_2_LINE            1
+#define HD44780_3_LINE            2
+#define HD44780_4_LINE            3
 /* Dot 5x8 or 5x10 definition */
 #define HD44780_DOT_5_8           0
 #define HD44780_DOT_5_10          1

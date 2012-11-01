@@ -226,11 +226,12 @@ Status_t Update_Display_Panel(uint8 Mode)
                 break;
             }  
 
-            printc((const char *)row);
-            if(HD44780_OK !=  HD44780_StrShow(1, i + 1,  row)) {
+//            printc((const char *)row);
+            if(HD44780_OK !=  HD44780_StrShow(0, i,  row)) {
+              printc((const char *)row);
               return MENU_DISPLAY_ERROR;
             }
-            if (i < 1) {
+            if (i < 3) {
               i++;
             } else {
               i = 0;
