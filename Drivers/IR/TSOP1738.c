@@ -1,4 +1,5 @@
 #include "Global_Defines.h"
+#include "Timer.h"
 #include "Includes.h"
 
 uint8 Control_g = 0;

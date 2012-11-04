@@ -2,169 +2,159 @@
 #include "Func_Trace.h"
 #include "Delay.h"
 #include "Delay_Func.h"
+#include "Timer.h"
 #include "Includes.h"
 
-unsigned int T0Flag = 0;
-uint8 DlyStatus = FREE;
-void *DlyCallback_p = NULL;
+#define DELAY_WORK_BUFFER_SIZE    10
+
+typedef struct DelayWork_s
+{
+  uint32 Delay;
+  uint32 AbsDelay;
+  void (*Callback)(void *);
+} DelayWork_t;
+
+DelayWork_t DelayWork[DELAY_WORK_BUFFER_SIZE] = {0};
+
+void Delay_ISR(void *Ptr);
 
 /*******************************************************************************
  *
  ******************************************************************************/
-Status_t uDelay(uint32 Delay)
+void uDelay(uint32 Delay)
 {
   FuncIN(UDELAY);
   
+  __istate_t s = __get_interrupt_state();
+  __disable_interrupt();
+  
   Wait(Delay);
   
-  EXIT_SUCCESS_FUNC(UDELAY);
+  __set_interrupt_state(s);
+  
+  FuncOUT(UDELAY);
 }
 FUNC_REGISTER(UDELAY, uDelay);
 
 /*******************************************************************************
  *
  ******************************************************************************/
-Status_t mDelay(uint32 Delay)
+void mDelay(uint32 Delay)
 {
   FuncIN(MDELAY);
   
   Wait(Delay * 1000);
   
-  EXIT_SUCCESS_FUNC(MDELAY);
+  FuncOUT(MDELAY);
 }
 FUNC_REGISTER(MDELAY, mDelay);
 
 /*******************************************************************************
  *
  ******************************************************************************/
-Status_t sDelay(uint32 Delay)
+static int Compare_DelayWork(const void *A, const void *B)
 {
-  FuncIN(SDELAY);
+  uint32 AbsDelay_A = ((DelayWork_t *)A) -> AbsDelay;
+  uint32 AbsDelay_B = ((DelayWork_t *)B) -> AbsDelay;
+  uint32 *Callback_A = (uint32*)(((DelayWork_t *)A) -> Callback);
+  uint32 *Callback_B = (uint32*)(((DelayWork_t *)B) -> Callback);
   
-  Wait(Delay * 1000 * 1000);
-  
-  EXIT_SUCCESS_FUNC(SDELAY);
-}
-FUNC_REGISTER(SDELAY, sDelay);
-
-/*******************************************************************************
- * Funkcija za docnenje
- * Kako prv argument se zadava vrednost
- * Kako vtor argument se zadava char i toa:
- *    m - milisekundi
- *    u - mikrosekundi
- *    s - sekundi
- * Mora da se inicijalizita Timer0
- ******************************************************************************/
-Status_t Dly(unsigned int a, char c, void *Callback_p)
-{
-  FuncIN(DLY);
-  
-  unsigned int b;
-  
-  if(DlyStatus != FREE)
-    EXIT_FUNC(DLY_BUSY_ERROR, DLY);
-  
-  DlyStatus = BUSY;
-  
-  if(PLLSTAT_bit.PLLE)
+  if((Callback_A == NULL) || (Callback_B == NULL))
   {
-    switch (VPBDIV)
+    if((Callback_A == NULL) && (Callback_B == NULL))
+      return 0;
+    else
     {
-      case 0:
-        b = ((PLLSTAT_bit.MSEL+1)*12000000)/4;  
-        break;
-      case 1:
-        b = ((PLLSTAT_bit.MSEL+1)*12000000);
-        break;
-      case 2:
-        b = ((PLLSTAT_bit.MSEL+1)*12000000)/2;
-        break;
-      default:
-        Fatal_Abort(-TIMER_CLOCK_ERROR);
-        break;
-    }
-  }
-  else
-  {
-    switch (VPBDIV)
-    {
-      case 0:
-        b = 12000000/4;  
-        break;
-      case 1:
-        b = 12000000;
-        break;
-      case 2:
-        b = 12000000/2;
-        break;
-      default:
-        Fatal_Abort(-TIMER_CLOCK_ERROR);
-        break;
+      if(Callback_A == NULL)
+        return 1;
+      else
+        return -1;
     }
   }
   
-  switch (c)
-  {
-    case 'm':
-      b = b / 1000;
-      break;
-    case 'u':
-      b = b / 1000000;
-      break;
-    case 's':
-      b = b / 1000;
-      a = a * 1000;
-      break;
-    default:
-      Fatal_Abort(-INVALID_INPUT_PARAMETER);
-      break;
-  }
+  if(AbsDelay_A < DELAY_TIMER_GET_COUNTER())
+    AbsDelay_A += DELAY_TIMER_RESET_VALUE;
   
-  T0MCR_bit.MR0STOP = 1;  // Zapri go TIMER0 na Match0
-  Timer_0_Start(a, b);    // Start na TIMER0
-  if(Callback_p == NULL)
-  {
-    T0Flag = 1;           // Ovoj flag treba za vo TIMER0ISR
-    while(T0Flag);        // Cekaj dodeka ne se pojavi INT od TIMER0
-    DlyStatus = FREE;
-  }
-  else 
-    DlyCallback_p = Callback_p;
+  if(AbsDelay_B < DELAY_TIMER_GET_COUNTER())
+    AbsDelay_B += DELAY_TIMER_RESET_VALUE;
   
-  EXIT_SUCCESS_FUNC(DLY);
+  return AbsDelay_A - AbsDelay_B;
 }
-FUNC_REGISTER(DLY, Dly);
 
 /*******************************************************************************
- * 
+ * Function for register delayed work function
+ * @uint32 Delay: Delay value micro seconds
+ * @void (*)(void *) Callback: Work function callback. This function is
+ *                             called in interrupt context.
+ *                             This function must have '__arm' flag!
  ******************************************************************************/
-__arm void Dly_ISR(void)
+Status_t Delay_Work(const uint32 Delay, void (*Callback)(void *))
 {
-  FuncIN(DLY_ISR);
+  FuncIN(DELAY_WORK);
   
-  if(DlyCallback_p != NULL)
+  Status_t Status;
+  int i;
+  uint32 AbsDelay;
+  
+  ASSERT(Callback != NULL, -INVALID_INPUT_POINTER);
+  
+  __disable_interrupt();
+  
+  AbsDelay = DELAY_TIMER_GET_COUNTER() + Delay;
+  if(AbsDelay > DELAY_TIMER_RESET_VALUE)
+    AbsDelay -= DELAY_TIMER_RESET_VALUE;
+  
+  for(i = 0; i < DELAY_WORK_BUFFER_SIZE; i++)
   {
-    ((Status_t (*)(void))DlyCallback_p)();
-    DlyCallback_p = NULL;
+    if(DelayWork[i].Callback == NULL)
+    {
+      DelayWork[i].Delay = Delay;
+      DelayWork[i].AbsDelay = AbsDelay;
+      DelayWork[i].Callback = Callback;
+    }
   }
   
-  DlyStatus = FREE;
-  T0Flag = 0;
+  if(i == DELAY_WORK_BUFFER_SIZE)
+  {
+    __enable_interrupt();
+    EXIT_FUNC(DELAY_QUEUE_FULL , DELAY_WORK);
+  }
   
-  FuncOUT(DLY_ISR);
+  qsort(DelayWork, DELAY_WORK_BUFFER_SIZE, sizeof(DelayWork_t), Compare_DelayWork);
+  
+  Status = Delay_Timer_Set_Match_0(DelayWork[0].AbsDelay, Delay_ISR);
+  
+  __enable_interrupt();
+  
+  VERIFY(Status, Status);
+  
+  EXIT_SUCCESS_FUNC(DELAY_WORK);
 }
-FUNC_REGISTER(DLY_ISR, Dly_ISR);
+FUNC_REGISTER(DELAY_WORK, Delay_Work);
 
 /*******************************************************************************
-* 
-*******************************************************************************/
-void Dly_Stop(void)
+ *
+ ******************************************************************************/
+__arm void Delay_ISR(void *Ptr)
 {
-  FuncIN(DLY_STOP);
+  FuncIN(DELAY_ISR);
   
-  Timer_0_Stop();
+  int i;
   
-  FuncOUT(DLY_STOP);
+  if(DelayWork[1].Callback != NULL)
+    Delay_Timer_Set_Match_0(DelayWork[1].AbsDelay, Delay_ISR);
+  
+  ASSERT(DelayWork[0].Callback != NULL, -NOT_REGISTERED_ERROR);
+  DelayWork[0].Callback(NULL);
+  
+  for(i = 0; i < (DELAY_WORK_BUFFER_SIZE - 1); i++)
+  {
+    DelayWork[i] = DelayWork[i + 1];
+    if(DelayWork[i].Callback == NULL)
+      break;
+  }
+  
+  FuncOUT(DELAY_ISR);
 }
-FUNC_REGISTER(DLY_STOP, Dly_Stop);
+FUNC_REGISTER(DELAY_ISR, Delay_ISR);
+

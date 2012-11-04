@@ -1,50 +1,113 @@
 #include "Global_Defines.h"
+#include "Timer.h"
 #include "Includes.h"
+#include <NXP/iolpc2148.h>
+#include "StatusHandling.h"
 
-#define TIMER_0_RESET_VALUE     60000000
+void (*Match_0_Callback)(void *);
+void (*Match_1_Callback)(void *);
+void (*Match_2_Callback)(void *);
 
 /*******************************************************************************
  *
  ******************************************************************************/
-#pragma optimize=speed
-#pragma inline=forced
-inline void Wait(uint32 Time_uSec)
+void Wait(uint32 Time_uSec)
 {
   uint32 Time;
   
-  if((Time = T0TC + Time_uSec) > TIMER_0_RESET_VALUE)
-    Time -= TIMER_0_RESET_VALUE;
+  if((Time = T0TC + Time_uSec) > DELAY_TIMER_RESET_VALUE)
+  {
+    Time -= DELAY_TIMER_RESET_VALUE;
+    while(T0TC > Time);
+    while(T0TC < Time);
+  }
+  else
+    while(T0TC < Time);
+}
+
+/*******************************************************************************
+ * Funtion for set match 0 value and callback
+ * @uint32 Value: Value to set for match 0
+ * @void (*)(void *) Callback: Callback function pointer. This function is
+ *                             called in interrupt context.
+ *                             This function must have '__arm' flag!
+ ******************************************************************************/
+Status_t Delay_Timer_Set_Match_0(uint32 Value, void (*Callback)(void *))
+{
+  if(Callback == NULL)
+    return -INVALID_INPUT_POINTER;
   
-  while(T0TC != Time);
+  Match_0_Callback = Callback;
+  T0MCR_bit.MR0INT = 1;             // Enable interrupt on match 0
+  T0MR0 = Value;                    // Ser match 0 value
+  
+  return SUCCESS;
 }
 
-
-void Timer_0_Init(void)
+/*******************************************************************************
+ * Funtion for set match 1 value and callback
+ * @uint32 Value: Value to set for match 1
+ * @void (*)(void *) Callback: Callback function pointer. This function is
+ *                             called in interrupt context.
+ *                             This function must have '__arm' flag!
+ ******************************************************************************/
+Status_t Delay_Timer_Set_Match_1(uint32 Value, void (*Callback)(void *))
 {
-  T0TCR_bit.CE = 0;     // Iskluci go tajmerot
-  T0IR = 0xFF;          // Cistime INTERRUPT FLAGS
-  T0TCR_bit.CR = 1;     // Resetiraj go tajmerot
-  T0CTCR = 0;           // Increment na PCLK
-  T0PR = 30000;         // 30000 na preskalerot za da dobieme 1 TIC na 1ms
-  T0PC = 0;             // Se cisti preskalerot
-  T0MCR = 0;            // Se zabranuvaat site EVENT od match
-  T0MCR_bit.MR0INT = 1; // Ovozmozuva prekin na match 0
-  T0MCR_bit.MR0RES = 1; // Koga ke ima match neka se resetira tajmerot
-  T0CCR = 0;            // Isklucuvame Capture
-  T0EMR = 0;            // Onevozmozuvame EXTERNAL MATCH
+  if(Callback == NULL)
+    return -INVALID_INPUT_POINTER;
+  
+  Match_1_Callback = Callback;
+  T0MCR_bit.MR1INT = 1;             // Enable interrupt on match 0
+  T0MR1 = Value;                    // Ser match 0 value
+  
+  return SUCCESS;
 }
 
-void Timer_0_Start(unsigned int a, unsigned int b)
+/*******************************************************************************
+ * Funtion for set match 2 value and callback
+ * @uint32 Value: Value to set for match 2
+ * @void (*)(void *) Callback: Callback function pointer. This function is
+ *                             called in interrupt context.
+ *                             This function must have '__arm' flag!
+ ******************************************************************************/
+Status_t Delay_Timer_Set_Match_2(uint32 Value, void (*Callback)(void *))
 {
-  T0PR = b;             // Postavi vrednost vo preskalerot
-  T0MR0 = a;            // Postavi na koja vrednost na match da ima event (prekin)
-  T0TCR_bit.CR = 1;     // Resetiraj go tajmerot
-  T0TCR = 1;            // Vkluci go tajmerot da broi i trgni go resetot ( da ne stoi na 0 tajmerot )
+  if(Callback == NULL)
+    return -INVALID_INPUT_POINTER;
+  
+  Match_2_Callback = Callback;
+  T0MCR_bit.MR2INT = 1;             // Enable interrupt on match 0
+  T0MR2 = Value;                    // Ser match 0 value
+  
+  return SUCCESS;
 }
 
-void Timer_0_Stop(void)
+/*******************************************************************************
+ *
+ ******************************************************************************/
+void Delay_Timer_Init(void)
 {
-  T0TCR_bit.CE = 0;     // Iskluci go tajmerot
+  uint32 PerCLK;
+  
+  T0TCR_bit.CE = 0;     // Timer count disable
+  T0IR = 0xFF;          // Clear INTERRUPT FLAGS
+  T0TCR_bit.CR = 1;     // Timer reset
+  T0CTCR = 0;           // Increment on PCLK
+  
+  PerCLK = Read_PER_CLK();
+  
+  T0PR = (PerCLK / 1000000) - 1;      // Set prescale for 1 TIC on 1us
+  T0PC = 0;                         // Clear prescale
+  
+  T0MCR = 0;                        // Clear all EVENT on match
+  
+  T0MR3 = DELAY_TIMER_RESET_VALUE;  // Set match 3 value
+  T0MCR_bit.MR3RES = 1;             // On match, reset the timer
+  
+  T0CCR = 0;            // Disable Capture
+  T0EMR = 0;            // Disable EXTERNAL MATCH
+  
+  T0TCR = 1;            // Remove reset and enable counter
 }
 
 void Timer_1_Init(void)
@@ -80,13 +143,36 @@ void Timer_1_Update_Match_0_Value(uint32 MatchValue)
   T1MR0 = MatchValue;   // Postavi na koja vrednost na match 0 da ima event (prekin)
 }
 
-
-
-__irq void Timer_0_ISR(void)    // Interrupt servisna rutina za TIMER0 
+__arm __irq void Timer_0_ISR(void)    // Interrupt function for TIMER0 
 {
-  T0IR = 0xFF;
+  uint8 IRQ_Serviced = 0;
   
-  Dly_ISR();
+  if(T0IR_bit.MR0INT == 1)
+  {
+    T0IR_bit.MR0INT = 1;        // Clear match 0 interrupt
+    T0MCR_bit.MR0INT = 0;       // Disable interrupt on match 0
+    Match_0_Callback(NULL);     // Call match 0 callback
+    IRQ_Serviced = 1;           // Set IRQ_Serviced flag
+  }
+  
+  if(T0IR_bit.MR1INT == 1)
+  {
+    T0IR_bit.MR1INT = 1;        // Clear match 0 interrupt
+    T0MCR_bit.MR1INT = 0;       // Disable interrupt on match 0
+    Match_1_Callback(NULL);     // Call match 0 callback
+    IRQ_Serviced = 1;           // Set IRQ_Serviced flag
+  }
+  
+  if(T0IR_bit.MR2INT == 1)
+  {
+    T0IR_bit.MR2INT = 1;        // Clear match 0 interrupt
+    T0MCR_bit.MR2INT = 0;       // Disable interrupt on match 0
+    Match_2_Callback(NULL);     // Call match 0 callback
+    IRQ_Serviced = 1;           // Set IRQ_Serviced flag
+  }
+  
+  if(IRQ_Serviced == 0)
+    T0IR = 0xFF;
   
   VICVectAddr = 0;
 }
