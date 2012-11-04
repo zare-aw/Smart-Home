@@ -25,7 +25,12 @@ void uDelay(uint32 Delay)
 {
   FuncIN(UDELAY);
   
+  __istate_t s = __get_interrupt_state();
+  __disable_interrupt();
+  
   Wait(Delay);
+  
+  __set_interrupt_state(s);
   
   FuncOUT(UDELAY);
 }
@@ -43,19 +48,6 @@ void mDelay(uint32 Delay)
   FuncOUT(MDELAY);
 }
 FUNC_REGISTER(MDELAY, mDelay);
-
-/*******************************************************************************
- *
- ******************************************************************************/
-void sDelay(uint32 Delay)
-{
-  FuncIN(SDELAY);
-  
-  Wait(Delay * 1000 * 1000);
-  
-  FuncOUT(SDELAY);
-}
-FUNC_REGISTER(SDELAY, sDelay);
 
 /*******************************************************************************
  *
