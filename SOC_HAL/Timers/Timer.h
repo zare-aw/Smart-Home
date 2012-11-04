@@ -3,7 +3,7 @@
 
 #include "StatusHandling.h"
 
-#define DELAY_TIMER_RESET_VALUE     60000000
+#define DELAY_TIMER_RESET_VALUE     5000000
 
 #define DELAY_TIMER_GET_COUNTER() T0TC
 
