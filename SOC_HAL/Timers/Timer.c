@@ -4,7 +4,6 @@
 #include <NXP/iolpc2148.h>
 #include "StatusHandling.h"
 
-
 void (*Match_0_Callback)(void *);
 void (*Match_1_Callback)(void *);
 void (*Match_2_Callback)(void *);
@@ -17,9 +16,13 @@ void Wait(uint32 Time_uSec)
   uint32 Time;
   
   if((Time = T0TC + Time_uSec) > DELAY_TIMER_RESET_VALUE)
+  {
     Time -= DELAY_TIMER_RESET_VALUE;
-  
-  while(T0TC != Time);
+    while(T0TC > Time);
+    while(T0TC < Time);
+  }
+  else
+    while(T0TC < Time);
 }
 
 /*******************************************************************************
@@ -93,7 +96,7 @@ void Delay_Timer_Init(void)
   
   PerCLK = Read_PER_CLK();
   
-  T0PR = PerCLK - 1000000 - 1;      // Set prescale for 1 TIC on 1us
+  T0PR = (PerCLK / 1000000) - 1;      // Set prescale for 1 TIC on 1us
   T0PC = 0;                         // Clear prescale
   
   T0MCR = 0;                        // Clear all EVENT on match
