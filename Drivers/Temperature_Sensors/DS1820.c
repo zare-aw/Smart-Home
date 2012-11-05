@@ -4,6 +4,7 @@
 #include "DS1820_HW.h"
 #include "DS1820_Pins.h"
 #include "DS1820_Func.h"
+#include "Delay.h"
 #include "Includes.h"
 
 static Status_t DS_Reset(int Ch);
@@ -50,12 +51,12 @@ static Status_t DS_Reset(int Ch)
   
   DS_WRITE_LOW(Ch);
   DS_DIR_OUT(Ch);
-  CONTROL_EXIT_FUNC(Dly(480, 'u', NULL) == SUCCESS, DLY_TIMER_UNAVAILABLE_ERROR, DS_RESET);
+  uDelay(480);
   DS_DIR_IN(Ch);            // Set Pin as input - wait for DS1820 to pull low
-  CONTROL_EXIT_FUNC(Dly(66, 'u', NULL) == SUCCESS, DLY_TIMER_UNAVAILABLE_ERROR, DS_RESET);
+  uDelay(66);
   DS_READ(Ch, Result);
   CONTROL_EXIT_FUNC(Result == 0, DS1820_NO_PRESENCE_ERROR, DS_RESET);
-  CONTROL_EXIT_FUNC(Dly(480-66, 'u', NULL) == SUCCESS, DLY_TIMER_UNAVAILABLE_ERROR, DS_RESET);
+  uDelay(480-66);
   DS_READ(Ch, Result);
   CONTROL_EXIT_FUNC(Result == 1, DS1820_SHORT_CIRCUIT_ERROR, DS_RESET);
   
@@ -73,16 +74,16 @@ static Status_t DS_Write_Bit(uint8 Data, int Ch)
   case 0:
     DS_WRITE_LOW(Ch);
     DS_DIR_OUT(Ch);
-    EXIT(Dly(40, 'u', NULL) == SUCCESS, DLY_TIMER_UNAVAILABLE_ERROR);
+    uDelay(40);
     DS_DIR_IN(Ch);
-    EXIT(Dly(10, 'u', NULL) == SUCCESS, DLY_TIMER_UNAVAILABLE_ERROR);
+    uDelay(10);
     break;
   case 1:
     DS_WRITE_LOW(Ch);
     DS_DIR_OUT(Ch);
-    EXIT(Dly(2, 'u', NULL) == SUCCESS, DLY_TIMER_UNAVAILABLE_ERROR);
+    uDelay(2);
     DS_DIR_IN(Ch);
-    EXIT(Dly(48, 'u', NULL) == SUCCESS, DLY_TIMER_UNAVAILABLE_ERROR);
+    uDelay(48);
     break;
   default:
     EXIT(0, INVALID_INPUT_PARAMETER);
@@ -99,18 +100,13 @@ static int DS_Read_Bit(int Ch)
   
   DS_WRITE_LOW(Ch);
   DS_DIR_OUT(Ch);
-  if(Dly(2, 'u', NULL) != SUCCESS)
-    goto ErrorExit;
+  uDelay(2);
   DS_DIR_IN(Ch);
-  if(Dly(3, 'u', NULL) != SUCCESS)
-    goto ErrorExit;
+  uDelay(3);
   DS_READ(Ch, Result);
-  if(Dly(70, 'u', NULL) != SUCCESS)
-    goto ErrorExit;
+  uDelay(70);
   
   return Result;
-ErrorExit:
-  return -1;
 }
 
 /*******************************************************************************
@@ -141,7 +137,6 @@ static Status_t DS_Read_Byte(uint8 *Result, int Ch)
   {
     *Result >>= 1;      // Shift the result to get it ready for the next bit
     Bit = DS_Read_Bit(Ch);
-    EXIT(Bit != (-1), DLY_TIMER_UNAVAILABLE_ERROR);
     if(Bit)
       *Result |= 0x80;   // If result is one, then set MS bit
   }

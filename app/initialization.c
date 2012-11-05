@@ -2,6 +2,7 @@
 #include "PWM_Backlight_Defconfig.h"
 #include "Includes.h"
 #include "Command.h"
+#include "Timer.h"
 
 void Pin_MUX_Init(void);
 
@@ -26,7 +27,7 @@ Status_t Initialization(void)
   (void)Console_Server_Init(CONSOLE_CHANELL, CONSOLE_SPEED, MODE_POOLING);
   (void)MAM_Init(ENABLE);
   GPIO_Init(FGPIO);
-  Timer_0_Init();
+  Delay_Timer_Init();
   Timer_1_Init();
   VICInit();
   (void)IR_Init();
