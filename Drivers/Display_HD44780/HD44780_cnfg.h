@@ -18,7 +18,7 @@
 /* MCU interface */
 #define HD44780_INTERFACE         HD44780_4_BIT
 /* Number of line */
-#define HD44780_LINE              HD44780_2_LINE
+#define HD44780_LINE              HD44780_4_LINE
 /* Dot Matrix 5x8 or 5x10 */
 #define HD44780_DOT_MATRIX        HD44780_DOT_5_8
 /* Display On/Off */
