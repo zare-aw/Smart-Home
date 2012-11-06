@@ -207,7 +207,7 @@ Status_t Update_Display_Panel(uint8 Mode)
   if (row == 0) {
     return HEAP_ALLOCATION_ERROR;
   }
-  
+
   switch(Mode)
   {
     case PULL:
@@ -226,51 +226,45 @@ Status_t Update_Display_Panel(uint8 Mode)
                 break;
             }  
 
-//            printc((const char *)row);
-            if(HD44780_OK !=  HD44780_StrShow(0, i,  row)) {
-              printc((const char *)row);
+            if(HD44780_OK !=  HD44780_StrShow(0, i,  row))
               return MENU_DISPLAY_ERROR;
-            }
+
             if (i < 3) {
               i++;
             } else {
               i = 0;
+              DisplaySync = 0;
             }
-        // Dovrsi
-        DisplaySync = 0;
       }
       break;
     case FORCE:
       if(ConsoleDisplayPrint == ENABLE)
-         Console_Display_Dump();
+        Console_Display_Dump();
 
-            switch(WorkingSurface)
-            {
-              case 1:
-                Fill_Row(row, SurfaceBuffer_1[i]);
-                break;
-              case 2:
-                Fill_Row(row, SurfaceBuffer_2[i]);
-                break;
-            }  
+        switch(WorkingSurface)
+        {
+          case 1:
+            Fill_Row(row, SurfaceBuffer_1[i]);
+            break;
+          case 2:
+            Fill_Row(row, SurfaceBuffer_2[i]);
+            break;
+        }
 
-            printc((const char *)row);
-            if(HD44780_OK !=  HD44780_StrShow(1, i + 1,  row)) {
-              return MENU_DISPLAY_ERROR;
-            }
-            if (i < 1) {
-              i++;
-            } else {
-              i = 0;
-            }
-      // Dovrsi
-      DisplaySync = 0;
+        if(HD44780_OK !=  HD44780_StrShow(0, i,  row))
+          return MENU_DISPLAY_ERROR;
+
+        if (i < 3) {
+          i++;
+          } else {
+            i = 0;
+          }
+
       break;
     default:
       CONTROL(0, INVALID_INPUT_PARAMETER);
       break;
   }
-
   free (row);
   RETURN_SUCCESS_FUNC(UPDATE_DISPLAY_PANEL);
 }

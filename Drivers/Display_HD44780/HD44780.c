@@ -54,6 +54,8 @@
 #define HD44780_BUSY_CHECK            TRUE
 #define HD44780_NOT_BUSY_CHECK        FALSE
 
+char LCDBuffer[Y_SIZE][X_SIZE] = {0};
+
 HD44780_CTRL_DEF HD4478_Ctrl =
 {
   0,                    /* Display Position */
@@ -650,6 +652,14 @@ HD44780_ERROR_CODE_DEF HD44780_StrShow(HD44780_XY_DEF X, HD44780_XY_DEF Y,  HD44
 {
   uint8 DDRamAdd;
   HD44780_ERROR_CODE_DEF ErrorRes = HD44780_OK;
+
+  if(0 == memcmp(LCDBuffer[Y] + X, DataStr, 20 - X))
+  {
+    return HD44780_OK;
+  } else {
+    memcpy(LCDBuffer[Y] + X, DataStr, 20 - X);
+  }
+
   if(HD44780_GetDDRamAdd(X,Y,&DDRamAdd) != HD44780_OK)
   {
     return HD44780_ERROR;
