@@ -1,5 +1,7 @@
 #include "Global_Defines.h"
 #include "Includes.h"
+#include "SurfaceFlinger_Func.h"
+#include "Func_Trace.h"
 
 char SurfaceBuffer_1[Y_SIZE][X_SIZE] = {0};
 char SurfaceBuffer_2[Y_SIZE][X_SIZE] = {0};
@@ -10,7 +12,7 @@ uint8 ConsoleDisplayPrint = DISABLE;
 
 static Status_t Update_Surface_Buffer(char InputChar, uint8 line, uint8 column);
 static void Swap_Surface_Buffer(void);
-static void Fill_Row(uint8 * const Row_p, const char *Buf_p);
+static Status_t Fill_Row(uint8 * const Row_p, const char *Buf_p);
 
 /*******************************************************************************
 * Standardna funkcija za pisuvanje po display.
@@ -21,18 +23,18 @@ static void Fill_Row(uint8 * const Row_p, const char *Buf_p);
 *******************************************************************************/
 Status_t printd(uint8 line, const char *format, ...)
 {
-  Function_IN(PRINTD);
+  FuncIN(PRINTD);
   uint32 i = 0;
   uint32 column = 1;
   char VsBuffer[(Y_SIZE * X_SIZE) + 4] = {0};
   va_list args;
   
-  EXIT(line <= Y_SIZE, INVALID_INPUT_PARAMETER);
-  EXIT(format != NULL, INVALID_INPUT_POINTER);
+  ASSERT(line <= Y_SIZE, -INVALID_INPUT_PARAMETER);
+  ASSERT(format != NULL, -INVALID_INPUT_POINTER);
   
   va_start(args, format);
   
-  EXIT(vsprintf(VsBuffer, format, args) >= 0, INVALID_INPUT_PARAMETER);
+  VERIFY(vsprintf(VsBuffer, format, args), -INVALID_INPUT_PARAMETER);
   
   while(VsBuffer[i])
   {
@@ -42,14 +44,16 @@ Status_t printd(uint8 line, const char *format, ...)
       line++;
       column = 1;
       if(line > Y_SIZE)
-        return INVALID_INPUT_PARAMETER;
+        Fatal_Abort(-INVALID_INPUT_PARAMETER);
     }
     column++;
     i++;
   }
   va_end(args);
-  RETURN_SUCCESS_FUNC(PRINTD);
+  
+  EXIT_SUCCESS_FUNC(PRINTD);
 }
+FUNC_REGISTER(PRINTD, printd);
 
 /*******************************************************************************
 * 
@@ -92,9 +96,10 @@ Status_t syncd(void)
 *******************************************************************************/
 static Status_t Update_Surface_Buffer(char InputChar, uint8 Line, uint8 Column)
 {
-  Function_IN(UPDATE_SURFACE_BUFFER);
+  FuncIN(UPDATE_SURFACE_BUFFER);
   
-  CONTROL((Line <= Y_SIZE) && (Column <= X_SIZE), INVALID_INPUT_PARAMETER);
+  ASSERT((Line <= Y_SIZE) && (Column <= X_SIZE), -INVALID_INPUT_PARAMETER);
+  
   switch(BeckupSurface)
   {
     case 1:
@@ -104,11 +109,12 @@ static Status_t Update_Surface_Buffer(char InputChar, uint8 Line, uint8 Column)
       SurfaceBuffer_2[Line - 1][Column - 1] = InputChar;
       break;
     default:
-      return GENERAL_ERROR;
+      Fatal_Abort(-GENERAL_ERROR);
   }
   
-  RETURN_SUCCESS_FUNC(UPDATE_SURFACE_BUFFER);
+  EXIT_SUCCESS_FUNC(UPDATE_SURFACE_BUFFER);
 }
+FUNC_REGISTER(UPDATE_SURFACE_BUFFER, Update_Surface_Buffer);
 
 /*******************************************************************************
 * 
@@ -129,20 +135,31 @@ static void Swap_Surface_Buffer(void)
 /*******************************************************************************
 * 
 *******************************************************************************/
-static void Fill_Row(uint8 * const Row_p, const char *Buf_p){
+static Status_t Fill_Row(uint8 * const Row_p, const char *Buf_p)
+{
+  FuncIN(FILL_ROW);
+  
+  ASSERT(Row_p != NULL, -INVALID_INPUT_POINTER);
+  ASSERT(Buf_p != NULL, -INVALID_INPUT_POINTER);
+  
   uint8 *Buff_p = (uint8 *)Buf_p;
   uint8 *Index_p = Buff_p;
   uint8 *End_p = Buff_p + X_SIZE;
   uint8 len = 0;
-  while(*Index_p != 0x0A && *Index_p != 0 && Index_p < End_p) {
+  
+  while(*Index_p != 0x0A && *Index_p != 0 && Index_p < End_p)
     Index_p++;
-  }
+  
   len = Index_p - Buff_p;
   memset((void *)Row_p, 0x20, X_SIZE);
   memcpy((void *)Row_p, (void *)Buff_p, len);
 
-  *(Row_p + X_SIZE) = 0; 
+  *(Row_p + X_SIZE) = 0;
+  
+  EXIT_SUCCESS_FUNC(FILL_ROW);
 }
+FUNC_REGISTER(FILL_ROW, Fill_Row);
+
 /*******************************************************************************
 * 
 *******************************************************************************/
@@ -154,8 +171,10 @@ void Console_Display_Update_Set(uint8 UpdateFlag)
 /*******************************************************************************
 * 
 *******************************************************************************/
-void Console_Display_Dump(void)
+Status_t Console_Display_Dump(void)
 {
+  FuncIN(CONSOLE_DISPLAY_DUMP);
+  
   printc("\n**");
   for(int i = 0; i < X_SIZE; i++)
     printc("*");
@@ -194,19 +213,23 @@ void Console_Display_Dump(void)
   for(int i = 0; i < X_SIZE; i++)
     printc("*");
   printc("**\n");
+  
+  EXIT_SUCCESS_FUNC(CONSOLE_DISPLAY_DUMP);
 }
+FUNC_REGISTER(CONSOLE_DISPLAY_DUMP, Console_Display_Dump);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Update_Display_Panel(uint8 Mode)
 {
-  Function_IN(UPDATE_DISPLAY_PANEL);
+  FuncIN(UPDATE_DISPLAY_PANEL);
+  
   static uint8 i = 0;
-  HD44780_STRING_DEF *row = (uint8 *)malloc(X_SIZE + 1);
-  if (row == 0) {
-    return HEAP_ALLOCATION_ERROR;
-  }
+  HD44780_STRING_DEF *row;
+  
+  row = (uint8 *)malloc(X_SIZE + 1);
+  ASSERT(row != 0, -HEAP_ALLOCATION_ERROR);
 
   switch(Mode)
   {
@@ -227,7 +250,7 @@ Status_t Update_Display_Panel(uint8 Mode)
             }  
 
             if(HD44780_OK !=  HD44780_StrShow(0, i,  row))
-              return MENU_DISPLAY_ERROR;
+              EXIT_FUNC(MENU_DISPLAY_ERROR, UPDATE_DISPLAY_PANEL);
 
             if (i < 3) {
               i++;
@@ -252,7 +275,7 @@ Status_t Update_Display_Panel(uint8 Mode)
         }
 
         if(HD44780_OK !=  HD44780_StrShow(0, i,  row))
-          return MENU_DISPLAY_ERROR;
+          EXIT_FUNC(MENU_DISPLAY_ERROR, UPDATE_DISPLAY_PANEL);
 
         if (i < 3) {
           i++;
@@ -262,9 +285,12 @@ Status_t Update_Display_Panel(uint8 Mode)
 
       break;
     default:
-      CONTROL(0, INVALID_INPUT_PARAMETER);
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
       break;
   }
-  free (row);
-  RETURN_SUCCESS_FUNC(UPDATE_DISPLAY_PANEL);
+  
+  free(row);
+  
+  EXIT_SUCCESS_FUNC(UPDATE_DISPLAY_PANEL);
 }
+FUNC_REGISTER(UPDATE_DISPLAY_PANEL, Update_Display_Panel);

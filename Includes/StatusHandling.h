@@ -292,9 +292,6 @@ void Print_Function_History(void);
 #define REGISTER_MENU_TEMP              10605
 #define UNREGISTER_MENU_TEMP            10606
 #define MENU_SEC_INT_CALLBACK           10607
-#define UPDATE_DISPLAY_PANEL            10608
-#define UPDATE_SURFACE_BUFFER           10609
-#define PRINTD                          10610
 
 // Temperature
 #define REGISTER_TEMP_SENSOR            10700

@@ -13,6 +13,7 @@
 #define CONSOLE_OFFSET          0x04000000
 #define COMMANDS_OFFSET         0x05000000
 #define DELAY_OFFSET            0x06000000
+#define DISPLAY_OFFSET          0x07000000
 
 // SOC_HAL
 #define CLK_RESET_OFFSET        0x21000000

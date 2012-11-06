@@ -692,24 +692,6 @@ void Print_Function_History(void)
     case (MENU_SEC_INT_CALLBACK | FUNC_OUT_MASK):
       printc(" - Menu_Sec_Int_Callback OUT\n");
       break;
-    case (UPDATE_DISPLAY_PANEL):
-      printc(" - Update_Display_Panel IN\n");
-      break;
-    case (UPDATE_DISPLAY_PANEL | FUNC_OUT_MASK):
-      printc(" - Update_Display_Panel OUT\n");
-      break;
-    case (UPDATE_SURFACE_BUFFER):
-      printc(" - Update_Surface_Buffer IN\n");
-      break;
-    case (UPDATE_SURFACE_BUFFER | FUNC_OUT_MASK):
-      printc(" - Update_Surface_Buffer OUT\n");
-      break;
-    case (PRINTD):
-      printc(" - printd IN\n");
-      break;
-    case (PRINTD | FUNC_OUT_MASK):
-      printc(" - printd OUT\n");
-      break;
     
       // Temperature
     case (REGISTER_TEMP_SENSOR):
