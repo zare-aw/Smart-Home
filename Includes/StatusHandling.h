@@ -256,33 +256,6 @@ void Print_Function_History(void);
 #define OUT_SYNC                        10101
 #define OUT_GET_STATE                   10102
 
-// Menu Callbacks
-#define MENU_CALLBACKS_INIT             10200
-#define POWER_KEY_CALLBACK              10201
-#define UP_KEY_CALLBACK                 10202
-#define DOWN_KEY_CALLBACK               10203
-#define LEFT_KEY_CALLBACK               10204
-#define RIGHT_KEY_CALLBACK              10205
-#define ENTER_KEY_CALLBACK              10206
-#define CANCEL_KEY_CALLBACK             10207
-#define MENU_KEY_CALLBACK               10208
-#define EXIT_KEY_CALLBACK               10209
-#define NUM1_KEY_CALLBACK               10211
-#define NUM2_KEY_CALLBACK               10212
-#define NUM3_KEY_CALLBACK               10213
-#define NUM4_KEY_CALLBACK               10214
-#define NUM5_KEY_CALLBACK               10215
-#define NUM6_KEY_CALLBACK               10216
-#define NUM7_KEY_CALLBACK               10217
-#define NUM8_KEY_CALLBACK               10218
-#define NUM9_KEY_CALLBACK               10219
-#define NUM0_KEY_CALLBACK               10220
-#define VOL_UP_KEY_CALLBACK             10221
-#define VOL_DOWN_KEY_CALLBACK           10222
-#define CH_UP_KEY_CALLBACK              10223
-#define CH_DOWN_KEY_CALLBACK            10224
-#define MUTE_KEY_CALLBACK               10225
-
 // Temperature
 #define REGISTER_TEMP_SENSOR            10700
 #define UNREGISTER_TEMP_SENSOR          10701

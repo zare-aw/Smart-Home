@@ -1,4 +1,5 @@
 #include "Global_Defines.h"
+#include "Func_Trace.h"
 #include "StatusHandling.h"
 #include "Menu_Func.h"
 #include "Menu_Debug.h"
@@ -12,319 +13,367 @@
 *******************************************************************************/
 Status_t Power_Key_Callback(void *p)
 {
-  Function_IN(POWER_KEY_CALLBACK);
+  FuncIN(POWER_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Power key callback called !\n"));
   
-  CONTROL(Menu(POWER_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(POWER_KEY_EVENT), -MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(POWER_KEY_CALLBACK);
 }
+FUNC_REGISTER(POWER_KEY_CALLBACK, Power_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Up_Key_Callback(void *p)
 {
-  Function_IN(UP_KEY_CALLBACK);
+  FuncIN(UP_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Up key callback called !\n"));
   
-  CONTROL(Menu(UP_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(UP_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(UP_KEY_CALLBACK);
 }
+FUNC_REGISTER(UP_KEY_CALLBACK, Up_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Down_Key_Callback(void *p)
 {
-  Function_IN(DOWN_KEY_CALLBACK);
+  FuncIN(DOWN_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Down key callback called !\n"));
   
-  CONTROL(Menu(DOWN_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(DOWN_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(DOWN_KEY_CALLBACK);
 }
+FUNC_REGISTER(DOWN_KEY_CALLBACK, Down_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Left_Key_Callback(void *p)
 {
-  Function_IN(LEFT_KEY_CALLBACK);
+  FuncIN(LEFT_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Left key callback called !\n"));
   
-  CONTROL(Menu(LEFT_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(LEFT_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(LEFT_KEY_CALLBACK);
 }
+FUNC_REGISTER(LEFT_KEY_CALLBACK, Left_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Right_Key_Callback(void *p)
 {
-  Function_IN(RIGHT_KEY_CALLBACK);
+  FuncIN(RIGHT_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Right key callback called !\n"));
   
-  CONTROL(Menu(RIGHT_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(RIGHT_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(RIGHT_KEY_CALLBACK);
 }
+FUNC_REGISTER(RIGHT_KEY_CALLBACK, Right_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Enter_Key_Callback(void *p)
 {
-  Function_IN(ENTER_KEY_CALLBACK);
+  FuncIN(ENTER_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Enter key callback called !\n"));
   
-  CONTROL(Menu(ENTER_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(ENTER_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(ENTER_KEY_CALLBACK);
 }
+FUNC_REGISTER(ENTER_KEY_CALLBACK, Enter_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Cancel_Key_Callback(void *p)
 {
-  Function_IN(CANCEL_KEY_CALLBACK);
+  FuncIN(CANCEL_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Cancel key callback called !\n"));
   
-  CONTROL(Menu(CANCEL_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(CANCEL_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(CANCEL_KEY_CALLBACK);
 }
+FUNC_REGISTER(CANCEL_KEY_CALLBACK, Cancel_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Menu_Key_Callback(void *p)
 {
-  Function_IN(MENU_KEY_CALLBACK);
+  FuncIN(MENU_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Menu key callback called !\n"));
   
-  CONTROL(Menu(MENU_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(MENU_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(MENU_KEY_CALLBACK);
 }
+FUNC_REGISTER(MENU_KEY_CALLBACK, Menu_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Exit_Key_Callback(void *p)
 {
-  Function_IN(EXIT_KEY_CALLBACK);
+  FuncIN(EXIT_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Exit key callback called !\n"));
   
-  CONTROL(Menu(EXIT_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(EXIT_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(EXIT_KEY_CALLBACK);
 }
+FUNC_REGISTER(EXIT_KEY_CALLBACK, Exit_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Num1_Key_Callback(void *p)
 {
-  Function_IN(NUM1_KEY_CALLBACK);
+  FuncIN(NUM1_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Num1 key callback called !\n"));
   
-  CONTROL(Menu(NUM1_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(NUM1_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(NUM1_KEY_CALLBACK);
 }
+FUNC_REGISTER(NUM1_KEY_CALLBACK, Num1_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Num2_Key_Callback(void *p)
 {
-  Function_IN(NUM2_KEY_CALLBACK);
+  FuncIN(NUM2_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Num2 key callback called !\n"));
   
-  CONTROL(Menu(NUM2_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(NUM2_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(NUM2_KEY_CALLBACK);
 }
+FUNC_REGISTER(NUM2_KEY_CALLBACK, Num2_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Num3_Key_Callback(void *p)
 {
-  Function_IN(NUM3_KEY_CALLBACK);
+  FuncIN(NUM3_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Num3 key callback called !\n"));
   
-  CONTROL(Menu(NUM3_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(NUM3_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(NUM3_KEY_CALLBACK);
 }
+FUNC_REGISTER(NUM3_KEY_CALLBACK, Num3_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Num4_Key_Callback(void *p)
 {
-  Function_IN(NUM4_KEY_CALLBACK);
+  FuncIN(NUM4_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Num4 key callback called !\n"));
   
-  CONTROL(Menu(NUM4_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(NUM4_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(NUM4_KEY_CALLBACK);
 }
+FUNC_REGISTER(NUM4_KEY_CALLBACK, Num4_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Num5_Key_Callback(void *p)
 {
-  Function_IN(NUM5_KEY_CALLBACK);
+  FuncIN(NUM5_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Num5 key callback called !\n"));
   
-  CONTROL(Menu(NUM5_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(NUM5_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(NUM5_KEY_CALLBACK);
 }
+FUNC_REGISTER(NUM5_KEY_CALLBACK, Num5_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Num6_Key_Callback(void *p)
 {
-  Function_IN(NUM6_KEY_CALLBACK);
+  FuncIN(NUM6_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Num6 key callback called !\n"));
   
-  CONTROL(Menu(NUM6_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(NUM6_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(NUM6_KEY_CALLBACK);
 }
+FUNC_REGISTER(NUM6_KEY_CALLBACK, Num6_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Num7_Key_Callback(void *p)
 {
-  Function_IN(NUM7_KEY_CALLBACK);
+  FuncIN(NUM7_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Num7 key callback called !\n"));
   
-  CONTROL(Menu(NUM7_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(NUM7_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(NUM7_KEY_CALLBACK);
 }
+FUNC_REGISTER(NUM7_KEY_CALLBACK, Num7_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Num8_Key_Callback(void *p)
 {
-  Function_IN(NUM8_KEY_CALLBACK);
+  FuncIN(NUM8_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Num8 key callback called !\n"));
   
-  CONTROL(Menu(NUM8_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(NUM8_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(NUM8_KEY_CALLBACK);
 }
+FUNC_REGISTER(NUM8_KEY_CALLBACK, Num8_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Num9_Key_Callback(void *p)
 {
-  Function_IN(NUM9_KEY_CALLBACK);
+  FuncIN(NUM9_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Num9 key callback called !\n"));
   
-  CONTROL(Menu(NUM9_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(NUM9_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(NUM9_KEY_CALLBACK);
 }
+FUNC_REGISTER(NUM9_KEY_CALLBACK, Num9_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Num0_Key_Callback(void *p)
 {
-  Function_IN(NUM0_KEY_CALLBACK);
+  FuncIN(NUM0_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Num0 key callback called !\n"));
   
-  CONTROL(Menu(NUM0_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(NUM0_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(NUM0_KEY_CALLBACK);
 }
+FUNC_REGISTER(NUM0_KEY_CALLBACK, Num0_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Vol_Up_Key_Callback(void *p)
 {
-  Function_IN(VOL_UP_KEY_CALLBACK);
+  FuncIN(VOL_UP_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Vol-Up key callback called !\n"));
   
-  CONTROL(Menu(VOL_UP_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(VOL_UP_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(VOL_UP_KEY_CALLBACK);
 }
+FUNC_REGISTER(VOL_UP_KEY_CALLBACK, Vol_Up_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Vol_Down_Key_Callback(void *p)
 {
-  Function_IN(VOL_DOWN_KEY_CALLBACK);
+  FuncIN(VOL_DOWN_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Vol-Down key callback called !\n"));
   
-  CONTROL(Menu(VOL_DOWN_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(VOL_DOWN_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(VOL_DOWN_KEY_CALLBACK);
 }
+FUNC_REGISTER(VOL_DOWN_KEY_CALLBACK, Vol_Down_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Ch_Up_Key_Callback(void *p)
 {
-  Function_IN(CH_UP_KEY_CALLBACK);
+  FuncIN(CH_UP_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Ch-Up key callback called !\n"));
   
-  CONTROL(Menu(CH_UP_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(CH_UP_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(CH_UP_KEY_CALLBACK);
 }
+FUNC_REGISTER(CH_UP_KEY_CALLBACK, Ch_Up_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Ch_Down_Key_Callback(void *p)
 {
-  Function_IN(CH_DOWN_KEY_CALLBACK);
+  FuncIN(CH_DOWN_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Ch-Down key callback called !\n"));
   
-  CONTROL(Menu(CH_DOWN_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(CH_DOWN_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(CH_DOWN_KEY_CALLBACK);
 }
+FUNC_REGISTER(CH_DOWN_KEY_CALLBACK, Ch_Down_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Mute_Key_Callback(void *p)
 {
-  Function_IN(MUTE_KEY_CALLBACK);
+  FuncIN(MUTE_KEY_CALLBACK);
+  
   MENU_DEBUG(printc("\r # Mute key callback called !\n"));
   
-  CONTROL(Menu(MUTE_KEY_EVENT), MENU_ERROR);
+  VERIFY(Menu(MUTE_KEY_EVENT), MENU_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(MUTE_KEY_CALLBACK);
 }
+FUNC_REGISTER(MUTE_KEY_CALLBACK, Mute_Key_Callback);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Menu_Callbacks_Init(uint8 DisplayType, uint16 Xres, uint16 Yres)
 {
-  Function_IN(MENU_CALLBACKS_INIT);
+  FuncIN(MENU_CALLBACKS_INIT);
   
   ir_t ir_s;
   
@@ -333,170 +382,171 @@ Status_t Menu_Callbacks_Init(uint8 DisplayType, uint16 Xres, uint16 Yres)
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Power_Key_Callback;
-  CONTROL(!IR_Command_Init(POWER_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(POWER_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Up_Key_Callback;
-  CONTROL(!IR_Command_Init(UP_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(UP_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Down_Key_Callback;
-  CONTROL(!IR_Command_Init(DOWN_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(DOWN_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Left_Key_Callback;
-  CONTROL(!IR_Command_Init(LEFT_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(LEFT_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Right_Key_Callback;
-  CONTROL(!IR_Command_Init(RIGHT_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(RIGHT_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Enter_Key_Callback;
-  CONTROL(!IR_Command_Init(ENTER_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(ENTER_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Cancel_Key_Callback;
-  CONTROL(!IR_Command_Init(CANCEL_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(CANCEL_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Menu_Key_Callback;
-  CONTROL(!IR_Command_Init(MENU_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(MENU_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Exit_Key_Callback;
-  CONTROL(!IR_Command_Init(EXIT_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(EXIT_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Num1_Key_Callback;
-  CONTROL(!IR_Command_Init(NUM1_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(NUM1_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Num2_Key_Callback;
-  CONTROL(!IR_Command_Init(NUM2_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(NUM2_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Num3_Key_Callback;
-  CONTROL(!IR_Command_Init(NUM3_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(NUM3_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Num4_Key_Callback;
-  CONTROL(!IR_Command_Init(NUM4_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(NUM4_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Num5_Key_Callback;
-  CONTROL(!IR_Command_Init(NUM5_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(NUM5_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Num6_Key_Callback;
-  CONTROL(!IR_Command_Init(NUM6_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(NUM6_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Num7_Key_Callback;
-  CONTROL(!IR_Command_Init(NUM7_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(NUM7_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Num8_Key_Callback;
-  CONTROL(!IR_Command_Init(NUM8_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(NUM8_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Num9_Key_Callback;
-  CONTROL(!IR_Command_Init(NUM9_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(NUM9_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Num0_Key_Callback;
-  CONTROL(!IR_Command_Init(NUM0_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(NUM0_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = REPETITIVE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Vol_Up_Key_Callback;
-  CONTROL(!IR_Command_Init(VOL_UP_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(VOL_UP_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = REPETITIVE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Vol_Down_Key_Callback;
-  CONTROL(!IR_Command_Init(VOL_DOWN_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(VOL_DOWN_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Ch_Up_Key_Callback;
-  CONTROL(!IR_Command_Init(CH_UP_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(CH_UP_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Ch_Down_Key_Callback;
-  CONTROL(!IR_Command_Init(CH_DOWN_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(CH_DOWN_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = NULL;
   ir_s.Command = NULL;
   ir_s.CallMode = SINGLE_CALL;
   ir_s.Target = 0;
   ir_s.Callback_p = Mute_Key_Callback;
-  CONTROL(!IR_Command_Init(MUTE_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
+  VERIFY(IR_Command_Init(MUTE_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(MENU_CALLBACKS_INIT);
 }
+FUNC_REGISTER(MENU_CALLBACKS_INIT, Menu_Callbacks_Init);
