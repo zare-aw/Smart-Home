@@ -1,4 +1,6 @@
 #include "Global_Defines.h"
+#include "Menu_Func.h"
+#include "Menu_Debug.h"
 #include "Includes.h"
 
 

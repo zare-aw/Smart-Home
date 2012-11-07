@@ -283,16 +283,6 @@ void Print_Function_History(void);
 #define CH_DOWN_KEY_CALLBACK            10224
 #define MUTE_KEY_CALLBACK               10225
 
-// Menu
-#define MENU_INIT                       10600
-#define MENU                            10601
-#define DISPLAY_MENU_UPDATE             10602
-#define DISPLAY_DATE_TIME_UPDATE        10603
-#define DISPLAY_TEMP_UPDATE             10604
-#define REGISTER_MENU_TEMP              10605
-#define UNREGISTER_MENU_TEMP            10606
-#define MENU_SEC_INT_CALLBACK           10607
-
 // Temperature
 #define REGISTER_TEMP_SENSOR            10700
 #define UNREGISTER_TEMP_SENSOR          10701

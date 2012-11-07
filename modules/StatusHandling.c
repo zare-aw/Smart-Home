@@ -643,56 +643,6 @@ void Print_Function_History(void)
       printc(" - Mute_Key_Callback OUT\n");
       break;
     
-      // Menu
-    case (MENU_INIT):
-      printc(" - Menu_Init IN\n");
-      break;
-    case (MENU_INIT | FUNC_OUT_MASK):
-      printc(" - Menu_Init OUT\n");
-      break;
-    case (MENU):
-      printc(" - Menu IN\n");
-      break;
-    case (MENU | FUNC_OUT_MASK):
-      printc(" - Menu OUT\n");
-      break;
-    case (DISPLAY_MENU_UPDATE):
-      printc(" - Display_Menu_Update IN\n");
-      break;
-    case (DISPLAY_MENU_UPDATE | FUNC_OUT_MASK):
-      printc(" - Display_Menu_Update OUT\n");
-      break;
-    case (DISPLAY_DATE_TIME_UPDATE):
-      printc(" - Display_Date_Time_Update IN\n");
-      break;
-    case (DISPLAY_DATE_TIME_UPDATE | FUNC_OUT_MASK):
-      printc(" - Display_Date_Time_Update OUT\n");
-      break;
-    case (DISPLAY_TEMP_UPDATE):
-      printc(" - Display_Temp_Update IN\n");
-      break;
-    case (DISPLAY_TEMP_UPDATE | FUNC_OUT_MASK):
-      printc(" - Display_Temp_Update OUT\n");
-      break;
-    case (REGISTER_MENU_TEMP):
-      printc(" - Register_Menu_Temp IN\n");
-      break;
-    case (REGISTER_MENU_TEMP | FUNC_OUT_MASK):
-      printc(" - Register_Menu_Temp OUT\n");
-      break;
-    case (UNREGISTER_MENU_TEMP):
-      printc(" - Unregister_Menu_Temp IN\n");
-      break;
-    case (UNREGISTER_MENU_TEMP | FUNC_OUT_MASK):
-      printc(" - Unregister_Menu_Temp OUT\n");
-      break;
-    case (MENU_SEC_INT_CALLBACK):
-      printc(" - Menu_Sec_Int_Callback IN\n");
-      break;
-    case (MENU_SEC_INT_CALLBACK | FUNC_OUT_MASK):
-      printc(" - Menu_Sec_Int_Callback OUT\n");
-      break;
-    
       // Temperature
     case (REGISTER_TEMP_SENSOR):
       printc(" - Register_Temp_Sensor IN\n");

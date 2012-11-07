@@ -1,21 +1,6 @@
 #ifndef _Menu_h
 #define _Menu_h
 
-#define _MENU_DEBUG
-#define _MENU_INFO
-
-#ifdef _MENU_DEBUG
-#define MENU_DEBUG(a) a
-#else
-#define MENU_DEBUG(a)
-#endif
-
-#ifdef _MENU_INFO
-#define MENU_INFO(a) a
-#else
-#define MENU_INFO(a)
-#endif
-
 
 #define NO_OF_LEVELS          100
 #define INTERNAL_SENSOR       1

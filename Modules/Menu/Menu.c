@@ -1,5 +1,16 @@
+#include <string.h>
+#include <stdio.h>
 #include "Global_Defines.h"
-#include "Includes.h"
+#include "Func_Trace.h"
+#include "StatusHandling.h"
+#include "Menu_Func.h"
+#include "Menu_Debug.h"
+#include "Menu.h"
+#include "RTC.h"
+#include "Console.h"
+#include "SurfaceFlinger.h"
+#include "Temperature.h"
+
 
 uint8 LocationChange = 0;
 uint16 Level = 0;
@@ -18,7 +29,7 @@ static Status_t Display_Menu_Update(const uint8 Level, const uint16 *Location);
 *******************************************************************************/
 Status_t Menu_Init(void)
 {
-  Function_IN(MENU_INIT);
+  FuncIN(MENU_INIT);
   
   for(int i = 0; i < MAIN_VIEW_BUFFER_LINE; i++)
     for(int j = 0; j < MAIN_VIEW_BUFFER_COL; j++)
@@ -26,15 +37,16 @@ Status_t Menu_Init(void)
   
   RTC_Register_Inc_Int((void *)Menu_Sec_Int_Callback, IncIntType_SEC, &Sec_Callback_ID);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(MENU_INIT);
 }
+FUNC_REGISTER(MENU_INIT, Menu_Init);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Menu(uint32 Event)
 {
-  Function_IN(MENU);
+  FuncIN(MENU);
   
   switch(Location[0])
   {
@@ -105,23 +117,25 @@ Status_t Menu(uint32 Event)
       }
       break;
     default:
-      CONTROL(0, UNKNOWN_ERROR);
+      Fatal_Abort(-UNKNOWN_ERROR);
       break;
   }
   
   if(LocationChange == 1)
-    CONTROL(!Display_Menu_Update(Level, Location), MENU_DISPLAY_ERROR);
+    VERIFY(Display_Menu_Update(Level, Location), -MENU_DISPLAY_ERROR);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(MENU);
 }
+FUNC_REGISTER(MENU, Menu);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 static Status_t Display_Menu_Update(const uint8 Level, const uint16 *Location)
 {
-  Function_IN(DISPLAY_MENU_UPDATE);
-  CONTROL(Level < NO_OF_LEVELS, INVALID_INPUT_PARAMETER);
+  FuncIN(DISPLAY_MENU_UPDATE);
+  
+  ASSERT(Level < NO_OF_LEVELS, -INVALID_INPUT_PARAMETER);
   
   switch(Location[0])
   {
@@ -139,60 +153,68 @@ static Status_t Display_Menu_Update(const uint8 Level, const uint16 *Location)
       else
       {
         clrd();
-        CONTROL(!printd(1, "%s", MainViewBuffer[0]), GENERAL_ERROR);
-        CONTROL(!printd(2, "%s", MainViewBuffer[1]), GENERAL_ERROR);
-        CONTROL(!printd(3, "%s", MainViewBuffer[2]), GENERAL_ERROR);
-        CONTROL(!printd(4, "%s", MainViewBuffer[3]), GENERAL_ERROR);
+        
+        VERIFY(printd(1, "%s", MainViewBuffer[0]), -GENERAL_ERROR);
+        VERIFY(printd(2, "%s", MainViewBuffer[1]), -GENERAL_ERROR);
+        VERIFY(printd(3, "%s", MainViewBuffer[2]), -GENERAL_ERROR);
+        VERIFY(printd(4, "%s", MainViewBuffer[3]), -GENERAL_ERROR);
+        
         syncd();
       }
       break;
     case 1:
       clrd();
-      CONTROL(!printd(1, "%s", MainViewBuffer[4]), GENERAL_ERROR);
-      CONTROL(!printd(2, "%s", MainViewBuffer[5]), GENERAL_ERROR);
-      CONTROL(!printd(3, "%s", MainViewBuffer[6]), GENERAL_ERROR);
-      CONTROL(!printd(4, "%s", MainViewBuffer[7]), GENERAL_ERROR);
+      
+      VERIFY(printd(1, "%s", MainViewBuffer[4]), -GENERAL_ERROR);
+      VERIFY(printd(2, "%s", MainViewBuffer[5]), -GENERAL_ERROR);
+      VERIFY(printd(3, "%s", MainViewBuffer[6]), -GENERAL_ERROR);
+      VERIFY(printd(4, "%s", MainViewBuffer[7]), -GENERAL_ERROR);
+      
       syncd();
       break;
     case 2:
       clrd();
-      CONTROL(!printd(1, "%s", MainViewBuffer[8]), GENERAL_ERROR);
-      CONTROL(!printd(2, "%s", MainViewBuffer[9]), GENERAL_ERROR);
-      CONTROL(!printd(3, "%s", MainViewBuffer[10]), GENERAL_ERROR);
-      CONTROL(!printd(4, "%s", MainViewBuffer[11]), GENERAL_ERROR);
+      
+      VERIFY(printd(1, "%s", MainViewBuffer[8]), -GENERAL_ERROR);
+      VERIFY(printd(2, "%s", MainViewBuffer[9]), -GENERAL_ERROR);
+      VERIFY(printd(3, "%s", MainViewBuffer[10]), -GENERAL_ERROR);
+      VERIFY(printd(4, "%s", MainViewBuffer[11]), -GENERAL_ERROR);
+      
       syncd();
       break;
     default:
       LocationChange = 0;
-      CONTROL(0, INVALID_INPUT_POINTER);
+      Fatal_Abort(-INVALID_INPUT_POINTER);
       break;
   }
   
   LocationChange = 0;
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(DISPLAY_MENU_UPDATE);
 }
+FUNC_REGISTER(DISPLAY_MENU_UPDATE, Display_Menu_Update);
 
 /*******************************************************************************
 * This function update MainViewBuffer, 1-st and 2-nd line with Time and Date.
 *******************************************************************************/
 static Status_t Display_Date_Time_Update(RtcTime_t *Time_p, RtcDate_t *Date_p)
 {
-  Function_IN(DISPLAY_DATE_TIME_UPDATE);
-  CONTROL(Time_p != NULL, INVALID_INPUT_POINTER);
-  CONTROL(Date_p != NULL, INVALID_INPUT_POINTER);
+  FuncIN(DISPLAY_DATE_TIME_UPDATE);
+  
+  ASSERT(Time_p != NULL, -INVALID_INPUT_POINTER);
+  ASSERT(Date_p != NULL, -INVALID_INPUT_POINTER);
   
   char Time_S[10] = {0};
   char Date_S[32] = {0};
   int i;
   
-  CONTROL(!Format_Time(1, Time_p, Time_S), RTC_GENERAL_ERROR);
-  CONTROL(!Format_Date(2, Date_p, Date_S), RTC_GENERAL_ERROR);
+  VERIFY(Format_Time(1, Time_p, Time_S), -RTC_GENERAL_ERROR);
+  VERIFY(Format_Date(2, Date_p, Date_S), -RTC_GENERAL_ERROR);
   
   for(i = 0; Time_S[i] != 0; i++);
-  CONTROL(i <= 9, RTC_GENERAL_ERROR);
+  ASSERT(i <= 9, -RTC_GENERAL_ERROR);
   
   for(i = 0; Date_S[i] != 0; i++);
-  CONTROL(i <= 30, RTC_GENERAL_ERROR);
+  ASSERT(i <= 30, -RTC_GENERAL_ERROR);
       
   strcpy(MainViewBuffer[0], Time_S);
   MainViewBuffer[0][8] = ' ';
@@ -206,15 +228,16 @@ static Status_t Display_Date_Time_Update(RtcTime_t *Time_p, RtcDate_t *Date_p)
   for(int j = 0; (Date_S[i] != 0) && (j < 19); i++, j++)
     MainViewBuffer[1][j] = Date_S[i];
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(DISPLAY_DATE_TIME_UPDATE);
 }
+FUNC_REGISTER(DISPLAY_DATE_TIME_UPDATE, Display_Date_Time_Update);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 static Status_t Display_Temp_Update(const int TempInt, const int TempExt)
 {
-  Function_IN(DISPLAY_TEMP_UPDATE);
+  FuncIN(DISPLAY_TEMP_UPDATE);
   
   if(TempInt != NO_SENSOR)
   {
@@ -227,15 +250,16 @@ static Status_t Display_Temp_Update(const int TempInt, const int TempExt)
     MainViewBuffer[2][20] = 0;
   }
   
-  RETURN_SUCCESS_FUNC(DISPLAY_TEMP_UPDATE);
+  EXIT_SUCCESS_FUNC(DISPLAY_TEMP_UPDATE);
 }
+FUNC_REGISTER(DISPLAY_TEMP_UPDATE, Display_Temp_Update);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Register_Menu_Temp(const uint8 Source, const uint8 ID)
 {
-  Function_IN(REGISTER_MENU_TEMP);
+  FuncIN(REGISTER_MENU_TEMP);
   
   switch(Source)
   {
@@ -250,19 +274,20 @@ Status_t Register_Menu_Temp(const uint8 Source, const uint8 ID)
       MENU_INFO(printc("\r # Menu external temperature sensor registered with ID = %u\n", ID));
       break;
     default:
-      CONTROL(0, INVALID_INPUT_PARAMETER);
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
       break;
   }
   
-  RETURN_SUCCESS_FUNC(REGISTER_MENU_TEMP);
+  EXIT_SUCCESS_FUNC(REGISTER_MENU_TEMP);
 }
+FUNC_REGISTER(REGISTER_MENU_TEMP, Register_Menu_Temp);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Unregister_Menu_Temp(const uint8 Source)
 {
-  Function_IN(UNREGISTER_MENU_TEMP);
+  FuncIN(UNREGISTER_MENU_TEMP);
   
   switch(Source)
   {
@@ -277,19 +302,20 @@ Status_t Unregister_Menu_Temp(const uint8 Source)
       MENU_INFO(printc("\r # Menu external temperature sensor unregistered\n"));
       break;
     default:
-      CONTROL(0, INVALID_INPUT_PARAMETER);
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
       break;
   }
   
-  RETURN_SUCCESS_FUNC(REGISTER_MENU_TEMP);
+  EXIT_SUCCESS_FUNC(REGISTER_MENU_TEMP);
 }
+FUNC_REGISTER(UNREGISTER_MENU_TEMP, Unregister_Menu_Temp);
 
 /*******************************************************************************
 * 
 *******************************************************************************/
-Status_t Menu_Sec_Int_Callback(void *Ptr)
+__arm Status_t Menu_Sec_Int_Callback(void *Ptr)
 {
-  Function_IN(MENU_SEC_INT_CALLBACK);
+  FuncIN(MENU_SEC_INT_CALLBACK);
   
   RtcTime_t Time;
   RtcDate_t Date;
@@ -311,5 +337,6 @@ Status_t Menu_Sec_Int_Callback(void *Ptr)
   if((Level == 0) && (Location[0] == 0))
     Display_Menu_Update(Level, Location);
   
-  RETURN_SUCCESS_FUNC(MENU_SEC_INT_CALLBACK);
+  EXIT_SUCCESS_FUNC(MENU_SEC_INT_CALLBACK);
 }
+FUNC_REGISTER(MENU_SEC_INT_CALLBACK, Menu_Sec_Int_Callback);

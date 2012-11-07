@@ -1835,6 +1835,12 @@
         <name>$PROJ_DIR$\Modules\Menu\Menu.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\Modules\Menu\Menu_Debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Modules\Menu\Menu_Func.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\Modules\Menu\MenuCallbacks.c</name>
       </file>
     </group>
