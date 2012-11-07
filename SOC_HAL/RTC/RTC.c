@@ -1,8 +1,12 @@
+#include <string.h>
+#include <stdio.h>
+#include <NXP/iolpc2148.h>
 #include "Global_Defines.h"
 #include "RTC.h"
 #include "RTC_Debug.h"
 #include "RTC_Defconfig.h"
 #include "RTC_Func.h"
+#include "Console.h"
 
 
  /* RTC interrupt type */

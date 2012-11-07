@@ -1,7 +1,7 @@
 #ifndef _RTC_H
 #define _RTC_H
 
-#include "Includes.h"
+#include "StatusHandling.h"
 
 /*******************************************************************************
  * RTC Status defines
