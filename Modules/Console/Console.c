@@ -7,6 +7,9 @@
 #include "ConsoleCommands.h"
 #include "Command.h"
 
+#define KEY_NONE        0
+#define UP_DOWN_KEYS    1
+
 char InputString[MAX_CONSOLE_COMMAND_LENGTH] = {0};
 char Console_Queue[CONSOLE_QUEUE_SIZE] = {0};
 char QueueConsoleCommand[MAX_CONSOLE_COMMAND_IN_QUEUE][MAX_CONSOLE_COMMAND_LENGTH] = {0};
@@ -21,6 +24,8 @@ uint8 ConsoleCommandsInHistory = 0;
 uint8 Console_Mode = MODE_POOLING;
 uint8 ConsoleChanel = UART_0;
 uint8 ConsoleHistoryCnt = 0;
+uint8 SpecialStringFlag = 0;
+uint8 SpecialStringInfo = 0;
 
 static Status_t Add_Console_Command_In_History(char *InputString);
 static Status_t Get_Console_Command_From_History(uint8 NoOfPreviousCommand, char *CommandString);
@@ -177,6 +182,62 @@ __arm Status_t Console_ISR(void)
   
   Console_Get_Char(&Ch, 0x05);
   
+  if(SpecialStringFlag)
+  {
+    switch(Ch)
+    {
+      case 0x5B:
+        SpecialStringInfo = UP_DOWN_KEYS;
+        goto Exit;
+      default:
+        break;
+    }
+    
+    switch(SpecialStringInfo)
+    {
+      case UP_DOWN_KEYS:
+        switch(Ch)
+        {
+          case 0x41:    // Up
+            if(ConsoleHistoryCnt <= MAX_CONSOLE_COMMAND_HISTORY)
+            ConsoleHistoryCnt++;
+	    Get_Console_Command_From_History(ConsoleHistoryCnt, InputString);
+	    InputCharCnt = strlen(InputString);
+	    Add_String_In_Console_Queue("\r~$ ");
+	    Add_String_In_Console_Queue(InputString);
+            break;
+          case 0x42:    // Down
+            if(ConsoleHistoryCnt >= 1)
+              ConsoleHistoryCnt--;
+	    
+	    if((ConsoleHistoryCnt > 0) && (ConsoleHistoryCnt <= MAX_CONSOLE_COMMAND_HISTORY))
+	    {
+	      Get_Console_Command_From_History(ConsoleHistoryCnt, InputString);
+	      InputCharCnt = strlen(InputString);
+	      Add_String_In_Console_Queue("\r~$ ");
+	      Add_String_In_Console_Queue(InputString);
+	    }
+	    else
+	    {
+	      InputString[0] = '\0';
+	      InputCharCnt = 0;
+	      Add_String_In_Console_Queue("\r~$ ");
+	    }
+            break;
+          default:
+            break;
+        }
+        
+        SpecialStringFlag = 0;
+        SpecialStringInfo = KEY_NONE;
+        goto Exit;
+      default:
+        SpecialStringFlag = 0;
+        SpecialStringInfo = KEY_NONE;
+        goto Exit;
+    }   // switch(SpecialStringInfo)
+  }   // if(SpecialStringFlag)
+  
   switch(Ch)
   {
   case 0x0D:  // Enter
@@ -209,32 +270,8 @@ __arm Status_t Console_ISR(void)
       Add_Char_In_Console_Queue(Ch);
     }
     break;
-  case '8':  // Up    TODO: Check the value
-    if(ConsoleHistoryCnt <= MAX_CONSOLE_COMMAND_HISTORY)
-      ConsoleHistoryCnt++;
-	Get_Console_Command_From_History(ConsoleHistoryCnt, InputString);
-	InputCharCnt = strlen(InputString);
-	Add_String_In_Console_Queue("\r~$ ");
-	Add_String_In_Console_Queue(InputString);
-    break;
-  case '2':  // Down    TODO: Check the value
-    if(ConsoleHistoryCnt >= 1)
-      ConsoleHistoryCnt--;
-	
-	if((ConsoleHistoryCnt > 0) && (ConsoleHistoryCnt <= MAX_CONSOLE_COMMAND_HISTORY))
-	{
-	  Get_Console_Command_From_History(ConsoleHistoryCnt, InputString);
-	  InputCharCnt = strlen(InputString);
-	  Add_String_In_Console_Queue("\r~$ ");
-	  Add_String_In_Console_Queue(InputString);
-	}
-	else
-	{
-	  InputString[0] = '\0';
-	  InputCharCnt = 0;
-	  Add_String_In_Console_Queue("\r~$ ");
-	}
-	
+  case 0x1B:
+    SpecialStringFlag = 1;
     break;
   default:
     Add_Char_In_Console_Queue(Ch);
@@ -243,6 +280,7 @@ __arm Status_t Console_ISR(void)
     break;
   }
   
+Exit:
   EXIT_SUCCESS_FUNC(CONSOLE_ISR);
 }
 FUNC_REGISTER(CONSOLE_ISR, Console_ISR);
