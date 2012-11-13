@@ -34,8 +34,7 @@ void Wait(uint32 Time_uSec)
  ******************************************************************************/
 Status_t Delay_Timer_Set_Match_0(uint32 Value, void (*Callback)(void *))
 {
-  if(Callback != NULL)
-    return -INVALID_INPUT_POINTER;
+  ASSERT(Callback != NULL, -INVALID_INPUT_POINTER);
   
   Match_0_Callback = Callback;
   T0MCR_bit.MR0INT = 1;             // Enable interrupt on match 0
@@ -53,7 +52,7 @@ Status_t Delay_Timer_Set_Match_0(uint32 Value, void (*Callback)(void *))
  ******************************************************************************/
 Status_t Delay_Timer_Set_Match_1(uint32 Value, void (*Callback)(void *))
 {
-  ASSERT(Callback == NULL, -INVALID_INPUT_POINTER);
+  ASSERT(Callback != NULL, -INVALID_INPUT_POINTER);
   
   Match_1_Callback = Callback;
   T0MCR_bit.MR1INT = 1;             // Enable interrupt on match 1
@@ -71,8 +70,7 @@ Status_t Delay_Timer_Set_Match_1(uint32 Value, void (*Callback)(void *))
  ******************************************************************************/
 Status_t Delay_Timer_Set_Match_2(uint32 Value, void (*Callback)(void *))
 {
-  if(Callback == NULL)
-    return -INVALID_INPUT_POINTER;
+  ASSERT(Callback != NULL, -INVALID_INPUT_POINTER);
   
   Match_2_Callback = Callback;
   T0MCR_bit.MR2INT = 1;             // Enable interrupt on match 2
