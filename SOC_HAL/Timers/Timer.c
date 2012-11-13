@@ -34,12 +34,12 @@ void Wait(uint32 Time_uSec)
  ******************************************************************************/
 Status_t Delay_Timer_Set_Match_0(uint32 Value, void (*Callback)(void *))
 {
-  if(Callback == NULL)
+  if(Callback != NULL)
     return -INVALID_INPUT_POINTER;
   
   Match_0_Callback = Callback;
   T0MCR_bit.MR0INT = 1;             // Enable interrupt on match 0
-  T0MR0 = Value;                    // Ser match 0 value
+  T0MR0 = Value;                    // Set match 0 value
   
   return SUCCESS;
 }
@@ -53,12 +53,11 @@ Status_t Delay_Timer_Set_Match_0(uint32 Value, void (*Callback)(void *))
  ******************************************************************************/
 Status_t Delay_Timer_Set_Match_1(uint32 Value, void (*Callback)(void *))
 {
-  if(Callback == NULL)
-    return -INVALID_INPUT_POINTER;
+  ASSERT(Callback == NULL, -INVALID_INPUT_POINTER);
   
   Match_1_Callback = Callback;
-  T0MCR_bit.MR1INT = 1;             // Enable interrupt on match 0
-  T0MR1 = Value;                    // Ser match 0 value
+  T0MCR_bit.MR1INT = 1;             // Enable interrupt on match 1
+  T0MR1 = Value;                    // Set match 1 value
   
   return SUCCESS;
 }
@@ -76,8 +75,8 @@ Status_t Delay_Timer_Set_Match_2(uint32 Value, void (*Callback)(void *))
     return -INVALID_INPUT_POINTER;
   
   Match_2_Callback = Callback;
-  T0MCR_bit.MR2INT = 1;             // Enable interrupt on match 0
-  T0MR2 = Value;                    // Ser match 0 value
+  T0MCR_bit.MR2INT = 1;             // Enable interrupt on match 2
+  T0MR2 = Value;                    // Set match 2 value
   
   return SUCCESS;
 }
@@ -96,7 +95,7 @@ void Delay_Timer_Init(void)
   
   PerCLK = Read_PER_CLK();
   
-  T0PR = (PerCLK / 1000000) - 1;      // Set prescale for 1 TIC on 1us
+  T0PR = (PerCLK / 1000000) - 1;    // Set prescale for 1 TIC on 1us
   T0PC = 0;                         // Clear prescale
   
   T0MCR = 0;                        // Clear all EVENT on match
@@ -121,7 +120,7 @@ void Timer_1_Init(void)
   T1MCR = 0;            // Se zabranuvaat site EVENT od match
   T1MCR_bit.MR0INT = 1; // Ovozmozuva prekin na match 0
   T1MCR_bit.MR0RES = 1; // Koga ke ima match neka se resetira tajmerot
-  T1MCR_bit.MR0STOP = 0; // Koga ke ima match neka ne zapira tajmerot
+  T1MCR_bit.MR0STOP = 0;// Koga ke ima match neka ne zapira tajmerot
   T1CCR = 0;            // Isklucuvame Capture
   T1EMR = 0;            // Onevozmozuvame EXTERNAL MATCH
 }
@@ -157,17 +156,17 @@ __arm __irq void Timer_0_ISR(void)    // Interrupt function for TIMER0
   
   if(T0IR_bit.MR1INT == 1)
   {
-    T0IR_bit.MR1INT = 1;        // Clear match 0 interrupt
-    T0MCR_bit.MR1INT = 0;       // Disable interrupt on match 0
-    Match_1_Callback(NULL);     // Call match 0 callback
+    T0IR_bit.MR1INT = 1;        // Clear match 1 interrupt
+    T0MCR_bit.MR1INT = 0;       // Disable interrupt on match 1
+    Match_1_Callback(NULL);     // Call match 1 callback
     IRQ_Serviced = 1;           // Set IRQ_Serviced flag
   }
   
   if(T0IR_bit.MR2INT == 1)
   {
-    T0IR_bit.MR2INT = 1;        // Clear match 0 interrupt
-    T0MCR_bit.MR2INT = 0;       // Disable interrupt on match 0
-    Match_2_Callback(NULL);     // Call match 0 callback
+    T0IR_bit.MR2INT = 1;        // Clear match 2 interrupt
+    T0MCR_bit.MR2INT = 0;       // Disable interrupt on match 2
+    Match_2_Callback(NULL);     // Call match 2 callback
     IRQ_Serviced = 1;           // Set IRQ_Serviced flag
   }
   
