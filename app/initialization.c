@@ -37,10 +37,8 @@ Status_t Initialization(void)
   Menu_Init();
   PWM_Backlight_Init(BACKLIGHT_START_INTENSITY);
   
-  __enable_interrupt();
   Temp_Init();
   HD44780_PowerUpInit();
-  __disable_interrupt();
   
   Cmd_Init_Parameters_t Cmd_Init_Parameters;
   Cmd_Init_Parameters.putscmd = &puts;
