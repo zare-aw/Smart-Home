@@ -75,6 +75,7 @@ Status_t Register_Temp_Sensor(uint8 Ch, uint8 *SerialNumber, uint8 *SensorID)
   
   EXIT_SUCCESS_FUNC(REGISTER_TEMP_SENSOR);
 }
+FUNC_REGISTER(REGISTER_TEMP_SENSOR, Register_Temp_Sensor);
 
 /*******************************************************************************
 * 
@@ -103,6 +104,7 @@ Status_t Unregister_Temp_Sensor(uint8 SensorID)
   
   EXIT_SUCCESS_FUNC(UNREGISTER_TEMP_SENSOR);
 }
+FUNC_REGISTER(UNREGISTER_TEMP_SENSOR, Unregister_Temp_Sensor);
 
 /*******************************************************************************
 * 
@@ -145,6 +147,7 @@ Status_t Register_Temp_Alarm(uint8 SensorID, uint8 Event, int TempValue, void *C
   
   EXIT_SUCCESS_FUNC(REGISTER_TEMP_ALARM);
 }
+FUNC_REGISTER(REGISTER_TEMP_ALARM, Register_Temp_Alarm);
 
 /*******************************************************************************
 * 
@@ -185,6 +188,7 @@ Status_t Set_Temp_Alarm(TempAlarm_t *TempAlarm_p)
   
   EXIT_SUCCESS_FUNC(SET_TEMP_ALARM);
 }
+FUNC_REGISTER(SET_TEMP_ALARM, Set_Temp_Alarm);
 
 /*******************************************************************************
 * 
@@ -207,6 +211,7 @@ Status_t Unregister_Temp_Alarm(uint8 SensorID, uint8 AlarmID)
   
   EXIT_SUCCESS_FUNC(UNREGISTER_TEMP_ALARM);
 }
+FUNC_REGISTER(UNREGISTER_TEMP_ALARM, Unregister_Temp_Alarm);
 
 /*******************************************************************************
 * 
@@ -222,6 +227,7 @@ Status_t Set_State_Temp_Alarm(uint8 SensorID, uint8 AlarmID, uint8 State)
   
   EXIT_SUCCESS_FUNC(SET_STATE_TEMP_ALARM);
 }
+FUNC_REGISTER(SET_STATE_TEMP_ALARM, Set_State_Temp_Alarm);
 
 /*******************************************************************************
 * 
@@ -242,6 +248,7 @@ Status_t Read_Temp_Alarm(uint8 SensorID, uint8 AlarmID, TempAlarm_t *TempAlarm_p
   
   EXIT_SUCCESS_FUNC(READ_TEMP_ALARM);
 }
+FUNC_REGISTER(READ_TEMP_ALARM, Read_Temp_Alarm);
 
 /*******************************************************************************
 * 
@@ -297,6 +304,7 @@ Status_t Temp_Init(void)
   
   EXIT_SUCCESS_FUNC(TEMP_INIT);
 }
+FUNC_REGISTER(TEMP_INIT, Temp_Init);
 
 /*******************************************************************************
 * 
@@ -358,6 +366,7 @@ Status_t Temp_Reinit(void)
   
   EXIT_SUCCESS_FUNC(TEMP_REINIT);
 }
+FUNC_REGISTER(TEMP_REINIT, Temp_Reinit);
 
 /*******************************************************************************
 * 
@@ -485,6 +494,7 @@ Status_t Temp_Work(void)
   
   EXIT_SUCCESS_FUNC(TEMP_WORK);
 }
+FUNC_REGISTER(TEMP_WORK, Temp_Work);
 
 /*******************************************************************************
 * 
