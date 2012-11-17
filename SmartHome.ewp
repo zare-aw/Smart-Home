@@ -1870,6 +1870,12 @@
       <file>
         <name>$PROJ_DIR$\Modules\Temperature\Temperature.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\Modules\Temperature\Temperature_Debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Modules\Temperature\Temperature_Func.h</name>
+      </file>
     </group>
     <file>
       <name>$PROJ_DIR$\Modules\Commands.c</name>

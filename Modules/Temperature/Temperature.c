@@ -1,5 +1,14 @@
+#include <string.h>
+
 #include "Global_Defines.h"
-#include "Includes.h"
+#include "Console.h"
+#include "RTC.h"
+#include "DS1820.h"
+#include "Menu.h"
+
+#include "Temperature.h"
+#include "Temperature_Debug.h"
+#include "Temperature_Func.h"
 
 uint8 TempSensorSN[NO_OF_TEMP_SENSORS][8] = {0};
 uint8 TempSensorCH[NO_OF_TEMP_SENSORS] = {0};
@@ -40,8 +49,9 @@ int ReadTemp(uint8 SensorID)
 *******************************************************************************/
 Status_t Register_Temp_Sensor(uint8 Ch, uint8 *SerialNumber, uint8 *SensorID)
 {
-  Function_IN(REGISTER_TEMP_SENSOR);
-  CONTROL(Ch <= NO_OF_CHANNELS, INVALID_INPUT_PARAMETER);
+  FuncIN(REGISTER_TEMP_SENSOR);
+  
+  ASSERT(Ch <= NO_OF_CHANNELS, -INVALID_INPUT_PARAMETER);
   *SensorID = NO_OF_TEMP_SENSORS;
   
   for(int i = 0; i < NO_OF_TEMP_SENSORS; i++)
@@ -53,7 +63,7 @@ Status_t Register_Temp_Sensor(uint8 Ch, uint8 *SerialNumber, uint8 *SensorID)
       *SensorID = i;
       break;
     }
-  CONTROL(*SensorID != NO_OF_TEMP_SENSORS, TEMP_SLOTS_ERROR);
+  ASSERT(*SensorID != NO_OF_TEMP_SENSORS, -TEMP_SLOTS_ERROR);
   
   FirstTemp[*SensorID] = 1;
   
@@ -63,7 +73,7 @@ Status_t Register_Temp_Sensor(uint8 Ch, uint8 *SerialNumber, uint8 *SensorID)
     TEMP_DEBUG(printc("\r # Temp callback registered on RTC icrement interrupt with ID = %d\n", CallbackID));
   }
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(REGISTER_TEMP_SENSOR);
 }
 
 /*******************************************************************************
@@ -71,8 +81,9 @@ Status_t Register_Temp_Sensor(uint8 Ch, uint8 *SerialNumber, uint8 *SensorID)
 *******************************************************************************/
 Status_t Unregister_Temp_Sensor(uint8 SensorID)
 {
-  Function_IN(UNREGISTER_TEMP_SENSOR);
-  CONTROL(TempSensorCH[SensorID] != 0, NOT_REGISTERED_ERROR);
+  FuncIN(UNREGISTER_TEMP_SENSOR);
+  
+  ASSERT(TempSensorCH[SensorID] != 0, -NOT_REGISTERED_ERROR);
   int i;
   
   TempSensorCH[SensorID] = 0;
@@ -90,7 +101,7 @@ Status_t Unregister_Temp_Sensor(uint8 SensorID)
     CallbackID = 255;
   }
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(UNREGISTER_TEMP_SENSOR);
 }
 
 /*******************************************************************************
@@ -106,12 +117,13 @@ int Check_Sensor_Availability(uint8 SensorID)
 *******************************************************************************/
 Status_t Register_Temp_Alarm(uint8 SensorID, uint8 Event, int TempValue, void *Callback_p, uint8 *AlarmID)
 {
-  Function_IN(REGISTER_TEMP_ALARM);
-  CONTROL(SensorID < NO_OF_TEMP_SENSORS, INVALID_INPUT_PARAMETER);
-  CONTROL(TempSensorCH[SensorID] != 0, NOT_REGISTERED_ERROR);
-  CONTROL(Callback_p != NULL, INVALID_INPUT_POINTER);
-  CONTROL((TempValue > -55) && (TempValue < 125), INVALID_INPUT_PARAMETER);
-  CONTROL(AlarmID != NULL, INVALID_INPUT_POINTER);
+  FuncIN(REGISTER_TEMP_ALARM);
+  
+  ASSERT(SensorID < NO_OF_TEMP_SENSORS, -INVALID_INPUT_PARAMETER);
+  ASSERT(TempSensorCH[SensorID] != 0, -NOT_REGISTERED_ERROR);
+  ASSERT(Callback_p != NULL, -INVALID_INPUT_POINTER);
+  ASSERT((TempValue > -55) && (TempValue < 125), -INVALID_INPUT_PARAMETER);
+  ASSERT(AlarmID != NULL, -INVALID_INPUT_POINTER);
   *AlarmID = NO_OF_ALARMS;
   
   for(int i = 0; i < NO_OF_ALARMS; i++)
@@ -123,7 +135,7 @@ Status_t Register_Temp_Alarm(uint8 SensorID, uint8 Event, int TempValue, void *C
       *AlarmID = i;
       break;
     }
-  CONTROL(*AlarmID < NO_OF_ALARMS, TEMP_SLOTS_ERROR);
+  ASSERT(*AlarmID < NO_OF_ALARMS, -TEMP_SLOTS_ERROR);
   
   TEMP_DEBUG(printc("\r # Temp Alarm registered with parameters:\n"));
   TEMP_DEBUG(printc("\r # Sensor ID = %d\n", SensorID));
@@ -131,7 +143,7 @@ Status_t Register_Temp_Alarm(uint8 SensorID, uint8 Event, int TempValue, void *C
   TEMP_DEBUG(printc("\r # Temperature = %d\n", TempValue));
   TEMP_DEBUG(printc("\r # Alarm ID = %d\n", *AlarmID));
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(REGISTER_TEMP_ALARM);
 }
 
 /*******************************************************************************
@@ -139,9 +151,10 @@ Status_t Register_Temp_Alarm(uint8 SensorID, uint8 Event, int TempValue, void *C
 *******************************************************************************/
 Status_t Set_Temp_Alarm(TempAlarm_t *TempAlarm_p)
 {
-  Function_IN(SET_TEMP_ALARM);
-  CONTROL(TempAlarm_p -> SensorID < NO_OF_TEMP_SENSORS, INVALID_INPUT_PARAMETER);
-  CONTROL(TempAlarm_p -> AlarmID < NO_OF_ALARMS, INVALID_INPUT_PARAMETER);
+  FuncIN(SET_TEMP_ALARM);
+  
+  ASSERT(TempAlarm_p -> SensorID < NO_OF_TEMP_SENSORS, -INVALID_INPUT_PARAMETER);
+  ASSERT(TempAlarm_p -> AlarmID < NO_OF_ALARMS, -INVALID_INPUT_PARAMETER);
   
   if(AlarmEvent[TempAlarm_p -> SensorID][TempAlarm_p -> AlarmID] != NO_ALARM)
   {
@@ -170,7 +183,7 @@ Status_t Set_Temp_Alarm(TempAlarm_t *TempAlarm_p)
     }
   }
   
-  RETURN_SUCCESS_FUNC(SET_TEMP_ALARM);
+  EXIT_SUCCESS_FUNC(SET_TEMP_ALARM);
 }
 
 /*******************************************************************************
@@ -178,9 +191,10 @@ Status_t Set_Temp_Alarm(TempAlarm_t *TempAlarm_p)
 *******************************************************************************/
 Status_t Unregister_Temp_Alarm(uint8 SensorID, uint8 AlarmID)
 {
-  Function_IN(UNREGISTER_TEMP_ALARM);
-  CONTROL(TempSensorCH[SensorID] != 0, NOT_REGISTERED_ERROR);
-  CONTROL(AlarmEvent[SensorID][AlarmID] != 0, NOT_REGISTERED_ERROR);
+  FuncIN(UNREGISTER_TEMP_ALARM);
+  
+  ASSERT(TempSensorCH[SensorID] != 0, -NOT_REGISTERED_ERROR);
+  ASSERT(AlarmEvent[SensorID][AlarmID] != 0, -NOT_REGISTERED_ERROR);
   
   AlarmEvent[SensorID][AlarmID] = 0;
   AlarmState[SensorID][AlarmID] = ALARM_OFF;
@@ -191,7 +205,7 @@ Status_t Unregister_Temp_Alarm(uint8 SensorID, uint8 AlarmID)
   TEMP_DEBUG(printc("\r # Sensor ID = %d\n", SensorID));
   TEMP_DEBUG(printc("\r # Alarm ID = %d\n", AlarmID));
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(UNREGISTER_TEMP_ALARM);
 }
 
 /*******************************************************************************
@@ -199,13 +213,14 @@ Status_t Unregister_Temp_Alarm(uint8 SensorID, uint8 AlarmID)
 *******************************************************************************/
 Status_t Set_State_Temp_Alarm(uint8 SensorID, uint8 AlarmID, uint8 State)
 {
-  Function_IN(SET_STATE_TEMP_ALARM);
-  CONTROL(TempSensorCH[SensorID] != 0, NOT_REGISTERED_ERROR);
-  CONTROL(AlarmEvent[SensorID][AlarmID] != 0, NOT_REGISTERED_ERROR);
+  FuncIN(SET_STATE_TEMP_ALARM);
+  
+  ASSERT(TempSensorCH[SensorID] != 0, -NOT_REGISTERED_ERROR);
+  ASSERT(AlarmEvent[SensorID][AlarmID] != 0, -NOT_REGISTERED_ERROR);
   
   AlarmState[SensorID][AlarmID] = State;
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(SET_STATE_TEMP_ALARM);
 }
 
 /*******************************************************************************
@@ -213,16 +228,19 @@ Status_t Set_State_Temp_Alarm(uint8 SensorID, uint8 AlarmID, uint8 State)
 *******************************************************************************/
 Status_t Read_Temp_Alarm(uint8 SensorID, uint8 AlarmID, TempAlarm_t *TempAlarm_p)
 {
-  Function_IN(READ_TEMP_ALARM);
-  EXIT(TempSensorCH[SensorID] != 0, NOT_REGISTERED_ERROR);
-  EXIT(AlarmEvent[SensorID][AlarmID] != 0, NOT_REGISTERED_ERROR);
+  FuncIN(READ_TEMP_ALARM);
+  
+  if(TempSensorCH[SensorID] == 0)
+    EXIT_FUNC(NOT_REGISTERED_ERROR, READ_TEMP_ALARM);
+  if(AlarmEvent[SensorID][AlarmID] == 0)
+    EXIT_FUNC(NOT_REGISTERED_ERROR, READ_TEMP_ALARM);
   
   TempAlarm_p -> Event = AlarmEvent[SensorID][AlarmID];
   TempAlarm_p -> State = AlarmState[SensorID][AlarmID];
   TempAlarm_p -> Value = AlarmValue[SensorID][AlarmID];
   TempAlarm_p -> Callback = AlarmCallback[SensorID][AlarmID];
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(READ_TEMP_ALARM);
 }
 
 /*******************************************************************************
@@ -237,7 +255,7 @@ Status_t Read_Temp_Alarm_Wrap(uint8 SensorID, uint8 AlarmID, TempAlarm_t *TempAl
     case 2:
       return Read_Temp_Alarm(SensorID_2, AlarmID, TempAlarm_p);
     default:
-      return INVALID_INPUT_PARAMETER;
+      return -INVALID_INPUT_PARAMETER;
   }
 }
 
@@ -246,7 +264,8 @@ Status_t Read_Temp_Alarm_Wrap(uint8 SensorID, uint8 AlarmID, TempAlarm_t *TempAl
 *******************************************************************************/
 Status_t Temp_Init(void)
 {
-  Function_IN(TEMP_INIT);
+  FuncIN(TEMP_INIT);
+
   Status_t StatusReturn = GENERAL_ERROR;
   
   for(int i = 0; i < NO_OF_TEMP_SENSORS; i++)
@@ -259,8 +278,8 @@ Status_t Temp_Init(void)
   StatusReturn = DS1820_Init(1, NULL);
   if(StatusReturn == SUCCESS)
   {
-    CONTROL(!Register_Temp_Sensor(1, NULL, &SensorID_1), TEMP_SENSOR_REGISTER_ERROR);
-    CONTROL(!Register_Menu_Temp(INTERNAL_SENSOR, SensorID_1), TEMP_SENSOR_REGISTER_ERROR);
+    VERIFY(Register_Temp_Sensor(1, NULL, &SensorID_1), -TEMP_SENSOR_REGISTER_ERROR);
+    VERIFY(Register_Menu_Temp(INTERNAL_SENSOR, SensorID_1), -TEMP_SENSOR_REGISTER_ERROR);
     printc("\r # Temperature sensor on channel 1 registered on ID = %d\n", SensorID_1);
   }
   else
@@ -269,14 +288,14 @@ Status_t Temp_Init(void)
   StatusReturn = DS1820_Init(2, NULL);
   if(StatusReturn == SUCCESS)
   {
-    CONTROL(!Register_Temp_Sensor(2, NULL, &SensorID_2), TEMP_SENSOR_REGISTER_ERROR);
-    CONTROL(!Register_Menu_Temp(EXTERNAL_SENSOR, SensorID_2), TEMP_SENSOR_REGISTER_ERROR);
+    VERIFY(Register_Temp_Sensor(2, NULL, &SensorID_2), -TEMP_SENSOR_REGISTER_ERROR);
+    VERIFY(Register_Menu_Temp(EXTERNAL_SENSOR, SensorID_2), -TEMP_SENSOR_REGISTER_ERROR);
     printc("\r # Temperature sensor on channel 2 registered on ID = %d\n", SensorID_2);
   }
   else
     printc("\r # Failed to register Temperature sensor on channel 2\n");
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(TEMP_INIT);
 }
 
 /*******************************************************************************
@@ -284,7 +303,8 @@ Status_t Temp_Init(void)
 *******************************************************************************/
 Status_t Temp_Reinit(void)
 {
-  Function_IN(TEMP_REINIT);
+  FuncIN(TEMP_REINIT);
+  
   Status_t StatusReturn = GENERAL_ERROR;
   int i;
   
@@ -297,8 +317,8 @@ Status_t Temp_Reinit(void)
   {
     if(i == NO_OF_TEMP_SENSORS)
     {
-      CONTROL(!Register_Temp_Sensor(1, NULL, &SensorID_1), TEMP_SENSOR_REGISTER_ERROR);
-      CONTROL(!Register_Menu_Temp(INTERNAL_SENSOR, SensorID_1), TEMP_SENSOR_REGISTER_ERROR);
+      VERIFY(Register_Temp_Sensor(1, NULL, &SensorID_1), -TEMP_SENSOR_REGISTER_ERROR);
+      VERIFY(Register_Menu_Temp(INTERNAL_SENSOR, SensorID_1), -TEMP_SENSOR_REGISTER_ERROR);
       printc("\rTemperature sensor on channel 1 registered on ID = %d\n", SensorID_1);
     }
   }
@@ -306,8 +326,8 @@ Status_t Temp_Reinit(void)
   {
     if(i < NO_OF_TEMP_SENSORS)
     {
-      Unregister_Temp_Sensor(SensorID_1);
-      CONTROL(!Unregister_Menu_Temp(INTERNAL_SENSOR), TEMP_SENSOR_REGISTER_ERROR);
+      VERIFY(Unregister_Temp_Sensor(SensorID_1), -TEMP_SENSOR_REGISTER_ERROR);
+      VERIFY(Unregister_Menu_Temp(INTERNAL_SENSOR), -TEMP_SENSOR_REGISTER_ERROR);
       printc("\rFailed to register Temperature sensor on channel 1. Sensor removed!\n");
     }
   }
@@ -321,8 +341,8 @@ Status_t Temp_Reinit(void)
   {
     if(i == NO_OF_TEMP_SENSORS)
     {
-      CONTROL(!Register_Temp_Sensor(2, NULL, &SensorID_2), TEMP_SENSOR_REGISTER_ERROR);
-      CONTROL(!Register_Menu_Temp(EXTERNAL_SENSOR, SensorID_2), TEMP_SENSOR_REGISTER_ERROR);
+      VERIFY(Register_Temp_Sensor(2, NULL, &SensorID_2), -TEMP_SENSOR_REGISTER_ERROR);
+      VERIFY(Register_Menu_Temp(EXTERNAL_SENSOR, SensorID_2), -TEMP_SENSOR_REGISTER_ERROR);
       printc("\rTemperature sensor on channel 2 registered on ID = %d\n", SensorID_2);
     }
   }
@@ -330,13 +350,13 @@ Status_t Temp_Reinit(void)
   {
     if(i < NO_OF_TEMP_SENSORS)
     {
-      Unregister_Temp_Sensor(SensorID_2);
-      CONTROL(!Unregister_Menu_Temp(EXTERNAL_SENSOR), TEMP_SENSOR_REGISTER_ERROR);
+      VERIFY(Unregister_Temp_Sensor(SensorID_2), -TEMP_SENSOR_REGISTER_ERROR);
+      VERIFY(Unregister_Menu_Temp(EXTERNAL_SENSOR), -TEMP_SENSOR_REGISTER_ERROR);
       printc("\rFailed to register Temperature sensor on channel 2. Sensor removed!\n");
     }
   }
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(TEMP_REINIT);
 }
 
 /*******************************************************************************
@@ -344,18 +364,19 @@ Status_t Temp_Reinit(void)
 *******************************************************************************/
 Status_t Temp_Work(void)
 {
-  Function_IN(TEMP_WORK);
+  FuncIN(TEMP_WORK);
+  
   int j;
   
   if(ReinitFlag == 1)
   {
-    CONTROL(!Temp_Reinit(), TEMP_SENSOR_REINIT_ERROR);
+    VERIFY(Temp_Reinit(), -TEMP_SENSOR_REINIT_ERROR);
     ReinitFlag = 0;
-    RETURN_SUCCESS();
+    EXIT_SUCCESS_FUNC(TEMP_WORK);
   }
   
   if(TempUpdate == 0)
-    RETURN_SUCCESS();
+    EXIT_SUCCESS_FUNC(TEMP_WORK);
   
   for(int i = 0; i < NO_OF_TEMP_SENSORS; i++)
   {
@@ -461,7 +482,8 @@ Status_t Temp_Work(void)
   }
   
   TempUpdate = 0;
-  RETURN_SUCCESS_FUNC(TEMP_WORK);
+  
+  EXIT_SUCCESS_FUNC(TEMP_WORK);
 }
 
 /*******************************************************************************

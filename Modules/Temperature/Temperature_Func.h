@@ -1,0 +1,17 @@
+#ifndef _TSOP1738_Func_h
+#define _TSOP1738_Func_h
+
+// TSOP1738.c
+#define REGISTER_TEMP_SENSOR          TEMPERATURE_OFFSET | 0x01
+#define UNREGISTER_TEMP_SENSOR        TEMPERATURE_OFFSET | 0x02
+#define REGISTER_TEMP_ALARM           TEMPERATURE_OFFSET | 0x03
+#define SET_TEMP_ALARM                TEMPERATURE_OFFSET | 0x04
+#define UNREGISTER_TEMP_ALARM         TEMPERATURE_OFFSET | 0x05
+#define SET_STATE_TEMP_ALARM          TEMPERATURE_OFFSET | 0x06
+#define READ_TEMP_ALARM               TEMPERATURE_OFFSET | 0x07
+#define TEMP_INIT                     TEMPERATURE_OFFSET | 0x08
+#define TEMP_REINIT                   TEMPERATURE_OFFSET | 0x09
+#define TEMP_WORK                     TEMPERATURE_OFFSET | 0x0A
+
+
+#endif

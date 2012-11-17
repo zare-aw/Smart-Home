@@ -421,68 +421,6 @@ void Print_Function_History(void)
       printc(" - Display_Update_Command OUT\n");
       break;
     
-      // Temperature
-    case (REGISTER_TEMP_SENSOR):
-      printc(" - Register_Temp_Sensor IN\n");
-      break;
-    case (REGISTER_TEMP_SENSOR | FUNC_OUT_MASK):
-      printc(" - Register_Temp_Sensor OUT\n");
-      break;
-    case (UNREGISTER_TEMP_SENSOR):
-      printc(" - Unregister_Temp_Sensor IN\n");
-      break;
-    case (UNREGISTER_TEMP_SENSOR | FUNC_OUT_MASK):
-      printc(" - Unregister_Temp_Sensor OUT\n");
-      break;
-    case (REGISTER_TEMP_ALARM):
-      printc(" - Register_Temp_Alarm IN\n");
-      break;
-    case (REGISTER_TEMP_ALARM | FUNC_OUT_MASK):
-      printc(" - Register_Temp_Alarm OUT\n");
-      break;
-    case (SET_TEMP_ALARM):
-      printc(" - Set_Temp_Alarm IN\n");
-      break;
-    case (SET_TEMP_ALARM | FUNC_OUT_MASK):
-      printc(" - Set_Temp_Alarm OUT\n");
-      break;
-    case (UNREGISTER_TEMP_ALARM):
-      printc(" - Unregister_Temp_Alarm IN\n");
-      break;
-    case (UNREGISTER_TEMP_ALARM | FUNC_OUT_MASK):
-      printc(" - Unregister_Temp_Alarm OUT\n");
-      break;
-    case (SET_STATE_TEMP_ALARM):
-      printc(" - Set_State_Temp_Alarm IN\n");
-      break;
-    case (SET_STATE_TEMP_ALARM | FUNC_OUT_MASK):
-      printc(" - Set_State_Temp_Alarm OUT\n");
-      break;
-    case (READ_TEMP_ALARM):
-      printc(" - Read_Temp_Alarm IN\n");
-      break;
-    case (READ_TEMP_ALARM | FUNC_OUT_MASK):
-      printc(" - Read_Temp_Alarm OUT\n");
-      break;
-    case (TEMP_INIT):
-      printc(" - Temp_Init IN\n");
-      break;
-    case (TEMP_INIT | FUNC_OUT_MASK):
-      printc(" - Temp_Init OUT\n");
-      break;
-    case (TEMP_REINIT):
-      printc(" - Temp_Reinit IN\n");
-      break;
-    case (TEMP_REINIT | FUNC_OUT_MASK):
-      printc(" - Temp_Reinit OUT\n");
-      break;
-    case (TEMP_WORK):
-      printc(" - Temp_Work IN\n");
-      break;
-    case (TEMP_WORK | FUNC_OUT_MASK):
-      printc(" - Temp_Work OUT\n");
-      break;
-    
     default:
       printc("\r - ??? Function ID = %u\n", FunctionBuffer[FunctionInBeckupBuffer]);
       break;

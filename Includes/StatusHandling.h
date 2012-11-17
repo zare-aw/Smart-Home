@@ -55,7 +55,7 @@ void Print_Function_History(void);
 #define EXIT_FUNC(Status, Func) \
   do {\
     FuncOUT(Func); \
-    return Status;\
+    return Status; \
   }while (0)
 
 #define EXIT_SUCCESS_FUNC(Func)\
@@ -240,17 +240,5 @@ void Print_Function_History(void);
 // Debug Commands
 #define DISPLAY_DUMP_COMMAND            2500
 #define DISPLAY_UPDATE_COMMAND          2501
-
-// Temperature
-#define REGISTER_TEMP_SENSOR            10700
-#define UNREGISTER_TEMP_SENSOR          10701
-#define REGISTER_TEMP_ALARM             10702
-#define SET_TEMP_ALARM                  10703
-#define UNREGISTER_TEMP_ALARM           10704
-#define SET_STATE_TEMP_ALARM            10705
-#define READ_TEMP_ALARM                 10706
-#define TEMP_INIT                       10707
-#define TEMP_REINIT                     10708
-#define TEMP_WORK                       10709
 
 #endif

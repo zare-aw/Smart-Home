@@ -444,7 +444,7 @@ Status_t Get_Temp_Alarm_Command(uint8 NoOfCommand, uint8 SensorID)
               break;
           }
           printc(", Value = %d", TempAlarm_s.Value);
-          TEMP_DEBUG(printc(", CallbackAddress = %X", (uint32)TempAlarm_s.Callback));
+//          TEMP_DEBUG(printc(", CallbackAddress = %X", (uint32)TempAlarm_s.Callback));
           printc("\n");
         }
   }
@@ -492,7 +492,7 @@ Status_t Get_Temp_Alarm_Command(uint8 NoOfCommand, uint8 SensorID)
               break;
           }
           printc(", Value = %d", TempAlarm_s.Value);
-          TEMP_DEBUG(printc(", CallbackAddress = %X", (uint32)TempAlarm_s.Callback));
+//          TEMP_DEBUG(printc(", CallbackAddress = %X", (uint32)TempAlarm_s.Callback));
           printc("\n");
         }
   }
