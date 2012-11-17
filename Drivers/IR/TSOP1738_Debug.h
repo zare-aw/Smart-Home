@@ -2,7 +2,7 @@
 #define _TSOP1738_Debug_h
 
 #define _TSOP_INFO
-#define _TSOP_DEBUG
+//#define _TSOP_DEBUG
 
 
 #ifdef _TSOP_INFO
