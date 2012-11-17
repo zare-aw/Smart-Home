@@ -471,26 +471,6 @@ void Print_Function_History(void)
       printc(" - IR_Ext_Interrupt_Init OUT\n");
       break;
     
-      // Out Driver
-    case (OUT_INIT):
-      printc(" - Out_Init IN\n");
-      break;
-    case (OUT_INIT | FUNC_OUT_MASK):
-      printc(" - Out_Init OUT\n");
-      break;
-    case (OUT_SYNC):
-      printc(" - Out_Sync IN\n");
-      break;
-    case (OUT_SYNC | FUNC_OUT_MASK):
-      printc(" - Out_Sync OUT\n");
-      break;
-    case (OUT_GET_STATE):
-      printc(" - Out_Get_State IN\n");
-      break;
-    case (OUT_GET_STATE | FUNC_OUT_MASK):
-      printc(" - Out_Get_State OUT\n");
-      break;
-    
       // Temperature
     case (REGISTER_TEMP_SENSOR):
       printc(" - Register_Temp_Sensor IN\n");

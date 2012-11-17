@@ -251,11 +251,6 @@ void Print_Function_History(void);
 #define IR_EXT_INTERRUPT_ISR            10006
 #define IR_EXT_INTERRUPT_INIT           10007
 
-// Out Driver
-#define OUT_INIT                        10100
-#define OUT_SYNC                        10101
-#define OUT_GET_STATE                   10102
-
 // Temperature
 #define REGISTER_TEMP_SENSOR            10700
 #define UNREGISTER_TEMP_SENSOR          10701

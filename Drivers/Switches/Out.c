@@ -1,5 +1,12 @@
 #include "Global_Defines.h"
-#include "Includes.h"
+#include "StatusHandling.h"
+#include "Func_Trace.h"
+#include "Console.h"
+
+#include "Out.h"
+#include "Out_Func.h"
+#include "Out_Debug.h"
+#include "Out_Pins.h"
 
 // Ovaa struktura bi trebalo da se naoga vo RTC RAM. RAM so se napojuva od Baterija
 Out_t Out = {0};
@@ -7,7 +14,7 @@ Out_t OutState = {0};
 
 Status_t Out_Init(void)
 {
-  Function_IN(OUT_INIT);
+  FuncIN(OUT_INIT);
   
   OUT_1_INIT();
   OUT_2_INIT();
@@ -21,12 +28,13 @@ Status_t Out_Init(void)
   OUT_10_INIT();
   OUT_11_INIT();
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(OUT_INIT);
 }
 
 Status_t Out_Sync(void)
 {
-  Function_IN(OUT_SYNC);
+  FuncIN(OUT_SYNC);
+  
   if(Out.Change == 1)
   {
     Out.Change = 0;
@@ -246,7 +254,7 @@ Status_t Out_Sync(void)
 
 Status_t Out_Get_State(uint8 OutID, Out_t *Out_p)
 {
-  Function_IN(OUT_GET_STATE);
+  FuncIN(OUT_GET_STATE);
   
   switch(OutID)
   {
@@ -257,10 +265,10 @@ Status_t Out_Get_State(uint8 OutID, Out_t *Out_p)
       *Out_p = OutState;
       break;
     default:
-      CONTROL(0, INVALID_INPUT_PARAMETER);
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
   }
   
-  RETURN_SUCCESS_FUNC(OUT_GET_STATE);
+  EXIT_SUCCESS_FUNC(OUT_GET_STATE);
 }
 
 Status_t Out_1_Set(void * Ptr)

@@ -29,6 +29,7 @@
 // Drivers
 #define PWM_BACKLIGHT_OFFSET    0x41000000
 #define DS1820_OFFSET           0x42000000
+#define OUT_OFFSET              0x43000000
 
 /*******************************************************************************
 * Func_Trace status

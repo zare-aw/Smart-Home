@@ -1675,6 +1675,15 @@
       <file>
         <name>$PROJ_DIR$\Drivers\Switches\Out.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\Switches\Out_Debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\Switches\Out_Func.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\Switches\Out_Pins.h</name>
+      </file>
     </group>
     <group>
       <name>Temperature_Sensors</name>
