@@ -33,6 +33,7 @@ typedef struct Out_s
 Status_t Out_Init(void);
 Status_t Out_Sync(void);
 Status_t Out_Get_State(uint8 OutID, Out_t *Out);
+Status_t Out_Set_State(Out_t *Out_p);
 
 Status_t Out_1_Set(void * Ptr);
 Status_t Out_2_Set(void * Ptr);
