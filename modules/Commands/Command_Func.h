@@ -54,4 +54,8 @@
 #define DU_OFFSET                                           0x0B00
 #define DO_DU           COMMANDS_OFFSET | DU_OFFSET |       0x0001
 
+// cmd_set_ir.c
+#define SET_IR_OFFSET                                       0x0C00
+#define DO_SET_IR       COMMANDS_OFFSET | SET_IR_OFFSET |   0x0001
+
 #endif
