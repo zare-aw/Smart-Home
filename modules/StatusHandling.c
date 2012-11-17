@@ -105,14 +105,6 @@ void Print_Function_History(void)
   {
     switch(FunctionBuffer[FunctionInBeckupBuffer])
     {
-      // System
-    case (INITIALIZATION):
-      printc(" - Initialization IN\n");
-      break;
-    case (INITIALIZATION | FUNC_OUT_MASK):
-      printc(" - Initialization OUT\n");
-      break;
-    
       // ConsoleHelp
     case (CONSOLE_HELP):
       printc(" - Console_Help IN\n");

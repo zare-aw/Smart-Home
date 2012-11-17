@@ -68,6 +68,7 @@ void Print_Function_History(void);
 /*******************************************************************************
 * Macro definitions
 *******************************************************************************/
+#if 1
 #define CONTROL(Condition, Status) \
      do {\
        if (!(Condition)) \
@@ -128,6 +129,7 @@ void Print_Function_History(void);
     Function_OUT(Func); \
     return SUCCESS; \
   }while(0)
+#endif
 
 /*******************************************************************************
 * Status defines
@@ -180,9 +182,6 @@ void Print_Function_History(void);
 /*******************************************************************************
 * Function code definition
 *******************************************************************************/
-// System
-#define INITIALIZATION                10
-
 // ConsoleHelp
 #define CONSOLE_HELP                  1250
 #define CONSOLE_STATUS                1251

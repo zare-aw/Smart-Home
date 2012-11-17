@@ -4,6 +4,8 @@
 #include "Command.h"
 #include "Timer.h"
 
+#include "Initialization_func.h"
+
 void Pin_MUX_Init(void);
 
 Status_t Initialization(void)
