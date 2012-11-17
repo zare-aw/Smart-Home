@@ -8,7 +8,7 @@ void Pin_MUX_Init(void);
 
 Status_t Initialization(void)
 {
-  Function_IN(INITIALIZATION);
+  FuncIN(INITIALIZATION);
   
   printc("\n********************************\n");
   printc("\r*** Smart home system Rev 1.0 **\n");
@@ -44,8 +44,9 @@ Status_t Initialization(void)
   Cmd_Init_Parameters.putscmd = &puts;
   (void)Commands_Init(&Cmd_Init_Parameters);
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(INITIALIZATION);
 }
+FUNC_REGISTER(INITIALIZATION, Initialization);
 
 /*******************************************************************************
 * Inicijalizacija na GPIO
