@@ -58,4 +58,8 @@
 #define SET_IR_OFFSET                                       0x0C00
 #define DO_SET_IR       COMMANDS_OFFSET | SET_IR_OFFSET |   0x0001
 
+// cmd_switch.c
+#define SW_OFFSET                                           0x0D00
+#define DO_SW           COMMANDS_OFFSET | SW_OFFSET |       0x0001
+
 #endif

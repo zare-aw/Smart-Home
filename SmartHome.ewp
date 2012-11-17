@@ -1777,6 +1777,9 @@
           <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_set_time.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_switch.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_time.c</name>
         </file>
       </group>
