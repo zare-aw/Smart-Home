@@ -1,6 +1,11 @@
 #include "Global_Defines.h"
 #include "Timer.h"
-#include "Includes.h"
+#include "Console.h"
+
+#include "TSOP1738.h"
+#include "TSOP1738_Debug.h"
+#include "TSOP1738_Func.h"
+#include "TSOP1738_Pins.h"
 
 uint8 Control_g = 0;
 uint8 ControlBeckup = 0;
@@ -24,13 +29,13 @@ __arm static Status_t IR_Input_ISR(uint8 Control, uint8 Address, uint8 Command);
 *******************************************************************************/
 Status_t IR_Init(void)
 {
-  Function_IN(IR_INIT);
+  FuncIN(IR_INIT);
   
   Timer_1_Init();
   IR_Ext_Interrupt_Init();
-  IR_PIN_INIT();
+  TSOP_PIN_INIT();
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(IR_INIT);
 }
 
 /*******************************************************************************
@@ -38,14 +43,14 @@ Status_t IR_Init(void)
 *******************************************************************************/
 static Status_t IR_Ext_Interrupt_Init(void)
 {
-  Function_IN(IR_EXT_INTERRUPT_INIT);
+  FuncIN(IR_EXT_INTERRUPT_INIT);
   
   EXTINT_bit.EINT2 = 1;         // Clear INT Flag
   EXTWAKE_bit.EXTWAKE2 = 1;     // Enable Wake Up on Ext interrupt
   EXTMODE_bit.EXTMODE2 = 1;     // Edge senitive interrupt
   EXTPOLAR_bit.EXTPOLAR2 = 0;   // Falling-edge sensitive interrupt
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(IR_EXT_INTERRUPT_INIT);
 }
 
 /*******************************************************************************
@@ -63,9 +68,9 @@ static Status_t IR_Ext_Interrupt_Init(void)
 *******************************************************************************/
 Status_t IR_Command_Init(uint16 NoOfCommand, ir_t *ir_p)
 {
-  Function_IN(IR_COMMAND_INIT);
+  FuncIN(IR_COMMAND_INIT);
   
-  CONTROL((NoOfCommand < MAX_IR_COMMANDS) && (NoOfCommand > 0), IR_COMMAND_ERROR);
+  ASSERT((NoOfCommand < MAX_IR_COMMANDS) && (NoOfCommand > 0), -IR_COMMAND_ERROR);
   
   if((ir_p -> Address == NULL) && (ir_p -> Command == NULL) && (ir_p -> Callback_p == NULL) && (ir_p -> CallMode == NULL) && (ir_p -> Target == NULL))
   {
@@ -89,7 +94,7 @@ Status_t IR_Command_Init(uint16 NoOfCommand, ir_t *ir_p)
       IR_Commands[NoOfCommand].Callback_p = ir_p -> Callback_p;
   }
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(IR_COMMAND_INIT);
 }
 
 /*******************************************************************************
@@ -97,12 +102,12 @@ Status_t IR_Command_Init(uint16 NoOfCommand, ir_t *ir_p)
 *******************************************************************************/
 Status_t IR_Set_Command(uint16 NoOfCommand)
 {
-  Function_IN(IR_SET_COMMAND);
+  FuncIN(IR_SET_COMMAND);
   
   IR_SetCommand = 1;
   Set_NoOfCommand = NoOfCommand;
 
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(IR_SET_COMMAND);
 }
 
 /*******************************************************************************
@@ -110,11 +115,11 @@ Status_t IR_Set_Command(uint16 NoOfCommand)
 *******************************************************************************/
 Status_t IR_Get_Command(uint16 NoOfCommand, ir_t * IR_Command)
 {
-  Function_IN(IR_GET_COMMAND);
+  FuncIN(IR_GET_COMMAND);
   
   *IR_Command = IR_Commands[NoOfCommand];
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(IR_GET_COMMAND);
 }
 
 /*******************************************************************************
@@ -123,9 +128,9 @@ Status_t IR_Get_Command(uint16 NoOfCommand, ir_t * IR_Command)
 __arm Status_t IR_Timer_ISR(void)
 {
   uint8 Input = 0;
-  Input = IR_PIN_READ();    // Ova mora da se zavrsi najbrzo sto moze
+  Input = TSOP_PIN_READ();    // Ova mora da se zavrsi najbrzo sto moze
   
-  Function_IN(IR_TIMER_ISR);
+  FuncIN(IR_TIMER_ISR);
     
   switch (IrInputState)
   {
@@ -176,8 +181,8 @@ __arm Status_t IR_Timer_ISR(void)
       break;
     case 11:
       Command_g |= ((!Input) & 0x01);
-      IR_DEBUG(printc("\nAddress = %u\tCommand = %u\n", Address_g, Command_g));
-      IR_INT_ENABLE();
+      TSOP_DEBUG(printc("\nAddress = %u\tCommand = %u\n", Address_g, Command_g));
+      TSOP_INT_ENABLE();
       Timer_1_Stop();
       IrInputState = 0;
       
@@ -197,12 +202,12 @@ __arm Status_t IR_Timer_ISR(void)
         if((Control_g == ControlBeckup) && (Address_g == AddressBeckup) && (Command_g == CommandBeckup))
         {
           IR_Input_ISR(REPEAT_COMMAND, NULL, NULL);
-          IR_DEBUG(printc("\r # IR Repeat command received\n"));
+          TSOP_DEBUG(printc("\r # IR Repeat command received\n"));
         }
         else
         {
           IR_Input_ISR(NEW_COMMAND, Address_g, Command_g);
-          IR_DEBUG(printc("\r # IR New command received\n"));
+          TSOP_DEBUG(printc("\r # IR New command received\n"));
         }
       
         ControlBeckup = Control_g;
@@ -211,11 +216,11 @@ __arm Status_t IR_Timer_ISR(void)
       }
       break;
     default:
-      CONTROL(0, IR_READ_ERROR);
+      Fatal_Abort(-IR_READ_ERROR);
       break;
   } // switch
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(IR_TIMER_ISR);
 }
 
 /*******************************************************************************
@@ -223,14 +228,14 @@ __arm Status_t IR_Timer_ISR(void)
 *******************************************************************************/
 __arm static Status_t IR_Input_ISR(uint8 Control, uint8 Address, uint8 Command)
 {
-  Function_IN(IR_INPUT_ISR);
+  FuncIN(IR_INPUT_ISR);
   uint32 i;
   
   if(Control == REPEAT_COMMAND)
   {
     if(IR_LastCommand.CallMode == REPETITIVE_CALL)
       if(IR_LastCommand.Callback_p != NULL)
-        CONTROL(!IR_LastCommand.Callback_p(NULL), IR_CALLBACK_ERROR);
+        ASSERT(!IR_LastCommand.Callback_p(NULL), -IR_CALLBACK_ERROR);
   }
   else
   {
@@ -240,12 +245,12 @@ __arm static Status_t IR_Input_ISR(uint8 Control, uint8 Address, uint8 Command)
       {
         IR_LastCommand = IR_Commands[i];
         if(IR_Commands[i].Callback_p != NULL)
-          CONTROL(!IR_Commands[i].Callback_p(NULL), IR_CALLBACK_ERROR);
+          ASSERT(!IR_Commands[i].Callback_p(NULL), -IR_CALLBACK_ERROR);
       }
     }
   }
     
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(IR_INPUT_ISR);
 }
 
 /*******************************************************************************
@@ -253,19 +258,19 @@ __arm static Status_t IR_Input_ISR(uint8 Control, uint8 Address, uint8 Command)
 *******************************************************************************/
 __arm static Status_t IR_Ext_Interrupt_ISR(void)
 {
-  Function_IN(IR_EXT_INTERRUPT_ISR);
+  FuncIN(IR_EXT_INTERRUPT_ISR);
   
   Timer_1_Start( (IR_BURST_T * 4) + ((IR_BURST_T / 8) * 3) );
   
   IrInputState = 0;
   
-  IR_INT_DISABLE();
+  TSOP_INT_DISABLE();
   
   Control_g = 0;
   Address_g = 0;
   Command_g = 0;
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(IR_EXT_INTERRUPT_ISR);
 }
 
 __irq void Ext_Int_2_ISR(void)
@@ -280,7 +285,7 @@ __irq void Ext_Int_2_ISR(void)
 *******************************************************************************/
 Status_t IR_Dummy_Handler(void *Ptr)
 {
-  IR_INFO(printc(" # IR dummy handler executed!\n"));
+  TSOP_INFO(printc(" # IR dummy handler executed!\n"));
   
   return SUCCESS;
 }

@@ -421,56 +421,6 @@ void Print_Function_History(void)
       printc(" - Display_Update_Command OUT\n");
       break;
     
-      // IR Driver
-    case (IR_INIT):
-      printc(" - IR_Init IN\n");
-      break;
-    case (IR_INIT | FUNC_OUT_MASK):
-      printc(" - IR_Init OUT\n");
-      break;
-    case (IR_COMMAND_INIT):
-      printc(" - IR_Command_Init IN\n");
-      break;
-    case (IR_COMMAND_INIT | FUNC_OUT_MASK):
-      printc(" - IR_Command_Init OUT\n");
-      break;
-	case (IR_SET_COMMAND):
-      printc(" - IR_Set_Command IN\n");
-      break;
-    case (IR_SET_COMMAND | FUNC_OUT_MASK):
-      printc(" - IR_Set_Command OUT\n");
-      break;
-    case (IR_GET_COMMAND):
-      printc(" - IR_Get_Command IN\n");
-      break;
-    case (IR_GET_COMMAND | FUNC_OUT_MASK):
-      printc(" - IR_Get_Command OUT\n");
-      break;
-    case (IR_TIMER_ISR):
-      printc(" - IR_Timer_ISR IN\n");
-      break;
-    case (IR_TIMER_ISR | FUNC_OUT_MASK):
-      printc(" - IR_Timer_ISR OUT\n");
-      break;
-    case (IR_INPUT_ISR):
-      printc(" - IR_Input_ISR IN\n");
-      break;
-    case (IR_INPUT_ISR | FUNC_OUT_MASK):
-      printc(" - IR_Input_ISR OUT\n");
-      break;
-    case (IR_EXT_INTERRUPT_ISR):
-      printc(" - IR_Ext_Interrupt_ISR IN\n");
-      break;
-    case (IR_EXT_INTERRUPT_ISR | FUNC_OUT_MASK):
-      printc(" - IR_Ext_Interrupt_ISR OUT\n");
-      break;
-    case (IR_EXT_INTERRUPT_INIT):
-      printc(" - IR_Ext_Interrupt_Init IN\n");
-      break;
-    case (IR_EXT_INTERRUPT_INIT | FUNC_OUT_MASK):
-      printc(" - IR_Ext_Interrupt_Init OUT\n");
-      break;
-    
       // Temperature
     case (REGISTER_TEMP_SENSOR):
       printc(" - Register_Temp_Sensor IN\n");

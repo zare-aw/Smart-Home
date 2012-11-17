@@ -1666,6 +1666,15 @@
       <file>
         <name>$PROJ_DIR$\Drivers\IR\TSOP1738.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\IR\TSOP1738_Debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\IR\TSOP1738_Func.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Drivers\IR\TSOP1738_Pins.h</name>
+      </file>
     </group>
     <group>
       <name>Switches</name>

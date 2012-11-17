@@ -241,16 +241,6 @@ void Print_Function_History(void);
 #define DISPLAY_DUMP_COMMAND            2500
 #define DISPLAY_UPDATE_COMMAND          2501
 
-// IR Driver
-#define IR_INIT                         10000
-#define IR_COMMAND_INIT                 10001
-#define IR_SET_COMMAND                  10002
-#define IR_GET_COMMAND                  10003
-#define IR_TIMER_ISR                    10004
-#define IR_INPUT_ISR                    10005
-#define IR_EXT_INTERRUPT_ISR            10006
-#define IR_EXT_INTERRUPT_INIT           10007
-
 // Temperature
 #define REGISTER_TEMP_SENSOR            10700
 #define UNREGISTER_TEMP_SENSOR          10701

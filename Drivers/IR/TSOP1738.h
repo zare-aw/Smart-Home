@@ -1,9 +1,6 @@
 #ifndef _TSOP1738_h
 #define _TSOP1738_h
 
-//#define _IR_DEBUG
-#define _IR_INFO
-
 #define MAX_IR_COMMANDS       150
 #define RESERVED_IR_COMMANDS  50
 #define IR_BURST_T            889
@@ -36,23 +33,6 @@
 #define CH_UP_KEY       MAX_IR_COMMANDS - RESERVED_IR_COMMANDS + 22
 #define CH_DOWN_KEY     MAX_IR_COMMANDS - RESERVED_IR_COMMANDS + 23
 #define MUTE_KEY        MAX_IR_COMMANDS - RESERVED_IR_COMMANDS + 24
-
-#ifdef _IR_DEBUG
-#define IR_DEBUG(a) a
-#else
-#define IR_DEBUG(a)
-#endif
-
-#ifdef _IR_INFO
-#define IR_INFO(a) a
-#else
-#define IR_INFO(a)
-#endif
-
-#define IR_PIN_INIT()     (PINSEL0_bit.P0_15 = 2, FIO0DIR_bit.P0_15 = 0)
-#define IR_PIN_READ()     FIO0PIN_bit.P0_15
-#define IR_INT_ENABLE()   (PINSEL0_bit.P0_15 = 2)
-#define IR_INT_DISABLE()  (PINSEL0_bit.P0_15 = 0)
 
 typedef struct ir_s
 {
