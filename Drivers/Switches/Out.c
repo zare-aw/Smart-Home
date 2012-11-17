@@ -30,6 +30,7 @@ Status_t Out_Init(void)
   
   EXIT_SUCCESS_FUNC(OUT_INIT);
 }
+FUNC_REGISTER(OUT_INIT, Out_Init);
 
 Status_t Out_Sync(void)
 {
@@ -249,8 +250,9 @@ Status_t Out_Sync(void)
     }
   } // if
   
-  RETURN_SUCCESS();
+  EXIT_SUCCESS_FUNC(OUT_SYNC);
 }
+FUNC_REGISTER(OUT_SYNC, Out_Sync);
 
 Status_t Out_Get_State(uint8 OutID, Out_t *Out_p)
 {
@@ -270,6 +272,7 @@ Status_t Out_Get_State(uint8 OutID, Out_t *Out_p)
   
   EXIT_SUCCESS_FUNC(OUT_GET_STATE);
 }
+FUNC_REGISTER(OUT_GET_STATE, Out_Get_State);
 
 Status_t Out_1_Set(void * Ptr)
 {
