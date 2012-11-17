@@ -13,9 +13,9 @@ Status_t Get_Time_Command(uint8 NoOfCommand)
   RTC_Get_Time(&Time);
   
   if(strstr(QueueConsoleCommand[NoOfCommand], "-a") != NULL)
-    CONTROL(!Format_Time(2, &Time, String), RTC_GENERAL_ERROR);
+    VERIFY(Format_Time(2, &Time, String), -RTC_GENERAL_ERROR);
   else
-    CONTROL(!Format_Time(1, &Time, String), RTC_GENERAL_ERROR);
+    VERIFY(Format_Time(1, &Time, String), -RTC_GENERAL_ERROR);
   
   printc("\r # %s\n", String);
   
@@ -55,9 +55,9 @@ Status_t Get_Date_Command(uint8 NoOfCommand)
   RTC_Get_Date(&Date);
   
   if(strstr(QueueConsoleCommand[NoOfCommand], "-l") != NULL)
-    CONTROL(!Format_Date(2, &Date, String), RTC_GENERAL_ERROR);
+    VERIFY(Format_Date(2, &Date, String), -RTC_GENERAL_ERROR);
   else
-    CONTROL(!Format_Date(1, &Date, String), RTC_GENERAL_ERROR);
+    VERIFY(Format_Date(1, &Date, String), -RTC_GENERAL_ERROR);
   
   printc("\r # %s\n", String);
   
@@ -122,7 +122,7 @@ Status_t Get_IR_Commands_Command(uint8 NoOfCommand)
   
   for(i = 0; i < MAX_IR_COMMANDS; i++)
   {
-    CONTROL(!IR_Get_Command(i, &IR_Command), IR_COMMAND_GET_ERROR);
+    VERIFY(IR_Get_Command(i, &IR_Command), -IR_COMMAND_GET_ERROR);
     if((IR_Command.Address != NULL) || (IR_Command.Command != NULL) || (IR_Command.CallMode != NULL) || (IR_Command.Target != NULL))
       printc("\r # IR_Command_Number = %u\tAddress = %u\tCommand = %u\tCallMode = %u\tTarget = %u\n", i, IR_Command.Address, IR_Command.Command, IR_Command.CallMode, IR_Command.Target);
   }
@@ -145,13 +145,13 @@ Status_t Set_IR_Commands_Command(uint8 NoOfCommand, uint16 NoOfIRCommand, ir_t *
 
   if((ir_p -> Address == NULL) && (ir_p -> Command == NULL))
   {
-    CONTROL(!IR_Command_Init(NoOfIRCommand, ir_p), IR_COMMAND_SET_ERROR);
-    CONTROL(!IR_Set_Command(NoOfIRCommand), IR_COMMAND_SET_ERROR);
+    VERIFY(IR_Command_Init(NoOfIRCommand, ir_p), -IR_COMMAND_SET_ERROR);
+    VERIFY(IR_Set_Command(NoOfIRCommand), -IR_COMMAND_SET_ERROR);
     printc("\r # Waiting for Command from IR\n");
   }
   else
   {
-    CONTROL(!IR_Command_Init(NoOfIRCommand, ir_p), IR_COMMAND_SET_ERROR);
+    VERIFY(IR_Command_Init(NoOfIRCommand, ir_p), -IR_COMMAND_SET_ERROR);
     printc("\r # IR Command Set with parameters:\n");
     printc(" # NoOfCommand = %u\n", NoOfIRCommand);
     printc(" # Address = %u\n", ir_p -> Address);
@@ -517,7 +517,7 @@ Status_t Set_Temp_Alarm_Command(uint8 NoOfCommand, TempAlarm_t *TempAlarm_p)
   
   if(TempAlarm_p -> AlarmID != NO_ALARM_ID)
   {
-    CONTROL(!Set_Temp_Alarm(TempAlarm_p), TEMP_SET_ALARM_ERROR);
+    VERIFY(Set_Temp_Alarm(TempAlarm_p), -TEMP_SET_ALARM_ERROR);
     printc(" # Temp Alarm set\n");
   }
   else
@@ -527,8 +527,8 @@ Status_t Set_Temp_Alarm_Command(uint8 NoOfCommand, TempAlarm_t *TempAlarm_p)
        (TempAlarm_p -> Callback != NULL) &&
        (TempAlarm_p -> SensorID < NO_OF_TEMP_SENSORS))
     {
-      CONTROL(!Register_Temp_Alarm(TempAlarm_p -> SensorID, TempAlarm_p -> Event, TempAlarm_p -> Value,
-                                  TempAlarm_p -> Callback, &(TempAlarm_p -> AlarmID)), TEMP_ALARM_REGISTER_ERROR);
+      VERIFY(Register_Temp_Alarm(TempAlarm_p -> SensorID, TempAlarm_p -> Event, TempAlarm_p -> Value,
+                                  TempAlarm_p -> Callback, &(TempAlarm_p -> AlarmID)), -TEMP_ALARM_REGISTER_ERROR);
       printc("\r # Temp Alarm Registered\n");
     }
     else
@@ -538,7 +538,7 @@ Status_t Set_Temp_Alarm_Command(uint8 NoOfCommand, TempAlarm_t *TempAlarm_p)
     
     if((TempAlarm_p -> State != 0) && (TempAlarm_p -> SensorID < NO_OF_TEMP_SENSORS) && (TempAlarm_p -> AlarmID != NO_ALARM_ID))
     {
-      CONTROL(!Set_State_Temp_Alarm(TempAlarm_p -> SensorID, TempAlarm_p -> AlarmID, TempAlarm_p -> State), TEMP_ALARM_SET_STATE_ERROR);
+      VERIFY(Set_State_Temp_Alarm(TempAlarm_p -> SensorID, TempAlarm_p -> AlarmID, TempAlarm_p -> State), -TEMP_ALARM_SET_STATE_ERROR);
       printc("\r # Temp Alarm state set\n");
     }
     else

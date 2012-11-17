@@ -22,7 +22,8 @@ Status_t DS1820_Init(int Ch, char *SN)
   DS_INIT(Ch);
 
   StatusReturn = DS1820_Read_SN(SerialNumber, Ch);
-  CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_INIT);
+  if(StatusReturn != SUCCESS)
+    EXIT_FUNC(StatusReturn, DS1820_INIT);
   
   if(SN != NULL)
     memcpy(SN, SerialNumber, 8);
@@ -55,10 +56,15 @@ static Status_t DS_Reset(int Ch)
   DS_DIR_IN(Ch);            // Set Pin as input - wait for DS1820 to pull low
   uDelay(66);
   DS_READ(Ch, Result);
-  CONTROL_EXIT_FUNC(Result == 0, DS1820_NO_PRESENCE_ERROR, DS_RESET);
+  
+  if(Result != 0)
+    EXIT_FUNC(DS1820_NO_PRESENCE_ERROR, DS_RESET);
+  
   uDelay(480-66);
   DS_READ(Ch, Result);
-  CONTROL_EXIT_FUNC(Result == 1, DS1820_SHORT_CIRCUIT_ERROR, DS_RESET);
+  
+  if(Result != 1)
+    EXIT_FUNC(DS1820_SHORT_CIRCUIT_ERROR, DS_RESET);
   
   EXIT_SUCCESS_FUNC(DS_RESET);
 }
@@ -86,7 +92,7 @@ static Status_t DS_Write_Bit(uint8 Data, int Ch)
     uDelay(48);
     break;
   default:
-    EXIT(0, INVALID_INPUT_PARAMETER);
+    Fatal_Abort(-INVALID_INPUT_PARAMETER);
   }
   return SUCCESS;
 }
@@ -120,7 +126,8 @@ static Status_t DS_Write_Byte(uint8 Data, int Ch)
   for (i = 0; i < 8; i++)
   {
     StatusReturn = DS_Write_Bit(Data & 0x01, Ch);
-    EXIT(StatusReturn == SUCCESS, StatusReturn);
+    if(StatusReturn != SUCCESS)
+      return StatusReturn;
     Data >>= 1;
   }
   return SUCCESS;
@@ -154,26 +161,32 @@ Status_t DS1820_Start_Conversion(int Ch, uint8 *SerialNumber_p)
   int i;
   
   StatusReturn = DS_Reset(Ch);
-  CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_START_CONVERSION);
+  if(StatusReturn != SUCCESS)
+    EXIT_FUNC(StatusReturn, DS1820_START_CONVERSION);
   
   if( SerialNumber_p == NULL)
   {
     StatusReturn = DS_Write_Byte(DS_SKIP_ROM_COMMAND, Ch);
-    CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_START_CONVERSION);
+    if(StatusReturn != SUCCESS)
+      EXIT_FUNC(StatusReturn, DS1820_START_CONVERSION);
   }
   else
   {
     StatusReturn = DS_Write_Byte(DS_MATCH_ROM_COMMAND, Ch);
-    CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_START_CONVERSION);
+    if(StatusReturn != SUCCESS)
+      EXIT_FUNC(StatusReturn, DS1820_START_CONVERSION);
+    
     for(i = 0; i < 8; i++)
     {
       StatusReturn = DS_Write_Byte(SerialNumber_p[i], Ch);
-      CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_START_CONVERSION);
+      if(StatusReturn != SUCCESS)
+        EXIT_FUNC(StatusReturn, DS1820_START_CONVERSION);
     }
   }
   
   StatusReturn = DS_Write_Byte(DS_CONVERT_TEMPERATURE_COMMAND, Ch);
-  CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_START_CONVERSION);
+  if(StatusReturn != SUCCESS)
+    EXIT_FUNC(StatusReturn, DS1820_START_CONVERSION);
   
   EXIT_SUCCESS_FUNC(DS1820_START_CONVERSION);
 }
@@ -191,29 +204,37 @@ Status_t DS1820_Read_Temp(int *Temp, int Ch, uint8 *SerialNumber_p)
   int i;
   
   StatusReturn = DS_Reset(Ch);
-  CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_READ_TEMP);
+  if(StatusReturn != SUCCESS)
+    EXIT_FUNC(StatusReturn, DS1820_READ_TEMP);
   
   if(SerialNumber_p == NULL)
   {
     StatusReturn = DS_Write_Byte(DS_SKIP_ROM_COMMAND, Ch);
-    CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_READ_TEMP);
+    if(StatusReturn != SUCCESS)
+      EXIT_FUNC(StatusReturn, DS1820_READ_TEMP);
   }
   else
   {
     StatusReturn = DS_Write_Byte(DS_MATCH_ROM_COMMAND, Ch);
-    CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_READ_TEMP);
+    if(StatusReturn != SUCCESS)
+      EXIT_FUNC(StatusReturn, DS1820_READ_TEMP);
+    
     for(i = 0; i < 8; i++)
     {
       StatusReturn = DS_Write_Byte(SerialNumber_p[i], Ch);
-      CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_READ_TEMP);
+      if(StatusReturn != SUCCESS)
+        EXIT_FUNC(StatusReturn, DS1820_READ_TEMP);
     }
   }
       
   StatusReturn = DS_Write_Byte(DS_READ_SCRATCHPAD_COMMAND, Ch);
-  CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_READ_TEMP);
+  if(StatusReturn != SUCCESS)
+    EXIT_FUNC(StatusReturn, DS1820_READ_TEMP);
   
-  CONTROL_EXIT_FUNC(DS_Read_Byte(&Scratchpad[0], Ch) == SUCCESS, DS1820_UNABLE_TO_READ_DATA_ERROR, DS1820_READ_TEMP);
-  CONTROL_EXIT_FUNC(DS_Read_Byte(&Scratchpad[1], Ch) == SUCCESS, DS1820_UNABLE_TO_READ_DATA_ERROR, DS1820_READ_TEMP);
+  if(DS_Read_Byte(&Scratchpad[0], Ch) != SUCCESS)
+    EXIT_FUNC(DS1820_UNABLE_TO_READ_DATA_ERROR, DS1820_READ_TEMP);
+  if(DS_Read_Byte(&Scratchpad[1], Ch) != SUCCESS)
+    EXIT_FUNC(DS1820_UNABLE_TO_READ_DATA_ERROR, DS1820_READ_TEMP);
   
   if(Scratchpad[1])
     *Temp = ( -(((Scratchpad[0] ^ 0xFF) + 1) >> 1));   // Ako brojot e negativen napravi komplemet na 2
@@ -234,16 +255,19 @@ Status_t DS1820_Read_SN(uint8 *SerialNumber, int Ch)
   Status_t StatusReturn = GENERAL_ERROR;
   int i;
   
-  CONTROL(SerialNumber != NULL, INVALID_INPUT_PARAMETER);
+  ASSERT(SerialNumber != NULL, -INVALID_INPUT_PARAMETER);
   
   StatusReturn = DS_Reset(Ch);
-  CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_READ_SN);
+  if(StatusReturn != SUCCESS)
+    EXIT_FUNC(StatusReturn, DS1820_READ_SN);
   
   StatusReturn = DS_Write_Byte(DS_READ_ROM_COMMAND, Ch);
-  CONTROL_EXIT_FUNC(StatusReturn == SUCCESS, StatusReturn, DS1820_READ_SN);
+  if(StatusReturn != SUCCESS)
+    EXIT_FUNC(StatusReturn, DS1820_READ_SN);
   
   for(i = 0; i < 8; i++)
-    CONTROL_EXIT_FUNC(DS_Read_Byte(&(SerialNumber[i]), Ch) == SUCCESS, DS1820_UNABLE_TO_READ_DATA_ERROR, DS1820_READ_SN);
+    if(DS_Read_Byte(&(SerialNumber[i]), Ch) != SUCCESS)
+      EXIT_FUNC(DS1820_UNABLE_TO_READ_DATA_ERROR, DS1820_READ_SN);
   
   EXIT_SUCCESS_FUNC(DS1820_READ_SN);
 }
