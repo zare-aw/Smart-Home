@@ -463,64 +463,6 @@ Status_t Console_Command_Execute(uint8 NoOfCommand)
     EXIT_SUCCESS_FUNC(CONSOLE_COMMAND_EXECUTE);   // No Console Commands in Queue
   
   VERIFY(Run_Command(QueueConsoleCommand[NoOfCommand]), -CONSOLE_COMMAND_EXECUTE_ERROR);
-
-#if 0
-  if(!strncmp("help", QueueConsoleCommand[NoOfCommand], 4))
-       CONTROL(!Console_Help(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "status", QueueConsoleCommand[NoOfCommand], 6))
-       CONTROL(!Console_Status(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "list", QueueConsoleCommand[NoOfCommand], 4))
-       CONTROL(!Console_List(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "info", QueueConsoleCommand[NoOfCommand], 4))
-       CONTROL(!Console_Info(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "time", QueueConsoleCommand[NoOfCommand], 4))
-       CONTROL(!Console_Time(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "date", QueueConsoleCommand[NoOfCommand], 4))
-       CONTROL(!Console_Date(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "set-time", QueueConsoleCommand[NoOfCommand], 8))
-       CONTROL(!Console_Set_Time(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "set-date", QueueConsoleCommand[NoOfCommand], 8))
-       CONTROL(!Console_Set_Date(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "config", QueueConsoleCommand[NoOfCommand], 6))
-       CONTROL(!Console_Config(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "set-config", QueueConsoleCommand[NoOfCommand], 10))
-       CONTROL(!Console_Set_Config(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "ir", QueueConsoleCommand[NoOfCommand], 2))
-       CONTROL(!Console_Ir(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "set-ir", QueueConsoleCommand[NoOfCommand], 6))
-       CONTROL(!Console_Set_Ir(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "backlight", QueueConsoleCommand[NoOfCommand], 9))
-       CONTROL(!Console_Backlight(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "set-backlight", QueueConsoleCommand[NoOfCommand], 13))
-       CONTROL(!Console_Set_Backlight(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "light-switch", QueueConsoleCommand[NoOfCommand], 12))
-       CONTROL(!Console_Light_Switch(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "set-light-switch", QueueConsoleCommand[NoOfCommand], 16))
-       CONTROL(!Console_Set_Light_Switch(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "out-switch", QueueConsoleCommand[NoOfCommand], 10))
-       CONTROL(!Console_Out_Switch(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "set-out-switch", QueueConsoleCommand[NoOfCommand], 14))
-       CONTROL(!Console_Set_Out_Switch(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "switch-settings", QueueConsoleCommand[NoOfCommand], 15))
-       CONTROL(!Console_Switch_Settings(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "set-switch-settings", QueueConsoleCommand[NoOfCommand], 19))
-       CONTROL(!Console_Set_Switch_Settings(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "temp", QueueConsoleCommand[NoOfCommand], 4))
-       CONTROL(!Console_Temp(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "alarm", QueueConsoleCommand[NoOfCommand], 5))
-       CONTROL(!Console_Alarm(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "set-alarm", QueueConsoleCommand[NoOfCommand], 9))
-       CONTROL(!Console_Set_Alarm(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "get-temp-alarm", QueueConsoleCommand[NoOfCommand], 14))
-       CONTROL(!Console_Get_Temp_Alarm(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "set-temp-alarm", QueueConsoleCommand[NoOfCommand], 14))
-       CONTROL(!Console_Set_Temp_Alarm(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  
-  // Debug commands
-  else if(!strncmp( "dd", QueueConsoleCommand[NoOfCommand], 2))
-       CONTROL(!Console_Dump_Display(NoOfCommand), CONSOLE_COMMAND_EXECUTE_ERROR);
-  else if(!strncmp( "du", QueueConsoleCommand[NoOfCommand], 2))
-#endif
   
   Status = Console_Update_Display(NoOfCommand);
   VERIFY(Status, -CONSOLE_COMMAND_EXECUTE_ERROR);
