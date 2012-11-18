@@ -70,4 +70,8 @@
 #define DO_TRY_READ_RESPONSE_CMD    COMMANDS_OFFSET | TEMP_ALARM_OFFSET | 0x0004
 #define DO_SET_TEMP_ALARM_CMD       COMMANDS_OFFSET | TEMP_ALARM_OFFSET | 0x0005
 
+// cmd_x.c
+#define X_OFFSET                                            0x0D00
+#define DO_X            COMMANDS_OFFSET | X_OFFSET |        0x0001
+
 #endif

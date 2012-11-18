@@ -47,4 +47,11 @@ Status_t Menu_Sec_Int_Callback(void *Ptr);
 // Menu Callbacks
 Status_t Menu_Callbacks_Init(uint8 DisplayType, uint16 Xres, uint16 Yres);
 
+Status_t Up_Key_Callback(void *p);
+Status_t Down_Key_Callback(void *p);
+Status_t Left_Key_Callback(void *p);
+Status_t Right_Key_Callback(void *p);
+Status_t Enter_Key_Callback(void *p);
+Status_t Cancel_Key_Callback(void *p);
+
 #endif
