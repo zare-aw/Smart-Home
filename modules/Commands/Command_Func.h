@@ -62,4 +62,12 @@
 #define SW_OFFSET                                           0x0D00
 #define DO_SW           COMMANDS_OFFSET | SW_OFFSET |       0x0001
 
+// cmd_temp_alarm.c
+#define TEMP_ALARM_OFFSET                                                 0x0E00
+#define DO_TEMP_ALARM               COMMANDS_OFFSET | TEMP_ALARM_OFFSET | 0x0001
+#define DO_PRINT_TEMP_ALARMS_CMD    COMMANDS_OFFSET | TEMP_ALARM_OFFSET | 0x0002
+#define DO_TRY_READ_SENSOR_ID_CMD   COMMANDS_OFFSET | TEMP_ALARM_OFFSET | 0x0003
+#define DO_TRY_READ_RESPONSE_CMD    COMMANDS_OFFSET | TEMP_ALARM_OFFSET | 0x0004
+#define DO_SET_TEMP_ALARM_CMD       COMMANDS_OFFSET | TEMP_ALARM_OFFSET | 0x0005
+
 #endif

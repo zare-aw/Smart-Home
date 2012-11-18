@@ -33,6 +33,12 @@ typedef struct TempAlarm_s
   void *Callback;
 } TempAlarm_t;
 
+typedef struct TempAlarmResponse_s
+{
+  char *String;
+  void *Callback;
+} TempAlarmResponse_t;
+
 // Functions
 int ReadTemp(uint8 SensorID);
 Status_t Register_Temp_Sensor(uint8 Ch, uint8 *SerialNumber, uint8 *SensorID);

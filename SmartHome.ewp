@@ -1783,6 +1783,9 @@
           <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_temp.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_temp_alarm.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_time.c</name>
         </file>
       </group>
