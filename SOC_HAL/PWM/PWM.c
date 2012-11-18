@@ -1,8 +1,13 @@
+#include <NXP/iolpc2148.h>
 #include "Global_Defines.h"
 #include "Func_Trace.h"
+#include "StatusHandling.h"
+#include "Console.h"
+#include "CLK_Reset.h"
+
+#include "PWM.h"
 #include "PWM_Debug.h"
 #include "PWM_Func.h"
-#include "Includes.h"
 
 uint32 DutyRatio;
 

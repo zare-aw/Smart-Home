@@ -1,7 +1,11 @@
+#include <NXP/iolpc2148.h>
 #include "Global_Defines.h"
+#include "Func_Trace.h"
+#include "StatusHandling.h"
+#include "Console.h"
+
 #include "CLK_Reset_Func.h"
 #include "CLK_Reset_Defconfig.h"
-#include "Includes.h"
 
 uint32 CpuClk = OSC_CLK;
 uint32 PerClk = OSC_CLK;

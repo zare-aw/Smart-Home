@@ -1,11 +1,25 @@
+#include <NXP/iolpc2148.h>
 #include "Global_Defines.h"
 #include "PWM_Backlight_Defconfig.h"
-#include "Includes.h"
 #include "Command.h"
 #include "Timer.h"
+#include "Console.h"
+#include "Out.h"
+#include "CLK_Reset.h"
+#include "MAM.h"
+#include "VIC.h"
+#include "TSOP1738.h"
+#include "Menu.h"
+#include "RTC.h"
+#include "PWM_Backlight.h"
+#include "Temperature.h"
+#include "HD44780.h"
 
+#include "Initialization.h"
 #include "Initialization_func.h"
 
+void GPIO_Init(uint8 a);
+void Power_Init(void);
 void Pin_MUX_Init(void);
 
 Status_t Initialization(void)

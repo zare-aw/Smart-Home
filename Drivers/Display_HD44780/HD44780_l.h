@@ -1,6 +1,7 @@
 #ifndef  __HD44780_L_H
 #define  __HD44780_L_H
 
+#include <NXP/iolpc2148.h>
 #include "HD44780_cnfg.h"
 
 /* Delay macro */

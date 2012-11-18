@@ -1,5 +1,11 @@
+#include <intrinsics.h>
 #include "Global_Defines.h"
-#include "Includes.h"
+#include "StatusHandling.h"
+#include "Initialization.h"
+#include "Console.h"
+#include "SurfaceFlinger.h"
+#include "Temperature.h"
+#include "Out.h"
 
 void main()
 {

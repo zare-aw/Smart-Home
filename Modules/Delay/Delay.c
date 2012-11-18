@@ -1,9 +1,11 @@
+#include <intrinsics.h>
+#include <stdlib.h>
 #include "Global_Defines.h"
 #include "Func_Trace.h"
+#include "Timer.h"
+
 #include "Delay.h"
 #include "Delay_Func.h"
-#include "Timer.h"
-#include "Includes.h"
 
 #define DELAY_WORK_BUFFER_SIZE    10
 

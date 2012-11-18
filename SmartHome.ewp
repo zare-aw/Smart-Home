@@ -1722,19 +1722,7 @@
   <group>
     <name>Includes</name>
     <file>
-      <name>$PROJ_DIR$\Includes\Commands.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\ConsoleCommands.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\ConsoleHelp.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\Includes\Global_Defines.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Includes\Includes.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\Includes\StatusHandling.h</name>

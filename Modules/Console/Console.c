@@ -1,11 +1,14 @@
+#include <stdio.h>
+#include <stdarg.h>
+#include <string.h>
 #include "Global_Defines.h"
-#include "Includes.h"
 #include "Func_Trace.h"
+#include "UART_LPC214X.h"
+#include "Command.h"
+
 #include "Console_Defconfig.h"
 #include "Console_Func.h"
-#include "ConsoleHelp.h"
-#include "ConsoleCommands.h"
-#include "Command.h"
+#include "Console.h"
 
 #define KEY_NONE        0
 #define UP_DOWN_KEYS    1

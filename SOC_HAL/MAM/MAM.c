@@ -1,7 +1,9 @@
+#include <NXP/iolpc2148.h>
 #include "Global_Defines.h"
 #include "Func_Trace.h"
+#include "StatusHandling.h"
+
 #include "MAM_Func.h"
-#include "Includes.h"
 
 /*******************************************************************************
  * Funkcija za inicijalizacija na MAM. Kako vlezen argument se dava:

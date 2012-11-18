@@ -1,8 +1,10 @@
-#include "Global_Defines.h"
-#include "Timer.h"
-#include "Includes.h"
 #include <NXP/iolpc2148.h>
+#include "Global_Defines.h"
 #include "StatusHandling.h"
+#include "CLK_Reset.h"
+#include "TSOP1738.h"
+
+#include "Timer.h"
 
 void (*Match_0_Callback)(void *);
 void (*Match_1_Callback)(void *);

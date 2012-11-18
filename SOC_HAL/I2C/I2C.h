@@ -10,8 +10,6 @@
  *    Implements a generic I2C function library for the LPC2xxx processor.
  *
  *****************************************************************************/
-#include "includes.h"
-
 
 #ifndef _I2C_H
 #define _I2C_H

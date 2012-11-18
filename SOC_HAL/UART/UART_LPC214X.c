@@ -1,8 +1,10 @@
+#include <NXP/iolpc2148.h>
 #include "Global_Defines.h"
 #include "Func_Trace.h"
+#include "Console.h"
+
 #include "UART_LPC214X.h"
 #include "UART_LPC214X_Func.h"
-#include "Includes.h"
 
 unsigned int UART_Flag1 = 0;
 unsigned int UART_Flag2 = 0;

@@ -1,7 +1,15 @@
+#include <stdio.h>
+#include <stdarg.h>
+#include <string.h>
+#include <stdlib.h>
 #include "Global_Defines.h"
-#include "Includes.h"
-#include "SurfaceFlinger_Func.h"
 #include "Func_Trace.h"
+#include "StatusHandling.h"
+#include "Console.h"
+#include "HD44780.h"
+
+#include "SurfaceFlinger.h"
+#include "SurfaceFlinger_Func.h"
 
 char SurfaceBuffer_1[Y_SIZE][X_SIZE] = {0};
 char SurfaceBuffer_2[Y_SIZE][X_SIZE] = {0};

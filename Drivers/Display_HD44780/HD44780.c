@@ -1,6 +1,11 @@
+#include <string.h>
 #include "Global_Defines.h"
 #include "Delay.h"
-#include "Includes.h"
+#include "SurfaceFlinger.h"
+
+#include "HD44780.h"
+#include "HD44780_l.h"
+#include "HD44780_cnfg.h"
 
 #if (HD44780_BUS_WIDTH != 4) && (HD44780_BUS_WIDTH != 8)
 #error The HD44780_BUS_WIDTH must be 8 or 4!

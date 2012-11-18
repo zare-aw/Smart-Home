@@ -1,6 +1,8 @@
 #ifndef _DS1820_Pins_h
 #define _DS1820_Pins_h
 
+#include <NXP/iolpc2148.h>
+
 #define DS_INIT_1()       ( PINSEL2 &= ~(1 << 3), FIO1DIR_bit.P1_22 = 0 )
 #define DS_READ_1(Value)  ( Value = FIO1PIN_bit.P1_22 )
 #define DS_WRITE_LOW_1()  ( FIO1CLR_bit.P1_22 = 1 )

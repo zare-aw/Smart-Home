@@ -1,11 +1,14 @@
+#include <string.h>
 #include "Global_Defines.h"
 #include "StatusHandling.h"
+#include "Delay.h"
+#include "Console.h"
+
 #include "DS1820.h"
 #include "DS1820_HW.h"
 #include "DS1820_Pins.h"
 #include "DS1820_Func.h"
-#include "Delay.h"
-#include "Includes.h"
+
 
 static Status_t DS_Reset(int Ch);
 

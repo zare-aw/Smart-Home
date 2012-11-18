@@ -1,6 +1,7 @@
+#include <intrinsics.h>
 #include "Global_Defines.h"
 #include "StatusHandling.h"
-#include "Includes.h"
+#include "Console.h"
 
 /*******************************************************************************
  * Function for handle Fatal Error. This function prints error and

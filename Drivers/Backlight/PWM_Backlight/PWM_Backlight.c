@@ -1,8 +1,11 @@
 #include "Global_Defines.h"
+#include "StatusHandling.h"
+#include "Console.h"
+#include "PWM.h"
+
 #include "PWM_Backlight_Defconfig.h"
 #include "PWM_Backlight_Debug.h"
 #include "PWM_Backlight_Func.h"
-#include "Includes.h"
 
 /*******************************************************************************
  * Function Name: PWM_Backlight_Init

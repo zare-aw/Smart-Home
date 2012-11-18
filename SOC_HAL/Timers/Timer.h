@@ -1,6 +1,7 @@
 #ifndef __Timer_h
 #define __Timer_h
 
+#include <NXP/iolpc2148.h>
 #include "StatusHandling.h"
 
 #define DELAY_TIMER_RESET_VALUE     5000000

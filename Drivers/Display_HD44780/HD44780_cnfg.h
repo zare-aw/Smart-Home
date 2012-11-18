@@ -1,8 +1,6 @@
 #ifndef  __HD44780_CNFG_H
 #define  __HD44780_CNFG_H
 
-#include "Includes.h"
-
 /* HD44780 DRV Default setup data */
 // The R/W signal is connected when is > 0 to LCD module
 #define HD44780_WR                0
