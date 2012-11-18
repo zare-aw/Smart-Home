@@ -464,11 +464,6 @@ Status_t Console_Command_Execute(uint8 NoOfCommand)
   
   VERIFY(Run_Command(QueueConsoleCommand[NoOfCommand]), -CONSOLE_COMMAND_EXECUTE_ERROR);
   
-  Status = Console_Update_Display(NoOfCommand);
-  VERIFY(Status, -CONSOLE_COMMAND_EXECUTE_ERROR);
-  if(Status > SUCCESS)
-    EXIT_FUNC(CONSOLE_COMMAND_EXECUTE_ERROR, CONSOLE_COMMAND_EXECUTE);
-  
   Status = Remove_Console_Command_From_Queue(NoOfCommand);
   VERIFY(Status, -CONSOLE_COMMAND_ERROR);
   if(Status > SUCCESS)

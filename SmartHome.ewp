@@ -1893,15 +1893,6 @@
       </file>
     </group>
     <file>
-      <name>$PROJ_DIR$\Modules\Commands.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Modules\ConsoleCommands.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\Modules\ConsoleHelp.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\Modules\StatusHandling.c</name>
     </file>
   </group>
