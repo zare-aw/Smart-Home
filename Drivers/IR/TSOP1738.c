@@ -37,6 +37,7 @@ Status_t IR_Init(void)
   
   EXIT_SUCCESS_FUNC(IR_INIT);
 }
+FUNC_REGISTER(IR_INIT, IR_Init);
 
 /*******************************************************************************
 * 
@@ -52,6 +53,7 @@ static Status_t IR_Ext_Interrupt_Init(void)
   
   EXIT_SUCCESS_FUNC(IR_EXT_INTERRUPT_INIT);
 }
+FUNC_REGISTER(IR_EXT_INTERRUPT_INIT, IR_Ext_Interrupt_Init);
 
 /*******************************************************************************
 * @in NoOfCommand - Broj na komanda koja sakame da ja promenime
@@ -96,6 +98,7 @@ Status_t IR_Command_Init(uint16 NoOfCommand, ir_t *ir_p)
   
   EXIT_SUCCESS_FUNC(IR_COMMAND_INIT);
 }
+FUNC_REGISTER(IR_COMMAND_INIT, IR_Command_Init);
 
 /*******************************************************************************
 * 
@@ -109,6 +112,7 @@ Status_t IR_Set_Command(uint16 NoOfCommand)
 
   EXIT_SUCCESS_FUNC(IR_SET_COMMAND);
 }
+FUNC_REGISTER(IR_SET_COMMAND, IR_Set_Command);
 
 /*******************************************************************************
 * 
@@ -121,6 +125,7 @@ Status_t IR_Get_Command(uint16 NoOfCommand, ir_t * IR_Command)
   
   EXIT_SUCCESS_FUNC(IR_GET_COMMAND);
 }
+FUNC_REGISTER(IR_GET_COMMAND, IR_Get_Command);
 
 /*******************************************************************************
 * 
@@ -222,6 +227,7 @@ __arm Status_t IR_Timer_ISR(void)
   
   EXIT_SUCCESS_FUNC(IR_TIMER_ISR);
 }
+FUNC_REGISTER(IR_TIMER_ISR, IR_Timer_ISR);
 
 /*******************************************************************************
 * 
@@ -252,6 +258,7 @@ __arm static Status_t IR_Input_ISR(uint8 Control, uint8 Address, uint8 Command)
     
   EXIT_SUCCESS_FUNC(IR_INPUT_ISR);
 }
+FUNC_REGISTER(IR_INPUT_ISR, IR_Input_ISR);
 
 /*******************************************************************************
 * 
@@ -272,7 +279,11 @@ __arm static Status_t IR_Ext_Interrupt_ISR(void)
   
   EXIT_SUCCESS_FUNC(IR_EXT_INTERRUPT_ISR);
 }
+FUNC_REGISTER(IR_EXT_INTERRUPT_ISR, IR_Ext_Interrupt_ISR);
 
+/*******************************************************************************
+* 
+*******************************************************************************/
 __irq void Ext_Int_2_ISR(void)
 {
   IR_Ext_Interrupt_ISR();
