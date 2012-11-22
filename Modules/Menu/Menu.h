@@ -36,6 +36,22 @@
 #define CH_DOWN_KEY_EVENT     0x00400000
 #define MUTE_KEY_EVENT        0x00800000
 
+typedef struct Menu_State_s
+{
+  uint8 Level;      // Menu level
+  uint8 State;      // Menu state
+  uint8 Parent;     // Menu parent state
+  uint8 Flags;      // Menu state Flags
+  uint32 PossibleKeys;    // Possible keys for this state
+  Status_t (*Callback)(uint32 Key, void *);  // Implementation function
+  char *String;     // State string
+} Menu_State_t;
+
+// Macros
+#pragma section=".menu"
+
+#define MENU_STATE_CREATE(Level, State, Parent, Flags, Keys, Callback, String) \
+__root __packed Menu_State_t Menu_##Callback @ ".menu" = {Level, State, Parent, Flags, Keys, Callback, String}
 
 // Functions
 Status_t Menu_Init(void);
