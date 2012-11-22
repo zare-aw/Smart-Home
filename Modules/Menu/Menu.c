@@ -13,8 +13,8 @@
 
 
 uint8 LocationChange = 0;
-uint16 Level = 0;
-uint16 Location[NO_OF_LEVELS] = {0};
+uint8 Level = 0;
+uint8 State = 0;
 uint8 Sec_Callback_ID = 0;
 
 uint8 TempExtID = 0xFF;
@@ -22,7 +22,7 @@ uint8 TempIntID = 0xFF;
 
 char MainViewBuffer[MAIN_VIEW_BUFFER_LINE][MAIN_VIEW_BUFFER_COL] = {0};
 
-static Status_t Display_Menu_Update(const uint8 Level, const uint16 *Location);
+static Status_t Display_Menu_Update();
 
 /*******************************************************************************
 * 
@@ -48,81 +48,52 @@ Status_t Menu(uint32 Event)
 {
   FuncIN(MENU);
   
-  switch(Location[0])
+  if(Level == 0)
   {
-    case 0:
-      if(Level > 0)
-        switch(Location[1])
+    switch(Event)
+    {
+      case UP_KEY_EVENT:
+        if(State > 0)
         {
-          case 0:
-            break;
-          case 1:
-            break;
-          default:
-            break;
+          State--;
+          LocationChange = 1;
         }
-      else
-        switch(Event)
+        break;
+      case DOWN_KEY_EVENT:
+        if(State < (NO_OF_DESKTOPS - 1))
         {
-          case DOWN_KEY_EVENT:
-            Location[0] = 1;
-            LocationChange = 1;
-            break;
-          case MENU_KEY_EVENT:
-            Location[0] = 0;
-            Level = 1;
-            LocationChange = 1;
-            break;
-          default:
-            MENU_INFO(printc("\r # This Key is not used in this state of Menu. Event = %d\n", Event));
-            break;
+          State++;
+          LocationChange = 1;
         }
-      break;
-    case 1:
-      switch(Event)
-      {
-        case UP_KEY_EVENT:
-          Location[0] = 0;
-          LocationChange = 1;
-          break;
-        case DOWN_KEY_EVENT:
-          Location[0] = 2;
-          LocationChange = 1;
-          break;
-        case MENU_KEY_EVENT:
-          Location[0] = 0;
-          Level = 1;
-          LocationChange = 1;
-          break;
-        default:
-          MENU_INFO(printc("\r # This Key is not used in this state of Menu. Event = %d\n", Event));
-          break;
-      }
-      break;
-    case 2:
-      switch(Event)
-      {
-        case UP_KEY_EVENT:
-          Location[0] = 1;
-          LocationChange = 1;
-          break;
-        case MENU_KEY_EVENT:
-          Location[0] = 0;
-          Level = 1;
-          LocationChange = 1;
-          break;
-        default:
-          MENU_INFO(printc("\r # This Key is not used in this state of Menu. Event = %d\n", Event));
-          break;
-      }
-      break;
-    default:
-      Fatal_Abort(-UNKNOWN_ERROR);
-      break;
+        break;
+      case ENTER_KEY_EVENT:
+        Level = 1;
+        State = 1;
+        LocationChange = 1;
+        break;
+      case MENU_KEY_EVENT:
+        Level = 1;
+        State = 1;
+        LocationChange = 1;
+        break;
+      case VOL_UP_KEY_EVENT:
+        
+        break;
+      case VOL_DOWN_KEY_EVENT:
+        
+        break;
+      default:
+        MENU_INFO(printc("\r # Menu: Unsupported Key (0x%X)\n", Event));
+        break;
+    } // switch(State)
+  } // if(Level == 0)
+  else
+  {
+    
   }
   
   if(LocationChange == 1)
-    VERIFY(Display_Menu_Update(Level, Location), -MENU_DISPLAY_ERROR);
+    VERIFY(Display_Menu_Update(), -MENU_DISPLAY_ERROR);
   
   EXIT_SUCCESS_FUNC(MENU);
 }
@@ -131,27 +102,17 @@ FUNC_REGISTER(MENU, Menu);
 /*******************************************************************************
 * 
 *******************************************************************************/
-static Status_t Display_Menu_Update(const uint8 Level, const uint16 *Location)
+static Status_t Display_Menu_Update(void)
 {
   FuncIN(DISPLAY_MENU_UPDATE);
   
   ASSERT(Level < NO_OF_LEVELS, -INVALID_INPUT_PARAMETER);
   
-  switch(Location[0])
+  if(Level == 0)
   {
-    case 0:
-      if(Level > 0)
-        switch(Location[1])
-        {
-          case 0:
-            break;
-          case 1:
-            break;
-          default:
-            break;
-        }
-      else
-      {
+    switch(State)
+    {
+      case 0:
         clrd();
         
         VERIFY(printd(1, "%s", MainViewBuffer[0]), -GENERAL_ERROR);
@@ -160,35 +121,40 @@ static Status_t Display_Menu_Update(const uint8 Level, const uint16 *Location)
         VERIFY(printd(4, "%s", MainViewBuffer[3]), -GENERAL_ERROR);
         
         syncd();
-      }
-      break;
-    case 1:
-      clrd();
-      
-      VERIFY(printd(1, "%s", MainViewBuffer[4]), -GENERAL_ERROR);
-      VERIFY(printd(2, "%s", MainViewBuffer[5]), -GENERAL_ERROR);
-      VERIFY(printd(3, "%s", MainViewBuffer[6]), -GENERAL_ERROR);
-      VERIFY(printd(4, "%s", MainViewBuffer[7]), -GENERAL_ERROR);
-      
-      syncd();
-      break;
-    case 2:
-      clrd();
-      
-      VERIFY(printd(1, "%s", MainViewBuffer[8]), -GENERAL_ERROR);
-      VERIFY(printd(2, "%s", MainViewBuffer[9]), -GENERAL_ERROR);
-      VERIFY(printd(3, "%s", MainViewBuffer[10]), -GENERAL_ERROR);
-      VERIFY(printd(4, "%s", MainViewBuffer[11]), -GENERAL_ERROR);
-      
-      syncd();
-      break;
-    default:
-      LocationChange = 0;
-      Fatal_Abort(-INVALID_INPUT_POINTER);
-      break;
+        break;
+      case 1:
+        clrd();
+        
+        VERIFY(printd(1, "%s", MainViewBuffer[4]), -GENERAL_ERROR);
+        VERIFY(printd(2, "%s", MainViewBuffer[5]), -GENERAL_ERROR);
+        VERIFY(printd(3, "%s", MainViewBuffer[6]), -GENERAL_ERROR);
+        VERIFY(printd(4, "%s", MainViewBuffer[7]), -GENERAL_ERROR);
+        
+        syncd();
+        break;
+      case 2:
+        clrd();
+        
+        VERIFY(printd(1, "%s", MainViewBuffer[8]), -GENERAL_ERROR);
+        VERIFY(printd(2, "%s", MainViewBuffer[9]), -GENERAL_ERROR);
+        VERIFY(printd(3, "%s", MainViewBuffer[10]), -GENERAL_ERROR);
+        VERIFY(printd(4, "%s", MainViewBuffer[11]), -GENERAL_ERROR);
+        
+        syncd();
+        break;
+      default:
+        LocationChange = 0;
+        Fatal_Abort(-INVALID_INPUT_POINTER);
+        break;
+    } // switch(State)
+  } // if(Level == 0)
+  else
+  {
+    
   }
   
   LocationChange = 0;
+  
   EXIT_SUCCESS_FUNC(DISPLAY_MENU_UPDATE);
 }
 FUNC_REGISTER(DISPLAY_MENU_UPDATE, Display_Menu_Update);
@@ -334,8 +300,8 @@ __arm Status_t Menu_Sec_Int_Callback(void *Ptr)
   
   Display_Temp_Update(TempInt, TempExt);
   
-  if((Level == 0) && (Location[0] == 0))
-    Display_Menu_Update(Level, Location);
+  if((Level == 0) && (State == 0))
+    Display_Menu_Update();
   
   EXIT_SUCCESS_FUNC(MENU_SEC_INT_CALLBACK);
 }

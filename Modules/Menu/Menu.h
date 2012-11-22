@@ -1,8 +1,8 @@
 #ifndef _Menu_h
 #define _Menu_h
 
-
-#define NO_OF_LEVELS          100
+#define NO_OF_DESKTOPS        3
+#define NO_OF_LEVELS          20
 #define INTERNAL_SENSOR       1
 #define EXTERNAL_SENSOR       2
 #define NO_SENSOR             -255
