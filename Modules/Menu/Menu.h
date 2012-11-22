@@ -11,30 +11,30 @@
 #define MAIN_VIEW_BUFFER_COL  25
 
 // Events
-#define POWER_KEY_EVENT       1
-#define UP_KEY_EVENT          2
-#define DOWN_KEY_EVENT        3
-#define LEFT_KEY_EVENT        4
-#define RIGHT_KEY_EVENT       5
-#define ENTER_KEY_EVENT       6
-#define CANCEL_KEY_EVENT      7
-#define MENU_KEY_EVENT        8
-#define EXIT_KEY_EVENT        9
-#define NUM1_KEY_EVENT        10
-#define NUM2_KEY_EVENT        11
-#define NUM3_KEY_EVENT        12
-#define NUM4_KEY_EVENT        13
-#define NUM5_KEY_EVENT        14
-#define NUM6_KEY_EVENT        15
-#define NUM7_KEY_EVENT        16
-#define NUM8_KEY_EVENT        17
-#define NUM9_KEY_EVENT        18
-#define NUM0_KEY_EVENT        19
-#define VOL_UP_KEY_EVENT      20
-#define VOL_DOWN_KEY_EVENT    21
-#define CH_UP_KEY_EVENT       22
-#define CH_DOWN_KEY_EVENT     23
-#define MUTE_KEY_EVENT        24
+#define POWER_KEY_EVENT       0x00000001
+#define UP_KEY_EVENT          0x00000002
+#define DOWN_KEY_EVENT        0x00000004
+#define LEFT_KEY_EVENT        0x00000008
+#define RIGHT_KEY_EVENT       0x00000010
+#define ENTER_KEY_EVENT       0x00000020
+#define CANCEL_KEY_EVENT      0x00000040
+#define MENU_KEY_EVENT        0x00000080
+#define EXIT_KEY_EVENT        0x00000100
+#define NUM1_KEY_EVENT        0x00000200
+#define NUM2_KEY_EVENT        0x00000400
+#define NUM3_KEY_EVENT        0x00000800
+#define NUM4_KEY_EVENT        0x00001000
+#define NUM5_KEY_EVENT        0x00002000
+#define NUM6_KEY_EVENT        0x00004000
+#define NUM7_KEY_EVENT        0x00008000
+#define NUM8_KEY_EVENT        0x00010000
+#define NUM9_KEY_EVENT        0x00020000
+#define NUM0_KEY_EVENT        0x00040000
+#define VOL_UP_KEY_EVENT      0x00080000
+#define VOL_DOWN_KEY_EVENT    0x00100000
+#define CH_UP_KEY_EVENT       0x00200000
+#define CH_DOWN_KEY_EVENT     0x00400000
+#define MUTE_KEY_EVENT        0x00800000
 
 
 // Functions
