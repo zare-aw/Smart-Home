@@ -10,6 +10,7 @@
 #define REGISTER_MENU_TEMP          MENU_OFFSET | 0x06
 #define UNREGISTER_MENU_TEMP        MENU_OFFSET | 0x07
 #define MENU_SEC_INT_CALLBACK       MENU_OFFSET | 0x08
+#define FIND_MENU_STATE             MENU_OFFSET | 0x09
 
 // MenuCallbacks.c
 #define MENU_CALLBACKS_OFFSET                                             0x0100

@@ -49,6 +49,36 @@ uint32 Get_Menu_Section_Size(void)
 }
 
 /*******************************************************************************
+ * Function for find Menu_State table entry for a Menu_State
+ * @in Level - 
+ * @out **Menu_State_p - Double pointer for returning Menu_State_t structire
+ *                      of the Menu_State
+ * @out Status_t - Status
+ ******************************************************************************/
+Status_t Find_Menu_State(const uint8 Level, const uint8 State, Menu_State_t **Menu_State_p)
+{
+  FuncIN(FIND_MENU_STATE);
+  
+  Menu_State_t *Menu_Section_Begin = Get_Menu_Section_Begin();
+  Menu_State_t *Menu_Section_End = Get_Menu_Section_End();
+  Menu_State_t *Menu_State;
+  
+  ASSERT(Menu_State_p != NULL, -INVALID_INPUT_POINTER);
+  
+  for(Menu_State = Menu_Section_Begin; Menu_State != Menu_Section_End; Menu_State++)
+  {
+    if((Menu_State -> Level == Level) && (Menu_State -> State == State))
+    {
+      *Menu_State_p = Menu_State;
+      EXIT_SUCCESS_FUNC(FIND_MENU_STATE);
+    }
+  } // for
+  
+  EXIT_FUNC(MENU_STATE_NOT_FOUND, FIND_MENU_STATE);
+}
+FUNC_REGISTER(FIND_MENU_STATE, Find_Menu_State);
+
+/*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Menu_Init(void)

@@ -10,6 +10,8 @@
 #define MAIN_VIEW_BUFFER_LINE 12
 #define MAIN_VIEW_BUFFER_COL  25
 
+#define MENU_STATE_NOT_FOUND            MENU_OFFSET | 0x01
+
 // Events
 #define POWER_KEY_EVENT       0x00000001
 #define UP_KEY_EVENT          0x00000002
