@@ -25,6 +25,30 @@ char MainViewBuffer[MAIN_VIEW_BUFFER_LINE][MAIN_VIEW_BUFFER_COL] = {0};
 static Status_t Display_Menu_Update();
 
 /*******************************************************************************
+* Function for get start address of menu section
+*******************************************************************************/
+inline Menu_State_t *Get_Menu_Section_Begin(void)
+{
+  return __section_begin(".menu");
+}
+
+/*******************************************************************************
+* Function for get end address of menu section
+*******************************************************************************/
+inline Menu_State_t *Get_Menu_Section_End(void)
+{
+  return __section_end(".menu");
+}
+
+/*******************************************************************************
+* Function for get size on menu section
+*******************************************************************************/
+uint32 Get_Menu_Section_Size(void)
+{
+  return __section_size(".menu");
+}
+
+/*******************************************************************************
 * 
 *******************************************************************************/
 Status_t Menu_Init(void)
