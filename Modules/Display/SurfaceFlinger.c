@@ -245,8 +245,10 @@ Status_t Update_Display_Panel(uint8 Mode)
       if(DisplaySync == 1)
       {
         if(ConsoleDisplayPrint == ENABLE)
-          Console_Display_Dump();
-
+          if(i == 0)
+          {
+            Console_Display_Dump();
+          }
             switch(WorkingSurface)
             {
               case 1:
@@ -270,8 +272,10 @@ Status_t Update_Display_Panel(uint8 Mode)
       break;
     case FORCE:
       if(ConsoleDisplayPrint == ENABLE)
-        Console_Display_Dump();
-
+        if(i == 0)
+        {
+          Console_Display_Dump();
+        }
         switch(WorkingSurface)
         {
           case 1:

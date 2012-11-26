@@ -48,7 +48,7 @@ Status_t Initialization(void)
   VICInit();
   (void)IR_Init();
   Menu_Callbacks_Init(NULL, NULL, NULL);
-  RTC_Init(1);
+  RTC_Init(0);
   RTC_Enable();
   Menu_Init();
   PWM_Backlight_Init(BACKLIGHT_START_INTENSITY);
