@@ -10,7 +10,9 @@
 #define MAIN_VIEW_BUFFER_LINE 12
 #define MAIN_VIEW_BUFFER_COL  25
 
-#define MENU_STATE_NOT_FOUND            MENU_OFFSET | 0x01
+#define MENU_STATE_NOT_FOUND                        MENU_OFFSET | 0x01
+#define MENU_INVALID_EVENT                          MENU_OFFSET | 0x02
+#define MENU_STATE_EXECUTION_FAILED                 MENU_OFFSET | 0x03
 
 // Events
 #define POWER_KEY_EVENT       0x00000001
@@ -38,6 +40,12 @@
 #define CH_DOWN_KEY_EVENT     0x00400000
 #define MUTE_KEY_EVENT        0x00800000
 
+/**** Key Mask ****/
+#define DEFAULT_KEY_MASK      0x000001E6
+
+/**** Flags ****/
+#define MENU_LAST_STATE       0x01
+
 typedef struct Menu_State_s
 {
   uint8 Level;      // Menu level
@@ -45,7 +53,7 @@ typedef struct Menu_State_s
   uint8 Parent;     // Menu parent state
   uint8 Flags;      // Menu state Flags
   uint32 PossibleKeys;    // Possible keys for this state
-  Status_t (*Callback)(uint32 Key, void *);  // Implementation function
+  Status_t (*Callback)(struct Menu_State_s *Menu_State_p, const uint32 Key, void *);  // Implementation function
   char *String;     // State string
 } Menu_State_t;
 

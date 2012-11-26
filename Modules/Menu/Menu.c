@@ -50,7 +50,8 @@ uint32 Get_Menu_Section_Size(void)
 
 /*******************************************************************************
  * Function for find Menu_State table entry for a Menu_State
- * @in Level - 
+ * @in Level
+ * @in State
  * @out **Menu_State_p - Double pointer for returning Menu_State_t structire
  *                      of the Menu_State
  * @out Status_t - Status
@@ -102,6 +103,10 @@ Status_t Menu(uint32 Event)
 {
   FuncIN(MENU);
   
+  Status_t Status = GENERAL_ERROR;
+  Menu_State_t *Menu_State_p;
+  Menu_State_t *Menu_State_Temp_p;
+  
   if(Level == 0)
   {
     switch(Event)
@@ -143,7 +148,81 @@ Status_t Menu(uint32 Event)
   } // if(Level == 0)
   else
   {
+    // Find registered state
+    Status = Find_Menu_State(Level, State, &Menu_State_p);
+    VERIFY(Status, Status);
+    if(Status == MENU_STATE_NOT_FOUND)
+      Fatal_Abort(-FATAL_ERROR);
     
+    // Valid Event?
+    if(!(Event & (DEFAULT_KEY_MASK | Menu_State_p -> PossibleKeys)))
+      EXIT_FUNC(MENU_INVALID_EVENT, MENU);
+    
+    switch(Event)
+    {
+      case UP_KEY_EVENT:
+        if(State > 0)
+        {
+          State--;
+          LocationChange = 1;
+        }
+        break;
+      case DOWN_KEY_EVENT:
+        Status = Find_Menu_State(Level, State + 1, &Menu_State_Temp_p);
+        VERIFY(Status, Status);
+        
+        if(Status == SUCCESS)
+        {
+          State++;
+          LocationChange = 1;
+        }
+        break;
+      case ENTER_KEY_EVENT:
+        if(Event | Menu_State_p -> PossibleKeys)
+          VERIFY((Menu_State_p -> Callback)(Menu_State_p, Event, NULL), -MENU_STATE_EXECUTION_FAILED);
+        
+        if((Menu_State_p -> Flags & MENU_LAST_STATE) != MENU_LAST_STATE)
+        {
+          Status = Find_Menu_State(Level + 1, 1, &Menu_State_Temp_p);
+          VERIFY(Status, Status);
+          
+          if(Status == SUCCESS)
+          {
+            Level++;
+            State = 0;
+            LocationChange = 1;
+          }
+        }
+        break;
+      case CANCEL_KEY_EVENT:
+        if(Event & Menu_State_p -> PossibleKeys)
+          VERIFY((Menu_State_p -> Callback)(Menu_State_p, Event, NULL), -MENU_STATE_EXECUTION_FAILED);
+        
+        Level--;
+        State = Menu_State_p -> Parent;
+        LocationChange = 1;
+        break;
+     case MENU_KEY_EVENT:
+        if(Event | Menu_State_p -> PossibleKeys)
+          VERIFY((Menu_State_p -> Callback)(Menu_State_p, Event, NULL), -MENU_STATE_EXECUTION_FAILED);
+        
+        Level = 1;
+        State = 0;
+        LocationChange = 1;
+        break;
+      case EXIT_KEY_EVENT:
+        if(Event | Menu_State_p -> PossibleKeys)
+          VERIFY((Menu_State_p -> Callback)(Menu_State_p, Event, NULL), -MENU_STATE_EXECUTION_FAILED);
+        
+        Level = 0;
+        State = 0;
+        LocationChange = 1;
+        break;
+      default:
+        if(Event | Menu_State_p -> PossibleKeys)
+          VERIFY((Menu_State_p -> Callback)(Menu_State_p, Event, NULL), -MENU_STATE_EXECUTION_FAILED);
+        break;
+    }
   }
   
   if(LocationChange == 1)
