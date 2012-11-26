@@ -177,7 +177,7 @@ Status_t RTC_Init(uint8 ClkSource)
   FuncIN(RTC_INIT);
   unsigned int PreInt;
   
-  if(CCR_bit.CLKEN == TRUE && ClkSource == FALSE)
+  if(CCR_bit.CLKSRC == TRUE && ClkSource == FALSE)
     EXIT_SUCCESS_FUNC(RTC_INIT);
   
   RTC_Disable();
@@ -205,10 +205,12 @@ Status_t RTC_Init(uint8 ClkSource)
   CIIR_bit.IMSEC = 1;
 
   ILR = 0x3;    // clear all interrupt of RTC
-    
-  // initialize Date and Time
-  VERIFY(RTC_Set_Date_Time(&RTC_InitDateTime), -RTC_SET_ERROR);
 
+  if (YEAR < 2012 || ClkSource)
+  {
+    // initialize Date and Time
+    VERIFY(RTC_Set_Date_Time(&RTC_InitDateTime), -RTC_SET_ERROR);
+  }
 //  RTC_Enable();
   
   EXIT_SUCCESS_FUNC(RTC_INIT);
@@ -991,10 +993,11 @@ Status_t Format_Time(uint8 Type, RtcTime_t *Time_p, char *String)
       break;
     case 2:
       strcpy(String, "HH:MM:SS AM");
-      String[9] = (Hour>=12) ? 'P' : 'A';
       if (Hour>12)
-      Hour = Hour -12;    
-      
+      {
+        String[9] = 'P';
+        Hour = Hour -12;
+      }
       String[0] = Hour / 10 + '0';
       String[1] = Hour % 10 + '0';
       String[3] = Minute / 10 + '0';

@@ -23,7 +23,7 @@
 #define CCR_CLKEN_BIT       0
 #define CCR_CTCRST_BIT      1
 
-static RtcDateTime_t RTC_InitDateTime = {2011, 1, 1, 0, 0, 0};
+static RtcDateTime_t RTC_InitDateTime = {2012, 1, 1, 0, 0, 0};
 
 static char *RTC_DOWTbl[] = {
 	"Sunday ",
