@@ -1865,6 +1865,9 @@
         <name>$PROJ_DIR$\Modules\Menu\Menu_Func.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$\Modules\Menu\Menu_KeyMap.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\Modules\Menu\MenuCallbacks.c</name>
       </file>
     </group>
