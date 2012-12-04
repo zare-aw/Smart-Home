@@ -1855,6 +1855,12 @@
       <group>
         <name>Menu_Impl</name>
         <group>
+          <name>Date</name>
+          <file>
+            <name>$PROJ_DIR$\Modules\Menu\Menu_Impl\Date\Menu_Date.c</name>
+          </file>
+        </group>
+        <group>
           <name>Time</name>
           <file>
             <name>$PROJ_DIR$\Modules\Menu\Menu_Impl\Time\Menu_Time.c</name>
