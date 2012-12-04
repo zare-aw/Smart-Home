@@ -395,16 +395,15 @@ static Status_t Display_Menu_Update(void)
       for(i = MenuPointerPos, j = 0; i <= Y_SIZE; i++, j++)
       {
         Status = Find_Menu_State(Level, State + j, &Menu_State_p);
-        if(Status == MENU_STATE_NOT_FOUND)
+        if(Status != SUCCESS)
           break;
         else
-          if(Status == SUCCESS)
-          {
-            if(i == MenuPointerPos)
-              VERIFY(printd(i, MENU_POINTER_STRING "%s", Menu_State_p -> String), -GENERAL_ERROR);
-            else
-              VERIFY(printd(i, EMPTY_MENU_POINTER_STRING "%s", Menu_State_p -> String), -GENERAL_ERROR);
-          }
+        {
+          if(i == MenuPointerPos)
+            VERIFY(printd(i, MENU_POINTER_STRING "%s", Menu_State_p -> String), -GENERAL_ERROR);
+          else
+            VERIFY(printd(i, EMPTY_MENU_POINTER_STRING "%s", Menu_State_p -> String), -GENERAL_ERROR);
+        }
       }
       
       /**** Update Surface Flinger with previous states ****/
