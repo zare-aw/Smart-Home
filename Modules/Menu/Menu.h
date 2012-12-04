@@ -64,7 +64,7 @@ typedef struct Menu_State_s
 #pragma section=".menu"
 
 #define MENU_STATE_CREATE(Level, State, Parent, Flags, Keys, Callback, String) \
-__root __packed Menu_State_t Menu_##Callback @ ".menu" = {Level, State, Parent, Flags, Keys, Callback, String}
+  __root __packed Menu_State_t Menu_##Level_##State @ ".menu" = {Level, State, Parent, Flags, Keys, Callback, String}
 
 // Functions
 Status_t Menu_Init(void);
