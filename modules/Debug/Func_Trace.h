@@ -34,7 +34,7 @@
 #define TSOP1738_OFFSET         0x44000000
 
 // App
-#define INITIALIZATION_OFFSET   0x81000000
+#define INITIALIZATION_OFFSET   0x61000000
 
 /*******************************************************************************
 * Func_Trace status

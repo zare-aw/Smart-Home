@@ -69,11 +69,20 @@ Status_t Find_Menu_State(const uint8 Level, const uint8 State, Menu_State_t **Me
   
   ASSERT(Menu_State_p != NULL, -INVALID_INPUT_POINTER);
   
+  MENU_DEBUG_L2(printc("(%s) Enter! Level = %d, State = %d\n", __func__, Level, State));
+  
   for(Menu_State = Menu_Section_Begin; Menu_State != Menu_Section_End; Menu_State++)
   {
+    MENU_DEBUG_L3(printc("(%s) Try! Level = %d, State = %d, String = \"%s\"\n",
+                         __func__, Menu_State -> Level, Menu_State -> State, Menu_State -> String));
+    
     if((Menu_State -> Level == Level) && (Menu_State -> State == State))
     {
       *Menu_State_p = Menu_State;
+      
+      MENU_DEBUG_L3(printc("(%s) Found! Level = %d, State = %d, String = \"%s\"\n",
+                           __func__, Menu_State -> Level, Menu_State -> State, Menu_State -> String));  
+      
       EXIT_SUCCESS_FUNC(FIND_MENU_STATE);
     }
   } // for
@@ -110,6 +119,9 @@ Status_t Menu(uint32 Event)
   Menu_State_t *Menu_State_p;
   Menu_State_t *Menu_State_Temp_p;
   
+  MENU_DEBUG_L1(printc("(%s) Enter! Level = %d, State = %d, Event = 0x%08X\n",
+                       __func__, Level, State, Event));
+  
   if(Level == 0)
   {
     switch(Event)
@@ -130,12 +142,12 @@ Status_t Menu(uint32 Event)
         break;
       case ENTER_KEY_EVENT:
         Level = 1;
-        State = 1;
+        State = 0;
         LocationChange = 1;
         break;
       case MENU_KEY_EVENT:
         Level = 1;
-        State = 1;
+        State = 0;
         LocationChange = 1;
         break;
       case VOL_UP_KEY_EVENT:
@@ -145,7 +157,7 @@ Status_t Menu(uint32 Event)
         
         break;
       default:
-        MENU_INFO(printc("\r # Menu: Unsupported Key (0x%X)\n", Event));
+        MENU_INFO(printc("\r # Menu: Unsupported Key (0x%08X)\n", Event));
         break;
     } // switch(State)
   } // if(Level == 0)
@@ -154,12 +166,15 @@ Status_t Menu(uint32 Event)
     // Find registered state
     Status = Find_Menu_State(Level, State, &Menu_State_p);
     VERIFY(Status, Status);
-    if(Status == MENU_STATE_NOT_FOUND)
+    if(Status != SUCCESS)
       Fatal_Abort(-FATAL_ERROR);
     
     // Valid Event?
     if(!(Event & (DEFAULT_KEY_MASK | Menu_State_p -> PossibleKeys)))
+    {
+      MENU_INFO(printc("\r # Menu: Unsupported Key (0x%08X)\n", Event));
       EXIT_FUNC(MENU_INVALID_EVENT, MENU);
+    }
     
     switch(Event)
     {
@@ -228,6 +243,9 @@ Status_t Menu(uint32 Event)
     }
   }
   
+  MENU_DEBUG_L1(printc("(%s) After work! Level = %d, State = %d\n",
+                       __func__, Level, State));
+  
   if(LocationChange == 1)
     VERIFY(Display_Menu_Update(), -MENU_DISPLAY_ERROR);
   
@@ -246,7 +264,7 @@ static Status_t Display_Menu_Update(void)
   Menu_State_t *Menu_State_p;
   Menu_State_t *Menu_State_Buf[(Y_SIZE * 2) - 1] = {0};
   uint32 i, j, Find;
-    
+  
   if(Level == 0)
   {
     switch(State)
@@ -292,17 +310,18 @@ static Status_t Display_Menu_Update(void)
     /**** Level changed ****/
     if(PrevLevel != Level)
     {
+      MENU_DEBUG_L2(printc("(%s) Level Changed!\n", __func__));
+      
       memset(Menu_State_Buf, NULL, sizeof(Menu_State_t *) * ((Y_SIZE * 2) - 1));
       
       /**** Update Menu_State_Buf with next states ****/
       for(i = 0; i < Y_SIZE; i++)
       {
         Status = Find_Menu_State(Level, State + i, &Menu_State_p);
-        if(Status == MENU_STATE_NOT_FOUND)
+        if(Status != SUCCESS)
           break;
         else
-          if(Status == SUCCESS)
-            Menu_State_Buf[(Y_SIZE - 1) + i] = Menu_State_p;
+          Menu_State_Buf[(Y_SIZE - 1) + i] = Menu_State_p;
       }
       
       /**** Update Menu_State_Buf with previous states if exist ****/
@@ -315,11 +334,10 @@ static Status_t Display_Menu_Update(void)
           for(i = 1; i <= Find; i++)
           {
             Status = Find_Menu_State(Level, State - i, &Menu_State_p);
-            if(Status == MENU_STATE_NOT_FOUND)
+            if(Status != SUCCESS)
               break;
             else
-              if(Status == SUCCESS)
-                Menu_State_Buf[(Y_SIZE - 1) - i] = Menu_State_p;
+              Menu_State_Buf[(Y_SIZE - 1) - i] = Menu_State_p;
             
             if((State - i) == 0)
               break;
@@ -330,6 +348,8 @@ static Status_t Display_Menu_Update(void)
       clrd();
       
       /**** Update Surface Flinger ****/
+      MENU_DEBUG_L3(printc("(%s) Update Surface Flinger!\n", __func__));
+      
       for(i = 0, j = 1; i < ((Y_SIZE *  2) - 1); i++)
       {
         if(Menu_State_Buf[i] != NULL)
@@ -337,13 +357,19 @@ static Status_t Display_Menu_Update(void)
           if(i == (Y_SIZE - 1))
           {
             VERIFY(printd(j, MENU_POINTER_STRING "%s", Menu_State_Buf[i] -> String), -GENERAL_ERROR);
+            MENU_DEBUG_L3(printc(MENU_POINTER_STRING "%s\n", Menu_State_Buf[i] -> String));
             MenuPointerPos = j;
           }
           else
+          {
             VERIFY(printd(j, EMPTY_MENU_POINTER_STRING "%s", Menu_State_Buf[i] -> String), -GENERAL_ERROR);
+            MENU_DEBUG_L3(printc(EMPTY_MENU_POINTER_STRING "%s\n", Menu_State_Buf[i] -> String));
+          }
           j++;
         }
       }
+      
+      MENU_DEBUG_L3(printc("(%s) Surface Flinger Updated! Display Sync...\n", __func__));
       
       syncd();
       
@@ -352,6 +378,8 @@ static Status_t Display_Menu_Update(void)
     /**** Level not changed ****/
     else
     {
+      MENU_DEBUG_L2(printc("(%s) Level Not changed!\n", __func__));
+      
       /**** Calsulate next MenuPointerPos ****/
       if((MenuPointerPos > 0) && (MenuPointerPos < Y_SIZE))
       {
