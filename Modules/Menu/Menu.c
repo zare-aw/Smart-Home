@@ -15,6 +15,9 @@
 uint8 LocationChange = 0;
 uint8 Level = 0;
 uint8 State = 0;
+uint8 PrevLevel = 0;
+uint8 PrevState = 0;
+uint8 MenuPointerPos = 0;
 uint8 Sec_Callback_ID = 0;
 
 uint8 TempExtID = 0xFF;
@@ -239,8 +242,11 @@ static Status_t Display_Menu_Update(void)
 {
   FuncIN(DISPLAY_MENU_UPDATE);
   
-  ASSERT(Level < NO_OF_LEVELS, -INVALID_INPUT_PARAMETER);
-  
+  Status_t Status = GENERAL_ERROR;
+  Menu_State_t *Menu_State_p;
+  Menu_State_t *Menu_State_Buf[(Y_SIZE * 2) - 1] = {0};
+  uint32 i, j, Find;
+    
   if(Level == 0)
   {
     switch(State)
@@ -283,10 +289,113 @@ static Status_t Display_Menu_Update(void)
   } // if(Level == 0)
   else
   {
+    /**** Level changed ****/
+    if(PrevLevel != Level)
+    {
+      memset(Menu_State_Buf, NULL, sizeof(Menu_State_t *) * ((Y_SIZE * 2) - 1));
+      
+      /**** Update Menu_State_Buf with next states ****/
+      for(i = 0; i < Y_SIZE; i++)
+      {
+        Status = Find_Menu_State(Level, State + i, &Menu_State_p);
+        if(Status == MENU_STATE_NOT_FOUND)
+          break;
+        else
+          if(Status == SUCCESS)
+            Menu_State_Buf[(Y_SIZE - 1) + i] = Menu_State_p;
+      }
+      
+      /**** Update Menu_State_Buf with previous states if exist ****/
+      if(i < Y_SIZE)
+      {
+        Find = Y_SIZE - i;
+        
+        if(State > 0)
+        {
+          for(i = 1; i <= Find; i++)
+          {
+            Status = Find_Menu_State(Level, State - i, &Menu_State_p);
+            if(Status == MENU_STATE_NOT_FOUND)
+              break;
+            else
+              if(Status == SUCCESS)
+                Menu_State_Buf[(Y_SIZE - 1) - i] = Menu_State_p;
+            
+            if((State - i) == 0)
+              break;
+          }
+        } // if(State != 0)
+      } // if(i < Y_SIZE)
+      
+      clrd();
+      
+      /**** Update Surface Flinger ****/
+      for(i = 0, j = 1; i < ((Y_SIZE *  2) - 1); i++)
+      {
+        if(Menu_State_Buf[i] != NULL)
+        {
+          if(i == (Y_SIZE - 1))
+          {
+            VERIFY(printd(j, MENU_POINTER_STRING "%s", Menu_State_Buf[i] -> String), -GENERAL_ERROR);
+            MenuPointerPos = j;
+          }
+          else
+            VERIFY(printd(j, EMPTY_MENU_POINTER_STRING "%s", Menu_State_Buf[i] -> String), -GENERAL_ERROR);
+          j++;
+        }
+      }
+      
+      syncd();
+      
+    } // if(PrevLevel != Level)
     
+    /**** Level not changed ****/
+    else
+    {
+      /**** Calsulate next MenuPointerPos ****/
+      if((MenuPointerPos > 0) && (MenuPointerPos < Y_SIZE))
+      {
+        if(PrevState < State)
+          MenuPointerPos++;
+        else if(PrevState > State)
+          MenuPointerPos--;
+      }
+      
+      clrd();
+      
+      /**** Update Surface Flinger with next states ****/
+      for(i = MenuPointerPos, j = 0; i <= Y_SIZE; i++, j++)
+      {
+        Status = Find_Menu_State(Level, State + j, &Menu_State_p);
+        if(Status == MENU_STATE_NOT_FOUND)
+          break;
+        else
+          if(Status == SUCCESS)
+          {
+            if(i == MenuPointerPos)
+              VERIFY(printd(i, MENU_POINTER_STRING "%s", Menu_State_p -> String), -GENERAL_ERROR);
+            else
+              VERIFY(printd(i, EMPTY_MENU_POINTER_STRING "%s", Menu_State_p -> String), -GENERAL_ERROR);
+          }
+      }
+      
+      /**** Update Surface Flinger with previous states ****/
+      for(i = MenuPointerPos, j = 1; i > 1; i--, j++)
+      {
+        Status = Find_Menu_State(Level, State - j, &Menu_State_p);
+        if(Status != SUCCESS)
+          Fatal_Abort(Status);
+        else
+          VERIFY(printd(i - 1, EMPTY_MENU_POINTER_STRING "%s", Menu_State_p -> String), -GENERAL_ERROR);
+      }
+      
+      syncd();
+    }
   }
   
   LocationChange = 0;
+  PrevLevel = Level;
+  PrevState = State;
   
   EXIT_SUCCESS_FUNC(DISPLAY_MENU_UPDATE);
 }

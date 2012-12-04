@@ -10,6 +10,9 @@
 #define MAIN_VIEW_BUFFER_LINE 12
 #define MAIN_VIEW_BUFFER_COL  25
 
+#define MENU_POINTER_STRING         "> "
+#define EMPTY_MENU_POINTER_STRING   "  "
+
 #define MENU_STATE_NOT_FOUND                        MENU_OFFSET | 0x01
 #define MENU_INVALID_EVENT                          MENU_OFFSET | 0x02
 #define MENU_STATE_EXECUTION_FAILED                 MENU_OFFSET | 0x03
