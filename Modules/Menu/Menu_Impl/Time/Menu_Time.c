@@ -4,8 +4,13 @@
 #include "Menu.h"
 #include "Menu_Func.h"
 
+
+uint8 TimePath[] = {0};
 MENU_STATE_CREATE(
-  1, 0, 0, 0x00,
+  Time,
+  TimePath,
+  1,
+  0x00,
   ENTER_KEY_EVENT | \
   CANCEL_KEY_EVENT,
   NULL,

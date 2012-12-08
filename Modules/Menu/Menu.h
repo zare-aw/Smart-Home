@@ -3,6 +3,7 @@
 
 #define NO_OF_DESKTOPS        3
 #define NO_OF_LEVELS          20
+#define MENU_NO_OF_LEVELS     7
 #define INTERNAL_SENSOR       1
 #define EXTERNAL_SENSOR       2
 #define NO_SENSOR             -255
@@ -51,10 +52,9 @@
 
 typedef struct Menu_State_s
 {
-  uint8 Level;      // Menu level
-  uint8 State;      // Menu state
-  uint8 Parent;     // Menu parent state
-  uint8 Flags;      // Menu state Flags
+  uint8 *Path;            // Menu Path
+  uint16 MaxLevel;        // Maximum level
+  uint16 Flags;           // Menu state Flags
   uint32 PossibleKeys;    // Possible keys for this state
   Status_t (*Callback)(struct Menu_State_s *Menu_State_p, const uint32 Key, void *);  // Implementation function
   char *String;     // State string
@@ -63,8 +63,8 @@ typedef struct Menu_State_s
 // Macros
 #pragma section=".menu"
 
-#define MENU_STATE_CREATE(Level, State, Parent, Flags, Keys, Callback, String) \
-  __root __packed Menu_State_t Menu_##Level_##State @ ".menu" = {Level, State, Parent, Flags, Keys, Callback, String}
+#define MENU_STATE_CREATE(Name, Path, MaxLevel, Flags, Keys, Callback, String) \
+  __root __packed Menu_State_t Menu_##Name @ ".menu" = {Path, MaxLevel, Flags, Keys, Callback, String}
 
 // Functions
 Status_t Menu_Init(void);

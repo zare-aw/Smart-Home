@@ -14,7 +14,6 @@
 
 uint8 LocationChange = 0;
 uint8 Level = 0;
-uint8 State = 0;
 uint8 PrevLevel = 0;
 uint8 PrevState = 0;
 uint8 MenuPointerPos = 0;
@@ -24,6 +23,7 @@ uint8 TempExtID = 0xFF;
 uint8 TempIntID = 0xFF;
 
 char MainViewBuffer[MAIN_VIEW_BUFFER_LINE][MAIN_VIEW_BUFFER_COL] = {0};
+uint8 Menu_Current_Path[MENU_NO_OF_LEVELS];
 
 static Status_t Display_Menu_Update();
 
@@ -66,6 +66,7 @@ Status_t Find_Menu_State(const uint8 Level, const uint8 State, Menu_State_t **Me
   Menu_State_t *Menu_Section_Begin = Get_Menu_Section_Begin();
   Menu_State_t *Menu_Section_End = Get_Menu_Section_End();
   Menu_State_t *Menu_State;
+  uint32 i;
   
   ASSERT(Menu_State_p != NULL, -INVALID_INPUT_POINTER);
   
@@ -73,19 +74,33 @@ Status_t Find_Menu_State(const uint8 Level, const uint8 State, Menu_State_t **Me
   
   for(Menu_State = Menu_Section_Begin; Menu_State != Menu_Section_End; Menu_State++)
   {
-    MENU_DEBUG_L3(printc("(%s) Try! Level = %d, State = %d, String = \"%s\"\n",
-                         __func__, Menu_State -> Level, Menu_State -> State, Menu_State -> String));
+    MENU_DEBUG_L3(printc("(%s) Try! State = %d, String = \"%s\"\n",
+                         __func__, Menu_State -> Path[Level - 1], Menu_State -> String));
     
-    if((Menu_State -> Level == Level) && (Menu_State -> State == State))
+    if(Level > Menu_State -> MaxLevel)
+      continue;
+    
+    if(Menu_State -> Path[Level - 1] == State)
     {
+      for(i = Level - 1; i > 0; i--)
+      {
+        if(Menu_State -> Path[i - 1] != Menu_Current_Path[i])
+        {
+          MENU_DEBUG_L3(printc("(%s) Not Found! Level = %d, State = %d\n",
+                              __func__, Level, State));
+          EXIT_FUNC(MENU_STATE_NOT_FOUND, FIND_MENU_STATE);
+        }
+      }
+      
       *Menu_State_p = Menu_State;
-      
       MENU_DEBUG_L3(printc("(%s) Found! Level = %d, State = %d, String = \"%s\"\n",
-                           __func__, Menu_State -> Level, Menu_State -> State, Menu_State -> String));  
-      
+                           __func__, Level, Menu_State -> Path[Level - 1], Menu_State -> String));  
       EXIT_SUCCESS_FUNC(FIND_MENU_STATE);
-    }
+    } // if((Menu_State -> Path[Level - 1] == State)
   } // for
+  
+  MENU_DEBUG_L3(printc("(%s) Not Found! Level = %d, State = %d\n",
+                       __func__, Level, State));
   
   EXIT_FUNC(MENU_STATE_NOT_FOUND, FIND_MENU_STATE);
 }
@@ -120,34 +135,34 @@ Status_t Menu(uint32 Event)
   Menu_State_t *Menu_State_Temp_p;
   
   MENU_DEBUG_L1(printc("(%s) Enter! Level = %d, State = %d, Event = 0x%08X\n",
-                       __func__, Level, State, Event));
+                       __func__, Level, Menu_Current_Path[Level], Event));
   
   if(Level == 0)
   {
     switch(Event)
     {
       case UP_KEY_EVENT:
-        if(State > 0)
+        if(Menu_Current_Path[Level] > 0)
         {
-          State--;
+          Menu_Current_Path[Level]--;
           LocationChange = 1;
         }
         break;
       case DOWN_KEY_EVENT:
-        if(State < (NO_OF_DESKTOPS - 1))
+        if(Menu_Current_Path[Level] < (NO_OF_DESKTOPS - 1))
         {
-          State++;
+          Menu_Current_Path[Level]++;
           LocationChange = 1;
         }
         break;
       case ENTER_KEY_EVENT:
         Level = 1;
-        State = 0;
+        Menu_Current_Path[Level] = 0;
         LocationChange = 1;
         break;
       case MENU_KEY_EVENT:
         Level = 1;
-        State = 0;
+        Menu_Current_Path[Level] = 0;
         LocationChange = 1;
         break;
       case VOL_UP_KEY_EVENT:
@@ -159,12 +174,12 @@ Status_t Menu(uint32 Event)
       default:
         MENU_INFO(printc("\r # Menu: Unsupported Key (0x%08X)\n", Event));
         break;
-    } // switch(State)
+    } // switch(Menu_Current_Path[Level])
   } // if(Level == 0)
   else
   {
     // Find registered state
-    Status = Find_Menu_State(Level, State, &Menu_State_p);
+    Status = Find_Menu_State(Level, Menu_Current_Path[Level], &Menu_State_p);
     VERIFY(Status, Status);
     if(Status != SUCCESS)
       Fatal_Abort(-FATAL_ERROR);
@@ -179,19 +194,19 @@ Status_t Menu(uint32 Event)
     switch(Event)
     {
       case UP_KEY_EVENT:
-        if(State > 0)
+        if(Menu_Current_Path[Level] > 0)
         {
-          State--;
+          Menu_Current_Path[Level]--;
           LocationChange = 1;
         }
         break;
       case DOWN_KEY_EVENT:
-        Status = Find_Menu_State(Level, State + 1, &Menu_State_Temp_p);
+        Status = Find_Menu_State(Level, Menu_Current_Path[Level] + 1, &Menu_State_Temp_p);
         VERIFY(Status, Status);
         
         if(Status == SUCCESS)
         {
-          State++;
+          Menu_Current_Path[Level]++;
           LocationChange = 1;
         }
         break;
@@ -207,7 +222,7 @@ Status_t Menu(uint32 Event)
           if(Status == SUCCESS)
           {
             Level++;
-            State = 0;
+            Menu_Current_Path[Level] = 0;
             LocationChange = 1;
           }
         }
@@ -217,7 +232,12 @@ Status_t Menu(uint32 Event)
           VERIFY((Menu_State_p -> Callback)(Menu_State_p, Event, NULL), -MENU_STATE_EXECUTION_FAILED);
         
         Level--;
-        State = Menu_State_p -> Parent;
+        
+        if(Level != 0)
+          Menu_Current_Path[Level] = (Menu_State_p -> Path[Level - 1]) - 1;
+        else
+          Menu_Current_Path[Level] = 0;
+            
         LocationChange = 1;
         break;
      case MENU_KEY_EVENT:
@@ -225,7 +245,7 @@ Status_t Menu(uint32 Event)
           VERIFY((Menu_State_p -> Callback)(Menu_State_p, Event, NULL), -MENU_STATE_EXECUTION_FAILED);
         
         Level = 1;
-        State = 0;
+        Menu_Current_Path[Level] = 0;
         LocationChange = 1;
         break;
       case EXIT_KEY_EVENT:
@@ -233,7 +253,7 @@ Status_t Menu(uint32 Event)
           VERIFY((Menu_State_p -> Callback)(Menu_State_p, Event, NULL), -MENU_STATE_EXECUTION_FAILED);
         
         Level = 0;
-        State = 0;
+        Menu_Current_Path[Level] = 0;
         LocationChange = 1;
         break;
       default:
@@ -244,7 +264,7 @@ Status_t Menu(uint32 Event)
   }
   
   MENU_DEBUG_L1(printc("(%s) After work! Level = %d, State = %d\n",
-                       __func__, Level, State));
+                       __func__, Level, Menu_Current_Path[Level]));
   
   if(LocationChange == 1)
     VERIFY(Display_Menu_Update(), -MENU_DISPLAY_ERROR);
@@ -267,7 +287,7 @@ static Status_t Display_Menu_Update(void)
   
   if(Level == 0)
   {
-    switch(State)
+    switch(Menu_Current_Path[Level])
     {
       case 0:
         clrd();
@@ -301,9 +321,11 @@ static Status_t Display_Menu_Update(void)
         break;
       default:
         LocationChange = 0;
-        Fatal_Abort(-INVALID_INPUT_POINTER);
+        MENU_DEBUG(printc("(%s) UNKNOWN_ERROR! Level = %d, Menu_Current_Path[Level] = %d\n",
+                          __func__, Level, Menu_Current_Path[Level]));
+        Fatal_Abort(-UNKNOWN_ERROR);
         break;
-    } // switch(State)
+    } // switch(Menu_Current_Path[Level])
   } // if(Level == 0)
   else
   {
@@ -317,7 +339,7 @@ static Status_t Display_Menu_Update(void)
       /**** Update Menu_State_Buf with next states ****/
       for(i = 0; i < Y_SIZE; i++)
       {
-        Status = Find_Menu_State(Level, State + i, &Menu_State_p);
+        Status = Find_Menu_State(Level, Menu_Current_Path[Level] + i, &Menu_State_p);
         if(Status != SUCCESS)
           break;
         else
@@ -329,20 +351,20 @@ static Status_t Display_Menu_Update(void)
       {
         Find = Y_SIZE - i;
         
-        if(State > 0)
+        if(Menu_Current_Path[Level] > 0)
         {
           for(i = 1; i <= Find; i++)
           {
-            Status = Find_Menu_State(Level, State - i, &Menu_State_p);
+            Status = Find_Menu_State(Level, Menu_Current_Path[Level] - i, &Menu_State_p);
             if(Status != SUCCESS)
               break;
             else
               Menu_State_Buf[(Y_SIZE - 1) - i] = Menu_State_p;
             
-            if((State - i) == 0)
+            if((Menu_Current_Path[Level] - i) == 0)
               break;
           }
-        } // if(State != 0)
+        } // if(Menu_Current_Path[Level] != 0)
       } // if(i < Y_SIZE)
       
       clrd();
@@ -383,9 +405,9 @@ static Status_t Display_Menu_Update(void)
       /**** Calsulate next MenuPointerPos ****/
       if((MenuPointerPos > 0) && (MenuPointerPos < Y_SIZE))
       {
-        if(PrevState < State)
+        if(PrevState < Menu_Current_Path[Level])
           MenuPointerPos++;
-        else if(PrevState > State)
+        else if(PrevState > Menu_Current_Path[Level])
           MenuPointerPos--;
       }
       
@@ -394,7 +416,7 @@ static Status_t Display_Menu_Update(void)
       /**** Update Surface Flinger with next states ****/
       for(i = MenuPointerPos, j = 0; i <= Y_SIZE; i++, j++)
       {
-        Status = Find_Menu_State(Level, State + j, &Menu_State_p);
+        Status = Find_Menu_State(Level, Menu_Current_Path[Level] + j, &Menu_State_p);
         if(Status != SUCCESS)
           break;
         else
@@ -409,7 +431,7 @@ static Status_t Display_Menu_Update(void)
       /**** Update Surface Flinger with previous states ****/
       for(i = MenuPointerPos, j = 1; i > 1; i--, j++)
       {
-        Status = Find_Menu_State(Level, State - j, &Menu_State_p);
+        Status = Find_Menu_State(Level, Menu_Current_Path[Level] - j, &Menu_State_p);
         if(Status != SUCCESS)
           Fatal_Abort(Status);
         else
@@ -422,7 +444,7 @@ static Status_t Display_Menu_Update(void)
   
   LocationChange = 0;
   PrevLevel = Level;
-  PrevState = State;
+  PrevState = Menu_Current_Path[Level];
   
   EXIT_SUCCESS_FUNC(DISPLAY_MENU_UPDATE);
 }
@@ -569,7 +591,7 @@ __arm Status_t Menu_Sec_Int_Callback(void *Ptr)
   
   Display_Temp_Update(TempInt, TempExt);
   
-  if((Level == 0) && (State == 0))
+  if((Level == 0) && (Menu_Current_Path[Level] == 0))
     Display_Menu_Update();
   
   EXIT_SUCCESS_FUNC(MENU_SEC_INT_CALLBACK);
