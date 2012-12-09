@@ -257,8 +257,11 @@ Status_t Menu(uint32 Event)
         LocationChange = 1;
         break;
       default:
-        if(Event | Menu_State_p -> PossibleKeys)
+        if((Event & Menu_State_p -> PossibleKeys) && (Menu_State_p -> Callback != NULL))
           VERIFY((Menu_State_p -> Callback)(Menu_State_p, Event, NULL), -MENU_STATE_EXECUTION_FAILED);
+        else
+          MENU_DEBUG(printc("(%s) Unused Key! Level = %d, State = %d, Key = 0x08%X\n",
+                       __func__, Level, Menu_Current_Path[Level], Event));
         break;
     }
   }
