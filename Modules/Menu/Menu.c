@@ -234,7 +234,7 @@ Status_t Menu(uint32 Event)
         Level--;
         
         if(Level != 0)
-          Menu_Current_Path[Level] = (Menu_State_p -> Path[Level - 1]) - 1;
+          Menu_Current_Path[Level] = Menu_State_p -> Path[Level - 1];
         else
           Menu_Current_Path[Level] = 0;
             
