@@ -82,6 +82,8 @@ Status_t Find_Menu_State(const uint8 Level, const uint8 State, Menu_State_t **Me
     
     if(Menu_State -> Path[Level - 1] == State)
     {
+      MENU_DEBUG_L3(printc("(%s) Candidate! Level = %d, State = %d, String = \"%s\"\n",
+                           __func__, Level, Menu_State -> Path[Level - 1], Menu_State -> String));  
       for(i = Level - 1; i > 0; i--)
       {
         if(Menu_State -> Path[i - 1] != Menu_Current_Path[i])
@@ -216,7 +218,7 @@ Status_t Menu(uint32 Event)
         
         if((Menu_State_p -> Flags & MENU_LAST_STATE) != MENU_LAST_STATE)
         {
-          Status = Find_Menu_State(Level + 1, 1, &Menu_State_Temp_p);
+          Status = Find_Menu_State(Level + 1, 0, &Menu_State_Temp_p);
           VERIFY(Status, Status);
           
           if(Status == SUCCESS)
@@ -370,34 +372,36 @@ static Status_t Display_Menu_Update(void)
         } // if(Menu_Current_Path[Level] != 0)
       } // if(i < Y_SIZE)
       
-      clrd();
-      
-      /**** Update Surface Flinger ****/
-      MENU_DEBUG_L3(printc("(%s) Update Surface Flinger!\n", __func__));
-      
-      for(i = 0, j = 1; i < ((Y_SIZE *  2) - 1); i++)
+      if((Menu_State_Buf[Y_SIZE - 1] -> Flags & MENU_NO_DISPLAY_UPDATE) != MENU_NO_DISPLAY_UPDATE)
       {
-        if(Menu_State_Buf[i] != NULL)
+        clrd();
+        
+        /**** Update Surface Flinger ****/
+        MENU_DEBUG_L3(printc("(%s) Update Surface Flinger!\n", __func__));
+        
+        for(i = 0, j = 1; i < ((Y_SIZE *  2) - 1); i++)
         {
-          if(i == (Y_SIZE - 1))
+          if(Menu_State_Buf[i] != NULL)
           {
-            VERIFY(printd(j, MENU_POINTER_STRING "%s", Menu_State_Buf[i] -> String), -GENERAL_ERROR);
-            MENU_DEBUG_L3(printc(MENU_POINTER_STRING "%s\n", Menu_State_Buf[i] -> String));
-            MenuPointerPos = j;
+            if(i == (Y_SIZE - 1))
+            {
+              VERIFY(printd(j, MENU_POINTER_STRING "%s", Menu_State_Buf[i] -> String), -GENERAL_ERROR);
+              MENU_DEBUG_L3(printc(MENU_POINTER_STRING "%s\n", Menu_State_Buf[i] -> String));
+              MenuPointerPos = j;
+            }
+            else
+            {
+              VERIFY(printd(j, EMPTY_MENU_POINTER_STRING "%s", Menu_State_Buf[i] -> String), -GENERAL_ERROR);
+              MENU_DEBUG_L3(printc(EMPTY_MENU_POINTER_STRING "%s\n", Menu_State_Buf[i] -> String));
+            }
+            j++;
           }
-          else
-          {
-            VERIFY(printd(j, EMPTY_MENU_POINTER_STRING "%s", Menu_State_Buf[i] -> String), -GENERAL_ERROR);
-            MENU_DEBUG_L3(printc(EMPTY_MENU_POINTER_STRING "%s\n", Menu_State_Buf[i] -> String));
-          }
-          j++;
         }
-      }
-      
-      MENU_DEBUG_L3(printc("(%s) Surface Flinger Updated! Display Sync...\n", __func__));
-      
-      syncd();
-      
+        
+        MENU_DEBUG_L3(printc("(%s) Surface Flinger Updated! Display Sync...\n", __func__));
+        
+        syncd();
+      } // if((Menu_State_Buf[Y_SIZE - 1] -> Flags ...
     } // if(PrevLevel != Level)
     
     /**** Level not changed ****/
