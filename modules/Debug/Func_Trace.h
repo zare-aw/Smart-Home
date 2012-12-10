@@ -26,6 +26,7 @@
 #define PWM_OFFSET              0x26000000
 #define UART_OFFSET             0x27000000
 #define I2C_OFFSET              0x28000000
+#define ALARM_TIME_OFFSET       0x29000000
 
 // Drivers
 #define PWM_BACKLIGHT_OFFSET    0x41000000

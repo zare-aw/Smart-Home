@@ -113,6 +113,7 @@ Status_t Delay_Work(const uint32 Delay, void (*Callback)(void *))
       DelayWork[i].Delay = Delay;
       DelayWork[i].AbsDelay = AbsDelay;
       DelayWork[i].Callback = Callback;
+      break;
     }
   }
   

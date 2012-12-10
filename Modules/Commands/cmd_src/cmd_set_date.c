@@ -18,7 +18,7 @@ Status_t Do_Set_Date(Cmd_Tbl_t *Cmd_Tbl, uint32 flag, uint32 argc, char *argv[])
   if(argc == 0)
     EXIT_FUNC(CMD_MISSING_ARGUMENT, DO_SET_DATE);
   
-  if(strlen(argv[0]) > 10)  // Agument should be in format "DD:MM:YYYY"
+  if(strlen(argv[0]) > 10)  // Agument should be in format "DD.MM.YYYY"
     EXIT_FUNC(CMD_INVALID_ARGUMENT, DO_SET_DATE);
   
   strcpy(ArgumentTokens, argv[0]);  // strtok is changing the string. We need local copy!
