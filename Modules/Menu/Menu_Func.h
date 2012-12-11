@@ -40,4 +40,8 @@
 #define MUTE_KEY_CALLBACK           MENU_CALLBACKS_OFFSET | MENU_OFFSET | 0x0018
 #define MENU_CALLBACKS_INIT         MENU_CALLBACKS_OFFSET | MENU_OFFSET | 0x0019
 
+// Menu_Time.c
+#define MENU_TIME_OFFSET                                                  0x0200
+#define MENU_SET_TIME                    MENU_TIME_OFFSET | MENU_OFFSET | 0x0001
+
 #endif
