@@ -43,5 +43,8 @@
 // Menu_Time.c
 #define MENU_TIME_OFFSET                                                  0x0200
 #define MENU_SET_TIME                    MENU_TIME_OFFSET | MENU_OFFSET | 0x0001
+#define MENU_UPDATE_DISP_PTR_POS         MENU_TIME_OFFSET | MENU_OFFSET | 0x0002
+#define MENU_INCREMENT_PTR_POS_NUMBER    MENU_TIME_OFFSET | MENU_OFFSET | 0x0003
+#define MENU_DECREMENT_PTR_POS_NUMBER    MENU_TIME_OFFSET | MENU_OFFSET | 0x0004
 
 #endif

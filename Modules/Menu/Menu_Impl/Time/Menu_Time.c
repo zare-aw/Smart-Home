@@ -15,6 +15,150 @@ uint8 PointerPosition = 1;
 /*******************************************************************************
  *
  ******************************************************************************/
+static Status_t Menu_Update_Disp_Ptr_Pos(void)
+{
+  FuncIN(MENU_UPDATE_DISP_PTR_POS);
+  
+  switch(PointerPosition)
+  {
+    case 1:
+      printd(3, "^       ");
+      break;
+    case 2:
+      printd(3, " ^      ");
+      break;
+    case 3:
+      printd(3, "   ^    ");
+      break;
+    case 4:
+      printd(3, "    ^   ");
+      break;
+    case 5:
+      printd(3, "      ^ ");
+      break;
+    case 6:
+      printd(3, "       ^");
+      break;
+    default:
+      Fatal_Abort(-UNKNOWN_ERROR);
+      break;
+  }
+  
+  EXIT_SUCCESS_FUNC(MENU_UPDATE_DISP_PTR_POS);
+}
+FUNC_REGISTER(MENU_UPDATE_DISP_PTR_POS, Menu_Update_Disp_Ptr_Pos);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
+static Status_t Menu_Increment_Ptr_Pos_Number(void)
+{
+  FuncIN(MENU_INCREMENT_PTR_POS_NUMBER);
+  
+  switch(PointerPosition)
+  {
+    case 1:
+      if(Hour > 19)
+        Hour -= 20;
+      else
+        Hour += 10;
+      break;
+    case 2:
+      if(Hour%10 == 9)
+        Hour -= 9;
+      else
+        Hour++;
+      break;
+    case 3:
+      if(Minute > 49)
+        Minute -= 50;
+      else
+        Minute += 10;
+      break;
+    case 4:
+      if(Minute%10 == 9)
+        Minute -= 9;
+      else
+        Minute++;
+      break;
+    case 5:
+      if(Second > 49)
+        Second -= 50;
+      else
+        Second += 10;
+      break;
+    case 6:
+      if(Second%10 == 9)
+        Second -= 9;
+      else
+        Second++;
+      break;
+    default:
+      Fatal_Abort(-UNKNOWN_ERROR);
+      break;
+  }
+  
+  EXIT_SUCCESS_FUNC(MENU_INCREMENT_PTR_POS_NUMBER);
+}
+FUNC_REGISTER(MENU_INCREMENT_PTR_POS_NUMBER, Menu_Increment_Ptr_Pos_Number);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
+static Status_t Menu_Decrement_Ptr_Pos_Number(void)
+{
+  FuncIN(MENU_DECREMENT_PTR_POS_NUMBER);
+  
+  switch(PointerPosition)
+  {
+    case 1:
+      if(Hour < 10)
+        Hour += 20;
+      else
+        Hour -= 10;
+      break;
+    case 2:
+      if(Hour%10 == 0)
+        Hour += 9;
+      else
+        Hour--;
+      break;
+    case 3:
+      if(Minute < 10)
+        Minute += 50;
+      else
+        Minute -= 10;
+      break;
+    case 4:
+      if(Minute%10 == 0)
+        Minute += 9;
+      else
+        Minute--;
+      break;
+    case 5:
+      if(Second < 10)
+        Second += 50;
+      else
+        Second -= 10;
+      break;
+    case 6:
+      if(Second%10 == 0)
+        Second += 9;
+      else
+        Second--;
+      break;
+    default:
+      Fatal_Abort(-UNKNOWN_ERROR);
+      break;
+  }
+  
+  EXIT_SUCCESS_FUNC(MENU_DECREMENT_PTR_POS_NUMBER);
+}
+FUNC_REGISTER(MENU_DECREMENT_PTR_POS_NUMBER, Menu_Decrement_Ptr_Pos_Number);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
 Status_t Menu_Set_Time(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
 {
   FuncIN(MENU_SET_TIME);
@@ -24,6 +168,10 @@ Status_t Menu_Set_Time(struct Menu_State_s *Menu_State_p, const uint32 Key, void
   
   clrd();
   printd(1, "Set Time");
+  printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
+  Menu_Update_Disp_Ptr_Pos();
+  
+  printc("(%s): Enter! Key = 0x%08X\n", __func__, Key);
   
   switch(Key)
   {
@@ -31,12 +179,6 @@ Status_t Menu_Set_Time(struct Menu_State_s *Menu_State_p, const uint32 Key, void
       // First enter in this state
       if(EnterFlag == 0)
       {
-        Hour = 0;
-        Minute = 0;
-        Second = 0;
-        
-        printd(2, "00:00:00");
-        
         EnterFlag = 1;
         break;
       }
@@ -57,22 +199,63 @@ Status_t Menu_Set_Time(struct Menu_State_s *Menu_State_p, const uint32 Key, void
       
       break;
     case CANCEL_KEY_EVENT:
+      clrd();
+      
+      Hour = 0;
+      Minute = 0;
+      Second = 0;
+      
+      PointerPosition = 1;
+      
       EnterFlag = 0;
-      break;
+      
+      EXIT_SUCCESS_FUNC(MENU_SET_TIME);
     case UP_KEY_EVENT:
+      Menu_Increment_Ptr_Pos_Number();
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case DOWN_KEY_EVENT:
+      Menu_Decrement_Ptr_Pos_Number();
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case LEFT_KEY_EVENT:
+      if(PointerPosition > 1)
+      {
+        PointerPosition--;
+        Menu_Update_Disp_Ptr_Pos();
+      }
       break;
     case RIGHT_KEY_EVENT:
+      if(PointerPosition < 6)
+      {
+        PointerPosition++;
+        Menu_Update_Disp_Ptr_Pos();
+      }
       break;
     case EXIT_KEY_EVENT:
+      clrd();
+      
+      Hour = 0;
+      Minute = 0;
+      Second = 0;
+      
+      PointerPosition = 1;
+      
       EnterFlag = 0;
-      break;
+      
+      EXIT_SUCCESS_FUNC(MENU_SET_TIME);
     case MENU_KEY_EVENT:
+      clrd();
+      
+      Hour = 0;
+      Minute = 0;
+      Second = 0;
+      
+      PointerPosition = 1;
+      
       EnterFlag = 0;
-      break;
+      
+      EXIT_SUCCESS_FUNC(MENU_SET_TIME);
     case NUM1_KEY_EVENT:
       break;
     case NUM2_KEY_EVENT:
