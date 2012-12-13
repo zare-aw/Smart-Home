@@ -196,6 +196,12 @@ Status_t Menu(uint32 Event)
     switch(Event)
     {
       case UP_KEY_EVENT:
+        if((Event | Menu_State_p -> PossibleKeys) && (Menu_State_p -> Callback != NULL))
+          VERIFY((Menu_State_p -> Callback)(Menu_State_p, Event, NULL), -MENU_STATE_EXECUTION_FAILED);
+        
+        if((Menu_State_p -> Flags & MENU_NO_DISPLAY_UPDATE) == MENU_NO_DISPLAY_UPDATE)
+          break;
+        
         if(Menu_Current_Path[Level] > 0)
         {
           Menu_Current_Path[Level]--;
@@ -203,6 +209,12 @@ Status_t Menu(uint32 Event)
         }
         break;
       case DOWN_KEY_EVENT:
+        if((Event | Menu_State_p -> PossibleKeys) && (Menu_State_p -> Callback != NULL))
+          VERIFY((Menu_State_p -> Callback)(Menu_State_p, Event, NULL), -MENU_STATE_EXECUTION_FAILED);
+        
+        if((Menu_State_p -> Flags & MENU_NO_DISPLAY_UPDATE) == MENU_NO_DISPLAY_UPDATE)
+          break;
+        
         Status = Find_Menu_State(Level, Menu_Current_Path[Level] + 1, &Menu_State_Temp_p);
         VERIFY(Status, Status);
         
