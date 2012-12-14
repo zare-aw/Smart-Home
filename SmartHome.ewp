@@ -303,6 +303,7 @@
           <state>$PROJ_DIR$\SOC_HAL\Timers\</state>
           <state>$PROJ_DIR$\SOC_HAL\UART\</state>
           <state>$PROJ_DIR$\SOC_HAL\VIC\</state>
+          <state>$PROJ_DIR$\SOC_HAL\Alarm\</state>
           <state>$PROJ_DIR$\</state>
         </option>
         <option>
@@ -1777,7 +1778,10 @@
           <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_time.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_x.c</name>
+          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_time_alarm.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_x.c</name>
         </file>
       </group>
       <file>
@@ -1907,6 +1911,21 @@
   </group>
   <group>
     <name>SOC_HAL</name>
+    <group>
+      <name>Alarm</name>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\Alarm\Alarm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\Alarm\Alarm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\Alarm\Alarm_Debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\Alarm\Alarm_Func.h</name>
+      </file>
+    </group>
     <group>
       <name>CLK_Reset</name>
       <file>

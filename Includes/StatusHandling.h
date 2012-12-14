@@ -102,4 +102,7 @@ void Fatal_Abort(Status_t Status);
 #define TEMP_ALARM_REGISTER_ERROR           404
 #define TEMP_ALARM_SET_STATE_ERROR          405
 
+#define TIME_SET_ALARM_ERROR                500
+#define TIME_ALARM_REGISTER_ERROR           501
+#define TIME_ALARM_SET_STATE_ERROR          502
 #endif

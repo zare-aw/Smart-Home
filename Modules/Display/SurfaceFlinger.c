@@ -17,10 +17,12 @@ uint8 WorkingSurface = 1;
 uint8 BeckupSurface = 2;
 uint8 DisplaySync = 0;
 uint8 ConsoleDisplayPrint = DISABLE;
+uint8 UpdateDisplay_State = 0;
 
 static Status_t Update_Surface_Buffer(char InputChar, uint8 line, uint8 column);
 static void Swap_Surface_Buffer(void);
 static Status_t Fill_Row(uint8 * const Row_p, const char *Buf_p);
+static void Display_Update_Reset(void);
 
 /*******************************************************************************
 * Standardna funkcija za pisuvanje po display.
@@ -94,7 +96,10 @@ Status_t syncd(void)
     Swap_Surface_Buffer();
   }
   else
-    return ERROR;
+  {
+    Swap_Surface_Buffer();
+    Display_Update_Reset();
+  }
   
   return SUCCESS;
 }
@@ -229,79 +234,118 @@ FUNC_REGISTER(CONSOLE_DISPLAY_DUMP, Console_Display_Dump);
 /*******************************************************************************
 * 
 *******************************************************************************/
+static void Display_Update_Reset(void)
+{
+  UpdateDisplay_State = 0;
+}
+
+/*******************************************************************************
+* 
+*******************************************************************************/
 Status_t Update_Display_Panel(uint8 Mode)
 {
   FuncIN(UPDATE_DISPLAY_PANEL);
   
-  static uint8 i = 0;
-  HD44780_STRING_DEF *row;
+  HD44780_STRING_DEF *Row;
   
-  row = (uint8 *)malloc(X_SIZE + 1);
-  ASSERT(row != 0, -HEAP_ALLOCATION_ERROR);
-
   switch(Mode)
   {
     case PULL:
       if(DisplaySync == 1)
       {
-        if(ConsoleDisplayPrint == ENABLE)
-          if(i == 0)
-          {
-            Console_Display_Dump();
-          }
-            switch(WorkingSurface)
-            {
-              case 1:
-                Fill_Row(row, SurfaceBuffer_1[i]);
-                break;
-              case 2:
-                Fill_Row(row, SurfaceBuffer_2[i]);
-                break;
-            }  
-
-            if(HD44780_OK !=  HD44780_StrShow(0, i,  row))
-              EXIT_FUNC(MENU_DISPLAY_ERROR, UPDATE_DISPLAY_PANEL);
-
-            if (i < 3) {
-              i++;
-            } else {
-              i = 0;
-              DisplaySync = 0;
-            }
-      }
-      break;
-    case FORCE:
-      if(ConsoleDisplayPrint == ENABLE)
-        if(i == 0)
-        {
+        if((ConsoleDisplayPrint == ENABLE) && (UpdateDisplay_State == 0))
           Console_Display_Dump();
-        }
+        
+        Row = (uint8 *)malloc(X_SIZE + 1);
+        ASSERT(Row != 0, -HEAP_ALLOCATION_ERROR);
+        
         switch(WorkingSurface)
         {
           case 1:
-            Fill_Row(row, SurfaceBuffer_1[i]);
+            Fill_Row(Row, SurfaceBuffer_1[UpdateDisplay_State]);
             break;
           case 2:
-            Fill_Row(row, SurfaceBuffer_2[i]);
+            Fill_Row(Row, SurfaceBuffer_2[UpdateDisplay_State]);
             break;
         }
+        
+        switch(UpdateDisplay_State)
+        {
+          case 0:
+            if(HD44780_OK !=  HD44780_StrShow(0, 0, Row))
+              EXIT_FUNC(MENU_DISPLAY_ERROR, UPDATE_DISPLAY_PANEL);
+            
+            // Next State
+            UpdateDisplay_State = 1;
+            break;
+          case 1:
+            if(HD44780_OK !=  HD44780_StrShow(0, 1, Row))
+              EXIT_FUNC(MENU_DISPLAY_ERROR, UPDATE_DISPLAY_PANEL);
+            
+            // Next State
+#if Y_SIZE == 2
+            UpdateDisplay_State = 0;
+            DisplaySync = 0;
+            break;
+#else
+            UpdateDisplay_State = 2;
+            break;
+          case 2:
+            if(HD44780_OK !=  HD44780_StrShow(0, 2, Row))
+              EXIT_FUNC(MENU_DISPLAY_ERROR, UPDATE_DISPLAY_PANEL);
+            
+            // Next State
+            UpdateDisplay_State = 3;
+            break;
+          case 3:
+            if(HD44780_OK !=  HD44780_StrShow(0, 3, Row))
+              EXIT_FUNC(MENU_DISPLAY_ERROR, UPDATE_DISPLAY_PANEL);
+            
+            // Next State
+            UpdateDisplay_State = 0;
+            DisplaySync = 0;
+            break;
+#endif
+          default:
+            UpdateDisplay_State = 0;
+            DisplaySync = 0;
+            break;
+        } // switch(UpdateDisplay_State)
+        
+        free(Row);
+      } // if(DisplaySync == 1)
+      break;
+    case FORCE:
+      if(ConsoleDisplayPrint == ENABLE)
+        Console_Display_Dump();
+        
+      Row = (uint8 *)malloc(X_SIZE + 1);
+      ASSERT(Row != 0, -HEAP_ALLOCATION_ERROR);
+      
+      for(uint32 i = 0; i < Y_SIZE; i++)
+      {
+        switch(WorkingSurface)
+        {
+          case 1:
+            Fill_Row(Row, SurfaceBuffer_1[i]);
+            break;
+          case 2:
+            Fill_Row(Row, SurfaceBuffer_2[i]);
+            break;
+          default:
+            Fatal_Abort(-UNKNOWN_ERROR);
+        }
 
-        if(HD44780_OK !=  HD44780_StrShow(0, i,  row))
+        if(HD44780_OK !=  HD44780_StrShow(0, i,  Row))
           EXIT_FUNC(MENU_DISPLAY_ERROR, UPDATE_DISPLAY_PANEL);
-
-        if (i < 3) {
-          i++;
-          } else {
-            i = 0;
-          }
-
+      } // for(uint32 i = 0; i < Y_SIZE; i++)
+      
+      free(Row);
       break;
     default:
       Fatal_Abort(-INVALID_INPUT_PARAMETER);
       break;
-  }
-  
-  free(row);
+  } // switch(Mode)
   
   EXIT_SUCCESS_FUNC(UPDATE_DISPLAY_PANEL);
 }

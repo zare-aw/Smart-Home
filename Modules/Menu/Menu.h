@@ -83,5 +83,17 @@ Status_t Left_Key_Callback(void *p);
 Status_t Right_Key_Callback(void *p);
 Status_t Enter_Key_Callback(void *p);
 Status_t Cancel_Key_Callback(void *p);
+Status_t Menu_Key_Callback(void *p);
+Status_t Exit_Key_Callback(void *p);
+Status_t Num1_Key_Callback(void *p);
+Status_t Num2_Key_Callback(void *p);
+Status_t Num3_Key_Callback(void *p);
+Status_t Num4_Key_Callback(void *p);
+Status_t Num5_Key_Callback(void *p);
+Status_t Num6_Key_Callback(void *p);
+Status_t Num7_Key_Callback(void *p);
+Status_t Num8_Key_Callback(void *p);
+Status_t Num9_Key_Callback(void *p);
+Status_t Num0_Key_Callback(void *p);
 
 #endif
