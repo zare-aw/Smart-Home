@@ -159,6 +159,51 @@ FUNC_REGISTER(MENU_DECREMENT_PTR_POS_NUMBER, Menu_Decrement_Ptr_Pos_Number);
 /*******************************************************************************
  *
  ******************************************************************************/
+static Status_t Menu_Set_Ptr_Pos_Number(uint32 Number)
+{
+  FuncIN(MENU_SET_PTR_POS_NUMBER);
+  
+  switch(PointerPosition)
+  {
+    case 1:
+      if(Number < 3)
+        Hour = (Hour % 10) + Number * 10;
+      else
+        EXIT_FUNC(INVALID_INPUT_PARAMETER, MENU_SET_PTR_POS_NUMBER);
+      break;
+    case 2:
+      Hour = ((Hour / 10) * 10) + Number;
+      break;
+    case 3:
+      if(Number < 6)
+        Minute = (Minute % 10) + Number * 10;
+      else
+        EXIT_FUNC(INVALID_INPUT_PARAMETER, MENU_SET_PTR_POS_NUMBER);
+      break;
+    case 4:
+      Minute = ((Minute / 10) * 10) + Number;
+      break;
+    case 5:
+      if(Number < 6)
+        Second = (Second % 10) + Number * 10;
+      else
+        EXIT_FUNC(INVALID_INPUT_PARAMETER, MENU_SET_PTR_POS_NUMBER);
+      break;
+    case 6:
+      Second = ((Second / 10) * 10) + Number;
+      break;
+    default:
+      Fatal_Abort(-UNKNOWN_ERROR);
+      break;
+  }
+  
+  EXIT_SUCCESS_FUNC(MENU_SET_PTR_POS_NUMBER);
+}
+FUNC_REGISTER(MENU_SET_PTR_POS_NUMBER, Menu_Set_Ptr_Pos_Number);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
 Status_t Menu_Set_Time(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
 {
   FuncIN(MENU_SET_TIME);
@@ -257,24 +302,44 @@ Status_t Menu_Set_Time(struct Menu_State_s *Menu_State_p, const uint32 Key, void
       
       EXIT_SUCCESS_FUNC(MENU_SET_TIME);
     case NUM1_KEY_EVENT:
+      Menu_Set_Ptr_Pos_Number(1);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM2_KEY_EVENT:
+      Menu_Set_Ptr_Pos_Number(2);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM3_KEY_EVENT:
+      Menu_Set_Ptr_Pos_Number(3);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM4_KEY_EVENT:
+      Menu_Set_Ptr_Pos_Number(4);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM5_KEY_EVENT:
+      Menu_Set_Ptr_Pos_Number(5);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM6_KEY_EVENT:
+      Menu_Set_Ptr_Pos_Number(6);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM7_KEY_EVENT:
+      Menu_Set_Ptr_Pos_Number(7);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM8_KEY_EVENT:
+      Menu_Set_Ptr_Pos_Number(8);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM9_KEY_EVENT:
+      Menu_Set_Ptr_Pos_Number(9);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM0_KEY_EVENT:
+      Menu_Set_Ptr_Pos_Number(0);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     default:
       Fatal_Abort(-INVALID_INPUT_PARAMETER);
