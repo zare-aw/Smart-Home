@@ -18,6 +18,12 @@ uint8 RepeatCommand = 0;
 uint8 IR_SetCommand = 0;
 uint16 Set_NoOfCommand;
 
+uint8 WorkQueueHead = 0;
+uint8 WorkQueueTail = 0;
+uint8 WorkQueueCount = 0;
+
+Status_t (*WorkQueueCallback[IR_WORK_QUEUE_SIZE])(void * )  = {NULL};
+
 ir_t IR_Commands[MAX_IR_COMMANDS] = {0};
 ir_t IR_LastCommand = {0};
 
@@ -126,6 +132,73 @@ Status_t IR_Get_Command(uint16 NoOfCommand, ir_t * IR_Command)
   EXIT_SUCCESS_FUNC(IR_GET_COMMAND);
 }
 FUNC_REGISTER(IR_GET_COMMAND, IR_Get_Command);
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+__arm static Status_t IR_Add_Delayed_Callback_In_Queue(Status_t (*Callback_p)(void * ))
+{
+  FuncIN(IR_ADD_DELAYED_CALLBACK_IN_QUEUE);
+  
+  ASSERT(Callback_p != NULL, -INVALID_INPUT_POINTER);
+  
+  if(WorkQueueHead >= IR_WORK_QUEUE_SIZE)
+    WorkQueueHead = 0;
+  
+  if(WorkQueueCount >= IR_WORK_QUEUE_SIZE)
+    EXIT_FUNC(IR_QUEUE_FULL, IR_ADD_DELAYED_CALLBACK_IN_QUEUE);
+  
+  WorkQueueCallback[WorkQueueHead++] = Callback_p;
+  
+  WorkQueueCount++;
+  
+  EXIT_SUCCESS_FUNC(IR_ADD_DELAYED_CALLBACK_IN_QUEUE);
+}
+FUNC_REGISTER(IR_ADD_DELAYED_CALLBACK_IN_QUEUE, IR_Add_Delayed_Callback_In_Queue);
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+__arm static Status_t IR_Get_Delayed_Callback_From_Queue(Status_t (**Callback_pp)(void * ))
+{
+  FuncIN(IR_GET_DELAYED_CALLBACK_FROM_QUEUE);
+  
+  ASSERT(Callback_pp != NULL, -INVALID_INPUT_POINTER);
+  
+  if(WorkQueueCount == 0)
+    EXIT_FUNC(IR_QUEUE_EMPTY, IR_GET_DELAYED_CALLBACK_FROM_QUEUE);
+  
+  if(WorkQueueTail >= IR_WORK_QUEUE_SIZE)
+    WorkQueueTail = 0;
+  
+  *Callback_pp = WorkQueueCallback[WorkQueueTail++];
+  
+  WorkQueueCount--;
+  
+  EXIT_SUCCESS_FUNC(IR_GET_DELAYED_CALLBACK_FROM_QUEUE);
+}
+FUNC_REGISTER(IR_GET_DELAYED_CALLBACK_FROM_QUEUE, IR_Get_Delayed_Callback_From_Queue);
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+Status_t IR_Delayed_Work(void)
+{
+  FuncIN(IR_DELAYED_WORK);
+  
+  if(WorkQueueCount != 0)
+  {
+    Status_t (*Callback_p)(void * ) = NULL;
+    
+    ASSERT(IR_Get_Delayed_Callback_From_Queue(&Callback_p) == SUCCESS, -UNKNOWN_ERROR);
+    ASSERT(Callback_p != NULL, -UNKNOWN_ERROR);
+    
+    ASSERT(!Callback_p(NULL), -IR_CALLBACK_ERROR);
+  }
+  
+  EXIT_SUCCESS_FUNC(IR_DELAYED_WORK);
+}
+FUNC_REGISTER(IR_DELAYED_WORK, IR_Delayed_Work);
 
 /*******************************************************************************
 * 
@@ -239,9 +312,15 @@ __arm static Status_t IR_Input_ISR(uint8 Control, uint8 Address, uint8 Command)
   
   if(Control == REPEAT_COMMAND)
   {
-    if(IR_LastCommand.CallMode == REPETITIVE_CALL)
-      if(IR_LastCommand.Callback_p != NULL)
-        ASSERT(!IR_LastCommand.Callback_p(NULL), -IR_CALLBACK_ERROR);
+    if((IR_LastCommand.CallMode == REPETITIVE_CALL) &&
+       (IR_LastCommand.Address == Address) &&
+       (IR_LastCommand.Command == Command))
+    {
+      if(IR_LastCommand.IRQ_Callback_p != NULL)
+        ASSERT(!IR_LastCommand.IRQ_Callback_p(NULL), -IR_CALLBACK_ERROR);
+      
+      IR_Add_Delayed_Callback_In_Queue(IR_LastCommand.Callback_p);
+    }
   }
   else
   {
@@ -250,8 +329,11 @@ __arm static Status_t IR_Input_ISR(uint8 Control, uint8 Address, uint8 Command)
       if((IR_Commands[i].Address == Address) && (IR_Commands[i].Command == Command))
       {
         IR_LastCommand = IR_Commands[i];
-        if(IR_Commands[i].Callback_p != NULL)
-          ASSERT(!IR_Commands[i].Callback_p(NULL), -IR_CALLBACK_ERROR);
+        
+        if(IR_LastCommand.IRQ_Callback_p != NULL)
+          ASSERT(!IR_LastCommand.IRQ_Callback_p(NULL), -IR_CALLBACK_ERROR);
+        
+        IR_Add_Delayed_Callback_In_Queue(IR_LastCommand.Callback_p);
       }
     }
   }

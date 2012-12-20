@@ -3,6 +3,7 @@
 
 #define MAX_IR_COMMANDS       150
 #define RESERVED_IR_COMMANDS  50
+#define IR_WORK_QUEUE_SIZE    5
 #define IR_BURST_T            889
 #define SINGLE_CALL           1
 #define REPETITIVE_CALL       2
@@ -34,12 +35,17 @@
 #define CH_DOWN_KEY     MAX_IR_COMMANDS - RESERVED_IR_COMMANDS + 23
 #define MUTE_KEY        MAX_IR_COMMANDS - RESERVED_IR_COMMANDS + 24
 
+/**** Status Definitions ****/
+#define IR_QUEUE_EMPTY        TSOP1738_OFFSET | 0x01
+#define IR_QUEUE_FULL         TSOP1738_OFFSET | 0x02
+
 typedef struct ir_s
 {
   uint8 Address;
   uint8 Command;
   uint8 CallMode;
   uint8 Target;
+  Status_t (*IRQ_Callback_p)(void * );
   Status_t (*Callback_p)(void * );
 } ir_t;
 
@@ -48,6 +54,7 @@ Status_t IR_Init(void);
 Status_t IR_Command_Init(uint16 NoOfCommand, ir_t *ir_p);
 Status_t IR_Set_Command(uint16 NoOfCommand);
 Status_t IR_Get_Command(uint16 NoOfCommand, ir_t * IR_Command);
+Status_t IR_Delayed_Work(void);
 __arm Status_t IR_Timer_ISR(void);
 Status_t IR_Dummy_Handler(void *Ptr);
 
