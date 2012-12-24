@@ -15,9 +15,9 @@ uint8 PointerPosition = 1;
 /*******************************************************************************
  *
  ******************************************************************************/
-static Status_t Menu_Update_Disp_Ptr_Pos(void)
+static Status_t Menu_Time_Update_Disp_Ptr_Pos(void)
 {
-  FuncIN(MENU_UPDATE_DISP_PTR_POS);
+  FuncIN(MENU_TIME_UPDATE_DISP_PTR_POS);
   
   switch(PointerPosition)
   {
@@ -44,16 +44,16 @@ static Status_t Menu_Update_Disp_Ptr_Pos(void)
       break;
   }
   
-  EXIT_SUCCESS_FUNC(MENU_UPDATE_DISP_PTR_POS);
+  EXIT_SUCCESS_FUNC(MENU_TIME_UPDATE_DISP_PTR_POS);
 }
-FUNC_REGISTER(MENU_UPDATE_DISP_PTR_POS, Menu_Update_Disp_Ptr_Pos);
+FUNC_REGISTER(MENU_TIME_UPDATE_DISP_PTR_POS, Menu_Time_Update_Disp_Ptr_Pos);
 
 /*******************************************************************************
  *
  ******************************************************************************/
-static Status_t Menu_Increment_Ptr_Pos_Number(void)
+static Status_t Menu_Time_Increment_Ptr_Pos_Number(void)
 {
-  FuncIN(MENU_INCREMENT_PTR_POS_NUMBER);
+  FuncIN(MENU_TIME_INCREMENT_PTR_POS_NUMBER);
   
   switch(PointerPosition)
   {
@@ -98,16 +98,16 @@ static Status_t Menu_Increment_Ptr_Pos_Number(void)
       break;
   }
   
-  EXIT_SUCCESS_FUNC(MENU_INCREMENT_PTR_POS_NUMBER);
+  EXIT_SUCCESS_FUNC(MENU_TIME_INCREMENT_PTR_POS_NUMBER);
 }
-FUNC_REGISTER(MENU_INCREMENT_PTR_POS_NUMBER, Menu_Increment_Ptr_Pos_Number);
+FUNC_REGISTER(MENU_TIME_INCREMENT_PTR_POS_NUMBER, Menu_Time_Increment_Ptr_Pos_Number);
 
 /*******************************************************************************
  *
  ******************************************************************************/
-static Status_t Menu_Decrement_Ptr_Pos_Number(void)
+static Status_t Menu_Time_Decrement_Ptr_Pos_Number(void)
 {
-  FuncIN(MENU_DECREMENT_PTR_POS_NUMBER);
+  FuncIN(MENU_TIME_DECREMENT_PTR_POS_NUMBER);
   
   switch(PointerPosition)
   {
@@ -152,16 +152,16 @@ static Status_t Menu_Decrement_Ptr_Pos_Number(void)
       break;
   }
   
-  EXIT_SUCCESS_FUNC(MENU_DECREMENT_PTR_POS_NUMBER);
+  EXIT_SUCCESS_FUNC(MENU_TIME_DECREMENT_PTR_POS_NUMBER);
 }
-FUNC_REGISTER(MENU_DECREMENT_PTR_POS_NUMBER, Menu_Decrement_Ptr_Pos_Number);
+FUNC_REGISTER(MENU_TIME_DECREMENT_PTR_POS_NUMBER, Menu_Time_Decrement_Ptr_Pos_Number);
 
 /*******************************************************************************
  *
  ******************************************************************************/
-static Status_t Menu_Set_Ptr_Pos_Number(uint32 Number)
+static Status_t Menu_Time_Set_Ptr_Pos_Number(uint32 Number)
 {
-  FuncIN(MENU_SET_PTR_POS_NUMBER);
+  FuncIN(MENU_TIME_SET_PTR_POS_NUMBER);
   
   switch(PointerPosition)
   {
@@ -169,7 +169,7 @@ static Status_t Menu_Set_Ptr_Pos_Number(uint32 Number)
       if(Number < 3)
         Hour = (Hour % 10) + Number * 10;
       else
-        EXIT_FUNC(INVALID_INPUT_PARAMETER, MENU_SET_PTR_POS_NUMBER);
+        EXIT_FUNC(INVALID_INPUT_PARAMETER, MENU_TIME_SET_PTR_POS_NUMBER);
       break;
     case 2:
       Hour = ((Hour / 10) * 10) + Number;
@@ -178,7 +178,7 @@ static Status_t Menu_Set_Ptr_Pos_Number(uint32 Number)
       if(Number < 6)
         Minute = (Minute % 10) + Number * 10;
       else
-        EXIT_FUNC(INVALID_INPUT_PARAMETER, MENU_SET_PTR_POS_NUMBER);
+        EXIT_FUNC(INVALID_INPUT_PARAMETER, MENU_TIME_SET_PTR_POS_NUMBER);
       break;
     case 4:
       Minute = ((Minute / 10) * 10) + Number;
@@ -187,7 +187,7 @@ static Status_t Menu_Set_Ptr_Pos_Number(uint32 Number)
       if(Number < 6)
         Second = (Second % 10) + Number * 10;
       else
-        EXIT_FUNC(INVALID_INPUT_PARAMETER, MENU_SET_PTR_POS_NUMBER);
+        EXIT_FUNC(INVALID_INPUT_PARAMETER, MENU_TIME_SET_PTR_POS_NUMBER);
       break;
     case 6:
       Second = ((Second / 10) * 10) + Number;
@@ -197,9 +197,9 @@ static Status_t Menu_Set_Ptr_Pos_Number(uint32 Number)
       break;
   }
   
-  EXIT_SUCCESS_FUNC(MENU_SET_PTR_POS_NUMBER);
+  EXIT_SUCCESS_FUNC(MENU_TIME_SET_PTR_POS_NUMBER);
 }
-FUNC_REGISTER(MENU_SET_PTR_POS_NUMBER, Menu_Set_Ptr_Pos_Number);
+FUNC_REGISTER(MENU_TIME_SET_PTR_POS_NUMBER, Menu_Time_Set_Ptr_Pos_Number);
 
 /*******************************************************************************
  *
@@ -214,7 +214,7 @@ Status_t Menu_Set_Time(struct Menu_State_s *Menu_State_p, const uint32 Key, void
   clrd();
   printd(1, "Set Time");
   printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
-  Menu_Update_Disp_Ptr_Pos();
+  Menu_Time_Update_Disp_Ptr_Pos();
   
   printc("(%s): Enter! Key = 0x%08X\n", __func__, Key);
   
@@ -256,25 +256,25 @@ Status_t Menu_Set_Time(struct Menu_State_s *Menu_State_p, const uint32 Key, void
       
       EXIT_SUCCESS_FUNC(MENU_SET_TIME);
     case UP_KEY_EVENT:
-      Menu_Increment_Ptr_Pos_Number();
+      Menu_Time_Increment_Ptr_Pos_Number();
       printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case DOWN_KEY_EVENT:
-      Menu_Decrement_Ptr_Pos_Number();
+      Menu_Time_Decrement_Ptr_Pos_Number();
       printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case LEFT_KEY_EVENT:
       if(PointerPosition > 1)
       {
         PointerPosition--;
-        Menu_Update_Disp_Ptr_Pos();
+        Menu_Time_Update_Disp_Ptr_Pos();
       }
       break;
     case RIGHT_KEY_EVENT:
       if(PointerPosition < 6)
       {
         PointerPosition++;
-        Menu_Update_Disp_Ptr_Pos();
+        Menu_Time_Update_Disp_Ptr_Pos();
       }
       break;
     case EXIT_KEY_EVENT:
@@ -302,43 +302,43 @@ Status_t Menu_Set_Time(struct Menu_State_s *Menu_State_p, const uint32 Key, void
       
       EXIT_SUCCESS_FUNC(MENU_SET_TIME);
     case NUM1_KEY_EVENT:
-      Menu_Set_Ptr_Pos_Number(1);
+      Menu_Time_Set_Ptr_Pos_Number(1);
       printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM2_KEY_EVENT:
-      Menu_Set_Ptr_Pos_Number(2);
+      Menu_Time_Set_Ptr_Pos_Number(2);
       printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM3_KEY_EVENT:
-      Menu_Set_Ptr_Pos_Number(3);
+      Menu_Time_Set_Ptr_Pos_Number(3);
       printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM4_KEY_EVENT:
-      Menu_Set_Ptr_Pos_Number(4);
+      Menu_Time_Set_Ptr_Pos_Number(4);
       printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM5_KEY_EVENT:
-      Menu_Set_Ptr_Pos_Number(5);
+      Menu_Time_Set_Ptr_Pos_Number(5);
       printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM6_KEY_EVENT:
-      Menu_Set_Ptr_Pos_Number(6);
+      Menu_Time_Set_Ptr_Pos_Number(6);
       printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM7_KEY_EVENT:
-      Menu_Set_Ptr_Pos_Number(7);
+      Menu_Time_Set_Ptr_Pos_Number(7);
       printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM8_KEY_EVENT:
-      Menu_Set_Ptr_Pos_Number(8);
+      Menu_Time_Set_Ptr_Pos_Number(8);
       printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM9_KEY_EVENT:
-      Menu_Set_Ptr_Pos_Number(9);
+      Menu_Time_Set_Ptr_Pos_Number(9);
       printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     case NUM0_KEY_EVENT:
-      Menu_Set_Ptr_Pos_Number(0);
+      Menu_Time_Set_Ptr_Pos_Number(0);
       printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     default:
