@@ -10,7 +10,7 @@
 uint8 Hour = 0;
 uint8 Minute = 0;
 uint8 Second = 0;
-uint8 PointerPosition = 1;
+static uint8 PointerPosition = 1;
 
 /*******************************************************************************
  *
