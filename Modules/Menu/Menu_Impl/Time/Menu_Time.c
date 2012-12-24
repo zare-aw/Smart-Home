@@ -209,7 +209,17 @@ Status_t Menu_Set_Time(struct Menu_State_s *Menu_State_p, const uint32 Key, void
   FuncIN(MENU_SET_TIME);
   
   Status_t Status = GENERAL_ERROR;
+  RtcTime_t Time_s;
   static uint32 EnterFlag = 0;
+  
+  if(EnterFlag == 0)
+  {
+    RTC_Get_Time(&Time_s);
+    
+    Hour = Time_s.Hour;
+    Minute = Time_s.Minute;
+    Second = Time_s.Second;
+  }
   
   clrd();
   printd(1, "Set Time");
@@ -223,12 +233,7 @@ Status_t Menu_Set_Time(struct Menu_State_s *Menu_State_p, const uint32 Key, void
     case ENTER_KEY_EVENT:
       // First enter in this state
       if(EnterFlag == 0)
-      {
-        EnterFlag = 1;
         break;
-      }
-      
-      RtcTime_t Time_s;
       
       Time_s.Hour = Hour;
       Time_s.Minute = Minute;
@@ -346,6 +351,8 @@ Status_t Menu_Set_Time(struct Menu_State_s *Menu_State_p, const uint32 Key, void
   } // switch(Key)
   
   syncd();
+  
+  EnterFlag = 1;
   
   EXIT_SUCCESS_FUNC(MENU_SET_TIME);
 }
