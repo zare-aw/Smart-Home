@@ -50,6 +50,7 @@
 
 // Menu_Date.c
 #define MENU_DATE_OFFSET                                                         0x0300
+#define MENU_SET_DATE                           MENU_DATE_OFFSET | MENU_OFFSET | 0x0001
 #define MENU_DATE_UPDATE_DISP_PTR_POS           MENU_DATE_OFFSET | MENU_OFFSET | 0x0002
 #define MENU_DATE_INCREMENT_PTR_POS_NUMBER      MENU_DATE_OFFSET | MENU_OFFSET | 0x0003
 #define MENU_DATE_DECREMENT_PTR_POS_NUMBER      MENU_DATE_OFFSET | MENU_OFFSET | 0x0004
