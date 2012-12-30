@@ -4,7 +4,7 @@
 #define MAX_IR_COMMANDS       150
 #define RESERVED_IR_COMMANDS  50
 #define IR_WORK_QUEUE_SIZE    5
-#define IR_BURST_T            889
+#define IR_BURST_T            870
 #define SINGLE_CALL           1
 #define REPETITIVE_CALL       2
 #define REPEAT_COMMAND        2
@@ -49,6 +49,8 @@ typedef struct ir_s
   Status_t (*Callback_p)(void * );
 } ir_t;
 
+/**** Functions definition ****/
+Status_t IR_Received_Debug_Set_State(uint32 State);
 __irq void Ext_Int_2_ISR(void);
 Status_t IR_Init(void);
 Status_t IR_Command_Init(uint16 NoOfCommand, ir_t *ir_p);

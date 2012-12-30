@@ -1757,6 +1757,9 @@
           <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_ir.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_ir_debug.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_set_date.c</name>
         </file>
         <file>
@@ -1781,7 +1784,7 @@
           <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_time_alarm.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_x.c</name>
+          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_x.c</name>
         </file>
       </group>
       <file>
@@ -1817,6 +1820,12 @@
     </group>
     <group>
       <name>Debug</name>
+      <file>
+        <name>$PROJ_DIR$\Modules\Debug\Debug_GPIO.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Modules\Debug\Debug_GPIO.h</name>
+      </file>
       <file>
         <name>$PROJ_DIR$\Modules\Debug\Exception.c</name>
       </file>

@@ -80,3 +80,7 @@
 #define DO_REG_TIME_ALARM_CMD COMMANDS_OFFSET | TIME_ALARM_OFFSET |         0x0002
 #define DO_TIME_ALARM COMMANDS_OFFSET | TIME_ALARM_OFFSET |                 0x0003
 #endif
+
+// cmd_ir_debug.c
+#define IR_DEBUG_OFFSET                                                   0x1100
+#define DO_IR_DEBUG                   COMMANDS_OFFSET | IR_DEBUG_OFFSET | 0x0005

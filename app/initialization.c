@@ -1,5 +1,6 @@
 #include <NXP/iolpc2148.h>
 #include "Global_Defines.h"
+#include "Debug_GPIO.h"
 #include "PWM_Backlight_Defconfig.h"
 #include "Command.h"
 #include "Timer.h"
@@ -25,6 +26,8 @@ void Pin_MUX_Init(void);
 Status_t Initialization(void)
 {
   FuncIN(INITIALIZATION);
+  
+  Debug_GPIO_Init();
   
   printc("\n********************************\n");
   printc("\r*** Smart home system Rev 1.0 **\n");
