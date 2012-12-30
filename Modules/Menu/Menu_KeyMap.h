@@ -65,12 +65,6 @@
 #define VOL_DOWN_KEY_ADDRESS    0
 #define VOL_DOWN_KEY_COMMAND    0
 
-#define CH_UP_KEY_ADDRESS       8
-#define CH_UP_KEY_COMMAND       32
-
-#define CH_DOWN_KEY_ADDRESS     8
-#define CH_DOWN_KEY_COMMAND     33
-
 #define MUTE_KEY_ADDRESS        0
 #define MUTE_KEY_COMMAND        13
 

@@ -329,36 +329,6 @@ FUNC_REGISTER(VOL_DOWN_KEY_CALLBACK, Vol_Down_Key_Callback);
 /*******************************************************************************
 * 
 *******************************************************************************/
-Status_t Ch_Up_Key_Callback(void *p)
-{
-  FuncIN(CH_UP_KEY_CALLBACK);
-  
-  MENU_DEBUG(printc("\r # Ch-Up key callback called !\n"));
-  
-  VERIFY(Menu(CH_UP_KEY_EVENT), -MENU_ERROR);
-  
-  EXIT_SUCCESS_FUNC(CH_UP_KEY_CALLBACK);
-}
-FUNC_REGISTER(CH_UP_KEY_CALLBACK, Ch_Up_Key_Callback);
-
-/*******************************************************************************
-* 
-*******************************************************************************/
-Status_t Ch_Down_Key_Callback(void *p)
-{
-  FuncIN(CH_DOWN_KEY_CALLBACK);
-  
-  MENU_DEBUG(printc("\r # Ch-Down key callback called !\n"));
-  
-  VERIFY(Menu(CH_DOWN_KEY_EVENT), -MENU_ERROR);
-  
-  EXIT_SUCCESS_FUNC(CH_DOWN_KEY_CALLBACK);
-}
-FUNC_REGISTER(CH_DOWN_KEY_CALLBACK, Ch_Down_Key_Callback);
-
-/*******************************************************************************
-* 
-*******************************************************************************/
 Status_t Mute_Key_Callback(void *p)
 {
   FuncIN(MUTE_KEY_CALLBACK);
@@ -526,20 +496,6 @@ Status_t Menu_Callbacks_Init(uint8 DisplayType, uint16 Xres, uint16 Yres)
   ir_s.Target = 0;
   ir_s.Callback_p = Vol_Down_Key_Callback;
   VERIFY(IR_Command_Init(VOL_DOWN_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
-  
-  ir_s.Address = CH_UP_KEY_ADDRESS;
-  ir_s.Command = CH_UP_KEY_COMMAND;
-  ir_s.CallMode = SINGLE_CALL;
-  ir_s.Target = 0;
-  ir_s.Callback_p = Ch_Up_Key_Callback;
-  VERIFY(IR_Command_Init(CH_UP_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
-  
-  ir_s.Address = CH_DOWN_KEY_ADDRESS;
-  ir_s.Command = CH_DOWN_KEY_COMMAND;
-  ir_s.CallMode = SINGLE_CALL;
-  ir_s.Target = 0;
-  ir_s.Callback_p = Ch_Down_Key_Callback;
-  VERIFY(IR_Command_Init(CH_DOWN_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
   ir_s.Address = MUTE_KEY_ADDRESS;
   ir_s.Command = MUTE_KEY_COMMAND;

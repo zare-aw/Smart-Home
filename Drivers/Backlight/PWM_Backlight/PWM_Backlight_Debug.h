@@ -1,12 +1,19 @@
 #ifndef _PWM_Backlight_Debug_h
 #define _PWM_Backlight_Debug_h
 
-#define _BACKLIGHT_DEBUG
+#define _BL_DEBUG
+//#define _BL_DEBUG_L1
 
-#ifdef _BACKLIGHT_DEBUG
-#define BACKLIGHT_DEBUG(a) a
+#ifdef _BL_DEBUG
+#define BL_DEBUG(a) a
 #else
-#define BACKLIGHT_DEBUG(a)
+#define BL_DEBUG(a)
+#endif
+
+#ifdef _BL_DEBUG_L1
+#define BL_DEBUG_L1(a) a
+#else
+#define BL_DEBUG_L1(a)
 #endif
 
 #endif
