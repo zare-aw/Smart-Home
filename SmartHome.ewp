@@ -1821,6 +1821,12 @@
     <group>
       <name>Debug</name>
       <file>
+        <name>$PROJ_DIR$\Modules\Debug\Debug_GPIO.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Modules\Debug\Debug_GPIO.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$\Modules\Debug\Exception.c</name>
       </file>
       <file>
