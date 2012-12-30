@@ -233,7 +233,10 @@ Status_t Menu_Set_Time(struct Menu_State_s *Menu_State_p, const uint32 Key, void
     case ENTER_KEY_EVENT:
       // First enter in this state
       if(EnterFlag == 0)
+      {
+        EnterFlag = 1;
         break;
+      }
       
       Time_s.Hour = Hour;
       Time_s.Minute = Minute;
@@ -351,8 +354,6 @@ Status_t Menu_Set_Time(struct Menu_State_s *Menu_State_p, const uint32 Key, void
   } // switch(Key)
   
   syncd();
-  
-  EnterFlag = 1;
   
   EXIT_SUCCESS_FUNC(MENU_SET_TIME);
 }

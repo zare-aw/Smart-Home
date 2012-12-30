@@ -230,7 +230,10 @@ static Status_t Menu_Set_Date(struct Menu_State_s *Menu_State_p, const uint32 Ke
     case ENTER_KEY_EVENT:
       // First enter in this state
       if(EnterFlag == 0)
+      {
+        EnterFlag = 1;
         break;
+      }
       
       Date_s.Year = Year;
       Date_s.Month = Month;
@@ -333,8 +336,6 @@ static Status_t Menu_Set_Date(struct Menu_State_s *Menu_State_p, const uint32 Ke
   } // switch(Key)
   
   syncd();
-  
-  EnterFlag = 1;
   
   EXIT_SUCCESS_FUNC(MENU_SET_DATE);
 }
