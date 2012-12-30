@@ -4,7 +4,7 @@
 #define MAX_IR_COMMANDS       150
 #define RESERVED_IR_COMMANDS  50
 #define IR_WORK_QUEUE_SIZE    5
-#define IR_BURST_T            889
+#define IR_BURST_T            870
 #define SINGLE_CALL           1
 #define REPETITIVE_CALL       2
 #define REPEAT_COMMAND        2
