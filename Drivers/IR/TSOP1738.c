@@ -1,6 +1,8 @@
 #include "Global_Defines.h"
 #include "Timer.h"
 #include "Console.h"
+#include "Delay.h"
+#include "Debug_GPIO.h"
 
 #include "TSOP1738.h"
 #include "TSOP1738_Debug.h"
@@ -233,6 +235,13 @@ __arm Status_t IR_Timer_ISR(void)
 {
   uint8 Input = 0;
   Input = TSOP_PIN_READ();    // Ova mora da se zavrsi najbrzo sto moze
+  
+  if(IR_Input_Debug_Flag == ENABLE)
+  {
+    DBG_PIN_1_SET();
+    uDelay(5);
+    DBG_PIN_1_CLR();
+  }
   
   FuncIN(IR_TIMER_ISR);
     
