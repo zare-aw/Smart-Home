@@ -202,7 +202,7 @@ Status_t Menu(uint32 Event)
     switch(Event)
     {
       case UP_KEY_EVENT:
-        if((Event | Menu_State_p -> PossibleKeys) && (Menu_State_p -> Callback != NULL))
+        if((Event & Menu_State_p -> PossibleKeys) && (Menu_State_p -> Callback != NULL))
           VERIFY((Menu_State_p -> Callback)(Menu_State_p, Event, NULL), -MENU_STATE_EXECUTION_FAILED);
         
         if((Menu_State_p -> Flags & MENU_NO_DISPLAY_UPDATE) == MENU_NO_DISPLAY_UPDATE)
@@ -215,7 +215,7 @@ Status_t Menu(uint32 Event)
         }
         break;
       case DOWN_KEY_EVENT:
-        if((Event | Menu_State_p -> PossibleKeys) && (Menu_State_p -> Callback != NULL))
+        if((Event & Menu_State_p -> PossibleKeys) && (Menu_State_p -> Callback != NULL))
           VERIFY((Menu_State_p -> Callback)(Menu_State_p, Event, NULL), -MENU_STATE_EXECUTION_FAILED);
         
         if((Menu_State_p -> Flags & MENU_NO_DISPLAY_UPDATE) == MENU_NO_DISPLAY_UPDATE)
@@ -231,7 +231,7 @@ Status_t Menu(uint32 Event)
         }
         break;
       case ENTER_KEY_EVENT:
-        if((Event | Menu_State_p -> PossibleKeys) && (Menu_State_p -> Callback != NULL))
+        if((Event & Menu_State_p -> PossibleKeys) && (Menu_State_p -> Callback != NULL))
           VERIFY((Menu_State_p -> Callback)(Menu_State_p, Event, NULL), -MENU_STATE_EXECUTION_FAILED);
         
         if((Menu_State_p -> Flags & MENU_LAST_STATE) != MENU_LAST_STATE)
@@ -261,7 +261,7 @@ Status_t Menu(uint32 Event)
         LocationChange = 1;
         break;
      case MENU_KEY_EVENT:
-        if((Event | Menu_State_p -> PossibleKeys) && (Menu_State_p -> Callback != NULL))
+        if((Event & Menu_State_p -> PossibleKeys) && (Menu_State_p -> Callback != NULL))
           VERIFY((Menu_State_p -> Callback)(Menu_State_p, Event, NULL), -MENU_STATE_EXECUTION_FAILED);
         
         Level = 1;
@@ -269,7 +269,7 @@ Status_t Menu(uint32 Event)
         LocationChange = 1;
         break;
       case EXIT_KEY_EVENT:
-        if((Event | Menu_State_p -> PossibleKeys) && (Menu_State_p -> Callback != NULL))
+        if((Event & Menu_State_p -> PossibleKeys) && (Menu_State_p -> Callback != NULL))
           VERIFY((Menu_State_p -> Callback)(Menu_State_p, Event, NULL), -MENU_STATE_EXECUTION_FAILED);
         
         Level = 0;
