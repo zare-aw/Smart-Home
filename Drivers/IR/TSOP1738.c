@@ -22,6 +22,8 @@ uint8 WorkQueueHead = 0;
 uint8 WorkQueueTail = 0;
 uint8 WorkQueueCount = 0;
 
+uint8 IR_Input_Debug_Flag = DISABLE;
+
 Status_t (*WorkQueueCallback[IR_WORK_QUEUE_SIZE])(void * )  = {NULL};
 
 ir_t IR_Commands[MAX_IR_COMMANDS] = {0};
@@ -29,6 +31,30 @@ ir_t IR_LastCommand = {0};
 
 static Status_t IR_Ext_Interrupt_Init(void);
 __arm static Status_t IR_Input_ISR(uint8 Control, uint8 Address, uint8 Command);
+
+/*******************************************************************************
+* 
+*******************************************************************************/
+Status_t IR_Received_Debug_Set_State(uint32 State)
+{
+  FuncIN(IR_RECEIVED_DEBUG_SET_STATE);
+  
+  switch(State)
+  {
+    case ENABLE:
+      IR_Input_Debug_Flag = ENABLE;
+      EXIT_SUCCESS_FUNC(IR_RECEIVED_DEBUG_SET_STATE);
+    case DISABLE:
+      IR_Input_Debug_Flag = DISABLE;
+      EXIT_SUCCESS_FUNC(IR_RECEIVED_DEBUG_SET_STATE);
+    default:
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
+  }
+  
+  // This state should be never reached
+  EXIT_SUCCESS_FUNC(IR_RECEIVED_DEBUG_SET_STATE);
+}
+FUNC_REGISTER(IR_RECEIVED_DEBUG_SET_STATE, IR_Received_Debug_Set_State);
 
 /*******************************************************************************
 * 
@@ -277,6 +303,9 @@ __arm Status_t IR_Timer_ISR(void)
       }
       else
       {
+        if(IR_Input_Debug_Flag == ENABLE)
+          printc("\r # IR_DEBUG: Received: Address = %u\tCommand = %u\n", Address_g, Command_g);
+        
         if((Control_g == ControlBeckup) && (Address_g == AddressBeckup) && (Command_g == CommandBeckup))
         {
           IR_Input_ISR(REPEAT_COMMAND, NULL, NULL);

@@ -49,6 +49,8 @@ typedef struct ir_s
   Status_t (*Callback_p)(void * );
 } ir_t;
 
+/**** Functions definition ****/
+Status_t IR_Received_Debug_Set_State(uint32 State);
 __irq void Ext_Int_2_ISR(void);
 Status_t IR_Init(void);
 Status_t IR_Command_Init(uint16 NoOfCommand, ir_t *ir_p);
