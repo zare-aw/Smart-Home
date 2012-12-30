@@ -317,7 +317,7 @@ __arm Status_t IR_Timer_ISR(void)
         
         if((Control_g == ControlBeckup) && (Address_g == AddressBeckup) && (Command_g == CommandBeckup))
         {
-          IR_Input_ISR(REPEAT_COMMAND, NULL, NULL);
+          IR_Input_ISR(REPEAT_COMMAND, Address_g, Command_g);
           TSOP_DEBUG(printc("\r # IR Repeat command received\n"));
         }
         else
