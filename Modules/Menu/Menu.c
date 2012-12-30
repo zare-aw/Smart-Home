@@ -66,7 +66,7 @@ Status_t Find_Menu_State(const uint8 Level, const uint8 State, Menu_State_t **Me
   Menu_State_t *Menu_Section_Begin = Get_Menu_Section_Begin();
   Menu_State_t *Menu_Section_End = Get_Menu_Section_End();
   Menu_State_t *Menu_State;
-  uint32 i;
+  uint32 i, Found;
   
   ASSERT(Menu_State_p != NULL, -INVALID_INPUT_POINTER);
   
@@ -84,15 +84,21 @@ Status_t Find_Menu_State(const uint8 Level, const uint8 State, Menu_State_t **Me
     {
       MENU_DEBUG_L3(printc("(%s) Candidate! Level = %d, State = %d, String = \"%s\"\n",
                            __func__, Level, Menu_State -> Path[Level - 1], Menu_State -> String));  
+      
+      Found = 1;
+      
       for(i = Level - 1; i > 0; i--)
       {
         if(Menu_State -> Path[i - 1] != Menu_Current_Path[i])
         {
-          MENU_DEBUG_L3(printc("(%s) Not Found! Level = %d, State = %d\n",
+          MENU_DEBUG_L3(printc("(%s) Cnadidate Not valid. Continue! Level = %d, State = %d\n",
                               __func__, Level, State));
-          EXIT_FUNC(MENU_STATE_NOT_FOUND, FIND_MENU_STATE);
+          Found = 0;
         }
       }
+      
+      if(Found == 0)
+        continue;
       
       *Menu_State_p = Menu_State;
       MENU_DEBUG_L3(printc("(%s) Found! Level = %d, State = %d, String = \"%s\"\n",
