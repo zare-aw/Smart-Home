@@ -8,6 +8,8 @@
 #include "Menu.h"
 #include "Menu_KeyMap.h"
 
+#include "Out.h"
+
 
 /*******************************************************************************
 * 
@@ -546,7 +548,33 @@ Status_t Menu_Callbacks_Init(uint8 DisplayType, uint16 Xres, uint16 Yres)
   ir_s.Callback_p = Mute_Key_Callback;
   VERIFY(IR_Command_Init(MUTE_KEY, &ir_s), IR_COMMAND_INIT_ERROR);
   
+  ir_s.Address = 8;
+  ir_s.Command = 43;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Out_1_Toggle;
+  VERIFY(IR_Command_Init(51, &ir_s), IR_COMMAND_INIT_ERROR);
   
+  ir_s.Address = 8;
+  ir_s.Command = 44;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Out_2_Toggle;
+  VERIFY(IR_Command_Init(52, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = 8;
+  ir_s.Command = 45;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Out_3_Toggle;
+  VERIFY(IR_Command_Init(53, &ir_s), IR_COMMAND_INIT_ERROR);
+  
+  ir_s.Address = 8;
+  ir_s.Command = 46;
+  ir_s.CallMode = SINGLE_CALL;
+  ir_s.Target = 0;
+  ir_s.Callback_p = Out_4_Toggle;
+  VERIFY(IR_Command_Init(54, &ir_s), IR_COMMAND_INIT_ERROR);
   
   EXIT_SUCCESS_FUNC(MENU_CALLBACKS_INIT);
 }
