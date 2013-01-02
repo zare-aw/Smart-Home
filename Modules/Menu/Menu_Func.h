@@ -56,4 +56,8 @@
 #define MENU_DATE_DECREMENT_PTR_POS_NUMBER      MENU_DATE_OFFSET | MENU_OFFSET | 0x0004
 #define MENU_DATE_SET_PTR_POS_NUMBER            MENU_DATE_OFFSET | MENU_OFFSET | 0x0005
 
+// Menu_Switches.c
+#define MENU_SWITCHES_OFFSET                                              0x0400
+#define SWITCHES_STATE_DISPLAY       MENU_SWITCHES_OFFSET | MENU_OFFSET | 0x0001
+
 #endif

@@ -1874,6 +1874,12 @@
           </file>
         </group>
         <group>
+          <name>Switches</name>
+          <file>
+            <name>$PROJ_DIR$\Modules\Menu\Menu_Impl\Switches\Menu_Switches.c</name>
+          </file>
+        </group>
+        <group>
           <name>Time</name>
           <file>
             <name>$PROJ_DIR$\Modules\Menu\Menu_Impl\Time\Menu_Time.c</name>
