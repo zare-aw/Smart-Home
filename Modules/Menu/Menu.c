@@ -59,7 +59,7 @@ uint32 Get_Menu_Section_Size(void)
  *                      of the Menu_State
  * @out Status_t - Status
  ******************************************************************************/
-Status_t Find_Menu_State(const uint8 Level, const uint8 State, Menu_State_t **Menu_State_p)
+static Status_t Find_Menu_State(const uint8 Level, const uint8 State, Menu_State_t **Menu_State_p)
 {
   FuncIN(FIND_MENU_STATE);
   
