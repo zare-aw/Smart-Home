@@ -293,6 +293,7 @@ Status_t Out_Set_State(Out_t *Out_p)
   ASSERT(Out_p != NULL, -INVALID_INPUT_POINTER);
   
   Out = *Out_p;
+  Out.Change = 1;
   
   EXIT_SUCCESS_FUNC(OUT_SET_STATE);
 }
