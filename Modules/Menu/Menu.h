@@ -43,6 +43,7 @@
 #define CH_UP_KEY_EVENT       0x00200000
 #define CH_DOWN_KEY_EVENT     0x00400000
 #define MUTE_KEY_EVENT        0x00800000
+#define FLAG_1_KEY_EVENT      0x10000000
 
 /**** Key Mask ****/
 #define DEFAULT_KEY_MASK      0x000001E6
