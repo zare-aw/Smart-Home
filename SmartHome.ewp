@@ -1878,6 +1878,15 @@
           <file>
             <name>$PROJ_DIR$\Modules\Menu\Menu_Impl\Switches\Menu_Switches.c</name>
           </file>
+          <file>
+            <name>$PROJ_DIR$\Modules\Menu\Menu_Impl\Switches\Menu_Switches.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\Modules\Menu\Menu_Impl\Switches\Menu_Switches_Set.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\Modules\Menu\Menu_Impl\Switches\Menu_Switches_State.c</name>
+          </file>
         </group>
         <group>
           <name>Time</name>
