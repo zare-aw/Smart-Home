@@ -405,7 +405,7 @@ static Status_t Display_Menu_Update(void)
             {
               VERIFY(printd(j, MENU_POINTER_STRING "%s", Menu_State_Buf[i] -> String), -GENERAL_ERROR);
               MENU_DEBUG_L3(printc(MENU_POINTER_STRING "%s\n", Menu_State_Buf[i] -> String));
-              MenuPointerPos = j;
+              MenuPointerPos = j - 1;
             }
             else
             {
@@ -427,19 +427,24 @@ static Status_t Display_Menu_Update(void)
     {
       MENU_DEBUG_L2(printc("(%s) Level Not changed!\n", __func__));
       
-      /**** Calsulate next MenuPointerPos ****/
-      if((MenuPointerPos > 0) && (MenuPointerPos < Y_SIZE))
+      /**** Calculate next MenuPointerPos ****/
+      if((PrevState < Menu_Current_Path[Level]) && (MenuPointerPos < Y_SIZE - 1))
+        MenuPointerPos++;
+      else if(PrevState > Menu_Current_Path[Level])
       {
-        if(PrevState < Menu_Current_Path[Level])
-          MenuPointerPos++;
-        else if(PrevState > Menu_Current_Path[Level])
-          MenuPointerPos--;
+        if((PrevState - 1) == Menu_Current_Path[Level])
+        {
+          if(MenuPointerPos > 0)
+            MenuPointerPos--;
+        }
+        else
+          MenuPointerPos = 0;
       }
       
       clrd();
       
       /**** Update Surface Flinger with next states ****/
-      for(i = MenuPointerPos, j = 0; i <= Y_SIZE; i++, j++)
+      for(i = MenuPointerPos, j = 0; i < Y_SIZE; i++, j++)
       {
         Status = Find_Menu_State(Level, Menu_Current_Path[Level] + j, &Menu_State_p);
         if(Status != SUCCESS)
@@ -447,20 +452,20 @@ static Status_t Display_Menu_Update(void)
         else
         {
           if(i == MenuPointerPos)
-            VERIFY(printd(i, MENU_POINTER_STRING "%s", Menu_State_p -> String), -GENERAL_ERROR);
+            VERIFY(printd(i + 1, MENU_POINTER_STRING "%s", Menu_State_p -> String), -GENERAL_ERROR);
           else
-            VERIFY(printd(i, EMPTY_MENU_POINTER_STRING "%s", Menu_State_p -> String), -GENERAL_ERROR);
+            VERIFY(printd(i + 1, EMPTY_MENU_POINTER_STRING "%s", Menu_State_p -> String), -GENERAL_ERROR);
         }
       }
       
       /**** Update Surface Flinger with previous states ****/
-      for(i = MenuPointerPos, j = 1; i > 1; i--, j++)
+      for(i = MenuPointerPos, j = 1; i > 0; i--, j++)
       {
         Status = Find_Menu_State(Level, Menu_Current_Path[Level] - j, &Menu_State_p);
         if(Status != SUCCESS)
           Fatal_Abort(Status);
         else
-          VERIFY(printd(i - 1, EMPTY_MENU_POINTER_STRING "%s", Menu_State_p -> String), -GENERAL_ERROR);
+          VERIFY(printd(i, EMPTY_MENU_POINTER_STRING "%s", Menu_State_p -> String), -GENERAL_ERROR);
       }
       
       syncd();
