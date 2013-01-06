@@ -485,18 +485,12 @@ static Status_t Menu_Switch_Setting(struct Menu_State_s *Menu_State_p, const uin
       Menu_SW_Ptr_Pos = 0;
       break;
     case UP_KEY_EVENT:
-      if(Menu_SW_Ptr_Pos |= 0)
-      {
-        Menu_SW_Ptr_Pos = 0;
-        Menu_Switch_Set_Update_Display(&Out_s, Menu_SW_Ptr_Pos);
-      }
+      Menu_SW_Ptr_Pos = 0;
+      Menu_Switch_Set_Update_Display(&Out_s, Menu_SW_Ptr_Pos);
       break;
     case DOWN_KEY_EVENT:
-      if(Menu_SW_Ptr_Pos < 1)
-      {
-        Menu_SW_Ptr_Pos = 1;
-        Menu_Switch_Set_Update_Display(&Out_s, Menu_SW_Ptr_Pos);
-      }
+      Menu_SW_Ptr_Pos = 1;
+      Menu_Switch_Set_Update_Display(&Out_s, Menu_SW_Ptr_Pos);
       break;
     case FLAG_1_KEY_EVENT:
       Menu_Switch_Set_Update_Display(&Out_s, Menu_SW_Ptr_Pos);
