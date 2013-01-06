@@ -3,9 +3,9 @@
 
 #define _MENU_INFO             1
 #define _MENU_DEBUG            1
-#define _MENU_DEBUG_L1         1
-#define _MENU_DEBUG_L2         1
-#define _MENU_DEBUG_L3         1
+//#define _MENU_DEBUG_L1         1
+//#define _MENU_DEBUG_L2         1
+//#define _MENU_DEBUG_L3         1
 //#define _MENU_LOW_LEVEL_DEBUG  1
 
 #ifdef _MENU_INFO
