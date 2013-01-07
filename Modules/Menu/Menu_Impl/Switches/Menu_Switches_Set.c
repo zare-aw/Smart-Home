@@ -10,14 +10,6 @@
 #include "SurfaceFlinger.h"
 
 /**** Defines ****/
-#define SWITCHES_SET_STRING_LENGTH    X_SIZE + 1
-
-#define SW_1_SET_STR    0x00000001
-#define SW_2_SET_STR    0x00000002
-#define SW_3_SET_STR    0x00000004
-#define SW_4_SET_STR    0x00000008
-#define SW_5_SET_STR    0x00000010
-#define SW_6_SET_STR    0x00000020
 
 /**** Gloval Variables ****/
 uint8 SetSwitchFlag = 0;
