@@ -287,6 +287,8 @@
           <state>$PROJ_DIR$\Modules\Delay\</state>
           <state>$PROJ_DIR$\Modules\Display\</state>
           <state>$PROJ_DIR$\Modules\Menu\</state>
+          <state>$PROJ_DIR$\Modules\Menu\Menu_Impl\</state>
+          <state>$PROJ_DIR$\Modules\Menu\Menu_Impl\Switches\</state>
           <state>$PROJ_DIR$\Modules\Temperature\</state>
           <state>$PROJ_DIR$\Includes\</state>
           <state>$PROJ_DIR$\Drivers\</state>
@@ -1875,6 +1877,12 @@
         </group>
         <group>
           <name>Switches</name>
+          <group>
+            <name>Menu_Switches_Dependency</name>
+            <file>
+              <name>$PROJ_DIR$\Modules\Menu\Menu_Impl\Switches\Menu_Switches_Dependency\Menu_Switches_Dependency.c</name>
+            </file>
+          </group>
           <file>
             <name>$PROJ_DIR$\Modules\Menu\Menu_Impl\Switches\Menu_Switches.c</name>
           </file>
