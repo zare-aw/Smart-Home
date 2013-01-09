@@ -6,6 +6,12 @@
 #include "RTC.h"
 #include "Out.h"
 
+// Set_State_Time_Alarm(State)
+#define ALARM_OFF             1
+#define ALARM_ON              2
+
+#define NO_ALARM_ID           0
+#define NO_OF_TIME_ALARMS          10
 
 #define ALARM_WORK_BUFFER_SIZE    10
 
@@ -14,6 +20,9 @@
 
 typedef struct TimeAlarm_s
 {
+  uint8 State;
+  uint8 AlarmID;
+  uint8 Repeat;
   RtcDateTime_t DateTime;
   void *Callback;
 } TimeAlarm_t;
@@ -28,9 +37,13 @@ typedef struct TimeAlarmResponse_s
 
 //functions
 Status_t Register_Time_Alarm(TimeAlarm_t *TimeAlarm_p);
-Status_t Unregister_Time_Alarm(void *Ptr);
+Status_t Execute_Time_Alarm(void);
+Status_t Unregister_Time_Alarm(uint8 AlarmID);
 Status_t Time_Alarm_Status(void *Ptr);
 Status_t Time_Alarm_Dummy_Handler(void *Ptr);
+Status_t Set_Time_Alarm(TimeAlarm_t *TimeAlarm_p);
+Status_t Get_Alarm_ID(uint8 *AlarmID_p);
+Status_t Remove_Time_Alarm(uint8 AlarmID);
 
 static TimeAlarmResponse_t AlarmResponse[] =
 {

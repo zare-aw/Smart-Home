@@ -104,5 +104,9 @@ void Fatal_Abort(Status_t Status);
 
 #define TIME_SET_ALARM_ERROR                500
 #define TIME_ALARM_REGISTER_ERROR           501
-#define TIME_ALARM_SET_STATE_ERROR          502
+#define TIME_ALARM_UNREGISTER_ERROR         502
+#define TIME_ALARM_SET_STATE_ERROR          503
+#define TIME_ALARM_GET_ALARM_ID_ERROR       504
+#define TIME_ALARM_ID_MISSING_ERROR         505
+#define TIME_ALARM_REMOVE_ERROR             506
 #endif

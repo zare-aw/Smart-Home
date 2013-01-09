@@ -140,6 +140,6 @@ Status_t RTC_Get_Registered_Sw_Alarms(RtcSwAlarm_t *AlarmData_p, uint8 *NoOfAlar
 
 Status_t Format_Date(uint8 Type, RtcDate_t *Date_p, char *s);
 Status_t Format_Time(uint8 Type, RtcTime_t *Time_p, char *s);
-
+uint8 Is_Valid_Day(uint16 Year, uint8 Month, uint8 Day);
 #endif  // _RTC_H
 

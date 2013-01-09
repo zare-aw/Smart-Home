@@ -97,7 +97,7 @@ static uint8 Get_DoW(uint16 Year, uint8 Month, uint8 Day)
  * Description: Check if the specify day is valid
  * NOTE: Year is not smaller than RTC_YEARMIN (1901).
  *************************************************************************/
-static uint8 Is_Valid_Day(uint16 Year, uint8 Month, uint8 Day)
+uint8 Is_Valid_Day(uint16 Year, uint8 Month, uint8 Day)
 {
   /* Valid Judge */
   if(Year < RTC_YEARMIN || Year > RTC_YEARMAX || Day < 1)

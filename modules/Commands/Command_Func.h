@@ -75,10 +75,10 @@
 #define DO_X            COMMANDS_OFFSET | X_OFFSET |        0x0001
 
 // cmd_time_alarm.c
-#define TIME_ALARM_OFFSET                                                   0x1000
-#define DO_TRY_READ_TIME_RESPONSE_CMD COMMANDS_OFFSET | TIME_ALARM_OFFSET | 0x0001
-#define DO_REG_TIME_ALARM_CMD COMMANDS_OFFSET | TIME_ALARM_OFFSET |         0x0002
-#define DO_TIME_ALARM COMMANDS_OFFSET | TIME_ALARM_OFFSET |                 0x0003
+#define TIME_ALARM_OFFSET                                                     0x1000
+#define DO_TRY_READ_TIME_RESPONSE_CMD   COMMANDS_OFFSET | TIME_ALARM_OFFSET | 0x0001
+#define DO_SET_TIME_ALARM_CMD           COMMANDS_OFFSET | TIME_ALARM_OFFSET | 0x0002
+#define DO_TIME_ALARM                   COMMANDS_OFFSET | TIME_ALARM_OFFSET | 0x0003
 #endif
 
 // cmd_ir_debug.c

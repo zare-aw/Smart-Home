@@ -281,6 +281,7 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\App\</state>
           <state>$PROJ_DIR$\Modules\</state>
+          <state>$PROJ_DIR$\Modules\Alarm\</state>
           <state>$PROJ_DIR$\Modules\Commands\</state>
           <state>$PROJ_DIR$\Modules\Console\</state>
           <state>$PROJ_DIR$\Modules\Debug\</state>
@@ -305,7 +306,6 @@
           <state>$PROJ_DIR$\SOC_HAL\Timers\</state>
           <state>$PROJ_DIR$\SOC_HAL\UART\</state>
           <state>$PROJ_DIR$\SOC_HAL\VIC\</state>
-          <state>$PROJ_DIR$\SOC_HAL\Alarm\</state>
           <state>$PROJ_DIR$\</state>
         </option>
         <option>
@@ -1608,19 +1608,19 @@
   <group>
     <name>App</name>
     <file>
-      <name>$PROJ_DIR$\App\cstartup.asm</name>
+      <name>$PROJ_DIR$\app\cstartup.asm</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\App\initialization.c</name>
+      <name>$PROJ_DIR$\app\initialization.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\App\Initialization.h</name>
+      <name>$PROJ_DIR$\app\Initialization.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\App\Initialization_Func.h</name>
+      <name>$PROJ_DIR$\app\Initialization_Func.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\App\main.c</name>
+      <name>$PROJ_DIR$\app\main.c</name>
     </file>
   </group>
   <group>
@@ -1734,135 +1734,150 @@
   <group>
     <name>Modules</name>
     <group>
+      <name>Alarm</name>
+      <file>
+        <name>$PROJ_DIR$\modules\Alarm\Alarm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modules\Alarm\Alarm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modules\Alarm\Alarm_Debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\modules\Alarm\Alarm_Func.h</name>
+      </file>
+    </group>
+    <group>
       <name>Commands</name>
       <group>
         <name>cmd_src</name>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_bl.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_bl.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_date.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_date.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_dd.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_dd.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_du.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_du.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_help.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_help.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_info.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_info.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_ir.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_ir.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_ir_debug.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_ir_debug.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_set_date.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_set_date.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_set_ir.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_set_ir.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_set_time.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_set_time.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_switch.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_switch.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_temp.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_temp.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_temp_alarm.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_temp_alarm.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_time.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_time.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_time_alarm.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_time_alarm.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\Modules\Commands\cmd_src\cmd_x.c</name>
+          <name>$PROJ_DIR$\modules\Commands\cmd_src\cmd_x.c</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$\Modules\Commands\Command.c</name>
+        <name>$PROJ_DIR$\modules\Commands\Command.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Commands\Command.h</name>
+        <name>$PROJ_DIR$\modules\Commands\Command.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Commands\Command_Defconfig.h</name>
+        <name>$PROJ_DIR$\modules\Commands\Command_Defconfig.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Commands\Command_Func.h</name>
+        <name>$PROJ_DIR$\modules\Commands\Command_Func.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Commands\How_To_Create_Command_README.txt</name>
+        <name>$PROJ_DIR$\modules\Commands\How_To_Create_Command_README.txt</name>
       </file>
     </group>
     <group>
       <name>Console</name>
       <file>
-        <name>$PROJ_DIR$\Modules\Console\Console.c</name>
+        <name>$PROJ_DIR$\modules\Console\Console.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Console\Console.h</name>
+        <name>$PROJ_DIR$\modules\Console\Console.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Console\Console_Defconfig.h</name>
+        <name>$PROJ_DIR$\modules\Console\Console_Defconfig.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Console\Console_Func.h</name>
+        <name>$PROJ_DIR$\modules\Console\Console_Func.h</name>
       </file>
     </group>
     <group>
       <name>Debug</name>
       <file>
-        <name>$PROJ_DIR$\Modules\Debug\Debug_GPIO.c</name>
+        <name>$PROJ_DIR$\modules\Debug\Debug_GPIO.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Debug\Debug_GPIO.h</name>
+        <name>$PROJ_DIR$\modules\Debug\Debug_GPIO.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Debug\Exception.c</name>
+        <name>$PROJ_DIR$\modules\Debug\Exception.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Debug\Func_Trace.c</name>
+        <name>$PROJ_DIR$\modules\Debug\Func_Trace.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Debug\Func_Trace.h</name>
+        <name>$PROJ_DIR$\modules\Debug\Func_Trace.h</name>
       </file>
     </group>
     <group>
       <name>Delay</name>
       <file>
-        <name>$PROJ_DIR$\Modules\Delay\Delay.c</name>
+        <name>$PROJ_DIR$\modules\Delay\Delay.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Delay\Delay.h</name>
+        <name>$PROJ_DIR$\modules\Delay\Delay.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Delay\Delay_Func.h</name>
+        <name>$PROJ_DIR$\modules\Delay\Delay_Func.h</name>
       </file>
     </group>
     <group>
       <name>Display</name>
       <file>
-        <name>$PROJ_DIR$\Modules\Display\SurfaceFlinger.c</name>
+        <name>$PROJ_DIR$\modules\Display\SurfaceFlinger.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Display\SurfaceFlinger.h</name>
+        <name>$PROJ_DIR$\modules\Display\SurfaceFlinger.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Display\SurfaceFlinger_Debug.h</name>
+        <name>$PROJ_DIR$\modules\Display\SurfaceFlinger_Debug.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Display\SurfaceFlinger_Func.h</name>
+        <name>$PROJ_DIR$\modules\Display\SurfaceFlinger_Func.h</name>
       </file>
     </group>
     <group>
@@ -1907,60 +1922,45 @@
         </group>
       </group>
       <file>
-        <name>$PROJ_DIR$\Modules\Menu\Menu.c</name>
+        <name>$PROJ_DIR$\modules\Menu\Menu.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Menu\Menu.h</name>
+        <name>$PROJ_DIR$\modules\Menu\Menu.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Menu\Menu_Debug.h</name>
+        <name>$PROJ_DIR$\modules\Menu\Menu_Debug.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Menu\Menu_Func.h</name>
+        <name>$PROJ_DIR$\modules\Menu\Menu_Func.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Menu\Menu_KeyMap.h</name>
+        <name>$PROJ_DIR$\modules\Menu\Menu_KeyMap.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Menu\MenuCallbacks.c</name>
+        <name>$PROJ_DIR$\modules\Menu\MenuCallbacks.c</name>
       </file>
     </group>
     <group>
       <name>Temperature</name>
       <file>
-        <name>$PROJ_DIR$\Modules\Temperature\Temperature.c</name>
+        <name>$PROJ_DIR$\modules\Temperature\Temperature.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Temperature\Temperature.h</name>
+        <name>$PROJ_DIR$\modules\Temperature\Temperature.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Temperature\Temperature_Debug.h</name>
+        <name>$PROJ_DIR$\modules\Temperature\Temperature_Debug.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\Modules\Temperature\Temperature_Func.h</name>
+        <name>$PROJ_DIR$\modules\Temperature\Temperature_Func.h</name>
       </file>
     </group>
     <file>
-      <name>$PROJ_DIR$\Modules\StatusHandling.c</name>
+      <name>$PROJ_DIR$\modules\StatusHandling.c</name>
     </file>
   </group>
   <group>
     <name>SOC_HAL</name>
-    <group>
-      <name>Alarm</name>
-      <file>
-        <name>$PROJ_DIR$\SOC_HAL\Alarm\Alarm.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\SOC_HAL\Alarm\Alarm.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\SOC_HAL\Alarm\Alarm_Debug.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\SOC_HAL\Alarm\Alarm_Func.h</name>
-      </file>
-    </group>
     <group>
       <name>CLK_Reset</name>
       <file>
