@@ -17,6 +17,7 @@
 #define MENU_OFFSET             0x08000000
 #define TEMPERATURE_OFFSET      0x09000000
 #define SW_MANAGEMENT_OFFSET    0x0A000000
+#define ALARM_TIME_OFFSET       0x0B000000
 
 // SOC_HAL
 #define CLK_RESET_OFFSET        0x21000000
@@ -27,7 +28,7 @@
 #define PWM_OFFSET              0x26000000
 #define UART_OFFSET             0x27000000
 #define I2C_OFFSET              0x28000000
-#define ALARM_TIME_OFFSET       0x29000000
+#define FLASH_MANAGEMENT_OFFSET 0x29000000
 
 // Drivers
 #define PWM_BACKLIGHT_OFFSET    0x41000000

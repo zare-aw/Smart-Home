@@ -306,6 +306,7 @@
           <state>$PROJ_DIR$\SOC_HAL\Timers\</state>
           <state>$PROJ_DIR$\SOC_HAL\UART\</state>
           <state>$PROJ_DIR$\SOC_HAL\VIC\</state>
+          <state>$PROJ_DIR$\SOC_HAL\FLASH\</state>
           <state>$PROJ_DIR$\</state>
         </option>
         <option>
@@ -1989,6 +1990,21 @@
       </file>
       <file>
         <name>$PROJ_DIR$\SOC_HAL\CLK_Reset\CLK_Reset_Func.h</name>
+      </file>
+    </group>
+    <group>
+      <name>FLASH_Management</name>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\FLASH\FLASH_Management.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\FLASH\FLASH_Management.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\FLASH\FLASH_Management_Debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\SOC_HAL\FLASH\FLASH_Management_Func.h</name>
       </file>
     </group>
     <group>
