@@ -291,6 +291,7 @@
           <state>$PROJ_DIR$\Modules\Menu\Menu_Impl\</state>
           <state>$PROJ_DIR$\Modules\Menu\Menu_Impl\Switches\</state>
           <state>$PROJ_DIR$\Modules\Temperature\</state>
+          <state>$PROJ_DIR$\Modules\Configs\</state>
           <state>$PROJ_DIR$\Includes\</state>
           <state>$PROJ_DIR$\Drivers\</state>
           <state>$PROJ_DIR$\Drivers\Backlight\PWM_Backlight\</state>
@@ -1819,6 +1820,21 @@
       </file>
       <file>
         <name>$PROJ_DIR$\Modules\Commands\How_To_Create_Command_README.txt</name>
+      </file>
+    </group>
+    <group>
+      <name>Configs</name>
+      <file>
+        <name>$PROJ_DIR$\Modules\Configs\Configs.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Modules\Configs\Configs.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Modules\Configs\Configs_Debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\Modules\Configs\Configs_Func.h</name>
       </file>
     </group>
     <group>
