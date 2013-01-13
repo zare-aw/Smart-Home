@@ -18,8 +18,8 @@ define symbol __ICFEDIT_size_abtstack__ = 0x40;
 define symbol __ICFEDIT_size_heap__     = 0x2000;
 /**** End of ICF editor section. ###ICF###*/
 
-define symbol __region_SW_M_Cfg_start__ = 0x0007B000;
-define symbol __region_SW_M_Cfg_end__   = 0x0007B3FF;
+define symbol __region_SW_M_Cfg_start__ = 0x0007C000;
+define symbol __region_SW_M_Cfg_end__   = 0x0007CFFF;
 
 define symbol __region_USB_RAM_start__	= 0x7FD01004;
 define symbol __region_USB_RAM_end__	= 0x7FD01FFF;
