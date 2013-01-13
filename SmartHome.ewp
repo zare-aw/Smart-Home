@@ -1993,7 +1993,7 @@
       </file>
     </group>
     <group>
-      <name>FLASH_Management</name>
+      <name>FLASH</name>
       <file>
         <name>$PROJ_DIR$\SOC_HAL\FLASH\FLASH_Management.c</name>
       </file>
