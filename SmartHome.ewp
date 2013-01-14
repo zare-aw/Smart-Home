@@ -292,6 +292,7 @@
           <state>$PROJ_DIR$\Modules\Menu\Menu_Impl\Switches\</state>
           <state>$PROJ_DIR$\Modules\Temperature\</state>
           <state>$PROJ_DIR$\Modules\Configs\</state>
+          <state>$PROJ_DIR$\Modules\Switches_Management\</state>
           <state>$PROJ_DIR$\Includes\</state>
           <state>$PROJ_DIR$\Drivers\</state>
           <state>$PROJ_DIR$\Drivers\Backlight\PWM_Backlight\</state>
