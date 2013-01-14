@@ -20,6 +20,7 @@
 #define FLASH_PREPARE_SECTOR_FOR_WRITE      50
 #define FLASH_COPY_RAM_BUFFER_TO_FLASH      51
 #define FLASH_ERASE_SECTORS                 52
+#define FLASH_BLANK_CHECK_SECTORS           53
 
 /**** FLASH Status codes ****/
 #define FLASH_STATUS_CMD_SUCCESS                              0
@@ -80,7 +81,7 @@ FLASH_FUNC_REGISTER(FLASH_PREPARE_FOR_WRITE, FLASH_Prepare_For_Write);
 /*******************************************************************************
  *
  ******************************************************************************/
-static Status_t FLASH_Get_Sector_Number(uint32 Address, uint32 *Sector)
+Status_t FLASH_Get_Sector_Number(uint32 Address, uint32 *Sector)
 {
   FuncIN(FLASH_GET_SECTOR_NUMBER);
   
@@ -262,3 +263,48 @@ Status_t FLASH_Copy_RAM_To_FLASH(uint32 Dst_FLASH_Addr, uint32 Src_RAM_Addr, uin
   EXIT_FUNC(UNKNOWN_ERROR, FLASH_COPY_RAM_TO_FLASH);
 }
 FLASH_FUNC_REGISTER(FLASH_COPY_RAM_TO_FLASH, FLASH_Copy_RAM_To_FLASH);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
+Status_t FLASH_Sectors_Blank_Check(uint32 StartSectorNumber, uint32 EndSectorNumber)
+{
+  FuncIN(FLASH_SECTORS_BLANK_CHECK);
+  
+  uint32 Command[] = {FLASH_BLANK_CHECK_SECTORS,
+                      StartSectorNumber,
+                      EndSectorNumber};
+  uint32 Result[3] = {0xFF};
+  
+  IAP IAP_Entry = (IAP)IAP_LOCATION;
+  
+  FLASH_Prepare_For_Write(StartSectorNumber, EndSectorNumber);
+  
+  for(uint32 i = 0; i < FLASH_IAP_RETRY; i++)
+  {
+    __disable_interrupt();
+    IAP_Entry(Command, Result);
+    __enable_interrupt();
+    
+    switch(Result[0])
+    {
+      case FLASH_STATUS_CMD_SUCCESS:
+        FLASH_DEBUG_L1(printc("(%s) Sector Blank!\n", __func__));
+        EXIT_SUCCESS_FUNC(FLASH_SECTORS_BLANK_CHECK);
+      case FLASH_STATUS_BUSY:
+        FLASH_DEBUG_L2(printc("(%s) FLASH Busy! Retrying ...\n", __func__));
+        uDelay(100);
+        break;
+      case FLASH_STATUS_SECTOR_NOT_BLANK:
+        FLASH_DEBUG_L2(printc("(%s) Sector Not Blank!\n", __func__));
+        EXIT_FUNC(FLASH_SECTOR_NOT_BLANK, FLASH_SECTORS_BLANK_CHECK);
+      case FLASH_STATUS_INVALID_SECTOR:
+        Fatal_Abort(-INVALID_INPUT_PARAMETER);
+      default:
+        EXIT_FUNC(UNKNOWN_ERROR, FLASH_SECTORS_BLANK_CHECK);
+    } // switch(Result[0])
+  } // for(uint32 i = 0; i < IAP_RETRY; i++)
+  
+  EXIT_FUNC(UNKNOWN_ERROR, FLASH_SECTORS_BLANK_CHECK);
+}
+FLASH_FUNC_REGISTER(FLASH_SECTORS_BLANK_CHECK, FLASH_Sectors_Blank_Check);

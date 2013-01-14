@@ -6,5 +6,6 @@
 #define FLASH_GET_SECTOR_NUMBER                   FLASH_MANAGEMENT_OFFSET | 0x02
 #define FLASH_SECTORS_ERASE                       FLASH_MANAGEMENT_OFFSET | 0x03
 #define FLASH_COPY_RAM_TO_FLASH                   FLASH_MANAGEMENT_OFFSET | 0x04
+#define FLASH_SECTORS_BLANK_CHECK                 FLASH_MANAGEMENT_OFFSET | 0x05
 
 #endif // _FLASH_Management_Func_h
