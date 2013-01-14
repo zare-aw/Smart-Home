@@ -8,5 +8,6 @@
 #define SET_TIME_ALARM               ALARM_TIME_OFFSET | 0x05
 #define GET_ALARM_ID                 ALARM_TIME_OFFSET | 0x06
 #define REMOVE_TIME_ALARM            ALARM_TIME_OFFSET | 0x07
+#define UPDATE_REPETITIVE_ALARMS     ALARM_TIME_OFFSET | 0x08
 
 #endif

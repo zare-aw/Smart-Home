@@ -77,7 +77,7 @@ Status_t Do_Set_Time_Alarm_Cmd(TimeAlarm_t *TimeAlarm_p)
   CMD_TIMEA_DEBUG(printcmd("\r # State = %u\n", TimeAlarm_p -> State));
   CMD_TIMEA_DEBUG(printcmd("\r # Callback = 0x%X\n", TimeAlarm_p -> Callback));
   
-  if(TimeAlarm_p -> AlarmID != NO_ALARM_ID)
+  if(TimeAlarm_p -> AlarmID != NO_TIME_ALARM_ID)
   {
     VERIFY(Set_Time_Alarm(TimeAlarm_p), -TIME_SET_ALARM_ERROR);
     printcmd(" # Time Alarm set\n");

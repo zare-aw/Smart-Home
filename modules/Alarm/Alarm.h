@@ -1,7 +1,6 @@
 #ifndef __Alarm_h
 #define __Alarm_h
 
-#include <NXP/iolpc2148.h>
 #include "StatusHandling.h"
 #include "RTC.h"
 #include "Out.h"
@@ -10,8 +9,8 @@
 #define ALARM_OFF             1
 #define ALARM_ON              2
 
-#define NO_ALARM_ID           0
-#define NO_OF_TIME_ALARMS          10
+#define NO_TIME_ALARM_ID      0
+#define NO_OF_TIME_ALARMS     10
 
 #define ALARM_WORK_BUFFER_SIZE    10
 
@@ -42,7 +41,6 @@ Status_t Unregister_Time_Alarm(uint8 AlarmID);
 Status_t Time_Alarm_Status(void *Ptr);
 Status_t Time_Alarm_Dummy_Handler(void *Ptr);
 Status_t Set_Time_Alarm(TimeAlarm_t *TimeAlarm_p);
-Status_t Get_Alarm_ID(uint8 *AlarmID_p);
 Status_t Remove_Time_Alarm(uint8 AlarmID);
 
 static TimeAlarmResponse_t AlarmResponse[] =

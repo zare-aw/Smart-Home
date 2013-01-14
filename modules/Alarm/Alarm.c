@@ -1,4 +1,3 @@
-#include <NXP/iolpc2148.h>
 #include <stdlib.h>
 #include <string.h>
 #include "Global_Defines.h"
@@ -6,7 +5,6 @@
 #include "Func_Trace.h"
 #include "Console.h"
 #include "RTC.h"
-#include "Command.h"
 
 #include "Alarm.h"
 #include "Alarm_Func.h"
@@ -33,13 +31,13 @@ static int Compare_AlarmWork(const void *A, const void *B)
   uint8 AlarmID_A = ((TimeAlarm_t *)A) -> AlarmID;
   uint8 AlarmID_B = ((TimeAlarm_t *)B) -> AlarmID;
 
-  if((AlarmID_A == NO_ALARM_ID) || (AlarmID_B == NO_ALARM_ID))
+  if((AlarmID_A == NO_TIME_ALARM_ID) || (AlarmID_B == NO_TIME_ALARM_ID))
   {
-    if((AlarmID_A == NO_ALARM_ID) && (AlarmID_B == NO_ALARM_ID))
+    if((AlarmID_A == NO_TIME_ALARM_ID) && (AlarmID_B == NO_TIME_ALARM_ID))
       return 0;
     else
     {
-      if(AlarmID_A == NO_ALARM_ID)
+      if(AlarmID_A == NO_TIME_ALARM_ID)
         return 1;
       else
         return -1;
@@ -84,6 +82,7 @@ static int Compare_AlarmWork(const void *A, const void *B)
 *******************************************************************************/
 static int Update_Repetitive_Alarms()
 {
+  FuncIN(UPDATE_REPETITIVE_ALARMS);
   RtcDateTime_t Current_Time = {0};
   RtcDateTime_t Repeat_Time = {0};
   uint8 Repeat = 0;
@@ -137,8 +136,38 @@ Next_Day:
     }
   }
 
-  return 0;
+  EXIT_SUCCESS_FUNC(UPDATE_REPETITIVE_ALARMS);
 }
+FUNC_REGISTER(UPDATE_REPETITIVE_ALARMS, Update_Repetitive_Alarms);
+
+/*******************************************************************************
+* @out: AlarmID_p - next free AlarmID slot.
+*******************************************************************************/
+static Status_t Get_Alarm_ID(uint8 *AlarmID_p)
+{
+  FuncIN(GET_ALARM_ID);
+  uint8 Alarm_ID = 0;
+  int i = 0;
+  for(Alarm_ID = 1; Alarm_ID < ALARM_WORK_BUFFER_SIZE + 1; Alarm_ID++)
+  {
+    for(i = 0; i < ALARM_WORK_BUFFER_SIZE; i++)
+    {
+      if(AlarmWork[i].AlarmID == Alarm_ID)
+        break;
+    }
+    if(i == ALARM_WORK_BUFFER_SIZE)
+    {
+       *AlarmID_p = Alarm_ID;
+       ALARM_DEBUG(printc("\r # (%s) Alarm ID = %d\n",__func__, Alarm_ID));
+       break;
+    }
+  }
+  if(Alarm_ID == ALARM_WORK_BUFFER_SIZE)
+    EXIT_FUNC(-TIME_ALARM_GET_ALARM_ID_ERROR, GET_ALARM_ID);
+
+  EXIT_SUCCESS_FUNC(GET_ALARM_ID);
+}
+FUNC_REGISTER(GET_ALARM_ID, Get_Alarm_ID);
 /*******************************************************************************
 * 
 *******************************************************************************/
@@ -154,14 +183,14 @@ Status_t Register_Time_Alarm(TimeAlarm_t *TimeAlarm_p)
 
   for(i = 0; i < ALARM_WORK_BUFFER_SIZE; i++)
   {
-    if(AlarmWork[i].AlarmID == NO_ALARM_ID)
+    if(AlarmWork[i].AlarmID == NO_TIME_ALARM_ID)
     {
       AlarmWork[i].State = TimeAlarm_p -> State;
       AlarmWork[i].AlarmID = TimeAlarm_p -> AlarmID;
       AlarmWork[i].Repeat = TimeAlarm_p -> Repeat;
       AlarmWork[i].DateTime = TimeAlarm_p -> DateTime;
       AlarmWork[i].Callback = TimeAlarm_p -> Callback;
-      ALARM_DEBUG(printcmd("\r # Add element in %d field", i));
+      ALARM_DEBUG(printc("\r # Add element in %d field", i));
       break;
     }
   }
@@ -174,17 +203,17 @@ Status_t Register_Time_Alarm(TimeAlarm_t *TimeAlarm_p)
   Update_Repetitive_Alarms();
   qsort(AlarmWork, ALARM_WORK_BUFFER_SIZE, sizeof(TimeAlarm_t), Compare_AlarmWork);
 
-  ALARM_DEBUG(printcmd("\r # (%s) input parameters for RTC_Enable_Alarm\n",__func__));
-  ALARM_DEBUG(printcmd("\r # date = %02u.%02u.%02u\n",  AlarmWork[0].DateTime.Day,
-                                                        AlarmWork[0].DateTime.Month,
-                                                        AlarmWork[0].DateTime.Year));
-  ALARM_DEBUG(printcmd("\r # time = %02u:%02u:%02u\n",  AlarmWork[0].DateTime.Hour,
-                                                        AlarmWork[0].DateTime.Minute,
-                                                        AlarmWork[0].DateTime.Second));
-  ALARM_DEBUG(printcmd("\r # AlarmID = %d\n",           AlarmWork[0].AlarmID));
-  ALARM_DEBUG(printcmd("\r # State = %d\n",             AlarmWork[0].State));
-  ALARM_DEBUG(printcmd("\r # Repeat = 0x%X\n",          AlarmWork[0].Repeat));
-  ALARM_DEBUG(printcmd("\r # Callback = 0x%X\n",        AlarmWork[0].Callback));
+  ALARM_DEBUG(printc("\r # (%s) input parameters for RTC_Enable_Alarm\n",__func__));
+  ALARM_DEBUG(printc("\r # date = %02u.%02u.%02u\n",  AlarmWork[0].DateTime.Day,
+                                                      AlarmWork[0].DateTime.Month,
+                                                      AlarmWork[0].DateTime.Year));
+  ALARM_DEBUG(printc("\r # time = %02u:%02u:%02u\n",  AlarmWork[0].DateTime.Hour,
+                                                      AlarmWork[0].DateTime.Minute,
+                                                      AlarmWork[0].DateTime.Second));
+  ALARM_DEBUG(printc("\r # AlarmID = %d\n",           AlarmWork[0].AlarmID));
+  ALARM_DEBUG(printc("\r # State = %d\n",             AlarmWork[0].State));
+  ALARM_DEBUG(printc("\r # Repeat = 0x%X\n",          AlarmWork[0].Repeat));
+  ALARM_DEBUG(printc("\r # Callback = 0x%X\n",        AlarmWork[0].Callback));
 
   Status = RTC_Enable_Alarm(0xFF, &AlarmWork[0].DateTime, (void *)Execute_Time_Alarm);
 
@@ -255,7 +284,7 @@ Status_t Remove_Time_Alarm(uint8 AlarmID)
   for(i = 0; i < ALARM_WORK_BUFFER_SIZE; i++)
   {
     if(AlarmWork[i].AlarmID == AlarmID){
-      AlarmWork[i].AlarmID = NO_ALARM_ID;
+      AlarmWork[i].AlarmID = NO_TIME_ALARM_ID;
       AlarmWork[i].State = 0;
       memset((void *)&AlarmWork[i].DateTime, 0, sizeof(RtcDateTime_t));
       AlarmWork[i].Callback = NULL;
@@ -290,21 +319,21 @@ Status_t Time_Alarm_Status(void *Ptr)
     {
       break;
     }
-      printcmd("\r # Registered Alarm number: %d\n", i + 1);
-      printcmd("\r # date = %02u.%02u.%02u\n", AlarmWork[i].DateTime.Day,
-                                               AlarmWork[i].DateTime.Month,
-                                               AlarmWork[i].DateTime.Year);
-      printcmd("\r # time = %02u:%02u:%02u\n", AlarmWork[i].DateTime.Hour,
-                                               AlarmWork[i].DateTime.Minute,
-                                               AlarmWork[i].DateTime.Second);
-      printcmd("\r # AlarmID = %d\n",           AlarmWork[i].AlarmID);
-      printcmd("\r # State = %d\n",             AlarmWork[i].State);
-      printcmd("\r # Repeat = 0x%X\n",          AlarmWork[i].Repeat);
-      printcmd("\r # Callback = 0x%X\n",        AlarmWork[i].Callback);
+      printc("\r # Registered Alarm number: %d\n", i + 1);
+      printc("\r # date = %02u.%02u.%02u\n", AlarmWork[i].DateTime.Day,
+                                             AlarmWork[i].DateTime.Month,
+                                             AlarmWork[i].DateTime.Year);
+      printc("\r # time = %02u:%02u:%02u\n", AlarmWork[i].DateTime.Hour,
+                                             AlarmWork[i].DateTime.Minute,
+                                             AlarmWork[i].DateTime.Second);
+      printc("\r # AlarmID = %d\n",          AlarmWork[i].AlarmID);
+      printc("\r # State = %d\n",            AlarmWork[i].State);
+      printc("\r # Repeat = 0x%X\n",         AlarmWork[i].Repeat);
+      printc("\r # Callback = 0x%X\n",       AlarmWork[i].Callback);
   }
 
   if (i == 0)
-    printcmd("\r # Not Registered Alarm\n");
+    printc("\r # Not Registered Alarm\n");
 
   if(i == ALARM_WORK_BUFFER_SIZE)
   {
@@ -350,25 +379,25 @@ Status_t Set_Time_Alarm(TimeAlarm_t *TimeAlarm_p)
     {
       AlarmWork[i].DateTime = TimeAlarm_p -> DateTime;
       ALARM_DEBUG(
-      printcmd("\r # date = %02u.%02u.%02u\n", TimeAlarm_p -> DateTime.Day,
-                                               TimeAlarm_p -> DateTime.Month,
-                                               TimeAlarm_p -> DateTime.Year);
-      printcmd("\r # time = %02u:%02u:%02u\n", TimeAlarm_p -> DateTime.Hour,
-                                               TimeAlarm_p -> DateTime.Minute,
-                                               TimeAlarm_p -> DateTime.Second);)
+      printc("\r # date = %02u.%02u.%02u\n", TimeAlarm_p -> DateTime.Day,
+                                             TimeAlarm_p -> DateTime.Month,
+                                             TimeAlarm_p -> DateTime.Year);
+      printc("\r # time = %02u:%02u:%02u\n", TimeAlarm_p -> DateTime.Hour,
+                                             TimeAlarm_p -> DateTime.Minute,
+                                             TimeAlarm_p -> DateTime.Second);)
     }
     
     Update_Repetitive_Alarms();
     qsort(AlarmWork, ALARM_WORK_BUFFER_SIZE, sizeof(TimeAlarm_t), Compare_AlarmWork);
 
-    ALARM_DEBUG(printcmd("\r # (%s) input parameters for RTC_Enable_Alarm\n",__func__));
-    ALARM_DEBUG(printcmd("\r # date = %02u.%02u.%02u\n",  AlarmWork[0].DateTime.Day,
-                                                          AlarmWork[0].DateTime.Month,
-                                                          AlarmWork[0].DateTime.Year));
-    ALARM_DEBUG(printcmd("\r # time = %02u:%02u:%02u\n",  AlarmWork[0].DateTime.Hour,
-                                                          AlarmWork[0].DateTime.Minute,
-                                                          AlarmWork[0].DateTime.Second));
-    ALARM_DEBUG(printcmd("\r # Callback = 0x%X\n",        AlarmWork[0].Callback));
+    ALARM_DEBUG(printc("\r # (%s) input parameters for RTC_Enable_Alarm\n",__func__));
+    ALARM_DEBUG(printc("\r # date = %02u.%02u.%02u\n",  AlarmWork[0].DateTime.Day,
+                                                        AlarmWork[0].DateTime.Month,
+                                                        AlarmWork[0].DateTime.Year));
+    ALARM_DEBUG(printc("\r # time = %02u:%02u:%02u\n",  AlarmWork[0].DateTime.Hour,
+                                                        AlarmWork[0].DateTime.Minute,
+                                                        AlarmWork[0].DateTime.Second));
+    ALARM_DEBUG(printc("\r # Callback = 0x%X\n",        AlarmWork[0].Callback));
 
     Status = RTC_Enable_Alarm(0xFF, &AlarmWork[0].DateTime, (void *)Execute_Time_Alarm);
 
@@ -381,34 +410,6 @@ Status_t Set_Time_Alarm(TimeAlarm_t *TimeAlarm_p)
 }
 FUNC_REGISTER(SET_TIME_ALARM, Set_Time_Alarm);
 
-/*******************************************************************************
-* @out: AlarmID_p - next free AlarmID slot.
-*******************************************************************************/
-Status_t Get_Alarm_ID(uint8 *AlarmID_p)
-{
-  FuncIN(GET_ALARM_ID);
-  uint8 Alarm_ID = 0;
-  int i = 0;
-  for(Alarm_ID = 1; Alarm_ID < ALARM_WORK_BUFFER_SIZE + 1; Alarm_ID++)
-  {
-    for(i = 0; i < ALARM_WORK_BUFFER_SIZE; i++)
-    {
-      if(AlarmWork[i].AlarmID == Alarm_ID)
-        break;
-    }
-    if(i == ALARM_WORK_BUFFER_SIZE)
-    {
-       *AlarmID_p = Alarm_ID;
-       ALARM_DEBUG(printc("\r # (%s) Alarm ID = %d\n",__func__, Alarm_ID));
-       break;
-    }
-  }
-  if(Alarm_ID == ALARM_WORK_BUFFER_SIZE)
-    EXIT_FUNC(-TIME_ALARM_GET_ALARM_ID_ERROR, GET_ALARM_ID);
-
-  EXIT_SUCCESS_FUNC(GET_ALARM_ID);
-}
-FUNC_REGISTER(GET_ALARM_ID, Get_Alarm_ID);
 /*******************************************************************************
  *
  ******************************************************************************/
