@@ -15,6 +15,7 @@
 #include "PWM_Backlight.h"
 #include "Temperature.h"
 #include "HD44780.h"
+#include "SW_Management.h"
 
 #include "Initialization.h"
 #include "Initialization_func.h"
@@ -62,6 +63,8 @@ Status_t Initialization(void)
   Cmd_Init_Parameters_t Cmd_Init_Parameters;
   Cmd_Init_Parameters.putscmd = &puts;
   (void)Commands_Init(&Cmd_Init_Parameters);
+  
+  SW_M_Init();
   
   EXIT_SUCCESS_FUNC(INITIALIZATION);
 }
