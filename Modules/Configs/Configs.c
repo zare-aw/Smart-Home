@@ -11,18 +11,20 @@
 #include "FLASH_Management.h"
 #include "SW_Management.h"
 
+#define SW_M_CFG_SECTION_BEGIN      0x0007C000
 #define FLASH_WRITE_BUFFER_SIZE     1024
 
 uint32 FLASH_Write_Buffer[FLASH_WRITE_BUFFER_SIZE / 4] = {0};
 
-#pragma section=".sw_m_cfg"
+#pragma section = ".sw_m_cfg"
 
 /*******************************************************************************
  * Function for get start address of functions section
  ******************************************************************************/
 static inline void *Get_SW_M_Config_Section_Begin(void)
 {
-  return __section_begin(".sw_m_cfg");
+  return (void *)SW_M_CFG_SECTION_BEGIN;
+  //return __section_begin(".sw_m_cfg");
 }
 
 /*******************************************************************************
