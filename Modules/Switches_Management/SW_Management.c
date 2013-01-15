@@ -252,7 +252,7 @@ Status_t SW_M_Init(void)
 {
   FuncIN(SW_M_INIT);
   
-  Config_SW_M_Init();
+  Config_SW_M_Init(NO_OF_SWITCHES, NO_OF_EVENTS_PER_SWITCH);
   
   Config_SW_M_Read(SW_M_Event[0], NO_OF_SWITCHES, NO_OF_EVENTS_PER_SWITCH);
   
