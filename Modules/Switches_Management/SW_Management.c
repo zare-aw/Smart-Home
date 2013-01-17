@@ -8,6 +8,7 @@
 
 #include "Configs.h"
 #include "Temperature.h"
+#include "Alarm.h"
 
 __packed SW_M_Event_t SW_M_Event[NO_OF_SWITCHES][NO_OF_EVENTS_PER_SWITCH] = {0};
 void *CallbackON[]      = {(void *)Out_1_Set,
@@ -175,25 +176,119 @@ SW_M_FUNC_REGISTER(SW_M_CONFIG_TEMP_EVENT, SW_M_Config_Temp_Event);
 static Status_t SW_M_Config_Time_Event(uint32 NoOfSwitch, SW_M_Event_t *SW_M_Event_p)
 {
   FuncIN(SW_M_CONFIG_TIME_EVENT);
-  
+
+  TimeAlarm_t TimeAlarm;
+
   if(((SW_M_Event_p -> Config & SW_EVENT_ON) == SW_EVENT_ON) &&
      ((SW_M_Event_p -> Config & SW_EVENT_TIME_DEP) == SW_EVENT_TIME_DEP))
   {
     /**** Config Time_Start ****/
     if(SW_M_Event_p -> Time_Start.State == SW_TIME_ALARM_ON)
     {
+      if((SW_M_Event_p -> Config & SW_EVENT_RESPONSE_1_ON) == SW_EVENT_RESPONSE_1_ON)
+        SW_M_Get_Callback(NoOfSwitch, SW_CALLBACK_TYPE_ON, &TimeAlarm.Callback);
+      else
+        SW_M_Get_Callback(NoOfSwitch, SW_CALLBACK_TYPE_OFF, &TimeAlarm.Callback);
       
+      if(SW_M_Event_p -> Time_Start.AlarmID == SW_TIME_NO_ALARM_ID)
+      {
+        TimeAlarm.State = SW_M_Event_p -> Time_Start.State;
+        TimeAlarm.AlarmID = SW_TIME_NO_ALARM_ID;
+        TimeAlarm.Repeat = SW_M_Event_p -> Date.Repeat;
+        TimeAlarm.DateTime = (RtcDateTime_t){SW_M_Event_p -> Date.Year,
+                                             SW_M_Event_p -> Date.Month,
+                                             SW_M_Event_p -> Date.Day,
+                                             SW_M_Event_p -> Time_Start.Hour,
+                                             SW_M_Event_p -> Time_Start.Minute,
+                                             SW_M_Event_p -> Time_Start.Second};
+
+        Register_Time_Alarm(&TimeAlarm);
+      }
+      else
+      {
+        TimeAlarm.State = SW_M_Event_p -> Time_Start.State;
+        TimeAlarm.AlarmID = SW_M_Event_p -> Time_Start.AlarmID;
+        TimeAlarm.Repeat = SW_M_Event_p -> Date.Repeat;
+        TimeAlarm.DateTime = (RtcDateTime_t){SW_M_Event_p -> Date.Year,
+                                             SW_M_Event_p -> Date.Month,
+                                             SW_M_Event_p -> Date.Day,
+                                             SW_M_Event_p -> Time_Start.Hour,
+                                             SW_M_Event_p -> Time_Start.Minute,
+                                             SW_M_Event_p -> Time_Start.Second};
+
+        Set_Time_Alarm(&TimeAlarm);
+      }
     }
     else
     {
+      if(SW_M_Event_p -> Time_Start.AlarmID != SW_TIME_NO_ALARM_ID)
+      {
+        Unregister_Time_Alarm(SW_M_Event_p -> Time_Start.AlarmID);
+        SW_M_Event_p -> Time_Start.AlarmID = SW_TIME_NO_ALARM_ID;
+      }
+    }
+
+    /**** Config Time_Stop ****/
+    if(SW_M_Event_p -> Time_Stop.State == SW_TIME_ALARM_ON)
+    {
+      if((SW_M_Event_p -> Config & SW_EVENT_RESPONSE_2_ON) == SW_EVENT_RESPONSE_2_ON)
+        SW_M_Get_Callback(NoOfSwitch, SW_CALLBACK_TYPE_ON, &TimeAlarm.Callback);
+      else
+        SW_M_Get_Callback(NoOfSwitch, SW_CALLBACK_TYPE_OFF, &TimeAlarm.Callback);
       
+      if(SW_M_Event_p -> Time_Stop.AlarmID == SW_TIME_NO_ALARM_ID)
+      {
+        TimeAlarm.State = SW_M_Event_p -> Time_Stop.State;
+        TimeAlarm.AlarmID = SW_TIME_NO_ALARM_ID;
+        TimeAlarm.Repeat = SW_M_Event_p -> Date.Repeat;
+        TimeAlarm.DateTime = (RtcDateTime_t){SW_M_Event_p -> Date.Year,
+                                             SW_M_Event_p -> Date.Month,
+                                             SW_M_Event_p -> Date.Day,
+                                             SW_M_Event_p -> Time_Stop.Hour,
+                                             SW_M_Event_p -> Time_Stop.Minute,
+                                             SW_M_Event_p -> Time_Stop.Second};
+
+        Register_Time_Alarm(&TimeAlarm);
+      }
+      else
+      {
+        TimeAlarm.State = SW_M_Event_p -> Time_Stop.State;
+        TimeAlarm.AlarmID = SW_M_Event_p -> Time_Stop.AlarmID;
+        TimeAlarm.Repeat = SW_M_Event_p -> Date.Repeat;
+        TimeAlarm.DateTime = (RtcDateTime_t){SW_M_Event_p -> Date.Year,
+                                             SW_M_Event_p -> Date.Month,
+                                             SW_M_Event_p -> Date.Day,
+                                             SW_M_Event_p -> Time_Stop.Hour,
+                                             SW_M_Event_p -> Time_Stop.Minute,
+                                             SW_M_Event_p -> Time_Stop.Second};
+
+        Set_Time_Alarm(&TimeAlarm);
+      }
+    }
+    else
+    {
+      if(SW_M_Event_p -> Time_Start.AlarmID != SW_TIME_NO_ALARM_ID)
+      {
+        Unregister_Time_Alarm(SW_M_Event_p -> Time_Start.AlarmID);
+        SW_M_Event_p -> Time_Start.AlarmID = SW_TIME_NO_ALARM_ID;
+      }
     }
   }
   else
   {
-    
+    if(SW_M_Event_p -> Time_Start.AlarmID != SW_TIME_NO_ALARM_ID)
+    {
+      Unregister_Time_Alarm(SW_M_Event_p -> Time_Start.AlarmID);
+      SW_M_Event_p -> Time_Start.AlarmID = SW_TIME_NO_ALARM_ID;
+    }
+
+    if(SW_M_Event_p -> Time_Stop.AlarmID != SW_TIME_NO_ALARM_ID)
+    {
+      Unregister_Time_Alarm(SW_M_Event_p -> Time_Stop.AlarmID);
+      SW_M_Event_p -> Time_Stop.AlarmID = SW_TIME_NO_ALARM_ID;
+    }
   }
-  
+
   EXIT_SUCCESS_FUNC(SW_M_CONFIG_TIME_EVENT);
 }
 SW_M_FUNC_REGISTER(SW_M_CONFIG_TIME_EVENT, SW_M_Config_Time_Event);
