@@ -58,7 +58,7 @@
  * SW_M_Temp_s: AlarmID:
  ******************************************************************************/
 #define SW_TEMP_NO_ALARM_ID       NO_ALARM_ID
-
+#define SW_TIME_NO_ALARM_ID       NO_TIME_ALARM_ID
 /*******************************************************************************
  * SW_M_Get_Callback: Type:
  ******************************************************************************/
@@ -79,6 +79,7 @@ typedef struct SW_M_Time_s
 
 typedef struct SW_M_Date_s
 {
+  uint8 Repeat;  //Repeat days
   uint8 Month;  // Month value
   uint8 Day;    // Day value
   uint8 DoW;    // Day of week
