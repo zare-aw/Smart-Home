@@ -267,10 +267,10 @@ static Status_t SW_M_Config_Time_Event(uint32 NoOfSwitch, SW_M_Event_t *SW_M_Eve
     }
     else
     {
-      if(SW_M_Event_p -> Time_Start.AlarmID != SW_TIME_NO_ALARM_ID)
+      if(SW_M_Event_p -> Time_Stop.AlarmID != SW_TIME_NO_ALARM_ID)
       {
-        Unregister_Time_Alarm(SW_M_Event_p -> Time_Start.AlarmID);
-        SW_M_Event_p -> Time_Start.AlarmID = SW_TIME_NO_ALARM_ID;
+        Unregister_Time_Alarm(SW_M_Event_p -> Time_Stop.AlarmID);
+        SW_M_Event_p -> Time_Stop.AlarmID = SW_TIME_NO_ALARM_ID;
       }
     }
   }
