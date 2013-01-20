@@ -79,7 +79,7 @@ CONFIG_FUNC_REGISTER(CONFIG_SW_M_READ, Config_SW_M_Read);
 /*******************************************************************************
  * Function for initialize Switches management configuration in FLASH
  ******************************************************************************/
-Status_t Config_SW_M_Init(void)
+Status_t Config_SW_M_Init(const uint32 NoOfSW, const uint32 NoOfEventsPerSW)
 {
   FuncIN(CONFIG_SW_M_INIT);
   
@@ -92,7 +92,27 @@ Status_t Config_SW_M_Init(void)
   
   if(Status == SUCCESS)
   {
+    SW_M_Event_t *SW_M_Event_p;
+    
     memset((void *)FLASH_Write_Buffer, 0, FLASH_WRITE_BUFFER_SIZE);
+    
+    SW_M_Event_p = (SW_M_Event_t *)FLASH_Write_Buffer;
+    
+    for(uint32 i = 0; i < (NoOfSW * NoOfEventsPerSW); i++)
+    {
+      (SW_M_Event_p + i) -> Time_Start.State = SW_TIME_ALARM_OFF;
+      (SW_M_Event_p + i) -> Time_Stop.State = SW_TIME_ALARM_OFF;
+      
+      (SW_M_Event_p + i) -> Time_Start.AlarmID = SW_TIME_NO_ALARM_ID;
+      (SW_M_Event_p + i) -> Time_Stop.AlarmID = SW_TIME_NO_ALARM_ID;
+      
+      (SW_M_Event_p + i) -> Temp_1.State = SW_TEMP_ALARM_OFF;
+      (SW_M_Event_p + i) -> Temp_2.State = SW_TEMP_ALARM_OFF;
+      
+      (SW_M_Event_p + i) -> Temp_1.AlarmID = SW_TEMP_NO_ALARM_ID;
+      (SW_M_Event_p + i) -> Temp_2.AlarmID = SW_TEMP_NO_ALARM_ID;
+    }
+    
     FLASH_Copy_RAM_To_FLASH((uint32)Get_SW_M_Config_Section_Begin(), (uint32)FLASH_Write_Buffer, FLASH_WRITE_BUFFER_SIZE);
   }
   
