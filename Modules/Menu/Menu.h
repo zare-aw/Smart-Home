@@ -54,19 +54,19 @@
 
 typedef struct Menu_State_s
 {
-  uint8 *Path;            // Menu Path
-  uint16 MaxLevel;        // Maximum level
-  uint16 Flags;           // Menu state Flags
-  uint32 PossibleKeys;    // Possible keys for this state
+  const uint8 *Path;      // Menu Path
+  const uint16 MaxLevel;        // Maximum level
+  const uint16 Flags;           // Menu state Flags
+  const uint32 PossibleKeys;    // Possible keys for this state
   Status_t (*Callback)(struct Menu_State_s *Menu_State_p, const uint32 Key, void *);  // Implementation function
-  char *String;     // State string
+  const char *String;     // State string
 } Menu_State_t;
 
 // Macros
 #pragma section=".menu"
 
 #define MENU_STATE_CREATE(Name, Path, MaxLevel, Flags, Keys, Callback, String) \
-  __root __packed Menu_State_t Menu_##Name @ ".menu" = {Path, MaxLevel, Flags, Keys, Callback, String}
+  __root __packed const Menu_State_t Menu_##Name @ ".menu" = {Path, MaxLevel, Flags, Keys, Callback, String}
 
 // Functions
 Status_t Menu_Init(void);
