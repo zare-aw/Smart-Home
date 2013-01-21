@@ -34,19 +34,19 @@ typedef struct Cmd_Init_Parameters_s
 
 typedef struct Cmd_Tbl_s
 {
-  char *Name;         // Command name
-  uint8 MaxArgs;      // Maximum number of arguments
+  const char *Name;         // Command name
+  const uint8 MaxArgs;      // Maximum number of arguments
   Status_t (*Cmd)(struct Cmd_Tbl_s *, uint32, uint32, char *[]);  // Implementation function
-  char *Usage;        // Usage message
+  const char *Usage;        // Usage message
 #ifdef CFG_HELP
-  char *Help;         // Help message
+  const char *Help;         // Help message
 #endif
 } Cmd_Tbl_t;
 
 #pragma section=".cmd"
 
 #define CMD_CREATE(Name, MaxArgs, Cmd, Usage, Help) \
-__root __packed Cmd_Tbl_t Cmd_##Name @ ".cmd" = {#Name, MaxArgs, Cmd, Usage, Help}
+__root __packed const Cmd_Tbl_t Cmd_##Name @ ".cmd" = {#Name, MaxArgs, Cmd, Usage, Help}
 
 // Functions
 inline Cmd_Tbl_t *Get_Cmd_Section_Begin(void);
