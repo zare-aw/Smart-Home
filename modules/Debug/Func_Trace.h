@@ -59,7 +59,7 @@ typedef struct Func_Tbl_s
 #pragma section=".func"
 
 #define FUNC_REGISTER(Func, Name) \
-__root __packed Func_Tbl_t Func_##Name @ ".func" = {Func, #Name}
+__root __packed const Func_Tbl_t Func_##Name @ ".func" = {Func, #Name}
 
 /*******************************************************************************
 * Functions
