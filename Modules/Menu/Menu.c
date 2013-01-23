@@ -289,7 +289,8 @@ Status_t Menu(uint32 Event)
   MENU_DEBUG_L1(printc("(%s) After work! Level = %d, State = %d\n",
                        __func__, Level, Menu_Current_Path[Level]));
   
-  if(LocationChange == 1)
+  if((LocationChange == 1) ||
+     ((Menu_State_p -> Flags & MENU_FORCE_DISPLAY_UPDATE) == MENU_FORCE_DISPLAY_UPDATE))
     VERIFY(Display_Menu_Update(), -MENU_DISPLAY_ERROR);
   
   EXIT_SUCCESS_FUNC(MENU);

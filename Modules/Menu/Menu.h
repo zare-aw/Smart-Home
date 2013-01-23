@@ -49,8 +49,9 @@
 #define DEFAULT_KEY_MASK      0x000001E6
 
 /**** Flags ****/
-#define MENU_LAST_STATE           0x01
-#define MENU_NO_DISPLAY_UPDATE    0x02
+#define MENU_LAST_STATE             0x01
+#define MENU_NO_DISPLAY_UPDATE      0x02
+#define MENU_FORCE_DISPLAY_UPDATE   0x04
 
 typedef struct Menu_State_s
 {
