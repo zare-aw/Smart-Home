@@ -84,3 +84,9 @@
 // cmd_ir_debug.c
 #define IR_DEBUG_OFFSET                                                   0x1100
 #define DO_IR_DEBUG                   COMMANDS_OFFSET | IR_DEBUG_OFFSET | 0x0005
+
+// cmd_sw_management.c
+#define SW_MANAGEMENT                                             0x1200
+#define DO_SW_MANAGEMENT        COMMANDS_OFFSET | SW_MANAGEMENT | 0x0001
+#define SW_M_STATUS             COMMANDS_OFFSET | SW_MANAGEMENT | 0x0002
+#define DO_TRY_READ_SENSOR_CMD  COMMANDS_OFFSET | SW_MANAGEMENT | 0x0003
