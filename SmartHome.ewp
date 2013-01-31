@@ -290,6 +290,8 @@
           <state>$PROJ_DIR$\Modules\Menu\</state>
           <state>$PROJ_DIR$\Modules\Menu\Menu_Impl\</state>
           <state>$PROJ_DIR$\Modules\Menu\Menu_Impl\Switches\</state>
+          <state>$PROJ_DIR$\Modules\Menu\Menu_Impl\Switches\Menu_Switches_Dependency\</state>
+          <state>$PROJ_DIR$\Modules\Menu\Menu_Impl\Switches\Menu_Switches_Dependency\Menu_SW_Time_Dep\</state>
           <state>$PROJ_DIR$\Modules\Temperature\</state>
           <state>$PROJ_DIR$\Modules\Configs\</state>
           <state>$PROJ_DIR$\Modules\Switches_Management\</state>
@@ -1915,6 +1917,21 @@
           <name>Switches</name>
           <group>
             <name>Menu_Switches_Dependency</name>
+            <group>
+              <name>Menu_SW_Temp_Dep</name>
+            </group>
+            <group>
+              <name>Menu_SW_Time_Dep</name>
+              <file>
+                <name>$PROJ_DIR$\Modules\Menu\Menu_Impl\Switches\Menu_Switches_Dependency\Menu_SW_Time_Dep\Menu_SW_Time_Dep.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$\Modules\Menu\Menu_Impl\Switches\Menu_Switches_Dependency\Menu_SW_Time_Dep\Menu_SW_Time_Dep.h</name>
+              </file>
+            </group>
+            <group>
+              <name>Menu_SW_Time_Temp_Dep</name>
+            </group>
             <file>
               <name>$PROJ_DIR$\Modules\Menu\Menu_Impl\Switches\Menu_Switches_Dependency\Menu_Switches_Dependency.c</name>
             </file>

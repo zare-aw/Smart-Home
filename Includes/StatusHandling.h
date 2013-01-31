@@ -78,6 +78,7 @@ void Fatal_Abort(Status_t Status);
 #define REGISTER_ERROR                      0x0017
 
 #define NOT_REGISTERED_ERROR                0x0020
+#define NOT_INITIALIZED_ERROR               0x0021
 
 #define BUS_ERROR                           0x0030
 #define PCLKSEL_ERROR                       0x0031
