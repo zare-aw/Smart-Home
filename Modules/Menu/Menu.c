@@ -77,7 +77,7 @@ static Status_t Find_Menu_State(const uint8 Level, const uint8 State, Menu_State
     MENU_DEBUG_L3(printc("(%s) Try! State = %d, String = \"%s\"\n",
                          __func__, Menu_State -> Path[Level - 1], Menu_State -> String));
     
-    if(Level > Menu_State -> MaxLevel)
+    if(Level != Menu_State -> MaxLevel)
       continue;
     
     if(Menu_State -> Path[Level - 1] == State)
