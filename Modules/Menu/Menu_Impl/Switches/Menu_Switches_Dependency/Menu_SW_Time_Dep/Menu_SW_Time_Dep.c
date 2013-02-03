@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <string.h>
 
 #include "Global_Defines.h"
@@ -15,6 +16,7 @@ uint8 SetTimeFlag = 0;
 char Time_1_Name[SWITCHES_SET_STRING_LENGTH] = {0};
 char Time_2_Name[SWITCHES_SET_STRING_LENGTH] = {0};
 char Time_State_Name[SWITCHES_SET_STRING_LENGTH] = {0};
+char Set_Time_Name[SWITCHES_SET_STRING_LENGTH] = {0};
 
 
 /**** Functions ****/
@@ -100,6 +102,35 @@ FUNC_REGISTER(MENU_TIME_DEP_SET_TIME_STATE_NAME, Menu_Time_Dep_Set_Time_State_Na
 /*******************************************************************************
  *
  ******************************************************************************/
+static Status_t Menu_Time_Dep_Setting_Time_Name(void)
+{
+  FuncIN(MENU_TIME_DEP_SETTING_TIME_NAME);
+  
+  switch(SetTimeFlag)
+  {
+    case 1:
+      snprintf(Set_Time_Name, 16, "Time (%02u:%02u:%02u)",
+               SW_M_Event_g.Time_Start.Hour,
+               SW_M_Event_g.Time_Start.Minute,
+               SW_M_Event_g.Time_Start.Second);
+      break;
+    case 2:
+      snprintf(Set_Time_Name, 16, "Time (%02u:%02u:%02u)",
+               SW_M_Event_g.Time_Stop.Hour,
+               SW_M_Event_g.Time_Stop.Minute,
+               SW_M_Event_g.Time_Stop.Second);
+      break;
+    default:
+      Fatal_Abort(-UNKNOWN_ERROR);
+  }
+  
+  EXIT_SUCCESS_FUNC(MENU_TIME_DEP_SETTING_TIME_NAME);
+}
+FUNC_REGISTER(MENU_TIME_DEP_SETTING_TIME_NAME, Menu_Time_Dep_Setting_Time_Name);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
 static Status_t Menu_Time_Dep_Set_Time_1(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
 {
   FuncIN(MENU_TIME_DEP_SET_TIME_1);
@@ -109,6 +140,7 @@ static Status_t Menu_Time_Dep_Set_Time_1(struct Menu_State_s *Menu_State_p, cons
     case ENTER_KEY_EVENT:
       SetTimeFlag = 1;
       Menu_Time_Dep_Set_Time_State_Name();
+      Menu_Time_Dep_Setting_Time_Name();
       break;
     case CANCEL_KEY_EVENT:
       SetTimeFlag = 0;
@@ -133,6 +165,7 @@ static Status_t Menu_Time_Dep_Set_Time_2(struct Menu_State_s *Menu_State_p, cons
     case ENTER_KEY_EVENT:
       SetTimeFlag = 2;
       Menu_Time_Dep_Set_Time_State_Name();
+      Menu_Time_Dep_Setting_Time_Name();
       break;
     case CANCEL_KEY_EVENT:
       SetTimeFlag = 0;
@@ -166,6 +199,27 @@ static Status_t Menu_Time_Dep_Date(struct Menu_State_s *Menu_State_p, const uint
   EXIT_SUCCESS_FUNC(MENU_TIME_DEP_DATE);
 }
 FUNC_REGISTER(MENU_TIME_DEP_DATE, Menu_Time_Dep_Date);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
+static Status_t Menu_Time_Dep_Set_Time(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
+{
+  FuncIN(MENU_TIME_DEP_SET_TIME);
+  
+  switch(Key)
+  {
+    case ENTER_KEY_EVENT:
+      break;
+    case CANCEL_KEY_EVENT:
+      break;
+    default:
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
+  } // switch(Key)
+  
+  EXIT_SUCCESS_FUNC(MENU_TIME_DEP_SET_TIME);
+}
+FUNC_REGISTER(MENU_TIME_DEP_SET_TIME, Menu_Time_Dep_Set_Time);
 
 /*******************************************************************************
  *
@@ -310,6 +364,11 @@ FUNC_REGISTER(MENU_TIME_DEP_TIME_STATE, Menu_Time_Dep_Time_State);
  * Menu States
  ******************************************************************************/
 
+/*******************************************************************************
+ * Level 7
+ ******************************************************************************/
+
+
 /**** Switch 1, Event 1, Time 1 Dep *******************************************/
 const uint8 Switch_1_Event_1_Time1Path[] = {2, 3, 0, 0, 1, 0, 0};
 MENU_STATE_CREATE(
@@ -370,6 +429,12 @@ MENU_STATE_CREATE(
   "Date"
 );
 
+
+/*******************************************************************************
+ * Level 8
+ ******************************************************************************/
+
+
 /**** Switch 1, Event 1, Time 1, State Dep ************************************/
 const uint8 Switch_1_Event_1_Time_1_StatePath[] = {2, 3, 0, 0, 1, 0, 0, 0};
 MENU_STATE_CREATE(
@@ -389,6 +454,72 @@ MENU_STATE_CREATE(
   // String
   Time_State_Name
 );
+
+/**** Switch 1, Event 1, Time 1, Set Time Dep *********************************/
+const uint8 Switch_1_Event_1_Time_1_Set_Time_Path[] = {2, 3, 0, 0, 1, 0, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_1_Time_1_Set_Time,
+  // Path
+  Switch_1_Event_1_Time_1_Set_Time_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Time_Dep_Set_Time,
+  // String
+  Set_Time_Name
+);
+
+/**** Switch 1, Event 1, Time 2, State Dep ************************************/
+const uint8 Switch_1_Event_1_Time_2_StatePath[] = {2, 3, 0, 0, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_1_Time_2_State,
+  // Path
+  Switch_1_Event_1_Time_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Time_Dep_Time_State,
+  // String
+  Time_State_Name
+);
+
+/**** Switch 1, Event 1, Time 2, Set Time Dep *********************************/
+const uint8 Switch_1_Event_1_Time_2_Set_Time_Path[] = {2, 3, 0, 0, 1, 0, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_1_Time_2_Set_Time,
+  // Path
+  Switch_1_Event_1_Time_2_Set_Time_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Time_Dep_Set_Time,
+  // String
+  Set_Time_Name
+);
+
+
+/*******************************************************************************
+ * Level 9
+ ******************************************************************************/
+
 
 /**** Switch 1, Event 1, Time 1, State Dep ************************************/
 const uint8 Switch_1_Event_1_Time_1_Set_StatePath[] = {2, 3, 0, 0, 1, 0, 0, 0, 0};
@@ -411,26 +542,6 @@ MENU_STATE_CREATE(
   Menu_Time_Dep_Time_State,
   // String
   ""
-);
-
-/**** Switch 1, Event 1, Time 2, State Dep ************************************/
-const uint8 Switch_1_Event_1_Time_2_StatePath[] = {2, 3, 0, 0, 1, 0, 1, 0};
-MENU_STATE_CREATE(
-  // Name
-  Switch_1_Event_1_Time_2_State,
-  // Path
-  Switch_1_Event_1_Time_2_StatePath,
-  // Max Level
-  8,
-  // Flags
-  0x00,
-  // Possible Keys
-  ENTER_KEY_EVENT | \
-  CANCEL_KEY_EVENT,
-  // Callback
-  Menu_Time_Dep_Time_State,
-  // String
-  Time_State_Name
 );
 
 /**** Switch 1, Event 1, Time 2, State Dep ************************************/
