@@ -7,7 +7,7 @@
 #define NO_OF_SWITCHES                NO_OF_OUTS
 #define SWITCHES_STRING_LENGTH        8
 
-#define SWITCHES_SET_STRING_LENGTH    X_SIZE
+#define SWITCHES_SET_STRING_LENGTH    X_SIZE - 1
 
 #define SW_1_SET_STR    0x00000001
 #define SW_2_SET_STR    0x00000002
