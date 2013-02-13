@@ -1961,6 +1961,12 @@
             <name>$PROJ_DIR$\modules\Menu\Menu_Impl\Time\Menu_Time.c</name>
           </file>
         </group>
+        <group>
+          <name>TimeAlarm</name>
+          <file>
+            <name>$PROJ_DIR$\modules\Menu\Menu_Impl\TimeAlarm\Menu_Time_Alarm.c</name>
+          </file>
+        </group>
         <file>
           <name>$PROJ_DIR$\modules\Menu\Menu_Impl\Menu_Utilities.c</name>
         </file>
