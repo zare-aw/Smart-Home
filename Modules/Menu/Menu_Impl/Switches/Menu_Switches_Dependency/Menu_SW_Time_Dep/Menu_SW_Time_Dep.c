@@ -9,7 +9,7 @@
 #include "Menu_Func.h"
 #include "Menu_Switches.h"
 #include "Menu_Switches_Dependency.h"
-
+#include "Menu_Utilities.h"
 
 /**** Global Variables ****/
 uint8 SetTimeFlag = 0;
@@ -17,7 +17,8 @@ char Time_1_Name[SWITCHES_SET_STRING_LENGTH] = {0};
 char Time_2_Name[SWITCHES_SET_STRING_LENGTH] = {0};
 char Time_State_Name[SWITCHES_SET_STRING_LENGTH] = {0};
 char Set_Time_Name[SWITCHES_SET_STRING_LENGTH] = {0};
-
+char Set_Date_Name[SWITCHES_SET_STRING_LENGTH] = {0};
+char Set_Repeat_Name[SWITCHES_SET_STRING_LENGTH] = {0};
 
 /**** Functions ****/
 
@@ -27,7 +28,7 @@ char Set_Time_Name[SWITCHES_SET_STRING_LENGTH] = {0};
 Status_t Menu_Time_Dep_Set_Time_Name(void)
 {
   FuncIN(MENU_TIME_DEP_SET_TIME_NAME);
-  
+
   switch(SW_M_Event_g.Time_Start.State)
   {
     case SW_TIME_ALARM_ON:
@@ -39,7 +40,7 @@ Status_t Menu_Time_Dep_Set_Time_Name(void)
     default:
       Fatal_Abort(-UNKNOWN_ERROR);
   }
-  
+
   switch(SW_M_Event_g.Time_Stop.State)
   {
     case SW_TIME_ALARM_ON:
@@ -51,7 +52,7 @@ Status_t Menu_Time_Dep_Set_Time_Name(void)
     default:
       Fatal_Abort(-UNKNOWN_ERROR);
   }
-  
+
   EXIT_SUCCESS_FUNC(MENU_TIME_DEP_SET_TIME_NAME);
 }
 FUNC_REGISTER(MENU_TIME_DEP_SET_TIME_NAME, Menu_Time_Dep_Set_Time_Name);
@@ -62,7 +63,7 @@ FUNC_REGISTER(MENU_TIME_DEP_SET_TIME_NAME, Menu_Time_Dep_Set_Time_Name);
 static Status_t Menu_Time_Dep_Set_Time_State_Name(void)
 {
   FuncIN(MENU_TIME_DEP_SET_TIME_STATE_NAME);
-  
+
   switch(SetTimeFlag)
   {
     case 1:
@@ -94,7 +95,7 @@ static Status_t Menu_Time_Dep_Set_Time_State_Name(void)
     default:
       Fatal_Abort(-NOT_INITIALIZED_ERROR);
   }
-  
+
   EXIT_SUCCESS_FUNC(MENU_TIME_DEP_SET_TIME_STATE_NAME);
 }
 FUNC_REGISTER(MENU_TIME_DEP_SET_TIME_STATE_NAME, Menu_Time_Dep_Set_Time_State_Name);
@@ -105,7 +106,7 @@ FUNC_REGISTER(MENU_TIME_DEP_SET_TIME_STATE_NAME, Menu_Time_Dep_Set_Time_State_Na
 static Status_t Menu_Time_Dep_Setting_Time_Name(void)
 {
   FuncIN(MENU_TIME_DEP_SETTING_TIME_NAME);
-  
+
   switch(SetTimeFlag)
   {
     case 1:
@@ -131,10 +132,35 @@ FUNC_REGISTER(MENU_TIME_DEP_SETTING_TIME_NAME, Menu_Time_Dep_Setting_Time_Name);
 /*******************************************************************************
  *
  ******************************************************************************/
+static Status_t Menu_Time_Dep_Setting_Date_Name(void)
+{
+  FuncIN(MENU_TIME_DEP_SETTING_DATE_NAME);
+
+  if(0 == SW_M_Event_g.Date.Repeat) {
+    if(0 == SW_M_Event_g.Date.Day &&
+       0 == SW_M_Event_g.Date.Month &&
+       0 == SW_M_Event_g.Date.Year) {
+      strcpy(Set_Date_Name, "  Event Date");
+    } else {
+     strcpy(Set_Date_Name, "# Event Date");
+    }
+    strcpy(Set_Repeat_Name, "  Event Repeat");
+  } else {
+    strcpy(Set_Date_Name, "  Event Date");
+    strcpy(Set_Repeat_Name, "# Event Repeat");
+  }
+
+  EXIT_SUCCESS_FUNC(MENU_TIME_DEP_SETTING_DATE_NAME);
+}
+FUNC_REGISTER(MENU_TIME_DEP_SETTING_DATE_NAME, Menu_Time_Dep_Setting_Date_Name);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
 static Status_t Menu_Time_Dep_Set_Time_1(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
 {
   FuncIN(MENU_TIME_DEP_SET_TIME_1);
-  
+
   switch(Key)
   {
     case ENTER_KEY_EVENT:
@@ -159,7 +185,7 @@ FUNC_REGISTER(MENU_TIME_DEP_SET_TIME_1, Menu_Time_Dep_Set_Time_1);
 static Status_t Menu_Time_Dep_Set_Time_2(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
 {
   FuncIN(MENU_TIME_DEP_SET_TIME_2);
-  
+
   switch(Key)
   {
     case ENTER_KEY_EVENT:
@@ -173,7 +199,7 @@ static Status_t Menu_Time_Dep_Set_Time_2(struct Menu_State_s *Menu_State_p, cons
     default:
       Fatal_Abort(-INVALID_INPUT_PARAMETER);
   } // switch(Key)
-  
+
   EXIT_SUCCESS_FUNC(MENU_TIME_DEP_SET_TIME_2);
 }
 FUNC_REGISTER(MENU_TIME_DEP_SET_TIME_2, Menu_Time_Dep_Set_Time_2);
@@ -184,18 +210,18 @@ FUNC_REGISTER(MENU_TIME_DEP_SET_TIME_2, Menu_Time_Dep_Set_Time_2);
 static Status_t Menu_Time_Dep_Date(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
 {
   FuncIN(MENU_TIME_DEP_DATE);
-  
+
   switch(Key)
   {
     case ENTER_KEY_EVENT:
+      Menu_Time_Dep_Setting_Date_Name();
       break;
     case CANCEL_KEY_EVENT:
       break;
     default:
       Fatal_Abort(-INVALID_INPUT_PARAMETER);
   } // switch(Key)
-  
-  
+
   EXIT_SUCCESS_FUNC(MENU_TIME_DEP_DATE);
 }
 FUNC_REGISTER(MENU_TIME_DEP_DATE, Menu_Time_Dep_Date);
@@ -207,16 +233,172 @@ static Status_t Menu_Time_Dep_Set_Time(struct Menu_State_s *Menu_State_p, const 
 {
   FuncIN(MENU_TIME_DEP_SET_TIME);
   
+  static uint32 EnterFlag = 0;
+  clrd();
+
+  switch(SetTimeFlag)
+  {
+    case 1:
+      printd(1, "Set Start Time");
+      break;
+    case 2:
+      printd(1, "Set Stop Time");
+      break;
+    default:
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
+  }
+
+  if(EnterFlag == 0)
+  {
+    switch(SetTimeFlag)
+    {
+      case 1:
+        Hour = SW_M_Event_g.Time_Start.Hour;
+        Minute = SW_M_Event_g.Time_Start.Minute;
+        Second = SW_M_Event_g.Time_Start.Second;
+        break;
+      case 2:
+        Hour = SW_M_Event_g.Time_Stop.Hour;
+        Minute = SW_M_Event_g.Time_Stop.Minute;
+        Second = SW_M_Event_g.Time_Stop.Second;
+        break;
+    }
+  }
+  printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
+  Menu_Time_Update_Disp_Ptr_Pos();
+
   switch(Key)
   {
     case ENTER_KEY_EVENT:
+      // First enter in this state
+      if(EnterFlag == 0)
+      {
+        EnterFlag = 1;
+        break;
+      }
+      switch(SetTimeFlag)
+      {
+        case 1:
+          SW_M_Event_g.Time_Start.Hour = Hour;
+          SW_M_Event_g.Time_Start.Minute = Minute;
+          SW_M_Event_g.Time_Start.Second = Second;
+          break;
+        case 2:
+          SW_M_Event_g.Time_Stop.Hour = Hour;
+          SW_M_Event_g.Time_Stop.Minute = Minute;
+          SW_M_Event_g.Time_Stop.Second = Second;
+          break;
+        default:
+          Fatal_Abort(-INVALID_INPUT_PARAMETER);
+      }
+      printd(4, "Time set!");
+
       break;
     case CANCEL_KEY_EVENT:
+      clrd();
+      Menu_Time_Dep_Setting_Time_Name();
+
+      Hour = 0;
+      Minute = 0;
+      Second = 0;
+
+      PointerPosition = 1;
+
+      EnterFlag = 0;
+
+      EXIT_SUCCESS_FUNC(MENU_SET_ALARM_TIME);
+    case UP_KEY_EVENT:
+      Menu_Time_Increment_Ptr_Pos_Number();
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
+      break;
+    case DOWN_KEY_EVENT:
+      Menu_Time_Decrement_Ptr_Pos_Number();
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
+      break;
+    case LEFT_KEY_EVENT:
+      if(PointerPosition > 1)
+      {
+        PointerPosition--;
+        Menu_Time_Update_Disp_Ptr_Pos();
+      }
+      break;
+    case RIGHT_KEY_EVENT:
+      if(PointerPosition < 6)
+      {
+        PointerPosition++;
+        Menu_Time_Update_Disp_Ptr_Pos();
+      }
+      break;
+    case EXIT_KEY_EVENT:
+      clrd();
+
+      Hour = 0;
+      Minute = 0;
+      Second = 0;
+
+      PointerPosition = 1;
+
+      EnterFlag = 0;
+
+      EXIT_SUCCESS_FUNC(MENU_SET_ALARM_TIME);
+    case MENU_KEY_EVENT:
+      clrd();
+
+      Hour = 0;
+      Minute = 0;
+      Second = 0;
+
+      PointerPosition = 1;
+
+      EnterFlag = 0;
+
+      EXIT_SUCCESS_FUNC(MENU_SET_ALARM_TIME);
+    case NUM1_KEY_EVENT:
+      Menu_Time_Set_Ptr_Pos_Number(1);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
+      break;
+    case NUM2_KEY_EVENT:
+      Menu_Time_Set_Ptr_Pos_Number(2);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
+      break;
+    case NUM3_KEY_EVENT:
+      Menu_Time_Set_Ptr_Pos_Number(3);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
+      break;
+    case NUM4_KEY_EVENT:
+      Menu_Time_Set_Ptr_Pos_Number(4);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
+      break;
+    case NUM5_KEY_EVENT:
+      Menu_Time_Set_Ptr_Pos_Number(5);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
+      break;
+    case NUM6_KEY_EVENT:
+      Menu_Time_Set_Ptr_Pos_Number(6);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
+      break;
+    case NUM7_KEY_EVENT:
+      Menu_Time_Set_Ptr_Pos_Number(7);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
+      break;
+    case NUM8_KEY_EVENT:
+      Menu_Time_Set_Ptr_Pos_Number(8);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
+      break;
+    case NUM9_KEY_EVENT:
+      Menu_Time_Set_Ptr_Pos_Number(9);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
+      break;
+    case NUM0_KEY_EVENT:
+      Menu_Time_Set_Ptr_Pos_Number(0);
+      printd(2, "%02u:%02u:%02u", Hour, Minute, Second);
       break;
     default:
       Fatal_Abort(-INVALID_INPUT_PARAMETER);
   } // switch(Key)
-  
+
+  syncd();
+
   EXIT_SUCCESS_FUNC(MENU_TIME_DEP_SET_TIME);
 }
 FUNC_REGISTER(MENU_TIME_DEP_SET_TIME, Menu_Time_Dep_Set_Time);
@@ -227,11 +409,11 @@ FUNC_REGISTER(MENU_TIME_DEP_SET_TIME, Menu_Time_Dep_Set_Time);
 static Status_t Menu_Time_Dep_State_Update_Display(const uint32 Ptr_Pos)
 {
   FuncIN(MENU_TIME_DEP_STATE_UPDATE_DISPLAY);
-  
+
   uint8 State;
   char PointerString_1[3] = {0};
   char PointerString_2[3] = {0};
-  
+
   switch(Ptr_Pos)
   {
     case 1:
@@ -245,9 +427,9 @@ static Status_t Menu_Time_Dep_State_Update_Display(const uint32 Ptr_Pos)
     default:
       Fatal_Abort(-INVALID_INPUT_PARAMETER);
   }
-  
+
   printd(1, "Set State : Time %u", SetTimeFlag);
-  
+
   switch(SetTimeFlag)
   {
     case 1:
@@ -259,7 +441,7 @@ static Status_t Menu_Time_Dep_State_Update_Display(const uint32 Ptr_Pos)
     default:
       Fatal_Abort(-NOT_INITIALIZED_ERROR);
   } // switch(SetTimeFlag)
-  
+
   switch(State)
   {
     case SW_TIME_ALARM_OFF:
@@ -273,7 +455,7 @@ static Status_t Menu_Time_Dep_State_Update_Display(const uint32 Ptr_Pos)
     default:
       Fatal_Abort(-UNKNOWN_ERROR);
   } // switch(State)
-  
+
   EXIT_SUCCESS_FUNC(MENU_TIME_DEP_STATE_UPDATE_DISPLAY);
 }
 FUNC_REGISTER(MENU_TIME_DEP_STATE_UPDATE_DISPLAY, Menu_Time_Dep_State_Update_Display);
@@ -284,11 +466,11 @@ FUNC_REGISTER(MENU_TIME_DEP_STATE_UPDATE_DISPLAY, Menu_Time_Dep_State_Update_Dis
 static Status_t Menu_Time_Dep_Time_State(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
 {
   FuncIN(MENU_TIME_DEP_TIME_STATE);
-  
+
   static uint32 Ptr_Pos = 0;
-  
+
   clrd();
-  
+
   switch(Key)
   {
     case ENTER_KEY_EVENT:
@@ -330,15 +512,15 @@ static Status_t Menu_Time_Dep_Time_State(struct Menu_State_s *Menu_State_p, cons
           default:
             Fatal_Abort(-NOT_INITIALIZED_ERROR);
         } // switch(SetTimeFlag)
-        
+
         Menu_Time_Dep_State_Update_Display(Ptr_Pos);
         printd(4, "State Set!");
-        
-        Menu_Time_Dep_Set_Time_State_Name();
-        Menu_Time_Dep_Set_Time_Name();
+
       }
       break;
     case CANCEL_KEY_EVENT:
+      Menu_Time_Dep_Set_Time_State_Name();
+      Menu_Time_Dep_Set_Time_Name();
       Ptr_Pos = 0;
       break;
     case UP_KEY_EVENT:
@@ -352,13 +534,258 @@ static Status_t Menu_Time_Dep_Time_State(struct Menu_State_s *Menu_State_p, cons
     default:
       Fatal_Abort(-INVALID_INPUT_PARAMETER);
   } // switch(Key)
-  
+
   syncd();
-    
+
   EXIT_SUCCESS_FUNC(MENU_TIME_DEP_TIME_STATE);
 }
 FUNC_REGISTER(MENU_TIME_DEP_TIME_STATE, Menu_Time_Dep_Time_State);
+/*******************************************************************************
+ *
+ ******************************************************************************/
+static Status_t Menu_Time_Dep_Date_Set_Date(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
+{
+  FuncIN(MENU_TIME_DEP_DATE_SET_DATE);
 
+  Status_t Status = GENERAL_ERROR;
+  RtcDate_t Date_s;
+  static uint32 EnterFlag = 0;
+
+  if(EnterFlag == 0)
+  {
+    if(SW_M_Event_g.Date.Year == 0 &&
+       SW_M_Event_g.Date.Month == 0 &&
+       SW_M_Event_g.Date.Day == 0) {
+      RTC_Get_Date(&Date_s);
+
+      Year = Date_s.Year;
+      Month = Date_s.Month;
+      Day = Date_s.Day;
+    } else {
+      Year = SW_M_Event_g.Date.Year;
+      Month = SW_M_Event_g.Date.Month;
+      Day = SW_M_Event_g.Date.Day;
+    }
+  }
+
+  clrd();
+  printd(1, "Set Date");
+  printd(2, "%02u.%02u.%04u", Day, Month, Year);
+  Menu_Date_Update_Disp_Ptr_Pos();
+
+  switch(Key)
+  {
+    case ENTER_KEY_EVENT:
+      // First enter in this state
+      if(EnterFlag == 0)
+      {
+        EnterFlag = 1;
+        break;
+      }
+      Status = Is_Valid_Day(Year, Month, Day);
+
+      if(TRUE == Status) {
+        SW_M_Event_g.Date.Year = Year;
+        SW_M_Event_g.Date.Month = Month;
+        SW_M_Event_g.Date.Day = Day;
+
+        printd(2, "%02u.%02u.%04u Date Set!", Day, Month, Year);
+      }
+      else
+        printd(2, "%02u.%02u.%04u ERROR!!!", Day, Month, Year);
+
+      break;
+    case CANCEL_KEY_EVENT:
+      clrd();
+
+      PointerPosition = 1;
+      EnterFlag = 0;
+
+      Menu_Time_Dep_Setting_Date_Name();
+
+      EXIT_SUCCESS_FUNC(MENU_TIME_DEP_DATE_SET_DATE);
+    case UP_KEY_EVENT:
+      Menu_Date_Increment_Ptr_Pos_Number();
+      printd(2, "%02u.%02u.%04u", Day, Month, Year);
+      break;
+    case DOWN_KEY_EVENT:
+      Menu_Date_Decrement_Ptr_Pos_Number();
+      printd(2, "%02u.%02u.%04u", Day, Month, Year);
+      break;
+    case LEFT_KEY_EVENT:
+      if(PointerPosition > 1)
+      {
+        PointerPosition--;
+        Menu_Date_Update_Disp_Ptr_Pos();
+      }
+      break;
+    case RIGHT_KEY_EVENT:
+      if(PointerPosition < 6)
+      {
+        PointerPosition++;
+        Menu_Date_Update_Disp_Ptr_Pos();
+      }
+      break;
+    case EXIT_KEY_EVENT:
+      clrd();
+
+      PointerPosition = 1;
+      EnterFlag = 0;
+
+      Menu_Time_Dep_Setting_Date_Name();
+
+      EXIT_SUCCESS_FUNC(MENU_TIME_DEP_DATE_SET_DATE);
+    case MENU_KEY_EVENT:
+      clrd();
+
+      PointerPosition = 1;
+      EnterFlag = 0;
+
+      Menu_Time_Dep_Setting_Date_Name();
+      EXIT_SUCCESS_FUNC(MENU_TIME_DEP_DATE_SET_DATE);
+    case NUM1_KEY_EVENT:
+      Menu_Date_Set_Ptr_Pos_Number(1);
+      printd(2, "%02u.%02u.%04u", Day, Month, Year);
+      break;
+    case NUM2_KEY_EVENT:
+      Menu_Date_Set_Ptr_Pos_Number(2);
+      printd(2, "%02u.%02u.%04u", Day, Month, Year);
+      break;
+    case NUM3_KEY_EVENT:
+      Menu_Date_Set_Ptr_Pos_Number(3);
+      printd(2, "%02u.%02u.%04u", Day, Month, Year);
+      break;
+    case NUM4_KEY_EVENT:
+      Menu_Date_Set_Ptr_Pos_Number(4);
+      printd(2, "%02u.%02u.%04u", Day, Month, Year);
+      break;
+    case NUM5_KEY_EVENT:
+      Menu_Date_Set_Ptr_Pos_Number(5);
+      printd(2, "%02u.%02u.%04u", Day, Month, Year);
+      break;
+    case NUM6_KEY_EVENT:
+      Menu_Date_Set_Ptr_Pos_Number(6);
+      printd(2, "%02u.%02u.%04u", Day, Month, Year);
+      break;
+    case NUM7_KEY_EVENT:
+      Menu_Date_Set_Ptr_Pos_Number(7);
+      printd(2, "%02u.%02u.%04u", Day, Month, Year);
+      break;
+    case NUM8_KEY_EVENT:
+      Menu_Date_Set_Ptr_Pos_Number(8);
+      printd(2, "%02u.%02u.%04u", Day, Month, Year);
+      break;
+    case NUM9_KEY_EVENT:
+      Menu_Date_Set_Ptr_Pos_Number(9);
+      printd(2, "%02u.%02u.%04u", Day, Month, Year);
+      break;
+    case NUM0_KEY_EVENT:
+      Menu_Date_Set_Ptr_Pos_Number(0);
+      printd(2, "%02u.%02u.%04u", Day, Month, Year);
+      break;
+    default:
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
+  } // switch(Key)
+
+  syncd();
+
+  EXIT_SUCCESS_FUNC(MENU_TIME_DEP_DATE_SET_DATE);
+}
+FUNC_REGISTER(MENU_TIME_DEP_DATE_SET_DATE, Menu_Time_Dep_Date_Set_Date);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
+static Status_t Menu_Time_Dep_Date_Set_Repeat(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
+{
+  FuncIN(MENU_TIME_DEP_DATE_SET_REPEAT);
+
+  static uint32 EnterFlag = 0;
+  static uint8 Offset = 0;
+
+  if(EnterFlag == 0)
+  {
+    Offset = 0;
+    PointerPosition = 1;
+    Menu_Repeat_Update_Display(Offset, PointerPosition, SW_M_Event_g.Date.Repeat);
+  }
+
+  switch(Key)
+  {
+    case ENTER_KEY_EVENT:
+      // First enter in this state
+      if(EnterFlag == 0)
+      {
+        EnterFlag = 1;
+        break;
+      }
+      SW_M_Event_g.Date.Repeat = SW_M_Event_g.Date.Repeat ^ (1 << (PointerPosition - 1));
+      Menu_Repeat_Update_Display(Offset, PointerPosition, SW_M_Event_g.Date.Repeat); 
+
+      break;
+    case CANCEL_KEY_EVENT:
+      clrd();
+
+      PointerPosition = 1;
+      EnterFlag = 0;
+
+      Menu_Time_Dep_Setting_Date_Name();
+      EXIT_SUCCESS_FUNC(MENU_TIME_DEP_DATE_SET_REPEAT);
+    case UP_KEY_EVENT:
+      if(PointerPosition > 1)
+      {
+        PointerPosition--;
+        if((PointerPosition - Offset) < 1)
+        {
+          Offset--;
+        }
+      }
+      Menu_Repeat_Update_Display(Offset, PointerPosition, SW_M_Event_g.Date.Repeat);
+      break;
+    case DOWN_KEY_EVENT:
+      if(PointerPosition < NO_OF_DAYS)
+      {
+        PointerPosition++;
+        if((PointerPosition - Offset) > 4)
+        {
+          Offset++;
+        }
+      }
+      Menu_Repeat_Update_Display(Offset, PointerPosition, SW_M_Event_g.Date.Repeat);
+      break;
+    case LEFT_KEY_EVENT:
+      SW_M_Event_g.Date.Repeat = SW_M_Event_g.Date.Repeat ^ (1 << (PointerPosition - 1));
+      Menu_Repeat_Update_Display(Offset, PointerPosition, SW_M_Event_g.Date.Repeat);
+      break;
+    case RIGHT_KEY_EVENT:
+      SW_M_Event_g.Date.Repeat = SW_M_Event_g.Date.Repeat ^ (1 << (PointerPosition - 1));
+      Menu_Repeat_Update_Display(Offset, PointerPosition, SW_M_Event_g.Date.Repeat);
+      break;
+    case EXIT_KEY_EVENT:
+      clrd();
+
+      PointerPosition = 1;
+      EnterFlag = 0;
+
+      Menu_Time_Dep_Setting_Date_Name();
+      EXIT_SUCCESS_FUNC(MENU_TIME_DEP_DATE_SET_REPEAT);
+    case MENU_KEY_EVENT:
+      clrd();
+
+      PointerPosition = 1;
+      EnterFlag = 0;
+
+      Menu_Time_Dep_Setting_Date_Name();
+      EXIT_SUCCESS_FUNC(MENU_TIME_DEP_DATE_SET_REPEAT);
+    default:
+      Fatal_Abort(-INVALID_INPUT_PARAMETER);
+  } // switch(Key)
+
+  syncd();
+
+  EXIT_SUCCESS_FUNC(MENU_TIME_DEP_DATE_SET_REPEAT);
+}
+FUNC_REGISTER(MENU_TIME_DEP_DATE_SET_REPEAT, Menu_Time_Dep_Date_Set_Repeat);
 
 /*******************************************************************************
  * Menu States
@@ -475,6 +902,7 @@ MENU_STATE_CREATE(
   Set_Time_Name
 );
 
+
 /**** Switch 1, Event 1, Time 2, State Dep ************************************/
 const uint8 Switch_1_Event_1_Time_2_StatePath[] = {2, 3, 0, 0, 1, 0, 1, 0};
 MENU_STATE_CREATE(
@@ -515,7 +943,45 @@ MENU_STATE_CREATE(
   Set_Time_Name
 );
 
+/**** Switch 1, Event 1, Date Dep *********************************************/
+const uint8 Switch_1_Event_1_Date_Set_Date_Path[] = {2, 3, 0, 0, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_1_Date_Set_Date,
+  // Path
+  Switch_1_Event_1_Date_Set_Date_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Time_Dep_Date_Set_Date,
+  // String
+  Set_Date_Name
+);
 
+/**** Switch 1, Event 1, Date Dep *********************************************/
+const uint8 Switch_1_Event_1_Date_Set_Repeat_Path[] = {2, 3, 0, 0, 1, 0, 2, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_1_Date_Set_Repeat,
+  // Path
+  Switch_1_Event_1_Date_Set_Repeat_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Time_Dep_Date_Set_Repeat,
+  // String
+  Set_Repeat_Name
+);
 /*******************************************************************************
  * Level 9
  ******************************************************************************/
@@ -563,6 +1029,149 @@ MENU_STATE_CREATE(
   DOWN_KEY_EVENT,
   // Callback
   Menu_Time_Dep_Time_State,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 1, Time 1, State Dep ************************************/
+const uint8 Setting_Switch_1_Event_1_Time_1_Set_Time_Path[] = {2, 3, 0, 0, 1, 0, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_1_Time_1_Set_Time,
+  // Path
+  Setting_Switch_1_Event_1_Time_1_Set_Time_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Time_Dep_Set_Time,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 1, Time 2, State Dep ************************************/
+const uint8 Setting_Switch_1_Event_1_Time_2_Set_Time_Path[] = {2, 3, 0, 0, 1, 0, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_1_Time_2_Set_Time,
+  // Path
+  Setting_Switch_1_Event_1_Time_2_Set_Time_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Time_Dep_Set_Time,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 1, Date Dep *********************************************/
+const uint8 Setting_Switch_1_Event_1_Date_Set_Date_Path[] = {2, 3, 0, 0, 1, 0, 2, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_1_Date_Set_Date,
+  // Path
+  Setting_Switch_1_Event_1_Date_Set_Date_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Time_Dep_Date_Set_Date,
+  // String
+  ""
+);
+
+const uint8 Setting_Switch_1_Event_1_Date_Set_Repeat_Path[] = {2, 3, 0, 0, 1, 0, 2, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_1_Date_Set_Repeat,
+  // Path
+  Setting_Switch_1_Event_1_Date_Set_Repeat_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Time_Dep_Date_Set_Repeat,
   // String
   ""
 );

@@ -10,19 +10,9 @@
 #include "Menu_Utilities.h"
 #include <string.h>
 
-#define NO_OF_DAYS 7
-#define MAX_DAY_STRING_LENGTH 10
 #define MAX_STRING_LENGTH 20
 
 TimeAlarm_t TimeAlarm = {0};
-
-char Days_Name[NO_OF_DAYS][MAX_DAY_STRING_LENGTH] = { "MONDAY",
-                                                      "TUESDAY",
-                                                      "WEDNESDAY",
-                                                      "THURSDAY",
-                                                      "FRIDAY",
-                                                      "SATURDAY",
-                                                      "SUNDAY"};
 
 char AlarmDay[MAX_STRING_LENGTH] = "  Alarm Day";
 char RepeatDays[MAX_STRING_LENGTH] = "  Repeat Days";
@@ -358,21 +348,6 @@ FUNC_REGISTER(MENU_SET_ALARM_DATE, Menu_Set_Alarm_Date);
 /*******************************************************************************
  *
  ******************************************************************************/
-static Status_t Menu_Repeat_Update_Display(uint8 Offset, const uint32 Menu_Ptr_Pos)
-{
-  FuncIN(MENU_REPEAT_UPDATE_DISPLAY);
-  int i;
-  clrd();
-  for(i = 1; i <= 4; i++)
-  {
-    printd(i , "%s %s %s", PointerPosition == (Offset + i) ? ">" : " ", TimeAlarm.Repeat & 1 << (Offset + i - 1) ? "#" : " ", Days_Name[Offset + i - 1]);  
-  }
-  EXIT_SUCCESS_FUNC(MENU_REPEAT_UPDATE_DISPLAY);
-}
-FUNC_REGISTER(MENU_REPEAT_UPDATE_DISPLAY, Menu_Repeat_Update_Display);
-/*******************************************************************************
- *
- ******************************************************************************/
 static Status_t Menu_Set_Alarm_Repeat_Days(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
 {
   FuncIN(MENU_SET_ALARM_REPEAT_DAYS);
@@ -384,7 +359,7 @@ static Status_t Menu_Set_Alarm_Repeat_Days(struct Menu_State_s *Menu_State_p, co
   {
     Offset = 0;
     PointerPosition = 1;
-    Menu_Repeat_Update_Display(Offset, PointerPosition);
+    Menu_Repeat_Update_Display(Offset, PointerPosition, TimeAlarm.Repeat);
   }
   
   printc("(%s): Enter! Key = 0x%08X\n", __func__, Key);
@@ -399,7 +374,7 @@ static Status_t Menu_Set_Alarm_Repeat_Days(struct Menu_State_s *Menu_State_p, co
         break;
       }
       TimeAlarm.Repeat = TimeAlarm.Repeat ^ (1 << (PointerPosition - 1));
-      Menu_Repeat_Update_Display(Offset, PointerPosition); 
+      Menu_Repeat_Update_Display(Offset, PointerPosition, TimeAlarm.Repeat);
       
       break;
     case CANCEL_KEY_EVENT:
@@ -424,7 +399,7 @@ static Status_t Menu_Set_Alarm_Repeat_Days(struct Menu_State_s *Menu_State_p, co
           Offset--;
         }
       }
-      Menu_Repeat_Update_Display(Offset, PointerPosition);        
+      Menu_Repeat_Update_Display(Offset, PointerPosition, TimeAlarm.Repeat);
       break;
     case DOWN_KEY_EVENT:
       if(PointerPosition < NO_OF_DAYS)
@@ -435,15 +410,15 @@ static Status_t Menu_Set_Alarm_Repeat_Days(struct Menu_State_s *Menu_State_p, co
           Offset++;
         }
       }
-      Menu_Repeat_Update_Display(Offset, PointerPosition);
+      Menu_Repeat_Update_Display(Offset, PointerPosition, TimeAlarm.Repeat);
       break;
     case LEFT_KEY_EVENT:
       TimeAlarm.Repeat = TimeAlarm.Repeat ^ (1 << (PointerPosition - 1));
-      Menu_Repeat_Update_Display(Offset, PointerPosition);
+      Menu_Repeat_Update_Display(Offset, PointerPosition, TimeAlarm.Repeat);
       break;
     case RIGHT_KEY_EVENT:
       TimeAlarm.Repeat = TimeAlarm.Repeat ^ (1 << (PointerPosition - 1));
-      Menu_Repeat_Update_Display(Offset, PointerPosition);
+      Menu_Repeat_Update_Display(Offset, PointerPosition, TimeAlarm.Repeat);
       break;
     case EXIT_KEY_EVENT:
       clrd();

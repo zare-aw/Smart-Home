@@ -14,6 +14,14 @@ uint8 Hour = 0;
 uint8 Minute = 0;
 uint8 Second = 0;
 
+char const Days_Name[NO_OF_DAYS][MAX_DAY_STRING_LENGTH] = { "MONDAY",
+                                                      "TUESDAY",
+                                                      "WEDNESDAY",
+                                                      "THURSDAY",
+                                                      "FRIDAY",
+                                                      "SATURDAY",
+                                                      "SUNDAY"};
+
 uint8 PointerPosition = 1;
 /*******************************************************************************
  *
@@ -389,3 +397,19 @@ Status_t Menu_Date_Set_Ptr_Pos_Number(uint32 Number)
   EXIT_SUCCESS_FUNC(MENU_DATE_SET_PTR_POS_NUMBER);
 }
 FUNC_REGISTER(MENU_DATE_SET_PTR_POS_NUMBER, Menu_Date_Set_Ptr_Pos_Number);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
+Status_t Menu_Repeat_Update_Display(uint8 Offset, const uint32 Menu_Ptr_Pos, uint8 Repeat)
+{
+  FuncIN(MENU_REPEAT_UPDATE_DISPLAY);
+  int i;
+  clrd();
+  for(i = 1; i <= 4; i++)
+  {
+    printd(i , "%s %s %s", Menu_Ptr_Pos == (Offset + i) ? ">" : " ", Repeat & 1 << (Offset + i - 1) ? "#" : " ", Days_Name[Offset + i - 1]);  
+  }
+  EXIT_SUCCESS_FUNC(MENU_REPEAT_UPDATE_DISPLAY);
+}
+FUNC_REGISTER(MENU_REPEAT_UPDATE_DISPLAY, Menu_Repeat_Update_Display);
