@@ -8,6 +8,7 @@
 #include "Menu_Switches.h"
 #include "SW_Management.h"
 #include "Menu_SW_Time_Dep.h"
+#include "Menu_SW_Temp_Dep.h"
 
 #pragma section=".menu"
 
@@ -687,6 +688,7 @@ static Status_t Menu_Set_Temp_Dependency(struct Menu_State_s *Menu_State_p, cons
       SW_M_Event_g.Config |= SW_EVENT_TEMP_DEP;
       
       Menu_Set_Dependency_Display_Strings();
+      Menu_Temp_Dep_Set_Temp_Name();
       break;
     case CANCEL_KEY_EVENT:
       break;

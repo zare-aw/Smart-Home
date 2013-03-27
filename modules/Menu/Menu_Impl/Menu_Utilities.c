@@ -15,12 +15,20 @@ uint8 Minute = 0;
 uint8 Second = 0;
 
 char const Days_Name[NO_OF_DAYS][MAX_DAY_STRING_LENGTH] = { "MONDAY",
-                                                      "TUESDAY",
-                                                      "WEDNESDAY",
-                                                      "THURSDAY",
-                                                      "FRIDAY",
-                                                      "SATURDAY",
-                                                      "SUNDAY"};
+                                                            "TUESDAY",
+                                                            "WEDNESDAY",
+                                                            "THURSDAY",
+                                                            "FRIDAY",
+                                                            "SATURDAY",
+                                                            "SUNDAY"};
+
+
+char const Events_Name[NO_OF_EVENTS][MAX_EVENT_STRING_LENGTH] = { "ABOVE",
+                                                                  "BELOW",
+                                                                  "EQUAL",
+                                                                  "ABOVE_OR_EQUAL",
+                                                                  "BELOW_OR_EQUAL",
+                                                                  "DIFFERENT"};
 
 uint8 PointerPosition = 1;
 /*******************************************************************************
@@ -413,3 +421,228 @@ Status_t Menu_Repeat_Update_Display(uint8 Offset, const uint32 Menu_Ptr_Pos, uin
   EXIT_SUCCESS_FUNC(MENU_REPEAT_UPDATE_DISPLAY);
 }
 FUNC_REGISTER(MENU_REPEAT_UPDATE_DISPLAY, Menu_Repeat_Update_Display);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
+Status_t Menu_Temp_Increment_Ptr_Pos_Number(sint16 *Number_)
+{
+  FuncIN(MENU_TEMP_INCREMENT_PTR_POS_NUMBER);
+  sint16 Number = *Number_;
+  
+  switch(PointerPosition)
+  {
+    case 1:
+        Number *= -1;
+      break;
+    case 2:
+      if(Number >= 0)
+      {
+        if(Number / 1000 == 9)
+          Number -= 9000;
+        else
+          Number += 1000;
+      } 
+      else 
+      {
+        if(Number / 1000 == -9)
+          Number += 9000;
+        else
+          Number -= 1000;
+      }
+      break;
+    case 3:
+      if(Number >= 0)
+      {
+        if((Number / 100) % 10 == 9)
+          Number -= 900;
+        else
+          Number += 100;
+      }
+      else
+      {
+        if((Number / 100) % 10 == 9)
+          Number += 900;
+        else
+          Number -= 100;
+      }        
+      break;
+    case 4:
+      if(Number >= 0)
+      {
+        if((Number / 10) % 10 == 9)
+          Number -= 90;
+        else
+          Number += 10;
+      }
+      else
+      {
+        if((Number / 10) % 10 == 9)
+          Number += 90;
+        else
+          Number -= 10;
+      }
+      break;
+    case 5:
+      if(Number >= 0)
+      {
+        if(Number%10 == 9)
+          Number -= 9;
+        else
+          Number++;
+      }
+      else
+      {
+        if(Number%10 == 9)
+          Number += 9;
+        else
+          Number--;
+      }
+      break;
+    default:
+      Fatal_Abort(-UNKNOWN_ERROR);
+      break;
+  }
+  
+  *Number_ = Number;
+  EXIT_SUCCESS_FUNC(MENU_TEMP_INCREMENT_PTR_POS_NUMBER);
+}
+FUNC_REGISTER(MENU_TEMP_INCREMENT_PTR_POS_NUMBER, Menu_Temp_Increment_Ptr_Pos_Number);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
+Status_t Menu_Temp_Decrement_Ptr_Pos_Number(sint16 *Number_)
+{
+  FuncIN(MENU_TEMP_DECREMENT_PTR_POS_NUMBER);
+  
+  sint16 Number = *Number_;
+  switch(PointerPosition)
+  {
+  case 1:
+    Number *= -1;
+    break;
+  case 2:
+      if(Number >= 0)
+      {
+        if(Number / 1000 == 0)
+          Number += 9000;
+        else
+          Number -= 1000;
+      }
+      else
+      {
+        if(Number / 1000 == 0)
+          Number -= 9000;
+        else
+          Number += 1000;
+      }
+      break;
+    case 3:
+      if(Number >= 0)
+      {
+        if((Number / 100) % 10 == 0)
+          Number += 900;
+        else
+          Number -= 100;
+      }
+      else
+      {
+        if((Number / 100) % 10 == 0)
+          Number -= 900;
+        else
+          Number += 100;
+      }
+        break;
+    case 4:
+      if(Number >= 0)
+      {      
+        if((Number / 10) % 10 == 0)
+          Number += 90;
+        else
+          Number -= 10;
+      }
+      else
+      {
+        if((Number / 10) % 10 == 0)
+          Number -= 90;
+        else
+          Number += 10; 
+      }
+      break;
+    case 5:
+      if(Number >= 0)
+      {      
+        if(Number%10 == 0)
+          Number += 9;
+        else
+          Number--;
+      }
+      else
+      {
+        if(Number%10 == 0)
+          Number -= 9;
+        else
+          Number++;
+      }
+      break;
+    default:
+      Fatal_Abort(-UNKNOWN_ERROR);
+      break;
+  }
+  *Number_ = Number;
+  EXIT_SUCCESS_FUNC(MENU_TEMP_DECREMENT_PTR_POS_NUMBER);
+}
+FUNC_REGISTER(MENU_TEMP_DECREMENT_PTR_POS_NUMBER, Menu_Temp_Decrement_Ptr_Pos_Number);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
+Status_t Menu_Temp_Set_Ptr_Pos_Number(sint16 *Number_, sint8 Digit)
+{
+  FuncIN(MENU_TEMP_SET_PTR_POS_NUMBER);
+
+  sint16 Number = *Number_;
+  if(Number < 0)
+    Digit *= -1;
+    
+  switch(PointerPosition)
+  {
+    case 1:
+      break;
+    case 2:
+      Number = (Number % 1000) + Digit * 1000;
+      break;
+    case 3:
+      Number += (-((Number / 100) % 10) + Digit) * 100;
+      break;
+    case 4:
+      Number += (-((Number % 100) / 10) + Digit) * 10;
+      break;
+    case 5:
+      Number += -(Number % 10) + Digit;
+      break;
+    default:
+      Fatal_Abort(-UNKNOWN_ERROR);
+      break;
+  }
+  *Number_ = Number;
+  EXIT_SUCCESS_FUNC(MENU_TEMP_SET_PTR_POS_NUMBER);
+}
+FUNC_REGISTER(MENU_TEMP_SET_PTR_POS_NUMBER, Menu_Temp_Set_Ptr_Pos_Number);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
+Status_t Menu_Temp_Update_Event(uint8 Offset, const uint32 Menu_Ptr_Pos, uint8 Event)
+{
+  FuncIN(MENU_TEMP_UPDATE_EVENT);
+  int i;
+  clrd();
+  for(i = 1; i <= 4; i++)
+  {
+    printd(i , "%s %s %s", Menu_Ptr_Pos == (Offset + i) ? ">" : " ", Event == Offset + i ? "#" : " ", Events_Name[Offset + i - 1]);  
+  }
+  EXIT_SUCCESS_FUNC(MENU_TEMP_UPDATE_EVENT);
+}
+FUNC_REGISTER(MENU_TEMP_UPDATE_EVENT, Menu_Temp_Update_Event);
