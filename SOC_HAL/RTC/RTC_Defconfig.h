@@ -39,7 +39,7 @@ static char *RTC_MonthTbl[] = {
 	"",
 	"January ",
 	"February ",
-	"Match ",
+	"March ",
 	"April ",
 	"May ",
 	"June ",
