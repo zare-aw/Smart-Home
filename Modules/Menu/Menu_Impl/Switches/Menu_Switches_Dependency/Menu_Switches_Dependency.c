@@ -9,6 +9,7 @@
 #include "SW_Management.h"
 #include "Menu_SW_Time_Dep.h"
 #include "Menu_SW_Temp_Dep.h"
+#include "Menu_SW_Time_Temp_Dep.h"
 
 #pragma section=".menu"
 
