@@ -3,6 +3,7 @@
 #include "Console.h"
 #include "Delay.h"
 #include "Debug_GPIO.h"
+#include "FLASH_Management.h"
 
 #include "TSOP1738.h"
 #include "TSOP1738_Debug.h"
@@ -59,6 +60,15 @@ Status_t IR_Received_Debug_Set_State(uint32 State)
 FUNC_REGISTER(IR_RECEIVED_DEBUG_SET_STATE, IR_Received_Debug_Set_State);
 
 /*******************************************************************************
+*
+*******************************************************************************/
+void Ext_Int_Init(void)
+{
+  IR_Ext_Interrupt_Init();
+  TSOP_PIN_INIT();
+}
+
+/*******************************************************************************
 * 
 *******************************************************************************/
 Status_t IR_Init(void)
@@ -66,8 +76,9 @@ Status_t IR_Init(void)
   FuncIN(IR_INIT);
   
   Timer_1_Init();
-  IR_Ext_Interrupt_Init();
-  TSOP_PIN_INIT();
+  Ext_Int_Init();
+  
+  FLASH_Register_Interrupt_Reinit_Callback(Ext_Int_Init, NULL);
   
   EXIT_SUCCESS_FUNC(IR_INIT);
 }
