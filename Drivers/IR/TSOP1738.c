@@ -222,6 +222,8 @@ Status_t IR_Delayed_Work(void)
     ASSERT(Callback_p != NULL, -UNKNOWN_ERROR);
     
     ASSERT(!Callback_p(NULL), -IR_CALLBACK_ERROR);
+    
+    TSOP_DEBUG_L1(printc("\r # %s: Callback (0x%08X) Called!\n", __func__, Callback_p));
   }
   
   EXIT_SUCCESS_FUNC(IR_DELAYED_WORK);
@@ -236,6 +238,8 @@ __arm Status_t IR_Timer_ISR(void)
   uint8 Input = 0;
   Input = TSOP_PIN_READ();    // Ova mora da se zavrsi najbrzo sto moze
   
+  TSOP_DEBUG_L2(printc("\r # %s: IrInputState = %d\n", __func__, IrInputState));
+  
   if(IR_Input_Debug_Flag == ENABLE)
   {
     DBG_PIN_1_SET();
@@ -244,7 +248,7 @@ __arm Status_t IR_Timer_ISR(void)
   }
   
   FuncIN(IR_TIMER_ISR);
-    
+  
   switch (IrInputState)
   {
     case 0:
@@ -388,6 +392,8 @@ __arm static Status_t IR_Ext_Interrupt_ISR(void)
   FuncIN(IR_EXT_INTERRUPT_ISR);
   
   Timer_1_Start( (IR_BURST_T * 4) + ((IR_BURST_T / 8) * 3) );
+  
+  TSOP_DEBUG_L2(printc("\r # %s: Enter!\n", __func__));
   
   IrInputState = 0;
   
