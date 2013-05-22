@@ -23,20 +23,20 @@
 Status_t Do_Try_Read_Time_Response_Cmd(char *argv, TimeAlarm_t *TimeAlarm_p)
 {
   FuncIN(DO_TRY_READ_TIME_RESPONSE_CMD);
-  
+
   ASSERT(argv != NULL, -INVALID_INPUT_POINTER);
   ASSERT(TimeAlarm_p != NULL, -INVALID_INPUT_POINTER);
-  
+
   char *CommandString = NULL;
   int i;
-  
+
   CommandString = strstr(argv, "response=");
   if(CommandString != NULL)
   {
     TimeAlarm_p -> Callback = NULL;
-    
+
     CMD_TIMEA_DEBUG(printcmd("\r # (%s) 'response' found!\n", __func__));
-    
+
     for(i = 0; AlarmResponse[i].String != NULL; i++)
     {
       if(!strcmp(AlarmResponse[i].String, CommandString + 9))
@@ -46,14 +46,14 @@ Status_t Do_Try_Read_Time_Response_Cmd(char *argv, TimeAlarm_t *TimeAlarm_p)
                               __func__, AlarmResponse[i].String));
       }
     }
-    
+
     if(TimeAlarm_p -> Callback == NULL)
     {
       printcmd(" # Invalid 'response' parameter!\n");
       EXIT_FUNC(CMD_INVALID_ARGUMENT, DO_TRY_READ_TIME_RESPONSE_CMD);
     }
   } // if(CommandString != NULL)
-  
+
   EXIT_SUCCESS_FUNC(DO_TRY_READ_TIME_RESPONSE_CMD);
 }
 FUNC_REGISTER(DO_TRY_READ_TIME_RESPONSE_CMD, Do_Try_Read_Time_Response_Cmd);
@@ -63,9 +63,9 @@ FUNC_REGISTER(DO_TRY_READ_TIME_RESPONSE_CMD, Do_Try_Read_Time_Response_Cmd);
 Status_t Do_Set_Time_Alarm_Cmd(TimeAlarm_t *TimeAlarm_p)
 {
   FuncIN(DO_SET_TIME_ALARM_CMD);
-  
+
   ASSERT(TimeAlarm_p != NULL, -INVALID_INPUT_POINTER);
-  
+
   CMD_TIMEA_DEBUG(printcmd("\r # (%s) input parameters\n",__func__));
   CMD_TIMEA_DEBUG(printcmd("\r # date = %02u.%02u.%02u\n",  TimeAlarm_p -> DateTime.Day,
                                                             TimeAlarm_p -> DateTime.Month,
@@ -76,7 +76,7 @@ Status_t Do_Set_Time_Alarm_Cmd(TimeAlarm_t *TimeAlarm_p)
   CMD_TIMEA_DEBUG(printcmd("\r # AlarmID = %u\n", TimeAlarm_p -> AlarmID));
   CMD_TIMEA_DEBUG(printcmd("\r # State = %u\n", TimeAlarm_p -> State));
   CMD_TIMEA_DEBUG(printcmd("\r # Callback = 0x%X\n", TimeAlarm_p -> Callback));
-  
+
   if(TimeAlarm_p -> AlarmID != NO_TIME_ALARM_ID)
   {
     VERIFY(Set_Time_Alarm(TimeAlarm_p), -TIME_SET_ALARM_ERROR);
@@ -191,18 +191,18 @@ Status_t Do_Time_Alarm(Cmd_Tbl_t *Cmd_Tbl, uint32 flag, uint32 argc, char *argv[
         default:
           break;
       } // switch(Status)
-       
+
     } // for(i = 0; i < argc; i++)
     if(Remove == FALSE)
       Do_Set_Time_Alarm_Cmd(&TimeAlarm_s);
     else
       Remove_Time_Alarm(TimeAlarm_s.AlarmID);
-    
+
   } else
   {
     Time_Alarm_Status(NULL);
   }
-  
+
   EXIT_SUCCESS_FUNC(DO_TIME_ALARM);
 }
 FUNC_REGISTER(DO_TIME_ALARM, Do_Time_Alarm);
@@ -216,7 +216,7 @@ CMD_CREATE(
   "alarmID  E = Alarm ID\n"
   "response F = out_1_ON, out_1_OFF, ... , out_6_ON, out_6_OFF, sound_alarm, dummy\n"
   "state    D = ON, OFF (enable or disable the alarm)\n"
-  "repeat   F = Days in week when to perform the response ex. 100 == WEDNESDAY\n"
+  "repeat   F = Days in week when to perform the response ex. 0010000 == WEDNESDAY\n"
   "-rm      remove alarm with alarmID=C\n"
   "If you set 'alarmID' all other parameters is updated on that alarm. Other parameters is no necessary to set\n"
   "If you not set 'alarmID' you must set: date, time, response, state.\n"

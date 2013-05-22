@@ -168,7 +168,7 @@ Status_t Menu_Time_Dep_Setting_Time_Name(void)
     default:
       Fatal_Abort(-UNKNOWN_ERROR);
   }
-  
+
   EXIT_SUCCESS_FUNC(MENU_TIME_DEP_SETTING_TIME_NAME);
 }
 FUNC_REGISTER(MENU_TIME_DEP_SETTING_TIME_NAME, Menu_Time_Dep_Setting_Time_Name);
@@ -219,7 +219,7 @@ Status_t Menu_Time_Dep_Set_Time_1(struct Menu_State_s *Menu_State_p, const uint3
     default:
       Fatal_Abort(-INVALID_INPUT_PARAMETER);
   } // switch(Key)
-  
+
   EXIT_SUCCESS_FUNC(MENU_TIME_DEP_SET_TIME_1);
 }
 FUNC_REGISTER(MENU_TIME_DEP_SET_TIME_1, Menu_Time_Dep_Set_Time_1);
@@ -278,7 +278,7 @@ FUNC_REGISTER(MENU_TIME_DEP_DATE, Menu_Time_Dep_Date);
 Status_t Menu_Time_Dep_Set_Time(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
 {
   FuncIN(MENU_TIME_DEP_SET_TIME);
-  
+
   static uint32 EnterFlag = 0;
   clrd();
 
@@ -910,8 +910,8 @@ Status_t Menu_Time_Dep_Date_Set_Repeat(struct Menu_State_s *Menu_State_p, const 
         EnterFlag = 1;
         break;
       }
-      SW_M_Event_g.Date.Repeat = SW_M_Event_g.Date.Repeat ^ (1 << (PointerPosition - 1));
-      Menu_Repeat_Update_Display(Offset, PointerPosition, SW_M_Event_g.Date.Repeat); 
+      SW_M_Event_g.Date.Repeat = SW_M_Event_g.Date.Repeat ^ (1 << (7 - PointerPosition));
+      Menu_Repeat_Update_Display(Offset, PointerPosition, SW_M_Event_g.Date.Repeat);
 
       break;
     case CANCEL_KEY_EVENT:
@@ -945,11 +945,11 @@ Status_t Menu_Time_Dep_Date_Set_Repeat(struct Menu_State_s *Menu_State_p, const 
       Menu_Repeat_Update_Display(Offset, PointerPosition, SW_M_Event_g.Date.Repeat);
       break;
     case LEFT_KEY_EVENT:
-      SW_M_Event_g.Date.Repeat = SW_M_Event_g.Date.Repeat ^ (1 << (PointerPosition - 1));
+      SW_M_Event_g.Date.Repeat = SW_M_Event_g.Date.Repeat ^ (1 << (7 - PointerPosition));
       Menu_Repeat_Update_Display(Offset, PointerPosition, SW_M_Event_g.Date.Repeat);
       break;
     case RIGHT_KEY_EVENT:
-      SW_M_Event_g.Date.Repeat = SW_M_Event_g.Date.Repeat ^ (1 << (PointerPosition - 1));
+      SW_M_Event_g.Date.Repeat = SW_M_Event_g.Date.Repeat ^ (1 << (7 - PointerPosition));
       Menu_Repeat_Update_Display(Offset, PointerPosition, SW_M_Event_g.Date.Repeat);
       break;
     case EXIT_KEY_EVENT:

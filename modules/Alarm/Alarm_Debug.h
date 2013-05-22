@@ -1,8 +1,8 @@
 #ifndef _Alarm_Debug_h
 #define _Alarm_Debug_h
 
-#define _ALARM_INFO 1
-#define _ALARM_DEBUG 0
+#define _ALARM_INFO
+#define _ALARM_DEBUG
 
 
 #ifdef _ALARM_INFO

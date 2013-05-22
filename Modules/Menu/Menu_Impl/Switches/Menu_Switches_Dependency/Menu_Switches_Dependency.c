@@ -170,13 +170,13 @@ static Status_t Menu_Set_Dependency_Display_Strings(void)
 {
   FuncIN(MENU_SET_DEPENDENCY_DISPLAY_STRINGS);
   
-  if((SW_M_Event_g.Config & SW_EVENT_TIME_TEMP_DEP) == SW_EVENT_TIME_DEP)
+  if((SW_M_Event_g.Config & SW_EVENT_TIME_DEP) == SW_EVENT_TIME_DEP)
   {
     strcpy(SW_Event_TimeDependencyName, "# Time Dep");
     strcpy(SW_Event_TempDependencyName, "  Temp Dep");
     strcpy(SW_Event_TimeTempDependencyName, "  Time & Temp Dep");
   }
-  else if((SW_M_Event_g.Config & SW_EVENT_TIME_TEMP_DEP) == SW_EVENT_TEMP_DEP)
+  else if((SW_M_Event_g.Config & SW_EVENT_TEMP_DEP) == SW_EVENT_TEMP_DEP)
   {
     strcpy(SW_Event_TimeDependencyName, "  Time Dep");
     strcpy(SW_Event_TempDependencyName, "# Temp Dep");
@@ -660,6 +660,7 @@ static Status_t Menu_Set_Time_Dependency(struct Menu_State_s *Menu_State_p, cons
   {
     case ENTER_KEY_EVENT:
       SW_M_Event_g.Config &= ~SW_EVENT_TEMP_DEP;
+      SW_M_Event_g.Config &= ~SW_EVENT_TIME_TEMP_DEP;
       SW_M_Event_g.Config |= SW_EVENT_TIME_DEP;
       
       Menu_Set_Dependency_Display_Strings();
@@ -686,6 +687,7 @@ static Status_t Menu_Set_Temp_Dependency(struct Menu_State_s *Menu_State_p, cons
   {
     case ENTER_KEY_EVENT:
       SW_M_Event_g.Config &= ~SW_EVENT_TIME_DEP;
+      SW_M_Event_g.Config &= ~SW_EVENT_TIME_TEMP_DEP;
       SW_M_Event_g.Config |= SW_EVENT_TEMP_DEP;
       
       Menu_Set_Dependency_Display_Strings();
@@ -711,6 +713,8 @@ static Status_t Menu_Set_Time_Temp_Dependency(struct Menu_State_s *Menu_State_p,
   switch(Key)
   {
     case ENTER_KEY_EVENT:
+      SW_M_Event_g.Config &= ~SW_EVENT_TIME_DEP;
+      SW_M_Event_g.Config &= ~SW_EVENT_TEMP_DEP;
       SW_M_Event_g.Config |= SW_EVENT_TIME_TEMP_DEP;
       
       Menu_Set_Dependency_Display_Strings();

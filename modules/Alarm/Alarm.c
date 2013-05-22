@@ -78,7 +78,7 @@ static int Compare_AlarmWork(const void *A, const void *B)
   return 0;
 }
 /*******************************************************************************
-* 
+*
 *******************************************************************************/
 static int Update_Repetitive_Alarms()
 {
@@ -113,13 +113,13 @@ static int Update_Repetitive_Alarms()
 Next_Day:
           Repeat = (Repeat << 7) | (Repeat >> 1); //rotate to right
           if(Repeat == 1)
-          Repeat = 0x80; 
+          Repeat = 0x80;
           Repeat_Time.Day++;
           if(FALSE == Is_Valid_Day(Repeat_Time.Year,Repeat_Time.Month,Repeat_Time.Day)){
             //if day is from next month, increment the month and set the day as first day into that month
             Repeat_Time.Month++;
             Repeat_Time.Day = 1;
-          
+
              if(FALSE == Is_Valid_Day(Repeat_Time.Year,Repeat_Time.Month,Repeat_Time.Day)){
               //if day is from next year, increment the year and set the month to January
               Repeat_Time.Year++;
@@ -169,7 +169,7 @@ static Status_t Get_Alarm_ID(uint8 *AlarmID_p)
 }
 FUNC_REGISTER(GET_ALARM_ID, Get_Alarm_ID);
 /*******************************************************************************
-* 
+*
 *******************************************************************************/
 Status_t Register_Time_Alarm(TimeAlarm_t *TimeAlarm_p)
 {
@@ -224,7 +224,7 @@ Status_t Register_Time_Alarm(TimeAlarm_t *TimeAlarm_p)
 FUNC_REGISTER(REGISTER_TIME_ALARM, Register_Time_Alarm);
 
 /*******************************************************************************
-* 
+*
 *******************************************************************************/
 Status_t Execute_Time_Alarm()
 {
@@ -232,6 +232,7 @@ Status_t Execute_Time_Alarm()
   Status_t Status;
 
   ASSERT(AlarmWork[0].Callback != NULL, -NOT_REGISTERED_ERROR);
+  printc("\r #(%s):(%d)***  Execute Callback = 0x%X\n", __func__,__LINE__, AlarmWork[0].Callback);
   ((void(*)(void *))(AlarmWork[0].Callback))(NULL);
 
   if(AlarmWork[0].Repeat == 0) {
@@ -241,6 +242,19 @@ Status_t Execute_Time_Alarm()
 
   Update_Repetitive_Alarms();
   qsort(AlarmWork, ALARM_WORK_BUFFER_SIZE, sizeof(TimeAlarm_t), Compare_AlarmWork);
+
+  ALARM_DEBUG(printc("\r # (%s) input parameters for RTC_Enable_Alarm\n",__func__));
+  ALARM_DEBUG(printc("\r # date = %02u.%02u.%02u\n",  AlarmWork[0].DateTime.Day,
+                                                      AlarmWork[0].DateTime.Month,
+                                                      AlarmWork[0].DateTime.Year));
+  ALARM_DEBUG(printc("\r # time = %02u:%02u:%02u\n",  AlarmWork[0].DateTime.Hour,
+                                                      AlarmWork[0].DateTime.Minute,
+                                                      AlarmWork[0].DateTime.Second));
+  ALARM_DEBUG(printc("\r # AlarmID = %d\n",           AlarmWork[0].AlarmID));
+  ALARM_DEBUG(printc("\r # State = %d\n",             AlarmWork[0].State));
+  ALARM_DEBUG(printc("\r # Repeat = 0x%X\n",          AlarmWork[0].Repeat));
+  ALARM_DEBUG(printc("\r # Callback = 0x%X\n",        AlarmWork[0].Callback));
+
   Status = RTC_Enable_Alarm(0xFF, &AlarmWork[0].DateTime, (void *)Execute_Time_Alarm);
 
   VERIFY(Status, Status);
@@ -250,7 +264,7 @@ Status_t Execute_Time_Alarm()
 FUNC_REGISTER(EXECUTE_TIME_ALARM, Execute_Time_Alarm);
 
 /*******************************************************************************
-* 
+*
 *******************************************************************************/
 Status_t Unregister_Time_Alarm(uint8 AlarmID)
 {
@@ -271,9 +285,9 @@ Status_t Unregister_Time_Alarm(uint8 AlarmID)
   EXIT_SUCCESS_FUNC(UNREGISTER_TIME_ALARM);
 }
 FUNC_REGISTER(UNREGISTER_TIME_ALARM, Unregister_Time_Alarm);
-      
+
 /*******************************************************************************
-* 
+*
 *******************************************************************************/
 Status_t Remove_Time_Alarm(uint8 AlarmID)
 {
@@ -304,9 +318,9 @@ Status_t Remove_Time_Alarm(uint8 AlarmID)
   }
   EXIT_SUCCESS_FUNC(REMOVE_TIME_ALARM);
 }
-FUNC_REGISTER(REMOVE_TIME_ALARM, Remove_Time_Alarm);  
+FUNC_REGISTER(REMOVE_TIME_ALARM, Remove_Time_Alarm);
 /*******************************************************************************
-* 
+*
 *******************************************************************************/
 Status_t Time_Alarm_Status(void *Ptr)
 {
@@ -345,7 +359,7 @@ Status_t Time_Alarm_Status(void *Ptr)
 FUNC_REGISTER(TIME_ALARM_STATUS, Time_Alarm_Status);
 
 /*******************************************************************************
-* 
+*
 *******************************************************************************/
 Status_t Set_Time_Alarm(TimeAlarm_t *TimeAlarm_p)
 {
@@ -363,7 +377,7 @@ Status_t Set_Time_Alarm(TimeAlarm_t *TimeAlarm_p)
   {
     ALARM_DEBUG(printc("\r # Time Alarm set with parameters:\n"));
     ALARM_DEBUG(printc("\r # Alarm ID = %d\n", TimeAlarm_p -> AlarmID));
-    
+
     if(TimeAlarm_p -> Callback != NULL)
     {
       AlarmWork[i].Callback = TimeAlarm_p -> Callback;
@@ -378,6 +392,8 @@ Status_t Set_Time_Alarm(TimeAlarm_t *TimeAlarm_p)
        TimeAlarm_p -> DateTime.Second != 0)
     {
       AlarmWork[i].DateTime = TimeAlarm_p -> DateTime;
+      AlarmWork[i].Repeat = TimeAlarm_p -> Repeat;
+
       ALARM_DEBUG(
       printc("\r # date = %02u.%02u.%02u\n", TimeAlarm_p -> DateTime.Day,
                                              TimeAlarm_p -> DateTime.Month,
@@ -386,7 +402,7 @@ Status_t Set_Time_Alarm(TimeAlarm_t *TimeAlarm_p)
                                              TimeAlarm_p -> DateTime.Minute,
                                              TimeAlarm_p -> DateTime.Second);)
     }
-    
+
     Update_Repetitive_Alarms();
     qsort(AlarmWork, ALARM_WORK_BUFFER_SIZE, sizeof(TimeAlarm_t), Compare_AlarmWork);
 
@@ -404,7 +420,7 @@ Status_t Set_Time_Alarm(TimeAlarm_t *TimeAlarm_p)
     VERIFY(Status, Status);
 
   } else {
-    EXIT_FUNC(TIME_ALARM_ID_MISSING_ERROR , SET_TIME_ALARM); 
+    EXIT_FUNC(TIME_ALARM_ID_MISSING_ERROR , SET_TIME_ALARM);
   }
   EXIT_SUCCESS_FUNC(SET_TIME_ALARM);
 }

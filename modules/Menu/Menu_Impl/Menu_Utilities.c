@@ -37,7 +37,7 @@ uint8 PointerPosition = 1;
 Status_t Menu_Time_Update_Disp_Ptr_Pos(void)
 {
   FuncIN(MENU_TIME_UPDATE_DISP_PTR_POS);
-  
+
   switch(PointerPosition)
   {
     case 1:
@@ -62,7 +62,7 @@ Status_t Menu_Time_Update_Disp_Ptr_Pos(void)
       Fatal_Abort(-UNKNOWN_ERROR);
       break;
   }
-  
+
   EXIT_SUCCESS_FUNC(MENU_TIME_UPDATE_DISP_PTR_POS);
 }
 FUNC_REGISTER(MENU_TIME_UPDATE_DISP_PTR_POS, Menu_Time_Update_Disp_Ptr_Pos);
@@ -73,7 +73,7 @@ FUNC_REGISTER(MENU_TIME_UPDATE_DISP_PTR_POS, Menu_Time_Update_Disp_Ptr_Pos);
 Status_t Menu_Time_Increment_Ptr_Pos_Number(void)
 {
   FuncIN(MENU_TIME_INCREMENT_PTR_POS_NUMBER);
-  
+
   switch(PointerPosition)
   {
     case 1:
@@ -116,7 +116,7 @@ Status_t Menu_Time_Increment_Ptr_Pos_Number(void)
       Fatal_Abort(-UNKNOWN_ERROR);
       break;
   }
-  
+
   EXIT_SUCCESS_FUNC(MENU_TIME_INCREMENT_PTR_POS_NUMBER);
 }
 FUNC_REGISTER(MENU_TIME_INCREMENT_PTR_POS_NUMBER, Menu_Time_Increment_Ptr_Pos_Number);
@@ -127,7 +127,7 @@ FUNC_REGISTER(MENU_TIME_INCREMENT_PTR_POS_NUMBER, Menu_Time_Increment_Ptr_Pos_Nu
 Status_t Menu_Time_Decrement_Ptr_Pos_Number(void)
 {
   FuncIN(MENU_TIME_DECREMENT_PTR_POS_NUMBER);
-  
+
   switch(PointerPosition)
   {
     case 1:
@@ -170,7 +170,7 @@ Status_t Menu_Time_Decrement_Ptr_Pos_Number(void)
       Fatal_Abort(-UNKNOWN_ERROR);
       break;
   }
-  
+
   EXIT_SUCCESS_FUNC(MENU_TIME_DECREMENT_PTR_POS_NUMBER);
 }
 FUNC_REGISTER(MENU_TIME_DECREMENT_PTR_POS_NUMBER, Menu_Time_Decrement_Ptr_Pos_Number);
@@ -181,7 +181,7 @@ FUNC_REGISTER(MENU_TIME_DECREMENT_PTR_POS_NUMBER, Menu_Time_Decrement_Ptr_Pos_Nu
 Status_t Menu_Time_Set_Ptr_Pos_Number(uint32 Number)
 {
   FuncIN(MENU_TIME_SET_PTR_POS_NUMBER);
-  
+
   switch(PointerPosition)
   {
     case 1:
@@ -215,7 +215,7 @@ Status_t Menu_Time_Set_Ptr_Pos_Number(uint32 Number)
       Fatal_Abort(-UNKNOWN_ERROR);
       break;
   }
-  
+
   EXIT_SUCCESS_FUNC(MENU_TIME_SET_PTR_POS_NUMBER);
 }
 FUNC_REGISTER(MENU_TIME_SET_PTR_POS_NUMBER, Menu_Time_Set_Ptr_Pos_Number);
@@ -226,7 +226,7 @@ FUNC_REGISTER(MENU_TIME_SET_PTR_POS_NUMBER, Menu_Time_Set_Ptr_Pos_Number);
 Status_t Menu_Date_Update_Disp_Ptr_Pos(void)
 {
   FuncIN(MENU_DATE_UPDATE_DISP_PTR_POS);
-  
+
   switch(PointerPosition)
   {
     case 1:
@@ -251,7 +251,7 @@ Status_t Menu_Date_Update_Disp_Ptr_Pos(void)
       Fatal_Abort(-UNKNOWN_ERROR);
       break;
   }
-  
+
   EXIT_SUCCESS_FUNC(MENU_DATE_UPDATE_DISP_PTR_POS);
 }
 FUNC_REGISTER(MENU_DATE_UPDATE_DISP_PTR_POS, Menu_Date_Update_Disp_Ptr_Pos);
@@ -262,7 +262,7 @@ FUNC_REGISTER(MENU_DATE_UPDATE_DISP_PTR_POS, Menu_Date_Update_Disp_Ptr_Pos);
 Status_t Menu_Date_Increment_Ptr_Pos_Number(void)
 {
   FuncIN(MENU_DATE_INCREMENT_PTR_POS_NUMBER);
-  
+
   switch(PointerPosition)
   {
     case 1:
@@ -305,7 +305,7 @@ Status_t Menu_Date_Increment_Ptr_Pos_Number(void)
       Fatal_Abort(-UNKNOWN_ERROR);
       break;
   }
-  
+
   EXIT_SUCCESS_FUNC(MENU_DATE_INCREMENT_PTR_POS_NUMBER);
 }
 FUNC_REGISTER(MENU_DATE_INCREMENT_PTR_POS_NUMBER, Menu_Date_Increment_Ptr_Pos_Number);
@@ -316,7 +316,7 @@ FUNC_REGISTER(MENU_DATE_INCREMENT_PTR_POS_NUMBER, Menu_Date_Increment_Ptr_Pos_Nu
 Status_t Menu_Date_Decrement_Ptr_Pos_Number(void)
 {
   FuncIN(MENU_DATE_DECREMENT_PTR_POS_NUMBER);
-  
+
   switch(PointerPosition)
   {
     case 1:
@@ -359,7 +359,7 @@ Status_t Menu_Date_Decrement_Ptr_Pos_Number(void)
       Fatal_Abort(-UNKNOWN_ERROR);
       break;
   }
-  
+
   EXIT_SUCCESS_FUNC(MENU_DATE_DECREMENT_PTR_POS_NUMBER);
 }
 FUNC_REGISTER(MENU_DATE_DECREMENT_PTR_POS_NUMBER, Menu_Date_Decrement_Ptr_Pos_Number);
@@ -370,7 +370,7 @@ FUNC_REGISTER(MENU_DATE_DECREMENT_PTR_POS_NUMBER, Menu_Date_Decrement_Ptr_Pos_Nu
 Status_t Menu_Date_Set_Ptr_Pos_Number(uint32 Number)
 {
   FuncIN(MENU_DATE_SET_PTR_POS_NUMBER);
-  
+
   switch(PointerPosition)
   {
     case 1:
@@ -401,7 +401,7 @@ Status_t Menu_Date_Set_Ptr_Pos_Number(uint32 Number)
       Fatal_Abort(-UNKNOWN_ERROR);
       break;
   }
-  
+
   EXIT_SUCCESS_FUNC(MENU_DATE_SET_PTR_POS_NUMBER);
 }
 FUNC_REGISTER(MENU_DATE_SET_PTR_POS_NUMBER, Menu_Date_Set_Ptr_Pos_Number);
@@ -416,7 +416,7 @@ Status_t Menu_Repeat_Update_Display(uint8 Offset, const uint32 Menu_Ptr_Pos, uin
   clrd();
   for(i = 1; i <= 4; i++)
   {
-    printd(i , "%s %s %s", Menu_Ptr_Pos == (Offset + i) ? ">" : " ", Repeat & 1 << (Offset + i - 1) ? "#" : " ", Days_Name[Offset + i - 1]);  
+    printd(i , "%s %s %s", Menu_Ptr_Pos == (Offset + i) ? ">" : " ", Repeat & 1 << (7 - (Offset + i)) ? "#" : " ", Days_Name[Offset + i - 1]);
   }
   EXIT_SUCCESS_FUNC(MENU_REPEAT_UPDATE_DISPLAY);
 }
@@ -429,7 +429,7 @@ Status_t Menu_Temp_Increment_Ptr_Pos_Number(sint16 *Number_)
 {
   FuncIN(MENU_TEMP_INCREMENT_PTR_POS_NUMBER);
   sint16 Number = *Number_;
-  
+
   switch(PointerPosition)
   {
     case 1:
@@ -442,8 +442,8 @@ Status_t Menu_Temp_Increment_Ptr_Pos_Number(sint16 *Number_)
           Number -= 9000;
         else
           Number += 1000;
-      } 
-      else 
+      }
+      else
       {
         if(Number / 1000 == -9)
           Number += 9000;
@@ -465,7 +465,7 @@ Status_t Menu_Temp_Increment_Ptr_Pos_Number(sint16 *Number_)
           Number += 900;
         else
           Number -= 100;
-      }        
+      }
       break;
     case 4:
       if(Number >= 0)
@@ -503,7 +503,7 @@ Status_t Menu_Temp_Increment_Ptr_Pos_Number(sint16 *Number_)
       Fatal_Abort(-UNKNOWN_ERROR);
       break;
   }
-  
+
   *Number_ = Number;
   EXIT_SUCCESS_FUNC(MENU_TEMP_INCREMENT_PTR_POS_NUMBER);
 }
@@ -515,7 +515,7 @@ FUNC_REGISTER(MENU_TEMP_INCREMENT_PTR_POS_NUMBER, Menu_Temp_Increment_Ptr_Pos_Nu
 Status_t Menu_Temp_Decrement_Ptr_Pos_Number(sint16 *Number_)
 {
   FuncIN(MENU_TEMP_DECREMENT_PTR_POS_NUMBER);
-  
+
   sint16 Number = *Number_;
   switch(PointerPosition)
   {
@@ -556,7 +556,7 @@ Status_t Menu_Temp_Decrement_Ptr_Pos_Number(sint16 *Number_)
         break;
     case 4:
       if(Number >= 0)
-      {      
+      {
         if((Number / 10) % 10 == 0)
           Number += 90;
         else
@@ -567,12 +567,12 @@ Status_t Menu_Temp_Decrement_Ptr_Pos_Number(sint16 *Number_)
         if((Number / 10) % 10 == 0)
           Number -= 90;
         else
-          Number += 10; 
+          Number += 10;
       }
       break;
     case 5:
       if(Number >= 0)
-      {      
+      {
         if(Number%10 == 0)
           Number += 9;
         else
@@ -605,7 +605,7 @@ Status_t Menu_Temp_Set_Ptr_Pos_Number(sint16 *Number_, sint8 Digit)
   sint16 Number = *Number_;
   if(Number < 0)
     Digit *= -1;
-    
+
   switch(PointerPosition)
   {
     case 1:
@@ -641,7 +641,7 @@ Status_t Menu_Temp_Update_Event(uint8 Offset, const uint32 Menu_Ptr_Pos, uint8 E
   clrd();
   for(i = 1; i <= 4; i++)
   {
-    printd(i , "%s %s %s", Menu_Ptr_Pos == (Offset + i) ? ">" : " ", Event == Offset + i ? "#" : " ", Events_Name[Offset + i - 1]);  
+    printd(i , "%s %s %s", Menu_Ptr_Pos == (Offset + i) ? ">" : " ", Event == Offset + i ? "#" : " ", Events_Name[Offset + i - 1]);
   }
   EXIT_SUCCESS_FUNC(MENU_TEMP_UPDATE_EVENT);
 }
