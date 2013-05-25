@@ -37,6 +37,55 @@
 #define FLASH_STATUS_BUSY                                     11
 
 typedef void (*IAP)(uint32 [], uint32[]);
+void (*IntReinitCallback[INT_REINIT_CALLBACKS_NUMBER])(void) = {NULL};
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
+Status_t FLASH_Register_Interrupt_Reinit_Callback(void (*Callback)(void), uint8 *ID)
+{
+  FuncIN(FLASH_REGISTER_INTERRUPT_REINIT_CALLBACK);
+  ASSERT(Callback != NULL, -INVALID_INPUT_POINTER);
+  
+  uint32 i;
+  
+  for(i = 0; i < INT_REINIT_CALLBACKS_NUMBER; i++)
+  {
+    if(IntReinitCallback[i] == NULL)
+    {
+      IntReinitCallback[i] = Callback;
+      
+      if(ID != NULL)
+        *ID = i;
+      
+      break;
+    }
+  }
+  
+  if(i >= INT_REINIT_CALLBACKS_NUMBER)
+    EXIT_FUNC(MEMORY_ERROR, FLASH_REGISTER_INTERRUPT_REINIT_CALLBACK);
+  
+  EXIT_SUCCESS_FUNC(FLASH_REGISTER_INTERRUPT_REINIT_CALLBACK);
+}
+FLASH_FUNC_REGISTER(FLASH_REGISTER_INTERRUPT_REINIT_CALLBACK, FLASH_Register_Interrupt_Reinit_Callback);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
+Status_t FLASH_Unregister_Interrupt_Reinit_Callback(uint8 ID)
+{
+  FuncIN(FLASH_UNREGISTER_INTERRUPT_REINIT_CALLBACK);
+  ASSERT(ID < INT_REINIT_CALLBACKS_NUMBER, -INVALID_INPUT_PARAMETER);
+  
+  if(IntReinitCallback[ID] != NULL)
+    IntReinitCallback[ID] = NULL;
+  else
+    EXIT_FUNC(NOT_REGISTERED_ERROR, FLASH_UNREGISTER_INTERRUPT_REINIT_CALLBACK);
+  
+  EXIT_SUCCESS_FUNC(FLASH_UNREGISTER_INTERRUPT_REINIT_CALLBACK);
+}
+FLASH_FUNC_REGISTER(FLASH_UNREGISTER_INTERRUPT_REINIT_CALLBACK, FLASH_Unregister_Interrupt_Reinit_Callback);
+
 
 /*******************************************************************************
  *
@@ -230,6 +279,12 @@ Status_t FLASH_Copy_RAM_To_FLASH(uint32 Dst_FLASH_Addr, uint32 Src_RAM_Addr, uin
     __disable_interrupt();
     IAP_Entry(Command, Result);
     __enable_interrupt();
+    
+    for(uint32 j = 0; j < INT_REINIT_CALLBACKS_NUMBER; j++)
+    {
+      if(IntReinitCallback[j] != NULL)
+        IntReinitCallback[j]();
+    }
     
     switch(Result[0])
     {
