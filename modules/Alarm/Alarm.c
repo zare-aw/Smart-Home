@@ -134,6 +134,26 @@ Next_Day:
       AlarmWork[i].DateTime.Month =  Repeat_Time.Month;
       AlarmWork[i].DateTime.Day =  Repeat_Time.Day;
     }
+    else
+    {
+      if(ALARM_ON == AlarmWork[i].State)
+      {
+        if(AlarmWork[i].DateTime.Year > Current_Time.Year)
+          continue;
+          if(AlarmWork[i].DateTime.Month > Current_Time.Month)
+            continue;
+            if(AlarmWork[i].DateTime.Day > Current_Time.Day)
+              continue;
+              if(AlarmWork[i].DateTime.Hour > Current_Time.Hour)
+                continue;
+                if(AlarmWork[i].DateTime.Minute > Current_Time.Minute)
+                  continue;
+                  if(AlarmWork[i].DateTime.Second > Current_Time.Second)
+                    continue;
+        AlarmWork[i].State = ALARM_OFF;
+        ALARM_DEBUG(printc("\r # Elapsed Time for AlarmID = %d\n", AlarmWork[i].AlarmID));
+      }
+    }
   }
 
   EXIT_SUCCESS_FUNC(UPDATE_REPETITIVE_ALARMS);
