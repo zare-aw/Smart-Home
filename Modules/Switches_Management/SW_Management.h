@@ -114,5 +114,6 @@ typedef struct SW_M_Event_s
 Status_t SW_M_Set_Event(uint32 NoOfSwitch, uint32 NoOfEvent, SW_M_Event_t *SW_M_Event_p);
 Status_t SW_M_Get_Event(uint32 NoOfSwitch, uint32 NoOfEvent, SW_M_Event_t *SW_M_Event_p);
 Status_t SW_M_Init(void);
+Status_t SW_M_Init_Event_Reg(void);
 
 #endif // _SW_Management_h

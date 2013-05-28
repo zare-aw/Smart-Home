@@ -10,5 +10,6 @@
 #define SW_M_CONFIG_TIME_TEMP_EVENT                  SW_MANAGEMENT_OFFSET | 0x07
 #define SW_M_TEMP_REG_EVENT                          SW_MANAGEMENT_OFFSET | 0x08
 #define SW_M_TEMP_UNREG_EVENT                        SW_MANAGEMENT_OFFSET | 0x09
+#define SW_M_INIT_EVENT_REG                          SW_MANAGEMENT_OFFSET | 0x10
 
 #endif // _SW_Management_Func_h

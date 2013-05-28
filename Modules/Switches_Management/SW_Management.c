@@ -1170,6 +1170,38 @@ SW_M_FUNC_REGISTER(SW_M_GET_EVENT, SW_M_Get_Event);
 /*******************************************************************************
  *
  ******************************************************************************/
+Status_t SW_M_Init_Event_Reg()
+{
+  FuncIN(SW_M_INIT_EVENT_REG);
+  for(uint32 NoOfSwitch = NO_OF_SWITCHES; 0 != NoOfSwitch; NoOfSwitch--)
+  {
+    for(uint32 NoOfEvent = NO_OF_EVENTS_PER_SWITCH; 0 != NoOfEvent; NoOfEvent--){
+      SW_M_Event_ = SW_M_Event[NoOfSwitch - 1][NoOfEvent - 1];
+
+      SW_M_Event_.Time_Start.AlarmID = SW_TIME_NO_ALARM_ID;
+      SW_M_Event_.Time_Stop.AlarmID = SW_TIME_NO_ALARM_ID;
+      SW_M_Event_.Temp_1.AlarmID = SW_TEMP_NO_ALARM_ID;
+      SW_M_Event_.Temp_2.AlarmID = SW_TEMP_NO_ALARM_ID;
+
+      if(0 != (SW_M_Event_.Config & SW_EVENT_ON))
+      {
+        SW_M_Set_Event(NoOfSwitch  ,NoOfEvent ,&SW_M_Event_);
+      }
+      else
+      {
+        //remove the AlarmID from events only in RAM
+        SW_M_Event[NoOfSwitch - 1][NoOfEvent - 1] = SW_M_Event_;
+      }
+    }
+  }
+
+  EXIT_SUCCESS_FUNC(SW_M_INIT_EVENT_REG);
+}
+SW_M_FUNC_REGISTER(SW_M_INIT_EVENT_REG, SW_M_Init_Event_Reg);
+
+/*******************************************************************************
+ *
+ ******************************************************************************/
 Status_t SW_M_Init(void)
 {
   FuncIN(SW_M_INIT);
@@ -1177,6 +1209,8 @@ Status_t SW_M_Init(void)
   Config_SW_M_Init(NO_OF_SWITCHES, NO_OF_EVENTS_PER_SWITCH);
 
   Config_SW_M_Read(SW_M_Event[0], NO_OF_SWITCHES, NO_OF_EVENTS_PER_SWITCH);
+
+  SW_M_Init_Event_Reg();
 
   EXIT_SUCCESS_FUNC(SW_M_INIT);
 }
