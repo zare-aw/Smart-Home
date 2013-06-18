@@ -30,7 +30,7 @@ char Set_Sensor_Name[SWITCHES_SET_STRING_LENGTH] = {0};
 Status_t Menu_Temp_Dep_Set_Temp_Name(void)
 {
   FuncIN(MENU_TEMP_DEP_SET_TEMP_NAME);
-  
+
   switch(SW_M_Event_g.Temp_1.State)
   {
     case SW_TEMP_ALARM_ON:
@@ -42,7 +42,7 @@ Status_t Menu_Temp_Dep_Set_Temp_Name(void)
     default:
       Fatal_Abort(-UNKNOWN_ERROR);
   }
-  
+
   switch(SW_M_Event_g.Temp_2.State)
   {
     case SW_TEMP_ALARM_ON:
@@ -54,7 +54,7 @@ Status_t Menu_Temp_Dep_Set_Temp_Name(void)
     default:
       Fatal_Abort(-UNKNOWN_ERROR);
   }
-  
+
   EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_SET_TEMP_NAME);
 }
 FUNC_REGISTER(MENU_TEMP_DEP_SET_TEMP_NAME, Menu_Temp_Dep_Set_Temp_Name);
@@ -65,7 +65,7 @@ FUNC_REGISTER(MENU_TEMP_DEP_SET_TEMP_NAME, Menu_Temp_Dep_Set_Temp_Name);
 static Status_t Menu_Temp_Dep_Set_Temp_State_Name(void)
 {
   FuncIN(MENU_TEMP_DEP_SET_TEMP_STATE_NAME);
-  
+
   switch(SetTempFlag)
   {
     case 1:
@@ -97,7 +97,7 @@ static Status_t Menu_Temp_Dep_Set_Temp_State_Name(void)
     default:
       Fatal_Abort(-NOT_INITIALIZED_ERROR);
   }
-  
+
   EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_SET_TEMP_STATE_NAME);
 }
 FUNC_REGISTER(MENU_TEMP_DEP_SET_TEMP_STATE_NAME, Menu_Temp_Dep_Set_Temp_State_Name);
@@ -150,7 +150,7 @@ FUNC_REGISTER(MENU_TEMP_DEP_SET_TEMP_RESPONSE_NAME, Menu_Temp_Dep_Set_Temp_Respo
 static Status_t Menu_Temp_Dep_Setting_Temp_Name(void)
 {
   FuncIN(MENU_TEMP_DEP_SETTING_TEMP_NAME);
-  
+
   switch(SetTempFlag)
   {
     case 1:
@@ -162,7 +162,7 @@ static Status_t Menu_Temp_Dep_Setting_Temp_Name(void)
     default:
       Fatal_Abort(-UNKNOWN_ERROR);
   }
-  
+
   EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_SETTING_TEMP_NAME);
 }
 FUNC_REGISTER(MENU_TEMP_DEP_SETTING_TEMP_NAME, Menu_Temp_Dep_Setting_Temp_Name);
@@ -173,7 +173,7 @@ FUNC_REGISTER(MENU_TEMP_DEP_SETTING_TEMP_NAME, Menu_Temp_Dep_Setting_Temp_Name);
 static Status_t Menu_Temp_Dep_Setting_Sensor_Name(void)
 {
   FuncIN(MENU_TEMP_DEP_SETTING_SENSOR_NAME);
-  
+
   switch(SetTempFlag)
   {
     case 1:
@@ -185,7 +185,7 @@ static Status_t Menu_Temp_Dep_Setting_Sensor_Name(void)
     default:
       Fatal_Abort(-UNKNOWN_ERROR);
   }
-  
+
   EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_SETTING_SENSOR_NAME);
 }
 FUNC_REGISTER(MENU_TEMP_DEP_SETTING_SENSOR_NAME, Menu_Temp_Dep_Setting_Sensor_Name);
@@ -196,7 +196,7 @@ FUNC_REGISTER(MENU_TEMP_DEP_SETTING_SENSOR_NAME, Menu_Temp_Dep_Setting_Sensor_Na
 Status_t Menu_Temp_Dep_Set_Temp_1(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
 {
   FuncIN(MENU_TEMP_DEP_SET_TEMP_1);
-  
+
   switch(Key)
   {
     case ENTER_KEY_EVENT:
@@ -212,7 +212,7 @@ Status_t Menu_Temp_Dep_Set_Temp_1(struct Menu_State_s *Menu_State_p, const uint3
     default:
       Fatal_Abort(-INVALID_INPUT_PARAMETER);
   } // switch(Key)
-  
+
   EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_SET_TEMP_1);
 }
 FUNC_REGISTER(MENU_TEMP_DEP_SET_TEMP_1, Menu_Temp_Dep_Set_Temp_1);
@@ -223,7 +223,7 @@ FUNC_REGISTER(MENU_TEMP_DEP_SET_TEMP_1, Menu_Temp_Dep_Set_Temp_1);
 Status_t Menu_Temp_Dep_Set_Temp_2(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
 {
   FuncIN(MENU_TEMP_DEP_SET_TEMP_2);
-  
+
   switch(Key)
   {
     case ENTER_KEY_EVENT:
@@ -239,7 +239,7 @@ Status_t Menu_Temp_Dep_Set_Temp_2(struct Menu_State_s *Menu_State_p, const uint3
     default:
       Fatal_Abort(-INVALID_INPUT_PARAMETER);
   } // switch(Key)
-  
+
   EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_SET_TEMP_2);
 }
 FUNC_REGISTER(MENU_TEMP_DEP_SET_TEMP_2, Menu_Temp_Dep_Set_Temp_2);
@@ -250,11 +250,11 @@ FUNC_REGISTER(MENU_TEMP_DEP_SET_TEMP_2, Menu_Temp_Dep_Set_Temp_2);
 static Status_t Menu_Temp_Dep_State_Update_Display(const uint32 Ptr_Pos)
 {
   FuncIN(MENU_TEMP_DEP_STATE_UPDATE_DISPLAY);
-  
+
   uint8 State;
   char PointerString_1[3] = {0};
   char PointerString_2[3] = {0};
-  
+
   switch(Ptr_Pos)
   {
     case 1:
@@ -268,9 +268,9 @@ static Status_t Menu_Temp_Dep_State_Update_Display(const uint32 Ptr_Pos)
     default:
       Fatal_Abort(-INVALID_INPUT_PARAMETER);
   }
-  
+
   printd(1, "Set State : Temp %u", SetTempFlag);
-  
+
   switch(SetTempFlag)
   {
     case 1:
@@ -282,7 +282,7 @@ static Status_t Menu_Temp_Dep_State_Update_Display(const uint32 Ptr_Pos)
     default:
       Fatal_Abort(-NOT_INITIALIZED_ERROR);
   } // switch(SetTempFlag)
-  
+
   switch(State)
   {
     case SW_TEMP_ALARM_OFF:
@@ -296,7 +296,7 @@ static Status_t Menu_Temp_Dep_State_Update_Display(const uint32 Ptr_Pos)
     default:
       Fatal_Abort(-UNKNOWN_ERROR);
   } // switch(State)
-  
+
   EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_STATE_UPDATE_DISPLAY);
 }
 FUNC_REGISTER(MENU_TEMP_DEP_STATE_UPDATE_DISPLAY, Menu_Temp_Dep_State_Update_Display);
@@ -307,11 +307,11 @@ FUNC_REGISTER(MENU_TEMP_DEP_STATE_UPDATE_DISPLAY, Menu_Temp_Dep_State_Update_Dis
 Status_t Menu_Temp_Dep_Temp_State(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
 {
   FuncIN(MENU_TEMP_DEP_TEMP_STATE);
-  
+
   static uint32 Ptr_Pos = 0;
-  
+
   clrd();
-  
+
   switch(Key)
   {
     case ENTER_KEY_EVENT:
@@ -353,10 +353,10 @@ Status_t Menu_Temp_Dep_Temp_State(struct Menu_State_s *Menu_State_p, const uint3
           default:
             Fatal_Abort(-NOT_INITIALIZED_ERROR);
         } // switch(SetTempFlag)
-        
+
         Menu_Temp_Dep_State_Update_Display(Ptr_Pos);
         printd(4, "State Set!");
-        
+
       }
       break;
     case CANCEL_KEY_EVENT:
@@ -376,7 +376,7 @@ Status_t Menu_Temp_Dep_Temp_State(struct Menu_State_s *Menu_State_p, const uint3
     default:
       Fatal_Abort(-INVALID_INPUT_PARAMETER);
   } // switch(Key)
-  
+
   syncd();
 
   EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_TEMP_STATE);
@@ -531,21 +531,21 @@ FUNC_REGISTER(MENU_TEMP_DEP_TEMP_RESPONSE, Menu_Temp_Dep_Temp_Response);
 Status_t Menu_Temp_Dep_Set_Temp(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
 {
   FuncIN(MENU_TEMP_DEP_SET_TEMP);
-  
+
   static uint32 EnterFlag = 0;
   static sint16 TempSW = 0;
-  
+
   if(EnterFlag == 0)
   {
     PointerPosition = 1;
     TempSW = SetTempFlag == 1 ? SW_M_Event_g.Temp_1.Temp : SW_M_Event_g.Temp_2.Temp;
   }
-  
+
   clrd();
   printd(1, "Set Temp %d", SetTempFlag);
   printd(2, "% 05d'C", TempSW);
   printd(3, "%*s ",PointerPosition, "^");
-  
+
   switch(Key)
   {
     case ENTER_KEY_EVENT:
@@ -555,24 +555,24 @@ Status_t Menu_Temp_Dep_Set_Temp(struct Menu_State_s *Menu_State_p, const uint32 
         EnterFlag = 1;
         break;
       }
-     
+
       printd(2, "% 05d'C Temp Set!", TempSW);
       if(SetTempFlag == 1)
         SW_M_Event_g.Temp_1.Temp = TempSW;
       else
         SW_M_Event_g.Temp_2.Temp = TempSW;
-      
+
       break;
     case CANCEL_KEY_EVENT:
       clrd();
-      
+
       TempSW = 0;
-      
+
       PointerPosition = 1;
-      
+
       EnterFlag = 0;
       Menu_Temp_Dep_Setting_Temp_Name();
-      
+
       EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_TEMP_STATE);
     case UP_KEY_EVENT:
       Menu_Temp_Increment_Ptr_Pos_Number(&TempSW);
@@ -598,25 +598,25 @@ Status_t Menu_Temp_Dep_Set_Temp(struct Menu_State_s *Menu_State_p, const uint32 
       break;
     case EXIT_KEY_EVENT:
       clrd();
-      
+
       TempSW = 0;
-      
+
       PointerPosition = 1;
-      
+
       EnterFlag = 0;
       Menu_Temp_Dep_Setting_Temp_Name();
-      
+
       EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_TEMP_STATE);
     case MENU_KEY_EVENT:
       clrd();
-      
+
       TempSW = 0;
-      
+
       PointerPosition = 1;
-      
+
       EnterFlag = 0;
       Menu_Temp_Dep_Setting_Temp_Name();
-      
+
       EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_TEMP_STATE);
     case NUM1_KEY_EVENT:
       Menu_Temp_Set_Ptr_Pos_Number(&TempSW, 1);
@@ -661,9 +661,9 @@ Status_t Menu_Temp_Dep_Set_Temp(struct Menu_State_s *Menu_State_p, const uint32 
     default:
       Fatal_Abort(-INVALID_INPUT_PARAMETER);
   } // switch(Key)
-  
+
   syncd();
-  
+
   EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_SET_TEMP);
 }
 FUNC_REGISTER(MENU_TEMP_DEP_SET_TEMP, Menu_Temp_Dep_Set_Temp);
@@ -674,21 +674,21 @@ FUNC_REGISTER(MENU_TEMP_DEP_SET_TEMP, Menu_Temp_Dep_Set_Temp);
 Status_t Menu_Temp_Dep_Set_Sensor(struct Menu_State_s *Menu_State_p, const uint32 Key, void *Ptr)
 {
   FuncIN(MENU_TEMP_DEP_SET_SENSOR);
-  
+
   static uint32 EnterFlag = 0;
   static uint16 Sensor = 0;
-  
+
   if(EnterFlag == 0)
   {
     PointerPosition = 4;
     Sensor = SetTempFlag == 1 ? SW_M_Event_g.Temp_1.Sensor : SW_M_Event_g.Temp_2.Sensor;
   }
-  
+
   clrd();
   printd(1, "Set Sensor %d", SetTempFlag);
   printd(2, "   %02d", Sensor);
   printd(3, "%*s ",PointerPosition, "^");
-  
+
   switch(Key)
   {
     case ENTER_KEY_EVENT:
@@ -714,14 +714,14 @@ Status_t Menu_Temp_Dep_Set_Sensor(struct Menu_State_s *Menu_State_p, const uint3
       break;
     case CANCEL_KEY_EVENT:
       clrd();
-      
+
       Sensor = 0;
-      
+
       PointerPosition = 1;
-      
+
       EnterFlag = 0;
       Menu_Temp_Dep_Setting_Sensor_Name();
-      
+
       EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_TEMP_STATE);
     case UP_KEY_EVENT:
       Menu_Temp_Increment_Ptr_Pos_Number((sint16 *)&Sensor);
@@ -747,25 +747,25 @@ Status_t Menu_Temp_Dep_Set_Sensor(struct Menu_State_s *Menu_State_p, const uint3
       break;
     case EXIT_KEY_EVENT:
       clrd();
-      
+
       Sensor = 0;
-      
+
       PointerPosition = 1;
-      
+
       EnterFlag = 0;
       Menu_Temp_Dep_Setting_Sensor_Name();
-      
+
       EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_SET_SENSOR);
     case MENU_KEY_EVENT:
       clrd();
-      
+
       Sensor = 0;
-      
+
       PointerPosition = 1;
-      
+
       EnterFlag = 0;
       Menu_Temp_Dep_Setting_Sensor_Name();
-      
+
       EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_SET_SENSOR);
     case NUM1_KEY_EVENT:
       Menu_Temp_Set_Ptr_Pos_Number((sint16 *)&Sensor, 1);
@@ -810,9 +810,9 @@ Status_t Menu_Temp_Dep_Set_Sensor(struct Menu_State_s *Menu_State_p, const uint3
     default:
       Fatal_Abort(-INVALID_INPUT_PARAMETER);
   } // switch(Key)
-  
+
   syncd();
-  
+
   EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_SET_SENSOR);
 }
 FUNC_REGISTER(MENU_TEMP_DEP_SET_SENSOR, Menu_Temp_Dep_Set_Sensor);
@@ -846,12 +846,12 @@ Status_t  Menu_Temp_Dep_Set_Event(struct Menu_State_s *Menu_State_p, const uint3
         break;
       }
       Event = PointerPosition;
-      Menu_Temp_Update_Event(Offset, PointerPosition, Event); 
+      Menu_Temp_Update_Event(Offset, PointerPosition, Event);
         if(SetTempFlag == 1)
           SW_M_Event_g.Temp_1.Event = Event;
         else
           SW_M_Event_g.Temp_2.Event = Event;
-        
+
       break;
     case CANCEL_KEY_EVENT:
       clrd();
@@ -859,7 +859,7 @@ Status_t  Menu_Temp_Dep_Set_Event(struct Menu_State_s *Menu_State_p, const uint3
       PointerPosition = 1;
       EnterFlag = 0;
       Event = 0;
-        
+
       EXIT_SUCCESS_FUNC(MENU_TEMP_DEP_SET_EVENT);
     case UP_KEY_EVENT:
       if(PointerPosition > 1)
@@ -881,7 +881,7 @@ Status_t  Menu_Temp_Dep_Set_Event(struct Menu_State_s *Menu_State_p, const uint3
           Offset++;
         }
       }
-      Menu_Temp_Update_Event(Offset, PointerPosition, Event); 
+      Menu_Temp_Update_Event(Offset, PointerPosition, Event);
       break;
     case EXIT_KEY_EVENT:
       clrd();
@@ -957,11 +957,932 @@ MENU_STATE_CREATE(
   Temp_2_Name
 );
 
+/**** Switch 1, Event 2, Temp 1 Dep *******************************************/
+const uint8 Switch_1_Event_2_Temp1Path[] = {2, 3, 0, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_2_Temp1,
+  // Path
+  Switch_1_Event_2_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 1, Event 2, Temp 2 Dep *******************************************/
+const uint8 Switch_1_Event_2_Temp2Path[] = {2, 3, 0, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_2_Temp2,
+  // Path
+  Switch_1_Event_2_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 1, Event 3, Temp 1 Dep *******************************************/
+const uint8 Switch_1_Event_3_Temp1Path[] = {2, 3, 0, 2, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_3_Temp1,
+  // Path
+  Switch_1_Event_3_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 1, Event 3, Temp 2 Dep *******************************************/
+const uint8 Switch_1_Event_3_Temp2Path[] = {2, 3, 0, 2, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_3_Temp2,
+  // Path
+  Switch_1_Event_3_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 1, Event 4, Temp 1 Dep *******************************************/
+const uint8 Switch_1_Event_4_Temp1Path[] = {2, 3, 0, 3, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_4_Temp1,
+  // Path
+  Switch_1_Event_4_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 1, Event 1, Temp 2 Dep *******************************************/
+const uint8 Switch_1_Event_4_Temp2Path[] = {2, 3, 0, 3, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_4_Temp2,
+  // Path
+  Switch_1_Event_4_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 2, Event 1, Temp 1 Dep *******************************************/
+const uint8 Switch_2_Event_1_Temp1Path[] = {2, 3, 1, 0, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_1_Temp1,
+  // Path
+  Switch_2_Event_1_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 2, Event 1, Temp 2 Dep *******************************************/
+const uint8 Switch_2_Event_1_Temp2Path[] = {2, 3, 1, 0, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_1_Temp2,
+  // Path
+  Switch_2_Event_1_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 2, Event 2, Temp 1 Dep *******************************************/
+const uint8 Switch_2_Event_2_Temp1Path[] = {2, 3, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_2_Temp1,
+  // Path
+  Switch_2_Event_2_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 2, Event 2, Temp 2 Dep *******************************************/
+const uint8 Switch_2_Event_2_Temp2Path[] = {2, 3, 1, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_2_Temp2,
+  // Path
+  Switch_2_Event_2_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 2, Event 3, Temp 1 Dep *******************************************/
+const uint8 Switch_2_Event_3_Temp1Path[] = {2, 3, 1, 2, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_3_Temp1,
+  // Path
+  Switch_2_Event_3_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 2, Event 3, Temp 2 Dep *******************************************/
+const uint8 Switch_2_Event_3_Temp2Path[] = {2, 3, 1, 2, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_3_Temp2,
+  // Path
+  Switch_2_Event_3_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 2, Event 4, Temp 1 Dep *******************************************/
+const uint8 Switch_2_Event_4_Temp1Path[] = {2, 3, 1, 3, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_4_Temp1,
+  // Path
+  Switch_2_Event_4_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 2, Event 4, Temp 2 Dep *******************************************/
+const uint8 Switch_2_Event_4_Temp2Path[] = {2, 3, 1, 3, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_4_Temp2,
+  // Path
+  Switch_2_Event_4_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 3, Event 1, Temp 1 Dep *******************************************/
+const uint8 Switch_3_Event_1_Temp1Path[] = {2, 3, 2, 0, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_1_Temp1,
+  // Path
+  Switch_3_Event_1_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 3, Event 1, Temp 2 Dep *******************************************/
+const uint8 Switch_3_Event_1_Temp2Path[] = {2, 3, 2, 0, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_1_Temp2,
+  // Path
+  Switch_3_Event_1_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 3, Event 2, Temp 1 Dep *******************************************/
+const uint8 Switch_3_Event_2_Temp1Path[] = {2, 3, 2, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_2_Temp1,
+  // Path
+  Switch_3_Event_2_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 3, Event 2, Temp 2 Dep *******************************************/
+const uint8 Switch_3_Event_2_Temp2Path[] = {2, 3, 2, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_2_Temp2,
+  // Path
+  Switch_3_Event_2_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 3, Event 3, Temp 1 Dep *******************************************/
+const uint8 Switch_3_Event_3_Temp1Path[] = {2, 3, 2, 2, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_3_Temp1,
+  // Path
+  Switch_3_Event_3_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 3, Event 3, Temp 2 Dep *******************************************/
+const uint8 Switch_3_Event_3_Temp2Path[] = {2, 3, 2, 2, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_3_Temp2,
+  // Path
+  Switch_3_Event_3_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 3, Event 4, Temp 1 Dep *******************************************/
+const uint8 Switch_3_Event_4_Temp1Path[] = {2, 3, 2, 3, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_4_Temp1,
+  // Path
+  Switch_3_Event_4_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 3, Event 4, Temp 2 Dep *******************************************/
+const uint8 Switch_3_Event_4_Temp2Path[] = {2, 3, 2, 3, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_4_Temp2,
+  // Path
+  Switch_3_Event_4_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 4, Event 1, Temp 1 Dep *******************************************/
+const uint8 Switch_4_Event_1_Temp1Path[] = {2, 3, 3, 0, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_1_Temp1,
+  // Path
+  Switch_4_Event_1_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 4, Event 1, Temp 2 Dep *******************************************/
+const uint8 Switch_4_Event_1_Temp2Path[] = {2, 3, 3, 0, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_1_Temp2,
+  // Path
+  Switch_4_Event_1_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 4, Event 2, Temp 1 Dep *******************************************/
+const uint8 Switch_4_Event_2_Temp1Path[] = {2, 3, 3, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_2_Temp1,
+  // Path
+  Switch_4_Event_2_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 4, Event 2, Temp 2 Dep *******************************************/
+const uint8 Switch_4_Event_2_Temp2Path[] = {2, 3, 3, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_2_Temp2,
+  // Path
+  Switch_4_Event_2_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 4, Event 3, Temp 1 Dep *******************************************/
+const uint8 Switch_4_Event_3_Temp1Path[] = {2, 3, 3, 2, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_3_Temp1,
+  // Path
+  Switch_4_Event_3_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 4, Event 3, Temp 2 Dep *******************************************/
+const uint8 Switch_4_Event_3_Temp2Path[] = {2, 3, 3, 2, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_3_Temp2,
+  // Path
+  Switch_4_Event_3_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 4, Event 4, Temp 1 Dep *******************************************/
+const uint8 Switch_4_Event_4_Temp1Path[] = {2, 3, 3, 3, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_4_Temp1,
+  // Path
+  Switch_4_Event_4_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 4, Event 4, Temp 2 Dep *******************************************/
+const uint8 Switch_4_Event_4_Temp2Path[] = {2, 3, 3, 3, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_4_Temp2,
+  // Path
+  Switch_4_Event_4_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 5, Event 1, Temp 1 Dep *******************************************/
+const uint8 Switch_5_Event_1_Temp1Path[] = {2, 3, 4, 0, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_1_Temp1,
+  // Path
+  Switch_5_Event_1_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 5, Event 1, Temp 2 Dep *******************************************/
+const uint8 Switch_5_Event_1_Temp2Path[] = {2, 3, 4, 0, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_1_Temp2,
+  // Path
+  Switch_5_Event_1_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 5, Event 2, Temp 1 Dep *******************************************/
+const uint8 Switch_5_Event_2_Temp1Path[] = {2, 3, 4, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_2_Temp1,
+  // Path
+  Switch_5_Event_2_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 5, Event 2, Temp 2 Dep *******************************************/
+const uint8 Switch_5_Event_2_Temp2Path[] = {2, 3, 4, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_2_Temp2,
+  // Path
+  Switch_5_Event_2_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 5, Event 3, Temp 1 Dep *******************************************/
+const uint8 Switch_5_Event_3_Temp1Path[] = {2, 3, 4, 2, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_3_Temp1,
+  // Path
+  Switch_5_Event_3_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 5, Event 3 Temp 2 Dep *******************************************/
+const uint8 Switch_5_Event_3_Temp2Path[] = {2, 3, 4, 2, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_3_Temp2,
+  // Path
+  Switch_5_Event_3_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 5, Event 4, Temp 1 Dep *******************************************/
+const uint8 Switch_5_Event_4_Temp1Path[] = {2, 3, 4, 3, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_4_Temp1,
+  // Path
+  Switch_5_Event_4_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 5, Event 4, Temp 2 Dep *******************************************/
+const uint8 Switch_5_Event_4_Temp2Path[] = {2, 3, 4, 3, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_4_Temp2,
+  // Path
+  Switch_5_Event_4_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 6, Event 1, Temp 1 Dep *******************************************/
+const uint8 Switch_6_Event_1_Temp1Path[] = {2, 3, 5, 0, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_1_Temp1,
+  // Path
+  Switch_6_Event_1_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 6, Event 1, Temp 2 Dep *******************************************/
+const uint8 Switch_6_Event_1_Temp2Path[] = {2, 3, 5, 0, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_1_Temp2,
+  // Path
+  Switch_6_Event_1_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 6, Event 2, Temp 1 Dep *******************************************/
+const uint8 Switch_6_Event_2_Temp1Path[] = {2, 3, 5, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_2_Temp1,
+  // Path
+  Switch_6_Event_2_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 6, Event 2, Temp 2 Dep *******************************************/
+const uint8 Switch_6_Event_2_Temp2Path[] = {2, 3, 5, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_2_Temp2,
+  // Path
+  Switch_6_Event_2_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 6, Event 3, Temp 1 Dep *******************************************/
+const uint8 Switch_6_Event_3_Temp1Path[] = {2, 3, 5, 2, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_3_Temp1,
+  // Path
+  Switch_6_Event_3_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 6, Event 3, Temp 2 Dep *******************************************/
+const uint8 Switch_6_Event_3_Temp2Path[] = {2, 3, 5, 2, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_3_Temp2,
+  // Path
+  Switch_6_Event_3_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
+
+/**** Switch 6, Event 4, Temp 1 Dep *******************************************/
+const uint8 Switch_6_Event_4_Temp1Path[] = {2, 3, 5, 3, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_4_Temp1,
+  // Path
+  Switch_6_Event_4_Temp1Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_1,
+  // String
+  Temp_1_Name
+);
+
+/**** Switch 6, Event 4, Temp 2 Dep *******************************************/
+const uint8 Switch_6_Event_4_Temp2Path[] = {2, 3, 5, 3, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_4_Temp2,
+  // Path
+  Switch_6_Event_4_Temp2Path,
+  // Max Level
+  7,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp_2,
+  // String
+  Temp_2_Name
+);
 /*******************************************************************************
  * Level 8
  ******************************************************************************/
 
-
+/*******************************************************************************
+ * Switch 1
+ ******************************************************************************/
 /**** Switch 1, Event 1, Temp 1, State Dep ************************************/
 const uint8 Switch_1_Event_1_Temp_1_StatePath[] = {2, 3, 0, 0, 1, 1, 0, 0};
 MENU_STATE_CREATE(
@@ -1161,11 +2082,4628 @@ MENU_STATE_CREATE(
   // String
   "Event 2"
 );
+
+/**** Switch 1, Event 2, Temp 1, State Dep ************************************/
+const uint8 Switch_1_Event_2_Temp_1_StatePath[] = {2, 3, 0, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_2_Temp_1_State,
+  // Path
+  Switch_1_Event_2_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 1, Event 2, Temp 1, Responce Dep *********************************/
+const uint8 Switch_1_Event_2_Temp_1_Responce_Path[] = {2, 3, 0, 1, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_2_Temp_1_Responce,
+  // Path
+  Switch_1_Event_2_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 1, Event 2, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_1_Event_2_Temp_1_Set_Temp_Path[] = {2, 3, 0, 1, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_2_Temp_1_Set_Temp,
+  // Path
+  Switch_1_Event_2_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 1, Event 2, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_1_Event_2_Temp_1_Set_Sensor_Path[] = {2, 3, 0, 1, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_2_Temp_1_Set_Sensor,
+  // Path
+  Switch_1_Event_2_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 1, Event 2, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_1_Event_2_Temp_1_Set_Event_Path[] = {2, 3, 0, 1, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_2_Temp_1_Set_Event,
+  // Path
+  Switch_1_Event_2_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 1, Event 2, Temp 2, State Dep ************************************/
+const uint8 Switch_1_Event_2_Temp_2_StatePath[] = {2, 3, 0, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_2_Temp_2_State,
+  // Path
+  Switch_1_Event_2_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 1, Event 2, Temp 2, Responce Dep *********************************/
+const uint8 Switch_1_Event_2_Temp_2_Responce_Path[] = {2, 3, 0, 1, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_2_Temp_2_Responce,
+  // Path
+  Switch_1_Event_2_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 1, Event 2, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_1_Event_2_Temp_2_Set_Temp_Path[] = {2, 3, 0, 1, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_2_Temp_2_Set_Temp,
+  // Path
+  Switch_1_Event_2_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 1, Event 2, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_1_Event_2_Temp_2_Set_Sensor_Path[] = {2, 3, 0, 1, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_2_Temp_2_Set_Sensor,
+  // Path
+  Switch_1_Event_2_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 1, Event 2, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_1_Event_2_Temp_2_Set_Event_Path[] = {2, 3, 0, 1, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_2_Temp_2_Set_Event,
+  // Path
+  Switch_1_Event_2_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 1, Event 3, Temp 1, State Dep ************************************/
+const uint8 Switch_1_Event_3_Temp_1_StatePath[] = {2, 3, 0, 2, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_3_Temp_1_State,
+  // Path
+  Switch_1_Event_3_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 1, Event 3, Temp 1, Responce Dep *********************************/
+const uint8 Switch_1_Event_3_Temp_1_Responce_Path[] = {2, 3, 0, 2, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_3_Temp_1_Responce,
+  // Path
+  Switch_1_Event_3_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 1, Event 3, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_1_Event_3_Temp_1_Set_Temp_Path[] = {2, 3, 0, 2, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_3_Temp_1_Set_Temp,
+  // Path
+  Switch_1_Event_3_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 1, Event 3, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_1_Event_3_Temp_1_Set_Sensor_Path[] = {2, 3, 0, 2, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_3_Temp_1_Set_Sensor,
+  // Path
+  Switch_1_Event_3_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 1, Event 3, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_1_Event_3_Temp_1_Set_Event_Path[] = {2, 3, 0, 2, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_3_Temp_1_Set_Event,
+  // Path
+  Switch_1_Event_3_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 1, Event 1, Temp 2, State Dep ************************************/
+const uint8 Switch_1_Event_3_Temp_2_StatePath[] = {2, 3, 0, 2, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_3_Temp_2_State,
+  // Path
+  Switch_1_Event_3_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 1, Event 3, Temp 2, Responce Dep *********************************/
+const uint8 Switch_1_Event_3_Temp_2_Responce_Path[] = {2, 3, 0, 2, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_3_Temp_2_Responce,
+  // Path
+  Switch_1_Event_3_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 1, Event 3, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_1_Event_3_Temp_2_Set_Temp_Path[] = {2, 3, 0, 2, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_3_Temp_2_Set_Temp,
+  // Path
+  Switch_1_Event_3_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 1, Event 3, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_1_Event_3_Temp_2_Set_Sensor_Path[] = {2, 3, 0, 2, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_3_Temp_2_Set_Sensor,
+  // Path
+  Switch_1_Event_3_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 1, Event 3, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_1_Event_3_Temp_2_Set_Event_Path[] = {2, 3, 0, 2, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_3_Temp_2_Set_Event,
+  // Path
+  Switch_1_Event_3_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 1, Event 4, Temp 1, State Dep ************************************/
+const uint8 Switch_1_Event_4_Temp_1_StatePath[] = {2, 3, 0, 3, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_4_Temp_1_State,
+  // Path
+  Switch_1_Event_4_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 1, Event 1, Temp 1, Responce Dep *********************************/
+const uint8 Switch_1_Event_4_Temp_1_Responce_Path[] = {2, 3, 0, 3, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_4_Temp_1_Responce,
+  // Path
+  Switch_1_Event_4_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 1, Event 4, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_1_Event_4_Temp_1_Set_Temp_Path[] = {2, 3, 0, 3, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_4_Temp_1_Set_Temp,
+  // Path
+  Switch_1_Event_4_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 1, Event 4, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_1_Event_4_Temp_1_Set_Sensor_Path[] = {2, 3, 0, 3, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_4_Temp_1_Set_Sensor,
+  // Path
+  Switch_1_Event_4_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 1, Event 4, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_1_Event_4_Temp_1_Set_Event_Path[] = {2, 3, 0, 3, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_4_Temp_1_Set_Event,
+  // Path
+  Switch_1_Event_4_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 1, Event 4, Temp 2, State Dep ************************************/
+const uint8 Switch_1_Event_4_Temp_2_StatePath[] = {2, 3, 0, 3, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_4_Temp_2_State,
+  // Path
+  Switch_1_Event_4_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 1, Event 4, Temp 2, Responce Dep *********************************/
+const uint8 Switch_1_Event_4_Temp_2_Responce_Path[] = {2, 3, 0, 3, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_4_Temp_2_Responce,
+  // Path
+  Switch_1_Event_4_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 1, Event 4, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_1_Event_4_Temp_2_Set_Temp_Path[] = {2, 3, 0, 3, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_4_Temp_2_Set_Temp,
+  // Path
+  Switch_1_Event_4_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 1, Event 4, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_1_Event_4_Temp_2_Set_Sensor_Path[] = {2, 3, 0, 3, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_4_Temp_2_Set_Sensor,
+  // Path
+  Switch_1_Event_4_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 1, Event 4, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_1_Event_4_Temp_2_Set_Event_Path[] = {2, 3, 0, 3, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_4_Temp_2_Set_Event,
+  // Path
+  Switch_1_Event_4_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/*******************************************************************************
+ * Switch 2
+ ******************************************************************************/
+/**** Switch 2, Event 1, Temp 1, State Dep ************************************/
+const uint8 Switch_2_Event_1_Temp_1_StatePath[] = {2, 3, 1, 0, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_1_Temp_1_State,
+  // Path
+  Switch_2_Event_1_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 2, Event 1, Temp 1, Responce Dep *********************************/
+const uint8 Switch_2_Event_1_Temp_1_Responce_Path[] = {2, 3, 1, 0, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_1_Temp_1_Responce,
+  // Path
+  Switch_2_Event_1_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 2, Event 1, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_2_Event_1_Temp_1_Set_Temp_Path[] = {2, 3, 1, 0, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_1_Temp_1_Set_Temp,
+  // Path
+  Switch_2_Event_1_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 2, Event 1, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_2_Event_1_Temp_1_Set_Sensor_Path[] = {2, 3, 1, 0, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_1_Temp_1_Set_Sensor,
+  // Path
+  Switch_2_Event_1_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 2, Event 1, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_2_Event_1_Temp_1_Set_Event_Path[] = {2, 3, 1, 0, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_1_Temp_1_Set_Event,
+  // Path
+  Switch_2_Event_1_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 2, Event 1, Temp 2, State Dep ************************************/
+const uint8 Switch_2_Event_1_Temp_2_StatePath[] = {2, 3, 1, 0, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_1_Temp_2_State,
+  // Path
+  Switch_2_Event_1_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 2, Event 1, Temp 2, Responce Dep *********************************/
+const uint8 Switch_2_Event_1_Temp_2_Responce_Path[] = {2, 3, 1, 0, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_1_Temp_2_Responce,
+  // Path
+  Switch_2_Event_1_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 2, Event 1, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_2_Event_1_Temp_2_Set_Temp_Path[] = {2, 3, 1, 0, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_1_Temp_2_Set_Temp,
+  // Path
+  Switch_2_Event_1_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 2, Event 1, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_2_Event_1_Temp_2_Set_Sensor_Path[] = {2, 3, 1, 0, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_1_Temp_2_Set_Sensor,
+  // Path
+  Switch_2_Event_1_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 2, Event 1, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_2_Event_1_Temp_2_Set_Event_Path[] = {2, 3, 1, 0, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_1_Temp_2_Set_Event,
+  // Path
+  Switch_2_Event_1_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 2, Event 2, Temp 1, State Dep ************************************/
+const uint8 Switch_2_Event_2_Temp_1_StatePath[] = {2, 3, 1, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_2_Temp_1_State,
+  // Path
+  Switch_2_Event_2_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 2, Event 2, Temp 1, Responce Dep *********************************/
+const uint8 Switch_2_Event_2_Temp_1_Responce_Path[] = {2, 3, 1, 1, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_2_Temp_1_Responce,
+  // Path
+  Switch_2_Event_2_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 2, Event 2, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_2_Event_2_Temp_1_Set_Temp_Path[] = {2, 3, 1, 1, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_2_Temp_1_Set_Temp,
+  // Path
+  Switch_2_Event_2_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 2, Event 2, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_2_Event_2_Temp_1_Set_Sensor_Path[] = {2, 3, 1, 1, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_2_Temp_1_Set_Sensor,
+  // Path
+  Switch_2_Event_2_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 2, Event 2, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_2_Event_2_Temp_1_Set_Event_Path[] = {2, 3, 1, 1, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_2_Temp_1_Set_Event,
+  // Path
+  Switch_2_Event_2_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 2, Event 2, Temp 2, State Dep ************************************/
+const uint8 Switch_2_Event_2_Temp_2_StatePath[] = {2, 3, 1, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_2_Temp_2_State,
+  // Path
+  Switch_2_Event_2_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 2, Event 2, Temp 2, Responce Dep *********************************/
+const uint8 Switch_2_Event_2_Temp_2_Responce_Path[] = {2, 3, 1, 1, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_2_Temp_2_Responce,
+  // Path
+  Switch_2_Event_2_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 2, Event 2, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_2_Event_2_Temp_2_Set_Temp_Path[] = {2, 3, 1, 1, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_2_Temp_2_Set_Temp,
+  // Path
+  Switch_2_Event_2_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 2, Event 2, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_2_Event_2_Temp_2_Set_Sensor_Path[] = {2, 3, 1, 1, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_2_Temp_2_Set_Sensor,
+  // Path
+  Switch_2_Event_2_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 2, Event 2, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_2_Event_2_Temp_2_Set_Event_Path[] = {2, 3, 1, 1, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_2_Temp_2_Set_Event,
+  // Path
+  Switch_2_Event_2_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 2, Event 3, Temp 1, State Dep ************************************/
+const uint8 Switch_2_Event_3_Temp_1_StatePath[] = {2, 3, 1, 2, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_3_Temp_1_State,
+  // Path
+  Switch_2_Event_3_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 2, Event 3, Temp 1, Responce Dep *********************************/
+const uint8 Switch_2_Event_3_Temp_1_Responce_Path[] = {2, 3, 1, 2, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_3_Temp_1_Responce,
+  // Path
+  Switch_2_Event_3_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 2, Event 3, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_2_Event_3_Temp_1_Set_Temp_Path[] = {2, 3, 1, 2, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_3_Temp_1_Set_Temp,
+  // Path
+  Switch_2_Event_3_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 2, Event 3, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_2_Event_3_Temp_1_Set_Sensor_Path[] = {2, 3, 1, 2, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_3_Temp_1_Set_Sensor,
+  // Path
+  Switch_2_Event_3_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 2, Event 3, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_2_Event_3_Temp_1_Set_Event_Path[] = {2, 3, 1, 2, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_3_Temp_1_Set_Event,
+  // Path
+  Switch_2_Event_3_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 2, Event 1, Temp 2, State Dep ************************************/
+const uint8 Switch_2_Event_3_Temp_2_StatePath[] = {2, 3, 1, 2, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_3_Temp_2_State,
+  // Path
+  Switch_2_Event_3_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 2, Event 3, Temp 2, Responce Dep *********************************/
+const uint8 Switch_2_Event_3_Temp_2_Responce_Path[] = {2, 3, 1, 2, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_3_Temp_2_Responce,
+  // Path
+  Switch_2_Event_3_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 2, Event 3, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_2_Event_3_Temp_2_Set_Temp_Path[] = {2, 3, 1, 2, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_3_Temp_2_Set_Temp,
+  // Path
+  Switch_2_Event_3_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 2, Event 3, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_2_Event_3_Temp_2_Set_Sensor_Path[] = {2, 3, 1, 2, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_3_Temp_2_Set_Sensor,
+  // Path
+  Switch_2_Event_3_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 2, Event 3, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_2_Event_3_Temp_2_Set_Event_Path[] = {2, 3, 1, 2, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_3_Temp_2_Set_Event,
+  // Path
+  Switch_2_Event_3_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 2, Event 4, Temp 1, State Dep ************************************/
+const uint8 Switch_2_Event_4_Temp_1_StatePath[] = {2, 3, 1, 3, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_4_Temp_1_State,
+  // Path
+  Switch_2_Event_4_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 2, Event 1, Temp 1, Responce Dep *********************************/
+const uint8 Switch_2_Event_4_Temp_1_Responce_Path[] = {2, 3, 1, 3, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_4_Temp_1_Responce,
+  // Path
+  Switch_2_Event_4_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 2, Event 4, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_2_Event_4_Temp_1_Set_Temp_Path[] = {2, 3, 1, 3, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_4_Temp_1_Set_Temp,
+  // Path
+  Switch_2_Event_4_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 2, Event 4, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_2_Event_4_Temp_1_Set_Sensor_Path[] = {2, 3, 1, 3, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_4_Temp_1_Set_Sensor,
+  // Path
+  Switch_2_Event_4_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 2, Event 4, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_2_Event_4_Temp_1_Set_Event_Path[] = {2, 3, 1, 3, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_4_Temp_1_Set_Event,
+  // Path
+  Switch_2_Event_4_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 2, Event 4, Temp 2, State Dep ************************************/
+const uint8 Switch_2_Event_4_Temp_2_StatePath[] = {2, 3, 1, 3, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_4_Temp_2_State,
+  // Path
+  Switch_2_Event_4_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 2, Event 4, Temp 2, Responce Dep *********************************/
+const uint8 Switch_2_Event_4_Temp_2_Responce_Path[] = {2, 3, 1, 3, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_4_Temp_2_Responce,
+  // Path
+  Switch_2_Event_4_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 2, Event 4, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_2_Event_4_Temp_2_Set_Temp_Path[] = {2, 3, 1, 3, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_4_Temp_2_Set_Temp,
+  // Path
+  Switch_2_Event_4_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 2, Event 4, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_2_Event_4_Temp_2_Set_Sensor_Path[] = {2, 3, 1, 3, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_4_Temp_2_Set_Sensor,
+  // Path
+  Switch_2_Event_4_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 2, Event 4, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_2_Event_4_Temp_2_Set_Event_Path[] = {2, 3, 1, 3, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_4_Temp_2_Set_Event,
+  // Path
+  Switch_2_Event_4_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/*******************************************************************************
+ * Switch 3
+ ******************************************************************************/
+/**** Switch 3, Event 1, Temp 1, State Dep ************************************/
+const uint8 Switch_3_Event_1_Temp_1_StatePath[] = {2, 3, 2, 0, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_1_Temp_1_State,
+  // Path
+  Switch_3_Event_1_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 3, Event 1, Temp 1, Responce Dep *********************************/
+const uint8 Switch_3_Event_1_Temp_1_Responce_Path[] = {2, 3, 2, 0, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_1_Temp_1_Responce,
+  // Path
+  Switch_3_Event_1_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 3, Event 1, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_3_Event_1_Temp_1_Set_Temp_Path[] = {2, 3, 2, 0, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_1_Temp_1_Set_Temp,
+  // Path
+  Switch_3_Event_1_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 3, Event 1, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_3_Event_1_Temp_1_Set_Sensor_Path[] = {2, 3, 2, 0, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_1_Temp_1_Set_Sensor,
+  // Path
+  Switch_3_Event_1_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 3, Event 1, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_3_Event_1_Temp_1_Set_Event_Path[] = {2, 3, 2, 0, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_1_Temp_1_Set_Event,
+  // Path
+  Switch_3_Event_1_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 3, Event 1, Temp 2, State Dep ************************************/
+const uint8 Switch_3_Event_1_Temp_2_StatePath[] = {2, 3, 2, 0, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_1_Temp_2_State,
+  // Path
+  Switch_3_Event_1_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 3, Event 1, Temp 2, Responce Dep *********************************/
+const uint8 Switch_3_Event_1_Temp_2_Responce_Path[] = {2, 3, 2, 0, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_1_Temp_2_Responce,
+  // Path
+  Switch_3_Event_1_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 3, Event 1, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_3_Event_1_Temp_2_Set_Temp_Path[] = {2, 3, 2, 0, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_1_Temp_2_Set_Temp,
+  // Path
+  Switch_3_Event_1_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 3, Event 1, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_3_Event_1_Temp_2_Set_Sensor_Path[] = {2, 3, 2, 0, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_1_Temp_2_Set_Sensor,
+  // Path
+  Switch_3_Event_1_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 3, Event 1, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_3_Event_1_Temp_2_Set_Event_Path[] = {2, 3, 2, 0, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_1_Temp_2_Set_Event,
+  // Path
+  Switch_3_Event_1_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 3, Event 2, Temp 1, State Dep ************************************/
+const uint8 Switch_3_Event_2_Temp_1_StatePath[] = {2, 3, 2, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_2_Temp_1_State,
+  // Path
+  Switch_3_Event_2_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 3, Event 2, Temp 1, Responce Dep *********************************/
+const uint8 Switch_3_Event_2_Temp_1_Responce_Path[] = {2, 3, 2, 1, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_2_Temp_1_Responce,
+  // Path
+  Switch_3_Event_2_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 3, Event 2, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_3_Event_2_Temp_1_Set_Temp_Path[] = {2, 3, 2, 1, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_2_Temp_1_Set_Temp,
+  // Path
+  Switch_3_Event_2_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 3, Event 2, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_3_Event_2_Temp_1_Set_Sensor_Path[] = {2, 3, 2, 1, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_2_Temp_1_Set_Sensor,
+  // Path
+  Switch_3_Event_2_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 3, Event 2, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_3_Event_2_Temp_1_Set_Event_Path[] = {2, 3, 2, 1, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_2_Temp_1_Set_Event,
+  // Path
+  Switch_3_Event_2_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 3, Event 2, Temp 2, State Dep ************************************/
+const uint8 Switch_3_Event_2_Temp_2_StatePath[] = {2, 3, 2, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_2_Temp_2_State,
+  // Path
+  Switch_3_Event_2_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 3, Event 2, Temp 2, Responce Dep *********************************/
+const uint8 Switch_3_Event_2_Temp_2_Responce_Path[] = {2, 3, 2, 1, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_2_Temp_2_Responce,
+  // Path
+  Switch_3_Event_2_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 3, Event 2, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_3_Event_2_Temp_2_Set_Temp_Path[] = {2, 3, 2, 1, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_2_Temp_2_Set_Temp,
+  // Path
+  Switch_3_Event_2_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 3, Event 2, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_3_Event_2_Temp_2_Set_Sensor_Path[] = {2, 3, 2, 1, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_2_Temp_2_Set_Sensor,
+  // Path
+  Switch_3_Event_2_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 3, Event 2, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_3_Event_2_Temp_2_Set_Event_Path[] = {2, 3, 2, 1, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_2_Temp_2_Set_Event,
+  // Path
+  Switch_3_Event_2_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 3, Event 3, Temp 1, State Dep ************************************/
+const uint8 Switch_3_Event_3_Temp_1_StatePath[] = {2, 3, 2, 2, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_3_Temp_1_State,
+  // Path
+  Switch_3_Event_3_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 3, Event 3, Temp 1, Responce Dep *********************************/
+const uint8 Switch_3_Event_3_Temp_1_Responce_Path[] = {2, 3, 2, 2, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_3_Temp_1_Responce,
+  // Path
+  Switch_3_Event_3_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 3, Event 3, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_3_Event_3_Temp_1_Set_Temp_Path[] = {2, 3, 2, 2, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_3_Temp_1_Set_Temp,
+  // Path
+  Switch_3_Event_3_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 3, Event 3, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_3_Event_3_Temp_1_Set_Sensor_Path[] = {2, 3, 2, 2, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_3_Temp_1_Set_Sensor,
+  // Path
+  Switch_3_Event_3_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 3, Event 3, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_3_Event_3_Temp_1_Set_Event_Path[] = {2, 3, 2, 2, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_3_Temp_1_Set_Event,
+  // Path
+  Switch_3_Event_3_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 3, Event 1, Temp 2, State Dep ************************************/
+const uint8 Switch_3_Event_3_Temp_2_StatePath[] = {2, 3, 2, 2, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_3_Temp_2_State,
+  // Path
+  Switch_3_Event_3_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 3, Event 3, Temp 2, Responce Dep *********************************/
+const uint8 Switch_3_Event_3_Temp_2_Responce_Path[] = {2, 3, 2, 2, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_3_Temp_2_Responce,
+  // Path
+  Switch_3_Event_3_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 3, Event 3, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_3_Event_3_Temp_2_Set_Temp_Path[] = {2, 3, 2, 2, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_3_Temp_2_Set_Temp,
+  // Path
+  Switch_3_Event_3_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 3, Event 3, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_3_Event_3_Temp_2_Set_Sensor_Path[] = {2, 3, 2, 2, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_3_Temp_2_Set_Sensor,
+  // Path
+  Switch_3_Event_3_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 3, Event 3, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_3_Event_3_Temp_2_Set_Event_Path[] = {2, 3, 2, 2, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_3_Temp_2_Set_Event,
+  // Path
+  Switch_3_Event_3_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 3, Event 4, Temp 1, State Dep ************************************/
+const uint8 Switch_3_Event_4_Temp_1_StatePath[] = {2, 3, 2, 3, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_4_Temp_1_State,
+  // Path
+  Switch_3_Event_4_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 3, Event 1, Temp 1, Responce Dep *********************************/
+const uint8 Switch_3_Event_4_Temp_1_Responce_Path[] = {2, 3, 2, 3, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_4_Temp_1_Responce,
+  // Path
+  Switch_3_Event_4_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 3, Event 4, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_3_Event_4_Temp_1_Set_Temp_Path[] = {2, 3, 2, 3, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_4_Temp_1_Set_Temp,
+  // Path
+  Switch_3_Event_4_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 3, Event 4, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_3_Event_4_Temp_1_Set_Sensor_Path[] = {2, 3, 2, 3, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_4_Temp_1_Set_Sensor,
+  // Path
+  Switch_3_Event_4_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 3, Event 4, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_3_Event_4_Temp_1_Set_Event_Path[] = {2, 3, 2, 3, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_4_Temp_1_Set_Event,
+  // Path
+  Switch_3_Event_4_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 3, Event 4, Temp 2, State Dep ************************************/
+const uint8 Switch_3_Event_4_Temp_2_StatePath[] = {2, 3, 2, 3, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_4_Temp_2_State,
+  // Path
+  Switch_3_Event_4_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 3, Event 4, Temp 2, Responce Dep *********************************/
+const uint8 Switch_3_Event_4_Temp_2_Responce_Path[] = {2, 3, 2, 3, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_4_Temp_2_Responce,
+  // Path
+  Switch_3_Event_4_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 3, Event 4, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_3_Event_4_Temp_2_Set_Temp_Path[] = {2, 3, 2, 3, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_4_Temp_2_Set_Temp,
+  // Path
+  Switch_3_Event_4_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 3, Event 4, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_3_Event_4_Temp_2_Set_Sensor_Path[] = {2, 3, 2, 3, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_4_Temp_2_Set_Sensor,
+  // Path
+  Switch_3_Event_4_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 3, Event 4, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_3_Event_4_Temp_2_Set_Event_Path[] = {2, 3, 2, 3, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_4_Temp_2_Set_Event,
+  // Path
+  Switch_3_Event_4_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/*******************************************************************************
+ * Switch 4
+ ******************************************************************************/
+/**** Switch 4, Event 1, Temp 1, State Dep ************************************/
+const uint8 Switch_4_Event_1_Temp_1_StatePath[] = {2, 3, 3, 0, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_1_Temp_1_State,
+  // Path
+  Switch_4_Event_1_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 4, Event 1, Temp 1, Responce Dep *********************************/
+const uint8 Switch_4_Event_1_Temp_1_Responce_Path[] = {2, 3, 3, 0, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_1_Temp_1_Responce,
+  // Path
+  Switch_4_Event_1_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 4, Event 1, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_4_Event_1_Temp_1_Set_Temp_Path[] = {2, 3, 3, 0, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_1_Temp_1_Set_Temp,
+  // Path
+  Switch_4_Event_1_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 4, Event 1, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_4_Event_1_Temp_1_Set_Sensor_Path[] = {2, 3, 3, 0, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_1_Temp_1_Set_Sensor,
+  // Path
+  Switch_4_Event_1_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 4, Event 1, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_4_Event_1_Temp_1_Set_Event_Path[] = {2, 3, 3, 0, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_1_Temp_1_Set_Event,
+  // Path
+  Switch_4_Event_1_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 4, Event 1, Temp 2, State Dep ************************************/
+const uint8 Switch_4_Event_1_Temp_2_StatePath[] = {2, 3, 3, 0, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_1_Temp_2_State,
+  // Path
+  Switch_4_Event_1_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 4, Event 1, Temp 2, Responce Dep *********************************/
+const uint8 Switch_4_Event_1_Temp_2_Responce_Path[] = {2, 3, 3, 0, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_1_Temp_2_Responce,
+  // Path
+  Switch_4_Event_1_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 4, Event 1, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_4_Event_1_Temp_2_Set_Temp_Path[] = {2, 3, 3, 0, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_1_Temp_2_Set_Temp,
+  // Path
+  Switch_4_Event_1_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 4, Event 1, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_4_Event_1_Temp_2_Set_Sensor_Path[] = {2, 3, 3, 0, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_1_Temp_2_Set_Sensor,
+  // Path
+  Switch_4_Event_1_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 4, Event 1, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_4_Event_1_Temp_2_Set_Event_Path[] = {2, 3, 3, 0, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_1_Temp_2_Set_Event,
+  // Path
+  Switch_4_Event_1_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 4, Event 2, Temp 1, State Dep ************************************/
+const uint8 Switch_4_Event_2_Temp_1_StatePath[] = {2, 3, 3, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_2_Temp_1_State,
+  // Path
+  Switch_4_Event_2_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 4, Event 2, Temp 1, Responce Dep *********************************/
+const uint8 Switch_4_Event_2_Temp_1_Responce_Path[] = {2, 3, 3, 1, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_2_Temp_1_Responce,
+  // Path
+  Switch_4_Event_2_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 4, Event 2, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_4_Event_2_Temp_1_Set_Temp_Path[] = {2, 3, 3, 1, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_2_Temp_1_Set_Temp,
+  // Path
+  Switch_4_Event_2_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 4, Event 2, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_4_Event_2_Temp_1_Set_Sensor_Path[] = {2, 3, 3, 1, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_2_Temp_1_Set_Sensor,
+  // Path
+  Switch_4_Event_2_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 4, Event 2, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_4_Event_2_Temp_1_Set_Event_Path[] = {2, 3, 3, 1, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_2_Temp_1_Set_Event,
+  // Path
+  Switch_4_Event_2_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 4, Event 2, Temp 2, State Dep ************************************/
+const uint8 Switch_4_Event_2_Temp_2_StatePath[] = {2, 3, 3, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_2_Temp_2_State,
+  // Path
+  Switch_4_Event_2_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 4, Event 2, Temp 2, Responce Dep *********************************/
+const uint8 Switch_4_Event_2_Temp_2_Responce_Path[] = {2, 3, 3, 1, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_2_Temp_2_Responce,
+  // Path
+  Switch_4_Event_2_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 4, Event 2, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_4_Event_2_Temp_2_Set_Temp_Path[] = {2, 3, 3, 1, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_2_Temp_2_Set_Temp,
+  // Path
+  Switch_4_Event_2_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 4, Event 2, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_4_Event_2_Temp_2_Set_Sensor_Path[] = {2, 3, 3, 1, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_2_Temp_2_Set_Sensor,
+  // Path
+  Switch_4_Event_2_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 4, Event 2, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_4_Event_2_Temp_2_Set_Event_Path[] = {2, 3, 3, 1, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_2_Temp_2_Set_Event,
+  // Path
+  Switch_4_Event_2_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 4, Event 3, Temp 1, State Dep ************************************/
+const uint8 Switch_4_Event_3_Temp_1_StatePath[] = {2, 3, 3, 2, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_3_Temp_1_State,
+  // Path
+  Switch_4_Event_3_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 4, Event 3, Temp 1, Responce Dep *********************************/
+const uint8 Switch_4_Event_3_Temp_1_Responce_Path[] = {2, 3, 3, 2, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_3_Temp_1_Responce,
+  // Path
+  Switch_4_Event_3_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 4, Event 3, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_4_Event_3_Temp_1_Set_Temp_Path[] = {2, 3, 3, 2, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_3_Temp_1_Set_Temp,
+  // Path
+  Switch_4_Event_3_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 4, Event 3, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_4_Event_3_Temp_1_Set_Sensor_Path[] = {2, 3, 3, 2, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_3_Temp_1_Set_Sensor,
+  // Path
+  Switch_4_Event_3_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 4, Event 3, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_4_Event_3_Temp_1_Set_Event_Path[] = {2, 3, 3, 2, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_3_Temp_1_Set_Event,
+  // Path
+  Switch_4_Event_3_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 4, Event 1, Temp 2, State Dep ************************************/
+const uint8 Switch_4_Event_3_Temp_2_StatePath[] = {2, 3, 3, 2, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_3_Temp_2_State,
+  // Path
+  Switch_4_Event_3_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 4, Event 3, Temp 2, Responce Dep *********************************/
+const uint8 Switch_4_Event_3_Temp_2_Responce_Path[] = {2, 3, 3, 2, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_3_Temp_2_Responce,
+  // Path
+  Switch_4_Event_3_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 4, Event 3, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_4_Event_3_Temp_2_Set_Temp_Path[] = {2, 3, 3, 2, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_3_Temp_2_Set_Temp,
+  // Path
+  Switch_4_Event_3_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 4, Event 3, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_4_Event_3_Temp_2_Set_Sensor_Path[] = {2, 3, 3, 2, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_3_Temp_2_Set_Sensor,
+  // Path
+  Switch_4_Event_3_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 4, Event 3, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_4_Event_3_Temp_2_Set_Event_Path[] = {2, 3, 3, 2, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_3_Temp_2_Set_Event,
+  // Path
+  Switch_4_Event_3_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 4, Event 4, Temp 1, State Dep ************************************/
+const uint8 Switch_4_Event_4_Temp_1_StatePath[] = {2, 3, 3, 3, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_4_Temp_1_State,
+  // Path
+  Switch_4_Event_4_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 4, Event 1, Temp 1, Responce Dep *********************************/
+const uint8 Switch_4_Event_4_Temp_1_Responce_Path[] = {2, 3, 3, 3, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_4_Temp_1_Responce,
+  // Path
+  Switch_4_Event_4_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 4, Event 4, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_4_Event_4_Temp_1_Set_Temp_Path[] = {2, 3, 3, 3, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_4_Temp_1_Set_Temp,
+  // Path
+  Switch_4_Event_4_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 4, Event 4, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_4_Event_4_Temp_1_Set_Sensor_Path[] = {2, 3, 3, 3, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_4_Temp_1_Set_Sensor,
+  // Path
+  Switch_4_Event_4_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 4, Event 4, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_4_Event_4_Temp_1_Set_Event_Path[] = {2, 3, 3, 3, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_4_Temp_1_Set_Event,
+  // Path
+  Switch_4_Event_4_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 4, Event 4, Temp 2, State Dep ************************************/
+const uint8 Switch_4_Event_4_Temp_2_StatePath[] = {2, 3, 3, 3, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_4_Temp_2_State,
+  // Path
+  Switch_4_Event_4_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 4, Event 4, Temp 2, Responce Dep *********************************/
+const uint8 Switch_4_Event_4_Temp_2_Responce_Path[] = {2, 3, 3, 3, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_4_Temp_2_Responce,
+  // Path
+  Switch_4_Event_4_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 4, Event 4, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_4_Event_4_Temp_2_Set_Temp_Path[] = {2, 3, 3, 3, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_4_Temp_2_Set_Temp,
+  // Path
+  Switch_4_Event_4_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 4, Event 4, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_4_Event_4_Temp_2_Set_Sensor_Path[] = {2, 3, 3, 3, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_4_Temp_2_Set_Sensor,
+  // Path
+  Switch_4_Event_4_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 4, Event 4, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_4_Event_4_Temp_2_Set_Event_Path[] = {2, 3, 3, 3, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_4_Temp_2_Set_Event,
+  // Path
+  Switch_4_Event_4_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/*******************************************************************************
+ * Switch 5
+ ******************************************************************************/
+/**** Switch 5, Event 1, Temp 1, State Dep ************************************/
+const uint8 Switch_5_Event_1_Temp_1_StatePath[] = {2, 3, 4, 0, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_1_Temp_1_State,
+  // Path
+  Switch_5_Event_1_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 5, Event 1, Temp 1, Responce Dep *********************************/
+const uint8 Switch_5_Event_1_Temp_1_Responce_Path[] = {2, 3, 4, 0, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_1_Temp_1_Responce,
+  // Path
+  Switch_5_Event_1_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 5, Event 1, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_5_Event_1_Temp_1_Set_Temp_Path[] = {2, 3, 4, 0, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_1_Temp_1_Set_Temp,
+  // Path
+  Switch_5_Event_1_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 5, Event 1, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_5_Event_1_Temp_1_Set_Sensor_Path[] = {2, 3, 4, 0, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_1_Temp_1_Set_Sensor,
+  // Path
+  Switch_5_Event_1_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 5, Event 1, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_5_Event_1_Temp_1_Set_Event_Path[] = {2, 3, 4, 0, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_1_Temp_1_Set_Event,
+  // Path
+  Switch_5_Event_1_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 5, Event 1, Temp 2, State Dep ************************************/
+const uint8 Switch_5_Event_1_Temp_2_StatePath[] = {2, 3, 4, 0, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_1_Temp_2_State,
+  // Path
+  Switch_5_Event_1_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 5, Event 1, Temp 2, Responce Dep *********************************/
+const uint8 Switch_5_Event_1_Temp_2_Responce_Path[] = {2, 3, 4, 0, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_1_Temp_2_Responce,
+  // Path
+  Switch_5_Event_1_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 5, Event 1, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_5_Event_1_Temp_2_Set_Temp_Path[] = {2, 3, 4, 0, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_1_Temp_2_Set_Temp,
+  // Path
+  Switch_5_Event_1_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 5, Event 1, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_5_Event_1_Temp_2_Set_Sensor_Path[] = {2, 3, 4, 0, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_1_Temp_2_Set_Sensor,
+  // Path
+  Switch_5_Event_1_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 5, Event 1, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_5_Event_1_Temp_2_Set_Event_Path[] = {2, 3, 4, 0, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_1_Temp_2_Set_Event,
+  // Path
+  Switch_5_Event_1_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 5, Event 2, Temp 1, State Dep ************************************/
+const uint8 Switch_5_Event_2_Temp_1_StatePath[] = {2, 3, 4, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_2_Temp_1_State,
+  // Path
+  Switch_5_Event_2_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 5, Event 2, Temp 1, Responce Dep *********************************/
+const uint8 Switch_5_Event_2_Temp_1_Responce_Path[] = {2, 3, 4, 1, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_2_Temp_1_Responce,
+  // Path
+  Switch_5_Event_2_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 5, Event 2, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_5_Event_2_Temp_1_Set_Temp_Path[] = {2, 3, 4, 1, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_2_Temp_1_Set_Temp,
+  // Path
+  Switch_5_Event_2_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 5, Event 2, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_5_Event_2_Temp_1_Set_Sensor_Path[] = {2, 3, 4, 1, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_2_Temp_1_Set_Sensor,
+  // Path
+  Switch_5_Event_2_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 5, Event 2, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_5_Event_2_Temp_1_Set_Event_Path[] = {2, 3, 4, 1, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_2_Temp_1_Set_Event,
+  // Path
+  Switch_5_Event_2_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 5, Event 2, Temp 2, State Dep ************************************/
+const uint8 Switch_5_Event_2_Temp_2_StatePath[] = {2, 3, 4, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_2_Temp_2_State,
+  // Path
+  Switch_5_Event_2_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 5, Event 2, Temp 2, Responce Dep *********************************/
+const uint8 Switch_5_Event_2_Temp_2_Responce_Path[] = {2, 3, 4, 1, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_2_Temp_2_Responce,
+  // Path
+  Switch_5_Event_2_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 5, Event 2, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_5_Event_2_Temp_2_Set_Temp_Path[] = {2, 3, 4, 1, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_2_Temp_2_Set_Temp,
+  // Path
+  Switch_5_Event_2_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 5, Event 2, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_5_Event_2_Temp_2_Set_Sensor_Path[] = {2, 3, 4, 1, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_2_Temp_2_Set_Sensor,
+  // Path
+  Switch_5_Event_2_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 5, Event 2, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_5_Event_2_Temp_2_Set_Event_Path[] = {2, 3, 4, 1, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_2_Temp_2_Set_Event,
+  // Path
+  Switch_5_Event_2_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 5, Event 3, Temp 1, State Dep ************************************/
+const uint8 Switch_5_Event_3_Temp_1_StatePath[] = {2, 3, 4, 2, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_3_Temp_1_State,
+  // Path
+  Switch_5_Event_3_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 5, Event 3, Temp 1, Responce Dep *********************************/
+const uint8 Switch_5_Event_3_Temp_1_Responce_Path[] = {2, 3, 4, 2, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_3_Temp_1_Responce,
+  // Path
+  Switch_5_Event_3_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 5, Event 3, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_5_Event_3_Temp_1_Set_Temp_Path[] = {2, 3, 4, 2, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_3_Temp_1_Set_Temp,
+  // Path
+  Switch_5_Event_3_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 5, Event 3, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_5_Event_3_Temp_1_Set_Sensor_Path[] = {2, 3, 4, 2, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_3_Temp_1_Set_Sensor,
+  // Path
+  Switch_5_Event_3_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 5, Event 3, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_5_Event_3_Temp_1_Set_Event_Path[] = {2, 3, 4, 2, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_3_Temp_1_Set_Event,
+  // Path
+  Switch_5_Event_3_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 5, Event 1, Temp 2, State Dep ************************************/
+const uint8 Switch_5_Event_3_Temp_2_StatePath[] = {2, 3, 4, 2, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_3_Temp_2_State,
+  // Path
+  Switch_5_Event_3_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 5, Event 3, Temp 2, Responce Dep *********************************/
+const uint8 Switch_5_Event_3_Temp_2_Responce_Path[] = {2, 3, 4, 2, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_3_Temp_2_Responce,
+  // Path
+  Switch_5_Event_3_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 5, Event 3, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_5_Event_3_Temp_2_Set_Temp_Path[] = {2, 3, 4, 2, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_3_Temp_2_Set_Temp,
+  // Path
+  Switch_5_Event_3_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 5, Event 3, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_5_Event_3_Temp_2_Set_Sensor_Path[] = {2, 3, 4, 2, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_3_Temp_2_Set_Sensor,
+  // Path
+  Switch_5_Event_3_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 5, Event 3, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_5_Event_3_Temp_2_Set_Event_Path[] = {2, 3, 4, 2, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_3_Temp_2_Set_Event,
+  // Path
+  Switch_5_Event_3_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 5, Event 4, Temp 1, State Dep ************************************/
+const uint8 Switch_5_Event_4_Temp_1_StatePath[] = {2, 3, 4, 3, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_4_Temp_1_State,
+  // Path
+  Switch_5_Event_4_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 5, Event 1, Temp 1, Responce Dep *********************************/
+const uint8 Switch_5_Event_4_Temp_1_Responce_Path[] = {2, 3, 4, 3, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_4_Temp_1_Responce,
+  // Path
+  Switch_5_Event_4_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 5, Event 4, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_5_Event_4_Temp_1_Set_Temp_Path[] = {2, 3, 4, 3, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_4_Temp_1_Set_Temp,
+  // Path
+  Switch_5_Event_4_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 5, Event 4, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_5_Event_4_Temp_1_Set_Sensor_Path[] = {2, 3, 4, 3, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_4_Temp_1_Set_Sensor,
+  // Path
+  Switch_5_Event_4_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 5, Event 4, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_5_Event_4_Temp_1_Set_Event_Path[] = {2, 3, 4, 3, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_4_Temp_1_Set_Event,
+  // Path
+  Switch_5_Event_4_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 5, Event 4, Temp 2, State Dep ************************************/
+const uint8 Switch_5_Event_4_Temp_2_StatePath[] = {2, 3, 4, 3, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_4_Temp_2_State,
+  // Path
+  Switch_5_Event_4_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 5, Event 4, Temp 2, Responce Dep *********************************/
+const uint8 Switch_5_Event_4_Temp_2_Responce_Path[] = {2, 3, 4, 3, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_4_Temp_2_Responce,
+  // Path
+  Switch_5_Event_4_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 5, Event 4, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_5_Event_4_Temp_2_Set_Temp_Path[] = {2, 3, 4, 3, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_4_Temp_2_Set_Temp,
+  // Path
+  Switch_5_Event_4_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 5, Event 4, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_5_Event_4_Temp_2_Set_Sensor_Path[] = {2, 3, 4, 3, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_4_Temp_2_Set_Sensor,
+  // Path
+  Switch_5_Event_4_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 5, Event 4, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_5_Event_4_Temp_2_Set_Event_Path[] = {2, 3, 4, 3, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_4_Temp_2_Set_Event,
+  // Path
+  Switch_5_Event_4_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/*******************************************************************************
+ * Switch 6
+ ******************************************************************************/
+/**** Switch 6, Event 1, Temp 1, State Dep ************************************/
+const uint8 Switch_6_Event_1_Temp_1_StatePath[] = {2, 3, 5, 0, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_1_Temp_1_State,
+  // Path
+  Switch_6_Event_1_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 6, Event 1, Temp 1, Responce Dep *********************************/
+const uint8 Switch_6_Event_1_Temp_1_Responce_Path[] = {2, 3, 5, 0, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_1_Temp_1_Responce,
+  // Path
+  Switch_6_Event_1_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 6, Event 1, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_6_Event_1_Temp_1_Set_Temp_Path[] = {2, 3, 5, 0, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_1_Temp_1_Set_Temp,
+  // Path
+  Switch_6_Event_1_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 6, Event 1, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_6_Event_1_Temp_1_Set_Sensor_Path[] = {2, 3, 5, 0, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_1_Temp_1_Set_Sensor,
+  // Path
+  Switch_6_Event_1_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 6, Event 1, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_6_Event_1_Temp_1_Set_Event_Path[] = {2, 3, 5, 0, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_1_Temp_1_Set_Event,
+  // Path
+  Switch_6_Event_1_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 6, Event 1, Temp 2, State Dep ************************************/
+const uint8 Switch_6_Event_1_Temp_2_StatePath[] = {2, 3, 5, 0, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_1_Temp_2_State,
+  // Path
+  Switch_6_Event_1_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 6, Event 1, Temp 2, Responce Dep *********************************/
+const uint8 Switch_6_Event_1_Temp_2_Responce_Path[] = {2, 3, 5, 0, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_1_Temp_2_Responce,
+  // Path
+  Switch_6_Event_1_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 6, Event 1, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_6_Event_1_Temp_2_Set_Temp_Path[] = {2, 3, 5, 0, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_1_Temp_2_Set_Temp,
+  // Path
+  Switch_6_Event_1_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 6, Event 1, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_6_Event_1_Temp_2_Set_Sensor_Path[] = {2, 3, 5, 0, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_1_Temp_2_Set_Sensor,
+  // Path
+  Switch_6_Event_1_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 6, Event 1, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_6_Event_1_Temp_2_Set_Event_Path[] = {2, 3, 5, 0, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_1_Temp_2_Set_Event,
+  // Path
+  Switch_6_Event_1_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 6, Event 2, Temp 1, State Dep ************************************/
+const uint8 Switch_6_Event_2_Temp_1_StatePath[] = {2, 3, 5, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_2_Temp_1_State,
+  // Path
+  Switch_6_Event_2_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 6, Event 2, Temp 1, Responce Dep *********************************/
+const uint8 Switch_6_Event_2_Temp_1_Responce_Path[] = {2, 3, 5, 1, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_2_Temp_1_Responce,
+  // Path
+  Switch_6_Event_2_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 6, Event 2, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_6_Event_2_Temp_1_Set_Temp_Path[] = {2, 3, 5, 1, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_2_Temp_1_Set_Temp,
+  // Path
+  Switch_6_Event_2_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 6, Event 2, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_6_Event_2_Temp_1_Set_Sensor_Path[] = {2, 3, 5, 1, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_2_Temp_1_Set_Sensor,
+  // Path
+  Switch_6_Event_2_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 6, Event 2, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_6_Event_2_Temp_1_Set_Event_Path[] = {2, 3, 5, 1, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_2_Temp_1_Set_Event,
+  // Path
+  Switch_6_Event_2_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 6, Event 2, Temp 2, State Dep ************************************/
+const uint8 Switch_6_Event_2_Temp_2_StatePath[] = {2, 3, 5, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_2_Temp_2_State,
+  // Path
+  Switch_6_Event_2_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 6, Event 2, Temp 2, Responce Dep *********************************/
+const uint8 Switch_6_Event_2_Temp_2_Responce_Path[] = {2, 3, 5, 1, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_2_Temp_2_Responce,
+  // Path
+  Switch_6_Event_2_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 6, Event 2, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_6_Event_2_Temp_2_Set_Temp_Path[] = {2, 3, 5, 1, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_2_Temp_2_Set_Temp,
+  // Path
+  Switch_6_Event_2_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 6, Event 2, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_6_Event_2_Temp_2_Set_Sensor_Path[] = {2, 3, 5, 1, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_2_Temp_2_Set_Sensor,
+  // Path
+  Switch_6_Event_2_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 6, Event 2, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_6_Event_2_Temp_2_Set_Event_Path[] = {2, 3, 5, 1, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_2_Temp_2_Set_Event,
+  // Path
+  Switch_6_Event_2_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 6, Event 3, Temp 1, State Dep ************************************/
+const uint8 Switch_6_Event_3_Temp_1_StatePath[] = {2, 3, 5, 2, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_3_Temp_1_State,
+  // Path
+  Switch_6_Event_3_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 6, Event 3, Temp 1, Responce Dep *********************************/
+const uint8 Switch_6_Event_3_Temp_1_Responce_Path[] = {2, 3, 5, 2, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_3_Temp_1_Responce,
+  // Path
+  Switch_6_Event_3_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 6, Event 3, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_6_Event_3_Temp_1_Set_Temp_Path[] = {2, 3, 5, 2, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_3_Temp_1_Set_Temp,
+  // Path
+  Switch_6_Event_3_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 6, Event 3, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_6_Event_3_Temp_1_Set_Sensor_Path[] = {2, 3, 5, 2, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_3_Temp_1_Set_Sensor,
+  // Path
+  Switch_6_Event_3_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 6, Event 3, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_6_Event_3_Temp_1_Set_Event_Path[] = {2, 3, 5, 2, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_3_Temp_1_Set_Event,
+  // Path
+  Switch_6_Event_3_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 6, Event 1, Temp 2, State Dep ************************************/
+const uint8 Switch_6_Event_3_Temp_2_StatePath[] = {2, 3, 5, 2, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_3_Temp_2_State,
+  // Path
+  Switch_6_Event_3_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 6, Event 3, Temp 2, Responce Dep *********************************/
+const uint8 Switch_6_Event_3_Temp_2_Responce_Path[] = {2, 3, 5, 2, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_3_Temp_2_Responce,
+  // Path
+  Switch_6_Event_3_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 6, Event 3, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_6_Event_3_Temp_2_Set_Temp_Path[] = {2, 3, 5, 2, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_3_Temp_2_Set_Temp,
+  // Path
+  Switch_6_Event_3_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 6, Event 3, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_6_Event_3_Temp_2_Set_Sensor_Path[] = {2, 3, 5, 2, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_3_Temp_2_Set_Sensor,
+  // Path
+  Switch_6_Event_3_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 6, Event 3, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_6_Event_3_Temp_2_Set_Event_Path[] = {2, 3, 5, 2, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_3_Temp_2_Set_Event,
+  // Path
+  Switch_6_Event_3_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
+
+/**** Switch 6, Event 4, Temp 1, State Dep ************************************/
+const uint8 Switch_6_Event_4_Temp_1_StatePath[] = {2, 3, 5, 3, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_4_Temp_1_State,
+  // Path
+  Switch_6_Event_4_Temp_1_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 6, Event 1, Temp 1, Responce Dep *********************************/
+const uint8 Switch_6_Event_4_Temp_1_Responce_Path[] = {2, 3, 5, 3, 1, 1, 0, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_4_Temp_1_Responce,
+  // Path
+  Switch_6_Event_4_Temp_1_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 6, Event 4, Temp 1, Set Temp Dep *********************************/
+const uint8 Switch_6_Event_4_Temp_1_Set_Temp_Path[] = {2, 3, 5, 3, 1, 1, 0, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_4_Temp_1_Set_Temp,
+  // Path
+  Switch_6_Event_4_Temp_1_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 6, Event 4, Temp 1, Set Sensor Dep *********************************/
+const uint8 Switch_6_Event_4_Temp_1_Set_Sensor_Path[] = {2, 3, 5, 3, 1, 1, 0, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_4_Temp_1_Set_Sensor,
+  // Path
+  Switch_6_Event_4_Temp_1_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 6, Event 4, Temp 1, Set Event Dep *********************************/
+const uint8 Switch_6_Event_4_Temp_1_Set_Event_Path[] = {2, 3, 5, 3, 1, 1, 0, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_4_Temp_1_Set_Event,
+  // Path
+  Switch_6_Event_4_Temp_1_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 1"
+);
+
+/**** Switch 6, Event 4, Temp 2, State Dep ************************************/
+const uint8 Switch_6_Event_4_Temp_2_StatePath[] = {2, 3, 5, 3, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_4_Temp_2_State,
+  // Path
+  Switch_6_Event_4_Temp_2_StatePath,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  Temp_State_Name
+);
+
+/**** Switch 6, Event 4, Temp 2, Responce Dep *********************************/
+const uint8 Switch_6_Event_4_Temp_2_Responce_Path[] = {2, 3, 5, 3, 1, 1, 1, 1};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_4_Temp_2_Responce,
+  // Path
+  Switch_6_Event_4_Temp_2_Responce_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  Temp_Response_Name
+);
+
+/**** Switch 6, Event 4, Temp 2, Set Temp Dep *********************************/
+const uint8 Switch_6_Event_4_Temp_2_Set_Temp_Path[] = {2, 3, 5, 3, 1, 1, 1, 2};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_4_Temp_2_Set_Temp,
+  // Path
+  Switch_6_Event_4_Temp_2_Set_Temp_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  Set_Temp_Name
+);
+
+/**** Switch 6, Event 4, Temp 2, Set Sensor Dep *********************************/
+const uint8 Switch_6_Event_4_Temp_2_Set_Sensor_Path[] = {2, 3, 5, 3, 1, 1, 1, 3};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_4_Temp_2_Set_Sensor,
+  // Path
+  Switch_6_Event_4_Temp_2_Set_Sensor_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  Set_Sensor_Name
+);
+
+/**** Switch 6, Event 4, Temp 2, Set Event Dep *********************************/
+const uint8 Switch_6_Event_4_Temp_2_Set_Event_Path[] = {2, 3, 5, 3, 1, 1, 1, 4};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_4_Temp_2_Set_Event,
+  // Path
+  Switch_6_Event_4_Temp_2_Set_Event_Path,
+  // Max Level
+  8,
+  // Flags
+  0x00,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  "Event 2"
+);
 /*******************************************************************************
  * Level 9
  ******************************************************************************/
 
-
+/*******************************************************************************
+ * Switch 1
+ ******************************************************************************/
 /**** Switch 1, Event 1, Temp 1, State Dep ************************************/
 const uint8 Switch_1_Event_1_Temp_1_Set_StatePath[] = {2, 3, 0, 0, 1, 1, 0, 0, 0};
 MENU_STATE_CREATE(
@@ -1433,6 +6971,6547 @@ MENU_STATE_CREATE(
   Setting_Switch_1_Event_1_Temp_2_Set_Event,
   // Path
   Setting_Switch_1_Event_1_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+const uint8 Switch_1_Event_2_Temp_1_Set_StatePath[] = {2, 3, 0, 1, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_2_Temp_1_Set_State,
+  // Path
+  Switch_1_Event_2_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 2, Temp 2, State Dep ************************************/
+const uint8 Switch_1_Event_2_Temp_2_Set_StatePath[] = {2, 3, 0, 1, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_2_Temp_2_Set_State,
+  // Path
+  Switch_1_Event_2_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 2, Temp 1, Response Dep ************************************/
+const uint8 Switch_1_Event_2_Temp_1_Set_ResponsePath[] = {2, 3, 0, 1, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_2_Temp_1_Set_Response,
+  // Path
+  Switch_1_Event_2_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 2, Temp 2, Response Dep ************************************/
+const uint8 Switch_1_Event_2_Temp_2_Set_ResponsePath[] = {2, 3, 0, 1, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_2_Temp_2_Set_Response,
+  // Path
+  Switch_1_Event_2_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 2, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_1_Event_2_Temp_1_Set_Temp_Path[] = {2, 3, 0, 1, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_2_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_1_Event_2_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 2, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_1_Event_2_Temp_2_Set_Temp_Path[] = {2, 3, 0, 1, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_2_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_1_Event_2_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 2, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_1_Event_2_Temp_1_Set_Sensor_Path[] = {2, 3, 0, 1, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_2_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_1_Event_2_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 2, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_1_Event_2_Temp_2_Set_Sensor_Path[] = {2, 3, 0, 1, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_2_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_1_Event_2_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 2, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_1_Event_2_Temp_1_Set_Event_Path[] = {2, 3, 0, 1, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_2_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_1_Event_2_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 2, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_1_Event_2_Temp_2_Set_Event_Path[] = {2, 3, 0, 1, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_2_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_1_Event_2_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 3, Temp 1, State Dep ************************************/
+const uint8 Switch_1_Event_3_Temp_1_Set_StatePath[] = {2, 3, 0, 2, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_3_Temp_1_Set_State,
+  // Path
+  Switch_1_Event_3_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 3, Temp 2, State Dep ************************************/
+const uint8 Switch_1_Event_3_Temp_2_Set_StatePath[] = {2, 3, 0, 2, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_3_Temp_2_Set_State,
+  // Path
+  Switch_1_Event_3_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 3, Temp 1, Response Dep ************************************/
+const uint8 Switch_1_Event_3_Temp_1_Set_ResponsePath[] = {2, 3, 0, 2, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_3_Temp_1_Set_Response,
+  // Path
+  Switch_1_Event_3_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 3, Temp 2, Response Dep ************************************/
+const uint8 Switch_1_Event_3_Temp_2_Set_ResponsePath[] = {2, 3, 0, 2, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_3_Temp_2_Set_Response,
+  // Path
+  Switch_1_Event_3_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 3, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_1_Event_3_Temp_1_Set_Temp_Path[] = {2, 3, 0, 2, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_3_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_1_Event_3_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 3, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_1_Event_3_Temp_2_Set_Temp_Path[] = {2, 3, 0, 2, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_3_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_1_Event_3_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 3, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_1_Event_3_Temp_1_Set_Sensor_Path[] = {2, 3, 0, 2, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_3_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_1_Event_3_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 3, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_1_Event_3_Temp_2_Set_Sensor_Path[] = {2, 3, 0, 2, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_3_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_1_Event_3_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 3, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_1_Event_3_Temp_1_Set_Event_Path[] = {2, 3, 0, 2, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_3_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_1_Event_3_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 3, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_1_Event_3_Temp_2_Set_Event_Path[] = {2, 3, 0, 2, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_3_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_1_Event_3_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 4, Temp 1, State Dep ************************************/
+const uint8 Switch_1_Event_4_Temp_1_Set_StatePath[] = {2, 3, 0, 3, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_4_Temp_1_Set_State,
+  // Path
+  Switch_1_Event_4_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 4, Temp 2, State Dep ************************************/
+const uint8 Switch_1_Event_4_Temp_2_Set_StatePath[] = {2, 3, 0, 3, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_4_Temp_2_Set_State,
+  // Path
+  Switch_1_Event_4_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 4, Temp 1, Response Dep ************************************/
+const uint8 Switch_1_Event_4_Temp_1_Set_ResponsePath[] = {2, 3, 0, 3, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_4_Temp_1_Set_Response,
+  // Path
+  Switch_1_Event_4_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 4, Temp 2, Response Dep ************************************/
+const uint8 Switch_1_Event_4_Temp_2_Set_ResponsePath[] = {2, 3, 0, 3, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_1_Event_4_Temp_2_Set_Response,
+  // Path
+  Switch_1_Event_4_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 4, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_1_Event_4_Temp_1_Set_Temp_Path[] = {2, 3, 0, 3, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_4_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_1_Event_4_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 4, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_1_Event_4_Temp_2_Set_Temp_Path[] = {2, 3, 0, 3, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_4_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_1_Event_4_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 4, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_1_Event_4_Temp_1_Set_Sensor_Path[] = {2, 3, 0, 3, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_4_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_1_Event_4_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 4, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_1_Event_4_Temp_2_Set_Sensor_Path[] = {2, 3, 0, 3, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_4_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_1_Event_4_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 4, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_1_Event_4_Temp_1_Set_Event_Path[] = {2, 3, 0, 3, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_4_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_1_Event_4_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 1, Event 4, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_1_Event_4_Temp_2_Set_Event_Path[] = {2, 3, 0, 3, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_1_Event_4_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_1_Event_4_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/*******************************************************************************
+ * Switch 2
+ ******************************************************************************/
+/**** Switch 2, Event 1, Temp 1, State Dep ************************************/
+const uint8 Switch_2_Event_1_Temp_1_Set_StatePath[] = {2, 3, 1, 0, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_1_Temp_1_Set_State,
+  // Path
+  Switch_2_Event_1_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 1, Temp 2, State Dep ************************************/
+const uint8 Switch_2_Event_1_Temp_2_Set_StatePath[] = {2, 3, 1, 0, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_1_Temp_2_Set_State,
+  // Path
+  Switch_2_Event_1_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 1, Temp 1, Response Dep ************************************/
+const uint8 Switch_2_Event_1_Temp_1_Set_ResponsePath[] = {2, 3, 1, 0, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_1_Temp_1_Set_Response,
+  // Path
+  Switch_2_Event_1_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 1, Temp 2, Response Dep ************************************/
+const uint8 Switch_2_Event_1_Temp_2_Set_ResponsePath[] = {2, 3, 1, 0, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_1_Temp_2_Set_Response,
+  // Path
+  Switch_2_Event_1_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 1, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_2_Event_1_Temp_1_Set_Temp_Path[] = {2, 3, 1, 0, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_1_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_2_Event_1_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 1, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_2_Event_1_Temp_2_Set_Temp_Path[] = {2, 3, 1, 0, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_1_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_2_Event_1_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 1, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_2_Event_1_Temp_1_Set_Sensor_Path[] = {2, 3, 1, 0, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_1_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_2_Event_1_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 1, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_2_Event_1_Temp_2_Set_Sensor_Path[] = {2, 3, 1, 0, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_1_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_2_Event_1_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 1, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_2_Event_1_Temp_1_Set_Event_Path[] = {2, 3, 1, 0, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_1_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_2_Event_1_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 1, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_2_Event_1_Temp_2_Set_Event_Path[] = {2, 3, 1, 0, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_1_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_2_Event_1_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+const uint8 Switch_2_Event_2_Temp_1_Set_StatePath[] = {2, 3, 1, 1, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_2_Temp_1_Set_State,
+  // Path
+  Switch_2_Event_2_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 2, Temp 2, State Dep ************************************/
+const uint8 Switch_2_Event_2_Temp_2_Set_StatePath[] = {2, 3, 1, 1, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_2_Temp_2_Set_State,
+  // Path
+  Switch_2_Event_2_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 2, Temp 1, Response Dep ************************************/
+const uint8 Switch_2_Event_2_Temp_1_Set_ResponsePath[] = {2, 3, 1, 1, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_2_Temp_1_Set_Response,
+  // Path
+  Switch_2_Event_2_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 2, Temp 2, Response Dep ************************************/
+const uint8 Switch_2_Event_2_Temp_2_Set_ResponsePath[] = {2, 3, 1, 1, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_2_Temp_2_Set_Response,
+  // Path
+  Switch_2_Event_2_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 2, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_2_Event_2_Temp_1_Set_Temp_Path[] = {2, 3, 1, 1, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_2_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_2_Event_2_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 2, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_2_Event_2_Temp_2_Set_Temp_Path[] = {2, 3, 1, 1, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_2_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_2_Event_2_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 2, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_2_Event_2_Temp_1_Set_Sensor_Path[] = {2, 3, 1, 1, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_2_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_2_Event_2_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 2, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_2_Event_2_Temp_2_Set_Sensor_Path[] = {2, 3, 1, 1, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_2_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_2_Event_2_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 2, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_2_Event_2_Temp_1_Set_Event_Path[] = {2, 3, 1, 1, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_2_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_2_Event_2_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 2, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_2_Event_2_Temp_2_Set_Event_Path[] = {2, 3, 1, 1, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_2_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_2_Event_2_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 3, Temp 1, State Dep ************************************/
+const uint8 Switch_2_Event_3_Temp_1_Set_StatePath[] = {2, 3, 1, 2, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_3_Temp_1_Set_State,
+  // Path
+  Switch_2_Event_3_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 3, Temp 2, State Dep ************************************/
+const uint8 Switch_2_Event_3_Temp_2_Set_StatePath[] = {2, 3, 1, 2, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_3_Temp_2_Set_State,
+  // Path
+  Switch_2_Event_3_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 3, Temp 1, Response Dep ************************************/
+const uint8 Switch_2_Event_3_Temp_1_Set_ResponsePath[] = {2, 3, 1, 2, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_3_Temp_1_Set_Response,
+  // Path
+  Switch_2_Event_3_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 3, Temp 2, Response Dep ************************************/
+const uint8 Switch_2_Event_3_Temp_2_Set_ResponsePath[] = {2, 3, 1, 2, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_3_Temp_2_Set_Response,
+  // Path
+  Switch_2_Event_3_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 3, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_2_Event_3_Temp_1_Set_Temp_Path[] = {2, 3, 1, 2, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_3_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_2_Event_3_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 3, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_2_Event_3_Temp_2_Set_Temp_Path[] = {2, 3, 1, 2, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_3_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_2_Event_3_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 3, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_2_Event_3_Temp_1_Set_Sensor_Path[] = {2, 3, 1, 2, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_3_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_2_Event_3_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 3, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_2_Event_3_Temp_2_Set_Sensor_Path[] = {2, 3, 1, 2, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_3_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_2_Event_3_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 3, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_2_Event_3_Temp_1_Set_Event_Path[] = {2, 3, 1, 2, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_3_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_2_Event_3_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 3, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_2_Event_3_Temp_2_Set_Event_Path[] = {2, 3, 1, 2, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_3_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_2_Event_3_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 4, Temp 1, State Dep ************************************/
+const uint8 Switch_2_Event_4_Temp_1_Set_StatePath[] = {2, 3, 1, 3, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_4_Temp_1_Set_State,
+  // Path
+  Switch_2_Event_4_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 4, Temp 2, State Dep ************************************/
+const uint8 Switch_2_Event_4_Temp_2_Set_StatePath[] = {2, 3, 1, 3, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_4_Temp_2_Set_State,
+  // Path
+  Switch_2_Event_4_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 4, Temp 1, Response Dep ************************************/
+const uint8 Switch_2_Event_4_Temp_1_Set_ResponsePath[] = {2, 3, 1, 3, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_4_Temp_1_Set_Response,
+  // Path
+  Switch_2_Event_4_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 4, Temp 2, Response Dep ************************************/
+const uint8 Switch_2_Event_4_Temp_2_Set_ResponsePath[] = {2, 3, 1, 3, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_2_Event_4_Temp_2_Set_Response,
+  // Path
+  Switch_2_Event_4_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 4, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_2_Event_4_Temp_1_Set_Temp_Path[] = {2, 3, 1, 3, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_4_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_2_Event_4_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 4, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_2_Event_4_Temp_2_Set_Temp_Path[] = {2, 3, 1, 3, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_4_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_2_Event_4_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 4, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_2_Event_4_Temp_1_Set_Sensor_Path[] = {2, 3, 1, 3, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_4_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_2_Event_4_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 4, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_2_Event_4_Temp_2_Set_Sensor_Path[] = {2, 3, 1, 3, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_4_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_2_Event_4_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 4, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_2_Event_4_Temp_1_Set_Event_Path[] = {2, 3, 1, 3, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_4_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_2_Event_4_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 2, Event 4, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_2_Event_4_Temp_2_Set_Event_Path[] = {2, 3, 1, 3, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_2_Event_4_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_2_Event_4_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/*******************************************************************************
+ * Switch 3
+ ******************************************************************************/
+/**** Switch 3, Event 1, Temp 1, State Dep ************************************/
+const uint8 Switch_3_Event_1_Temp_1_Set_StatePath[] = {2, 3, 2, 0, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_1_Temp_1_Set_State,
+  // Path
+  Switch_3_Event_1_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 1, Temp 2, State Dep ************************************/
+const uint8 Switch_3_Event_1_Temp_2_Set_StatePath[] = {2, 3, 2, 0, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_1_Temp_2_Set_State,
+  // Path
+  Switch_3_Event_1_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 1, Temp 1, Response Dep ************************************/
+const uint8 Switch_3_Event_1_Temp_1_Set_ResponsePath[] = {2, 3, 2, 0, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_1_Temp_1_Set_Response,
+  // Path
+  Switch_3_Event_1_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 1, Temp 2, Response Dep ************************************/
+const uint8 Switch_3_Event_1_Temp_2_Set_ResponsePath[] = {2, 3, 2, 0, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_1_Temp_2_Set_Response,
+  // Path
+  Switch_3_Event_1_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 1, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_3_Event_1_Temp_1_Set_Temp_Path[] = {2, 3, 2, 0, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_1_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_3_Event_1_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 1, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_3_Event_1_Temp_2_Set_Temp_Path[] = {2, 3, 2, 0, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_1_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_3_Event_1_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 1, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_3_Event_1_Temp_1_Set_Sensor_Path[] = {2, 3, 2, 0, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_1_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_3_Event_1_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 1, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_3_Event_1_Temp_2_Set_Sensor_Path[] = {2, 3, 2, 0, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_1_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_3_Event_1_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 1, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_3_Event_1_Temp_1_Set_Event_Path[] = {2, 3, 2, 0, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_1_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_3_Event_1_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 1, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_3_Event_1_Temp_2_Set_Event_Path[] = {2, 3, 2, 0, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_1_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_3_Event_1_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+const uint8 Switch_3_Event_2_Temp_1_Set_StatePath[] = {2, 3, 2, 1, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_2_Temp_1_Set_State,
+  // Path
+  Switch_3_Event_2_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 2, Temp 2, State Dep ************************************/
+const uint8 Switch_3_Event_2_Temp_2_Set_StatePath[] = {2, 3, 2, 1, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_2_Temp_2_Set_State,
+  // Path
+  Switch_3_Event_2_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 2, Temp 1, Response Dep ************************************/
+const uint8 Switch_3_Event_2_Temp_1_Set_ResponsePath[] = {2, 3, 2, 1, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_2_Temp_1_Set_Response,
+  // Path
+  Switch_3_Event_2_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 2, Temp 2, Response Dep ************************************/
+const uint8 Switch_3_Event_2_Temp_2_Set_ResponsePath[] = {2, 3, 2, 1, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_2_Temp_2_Set_Response,
+  // Path
+  Switch_3_Event_2_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 2, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_3_Event_2_Temp_1_Set_Temp_Path[] = {2, 3, 2, 1, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_2_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_3_Event_2_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 2, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_3_Event_2_Temp_2_Set_Temp_Path[] = {2, 3, 2, 1, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_2_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_3_Event_2_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 2, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_3_Event_2_Temp_1_Set_Sensor_Path[] = {2, 3, 2, 1, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_2_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_3_Event_2_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 2, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_3_Event_2_Temp_2_Set_Sensor_Path[] = {2, 3, 2, 1, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_2_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_3_Event_2_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 2, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_3_Event_2_Temp_1_Set_Event_Path[] = {2, 3, 2, 1, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_2_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_3_Event_2_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 2, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_3_Event_2_Temp_2_Set_Event_Path[] = {2, 3, 2, 1, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_2_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_3_Event_2_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 3, Temp 1, State Dep ************************************/
+const uint8 Switch_3_Event_3_Temp_1_Set_StatePath[] = {2, 3, 2, 2, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_3_Temp_1_Set_State,
+  // Path
+  Switch_3_Event_3_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 3, Temp 2, State Dep ************************************/
+const uint8 Switch_3_Event_3_Temp_2_Set_StatePath[] = {2, 3, 2, 2, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_3_Temp_2_Set_State,
+  // Path
+  Switch_3_Event_3_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 3, Temp 1, Response Dep ************************************/
+const uint8 Switch_3_Event_3_Temp_1_Set_ResponsePath[] = {2, 3, 2, 2, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_3_Temp_1_Set_Response,
+  // Path
+  Switch_3_Event_3_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 3, Temp 2, Response Dep ************************************/
+const uint8 Switch_3_Event_3_Temp_2_Set_ResponsePath[] = {2, 3, 2, 2, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_3_Temp_2_Set_Response,
+  // Path
+  Switch_3_Event_3_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 3, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_3_Event_3_Temp_1_Set_Temp_Path[] = {2, 3, 2, 2, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_3_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_3_Event_3_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 3, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_3_Event_3_Temp_2_Set_Temp_Path[] = {2, 3, 2, 2, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_3_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_3_Event_3_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 3, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_3_Event_3_Temp_1_Set_Sensor_Path[] = {2, 3, 2, 2, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_3_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_3_Event_3_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 3, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_3_Event_3_Temp_2_Set_Sensor_Path[] = {2, 3, 2, 2, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_3_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_3_Event_3_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 3, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_3_Event_3_Temp_1_Set_Event_Path[] = {2, 3, 2, 2, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_3_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_3_Event_3_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 3, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_3_Event_3_Temp_2_Set_Event_Path[] = {2, 3, 2, 2, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_3_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_3_Event_3_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 4, Temp 1, State Dep ************************************/
+const uint8 Switch_3_Event_4_Temp_1_Set_StatePath[] = {2, 3, 2, 3, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_4_Temp_1_Set_State,
+  // Path
+  Switch_3_Event_4_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 4, Temp 2, State Dep ************************************/
+const uint8 Switch_3_Event_4_Temp_2_Set_StatePath[] = {2, 3, 2, 3, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_4_Temp_2_Set_State,
+  // Path
+  Switch_3_Event_4_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 4, Temp 1, Response Dep ************************************/
+const uint8 Switch_3_Event_4_Temp_1_Set_ResponsePath[] = {2, 3, 2, 3, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_4_Temp_1_Set_Response,
+  // Path
+  Switch_3_Event_4_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 4, Temp 2, Response Dep ************************************/
+const uint8 Switch_3_Event_4_Temp_2_Set_ResponsePath[] = {2, 3, 2, 3, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_3_Event_4_Temp_2_Set_Response,
+  // Path
+  Switch_3_Event_4_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 4, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_3_Event_4_Temp_1_Set_Temp_Path[] = {2, 3, 2, 3, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_4_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_3_Event_4_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 4, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_3_Event_4_Temp_2_Set_Temp_Path[] = {2, 3, 2, 3, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_4_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_3_Event_4_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 4, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_3_Event_4_Temp_1_Set_Sensor_Path[] = {2, 3, 2, 3, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_4_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_3_Event_4_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 4, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_3_Event_4_Temp_2_Set_Sensor_Path[] = {2, 3, 2, 3, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_4_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_3_Event_4_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 4, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_3_Event_4_Temp_1_Set_Event_Path[] = {2, 3, 2, 3, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_4_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_3_Event_4_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 3, Event 4, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_3_Event_4_Temp_2_Set_Event_Path[] = {2, 3, 2, 3, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_3_Event_4_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_3_Event_4_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/*******************************************************************************
+ * Switch 4
+ ******************************************************************************/
+/**** Switch 4, Event 1, Temp 1, State Dep ************************************/
+const uint8 Switch_4_Event_1_Temp_1_Set_StatePath[] = {2, 3, 3, 0, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_1_Temp_1_Set_State,
+  // Path
+  Switch_4_Event_1_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 1, Temp 2, State Dep ************************************/
+const uint8 Switch_4_Event_1_Temp_2_Set_StatePath[] = {2, 3, 3, 0, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_1_Temp_2_Set_State,
+  // Path
+  Switch_4_Event_1_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 1, Temp 1, Response Dep ************************************/
+const uint8 Switch_4_Event_1_Temp_1_Set_ResponsePath[] = {2, 3, 3, 0, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_1_Temp_1_Set_Response,
+  // Path
+  Switch_4_Event_1_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 1, Temp 2, Response Dep ************************************/
+const uint8 Switch_4_Event_1_Temp_2_Set_ResponsePath[] = {2, 3, 3, 0, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_1_Temp_2_Set_Response,
+  // Path
+  Switch_4_Event_1_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 1, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_4_Event_1_Temp_1_Set_Temp_Path[] = {2, 3, 3, 0, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_1_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_4_Event_1_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 1, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_4_Event_1_Temp_2_Set_Temp_Path[] = {2, 3, 3, 0, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_1_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_4_Event_1_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 1, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_4_Event_1_Temp_1_Set_Sensor_Path[] = {2, 3, 3, 0, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_1_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_4_Event_1_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 1, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_4_Event_1_Temp_2_Set_Sensor_Path[] = {2, 3, 3, 0, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_1_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_4_Event_1_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 1, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_4_Event_1_Temp_1_Set_Event_Path[] = {2, 3, 3, 0, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_1_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_4_Event_1_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 1, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_4_Event_1_Temp_2_Set_Event_Path[] = {2, 3, 3, 0, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_1_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_4_Event_1_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+const uint8 Switch_4_Event_2_Temp_1_Set_StatePath[] = {2, 3, 3, 1, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_2_Temp_1_Set_State,
+  // Path
+  Switch_4_Event_2_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 2, Temp 2, State Dep ************************************/
+const uint8 Switch_4_Event_2_Temp_2_Set_StatePath[] = {2, 3, 3, 1, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_2_Temp_2_Set_State,
+  // Path
+  Switch_4_Event_2_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 2, Temp 1, Response Dep ************************************/
+const uint8 Switch_4_Event_2_Temp_1_Set_ResponsePath[] = {2, 3, 3, 1, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_2_Temp_1_Set_Response,
+  // Path
+  Switch_4_Event_2_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 2, Temp 2, Response Dep ************************************/
+const uint8 Switch_4_Event_2_Temp_2_Set_ResponsePath[] = {2, 3, 3, 1, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_2_Temp_2_Set_Response,
+  // Path
+  Switch_4_Event_2_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 2, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_4_Event_2_Temp_1_Set_Temp_Path[] = {2, 3, 3, 1, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_2_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_4_Event_2_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 2, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_4_Event_2_Temp_2_Set_Temp_Path[] = {2, 3, 3, 1, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_2_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_4_Event_2_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 2, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_4_Event_2_Temp_1_Set_Sensor_Path[] = {2, 3, 3, 1, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_2_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_4_Event_2_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 2, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_4_Event_2_Temp_2_Set_Sensor_Path[] = {2, 3, 3, 1, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_2_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_4_Event_2_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 2, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_4_Event_2_Temp_1_Set_Event_Path[] = {2, 3, 3, 1, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_2_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_4_Event_2_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 2, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_4_Event_2_Temp_2_Set_Event_Path[] = {2, 3, 3, 1, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_2_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_4_Event_2_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 3, Temp 1, State Dep ************************************/
+const uint8 Switch_4_Event_3_Temp_1_Set_StatePath[] = {2, 3, 3, 2, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_3_Temp_1_Set_State,
+  // Path
+  Switch_4_Event_3_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 3, Temp 2, State Dep ************************************/
+const uint8 Switch_4_Event_3_Temp_2_Set_StatePath[] = {2, 3, 3, 2, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_3_Temp_2_Set_State,
+  // Path
+  Switch_4_Event_3_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 3, Temp 1, Response Dep ************************************/
+const uint8 Switch_4_Event_3_Temp_1_Set_ResponsePath[] = {2, 3, 3, 2, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_3_Temp_1_Set_Response,
+  // Path
+  Switch_4_Event_3_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 3, Temp 2, Response Dep ************************************/
+const uint8 Switch_4_Event_3_Temp_2_Set_ResponsePath[] = {2, 3, 3, 2, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_3_Temp_2_Set_Response,
+  // Path
+  Switch_4_Event_3_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 3, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_4_Event_3_Temp_1_Set_Temp_Path[] = {2, 3, 3, 2, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_3_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_4_Event_3_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 3, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_4_Event_3_Temp_2_Set_Temp_Path[] = {2, 3, 3, 2, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_3_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_4_Event_3_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 3, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_4_Event_3_Temp_1_Set_Sensor_Path[] = {2, 3, 3, 2, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_3_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_4_Event_3_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 3, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_4_Event_3_Temp_2_Set_Sensor_Path[] = {2, 3, 3, 2, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_3_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_4_Event_3_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 3, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_4_Event_3_Temp_1_Set_Event_Path[] = {2, 3, 3, 2, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_3_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_4_Event_3_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 3, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_4_Event_3_Temp_2_Set_Event_Path[] = {2, 3, 3, 2, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_3_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_4_Event_3_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 4, Temp 1, State Dep ************************************/
+const uint8 Switch_4_Event_4_Temp_1_Set_StatePath[] = {2, 3, 3, 3, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_4_Temp_1_Set_State,
+  // Path
+  Switch_4_Event_4_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 4, Temp 2, State Dep ************************************/
+const uint8 Switch_4_Event_4_Temp_2_Set_StatePath[] = {2, 3, 3, 3, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_4_Temp_2_Set_State,
+  // Path
+  Switch_4_Event_4_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 4, Temp 1, Response Dep ************************************/
+const uint8 Switch_4_Event_4_Temp_1_Set_ResponsePath[] = {2, 3, 3, 3, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_4_Temp_1_Set_Response,
+  // Path
+  Switch_4_Event_4_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 4, Temp 2, Response Dep ************************************/
+const uint8 Switch_4_Event_4_Temp_2_Set_ResponsePath[] = {2, 3, 3, 3, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_4_Event_4_Temp_2_Set_Response,
+  // Path
+  Switch_4_Event_4_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 4, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_4_Event_4_Temp_1_Set_Temp_Path[] = {2, 3, 3, 3, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_4_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_4_Event_4_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 4, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_4_Event_4_Temp_2_Set_Temp_Path[] = {2, 3, 3, 3, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_4_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_4_Event_4_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 4, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_4_Event_4_Temp_1_Set_Sensor_Path[] = {2, 3, 3, 3, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_4_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_4_Event_4_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 4, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_4_Event_4_Temp_2_Set_Sensor_Path[] = {2, 3, 3, 3, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_4_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_4_Event_4_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 4, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_4_Event_4_Temp_1_Set_Event_Path[] = {2, 3, 3, 3, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_4_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_4_Event_4_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 4, Event 4, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_4_Event_4_Temp_2_Set_Event_Path[] = {2, 3, 3, 3, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_4_Event_4_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_4_Event_4_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/*******************************************************************************
+ * Switch 5
+ ******************************************************************************/
+/**** Switch 5, Event 1, Temp 1, State Dep ************************************/
+const uint8 Switch_5_Event_1_Temp_1_Set_StatePath[] = {2, 3, 4, 0, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_1_Temp_1_Set_State,
+  // Path
+  Switch_5_Event_1_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 1, Temp 2, State Dep ************************************/
+const uint8 Switch_5_Event_1_Temp_2_Set_StatePath[] = {2, 3, 4, 0, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_1_Temp_2_Set_State,
+  // Path
+  Switch_5_Event_1_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 1, Temp 1, Response Dep ************************************/
+const uint8 Switch_5_Event_1_Temp_1_Set_ResponsePath[] = {2, 3, 4, 0, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_1_Temp_1_Set_Response,
+  // Path
+  Switch_5_Event_1_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 1, Temp 2, Response Dep ************************************/
+const uint8 Switch_5_Event_1_Temp_2_Set_ResponsePath[] = {2, 3, 4, 0, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_1_Temp_2_Set_Response,
+  // Path
+  Switch_5_Event_1_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 1, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_5_Event_1_Temp_1_Set_Temp_Path[] = {2, 3, 4, 0, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_1_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_5_Event_1_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 1, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_5_Event_1_Temp_2_Set_Temp_Path[] = {2, 3, 4, 0, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_1_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_5_Event_1_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 1, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_5_Event_1_Temp_1_Set_Sensor_Path[] = {2, 3, 4, 0, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_1_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_5_Event_1_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 1, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_5_Event_1_Temp_2_Set_Sensor_Path[] = {2, 3, 4, 0, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_1_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_5_Event_1_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 1, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_5_Event_1_Temp_1_Set_Event_Path[] = {2, 3, 4, 0, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_1_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_5_Event_1_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 1, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_5_Event_1_Temp_2_Set_Event_Path[] = {2, 3, 4, 0, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_1_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_5_Event_1_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+const uint8 Switch_5_Event_2_Temp_1_Set_StatePath[] = {2, 3, 4, 1, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_2_Temp_1_Set_State,
+  // Path
+  Switch_5_Event_2_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 2, Temp 2, State Dep ************************************/
+const uint8 Switch_5_Event_2_Temp_2_Set_StatePath[] = {2, 3, 4, 1, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_2_Temp_2_Set_State,
+  // Path
+  Switch_5_Event_2_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 2, Temp 1, Response Dep ************************************/
+const uint8 Switch_5_Event_2_Temp_1_Set_ResponsePath[] = {2, 3, 4, 1, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_2_Temp_1_Set_Response,
+  // Path
+  Switch_5_Event_2_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 2, Temp 2, Response Dep ************************************/
+const uint8 Switch_5_Event_2_Temp_2_Set_ResponsePath[] = {2, 3, 4, 1, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_2_Temp_2_Set_Response,
+  // Path
+  Switch_5_Event_2_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 2, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_5_Event_2_Temp_1_Set_Temp_Path[] = {2, 3, 4, 1, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_2_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_5_Event_2_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 2, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_5_Event_2_Temp_2_Set_Temp_Path[] = {2, 3, 4, 1, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_2_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_5_Event_2_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 2, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_5_Event_2_Temp_1_Set_Sensor_Path[] = {2, 3, 4, 1, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_2_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_5_Event_2_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 2, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_5_Event_2_Temp_2_Set_Sensor_Path[] = {2, 3, 4, 1, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_2_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_5_Event_2_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 2, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_5_Event_2_Temp_1_Set_Event_Path[] = {2, 3, 4, 1, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_2_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_5_Event_2_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 2, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_5_Event_2_Temp_2_Set_Event_Path[] = {2, 3, 4, 1, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_2_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_5_Event_2_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 3, Temp 1, State Dep ************************************/
+const uint8 Switch_5_Event_3_Temp_1_Set_StatePath[] = {2, 3, 4, 2, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_3_Temp_1_Set_State,
+  // Path
+  Switch_5_Event_3_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 3, Temp 2, State Dep ************************************/
+const uint8 Switch_5_Event_3_Temp_2_Set_StatePath[] = {2, 3, 4, 2, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_3_Temp_2_Set_State,
+  // Path
+  Switch_5_Event_3_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 3, Temp 1, Response Dep ************************************/
+const uint8 Switch_5_Event_3_Temp_1_Set_ResponsePath[] = {2, 3, 4, 2, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_3_Temp_1_Set_Response,
+  // Path
+  Switch_5_Event_3_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 3, Temp 2, Response Dep ************************************/
+const uint8 Switch_5_Event_3_Temp_2_Set_ResponsePath[] = {2, 3, 4, 2, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_3_Temp_2_Set_Response,
+  // Path
+  Switch_5_Event_3_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 3, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_5_Event_3_Temp_1_Set_Temp_Path[] = {2, 3, 4, 2, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_3_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_5_Event_3_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 3, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_5_Event_3_Temp_2_Set_Temp_Path[] = {2, 3, 4, 2, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_3_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_5_Event_3_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 3, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_5_Event_3_Temp_1_Set_Sensor_Path[] = {2, 3, 4, 2, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_3_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_5_Event_3_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 3, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_5_Event_3_Temp_2_Set_Sensor_Path[] = {2, 3, 4, 2, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_3_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_5_Event_3_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 3, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_5_Event_3_Temp_1_Set_Event_Path[] = {2, 3, 4, 2, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_3_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_5_Event_3_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 3, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_5_Event_3_Temp_2_Set_Event_Path[] = {2, 3, 4, 2, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_3_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_5_Event_3_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 4, Temp 1, State Dep ************************************/
+const uint8 Switch_5_Event_4_Temp_1_Set_StatePath[] = {2, 3, 4, 3, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_4_Temp_1_Set_State,
+  // Path
+  Switch_5_Event_4_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 4, Temp 2, State Dep ************************************/
+const uint8 Switch_5_Event_4_Temp_2_Set_StatePath[] = {2, 3, 4, 3, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_4_Temp_2_Set_State,
+  // Path
+  Switch_5_Event_4_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 4, Temp 1, Response Dep ************************************/
+const uint8 Switch_5_Event_4_Temp_1_Set_ResponsePath[] = {2, 3, 4, 3, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_4_Temp_1_Set_Response,
+  // Path
+  Switch_5_Event_4_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 4, Temp 2, Response Dep ************************************/
+const uint8 Switch_5_Event_4_Temp_2_Set_ResponsePath[] = {2, 3, 4, 3, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_5_Event_4_Temp_2_Set_Response,
+  // Path
+  Switch_5_Event_4_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 4, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_5_Event_4_Temp_1_Set_Temp_Path[] = {2, 3, 4, 3, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_4_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_5_Event_4_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 4, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_5_Event_4_Temp_2_Set_Temp_Path[] = {2, 3, 4, 3, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_4_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_5_Event_4_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 4, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_5_Event_4_Temp_1_Set_Sensor_Path[] = {2, 3, 4, 3, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_4_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_5_Event_4_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 4, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_5_Event_4_Temp_2_Set_Sensor_Path[] = {2, 3, 4, 3, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_4_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_5_Event_4_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 4, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_5_Event_4_Temp_1_Set_Event_Path[] = {2, 3, 4, 3, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_4_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_5_Event_4_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 5, Event 4, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_5_Event_4_Temp_2_Set_Event_Path[] = {2, 3, 4, 3, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_5_Event_4_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_5_Event_4_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/*******************************************************************************
+ * Switch 6
+ ******************************************************************************/
+/**** Switch 6, Event 1, Temp 1, State Dep ************************************/
+const uint8 Switch_6_Event_1_Temp_1_Set_StatePath[] = {2, 3, 5, 0, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_1_Temp_1_Set_State,
+  // Path
+  Switch_6_Event_1_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 1, Temp 2, State Dep ************************************/
+const uint8 Switch_6_Event_1_Temp_2_Set_StatePath[] = {2, 3, 5, 0, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_1_Temp_2_Set_State,
+  // Path
+  Switch_6_Event_1_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 1, Temp 1, Response Dep ************************************/
+const uint8 Switch_6_Event_1_Temp_1_Set_ResponsePath[] = {2, 3, 5, 0, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_1_Temp_1_Set_Response,
+  // Path
+  Switch_6_Event_1_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 1, Temp 2, Response Dep ************************************/
+const uint8 Switch_6_Event_1_Temp_2_Set_ResponsePath[] = {2, 3, 5, 0, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_1_Temp_2_Set_Response,
+  // Path
+  Switch_6_Event_1_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 1, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_6_Event_1_Temp_1_Set_Temp_Path[] = {2, 3, 5, 0, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_1_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_6_Event_1_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 1, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_6_Event_1_Temp_2_Set_Temp_Path[] = {2, 3, 5, 0, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_1_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_6_Event_1_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 1, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_6_Event_1_Temp_1_Set_Sensor_Path[] = {2, 3, 5, 0, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_1_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_6_Event_1_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 1, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_6_Event_1_Temp_2_Set_Sensor_Path[] = {2, 3, 5, 0, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_1_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_6_Event_1_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 1, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_6_Event_1_Temp_1_Set_Event_Path[] = {2, 3, 5, 0, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_1_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_6_Event_1_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 1, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_6_Event_1_Temp_2_Set_Event_Path[] = {2, 3, 5, 0, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_1_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_6_Event_1_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+const uint8 Switch_6_Event_2_Temp_1_Set_StatePath[] = {2, 3, 5, 1, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_2_Temp_1_Set_State,
+  // Path
+  Switch_6_Event_2_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 2, Temp 2, State Dep ************************************/
+const uint8 Switch_6_Event_2_Temp_2_Set_StatePath[] = {2, 3, 5, 1, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_2_Temp_2_Set_State,
+  // Path
+  Switch_6_Event_2_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 2, Temp 1, Response Dep ************************************/
+const uint8 Switch_6_Event_2_Temp_1_Set_ResponsePath[] = {2, 3, 5, 1, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_2_Temp_1_Set_Response,
+  // Path
+  Switch_6_Event_2_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 2, Temp 2, Response Dep ************************************/
+const uint8 Switch_6_Event_2_Temp_2_Set_ResponsePath[] = {2, 3, 5, 1, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_2_Temp_2_Set_Response,
+  // Path
+  Switch_6_Event_2_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 2, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_6_Event_2_Temp_1_Set_Temp_Path[] = {2, 3, 5, 1, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_2_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_6_Event_2_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 2, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_6_Event_2_Temp_2_Set_Temp_Path[] = {2, 3, 5, 1, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_2_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_6_Event_2_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 2, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_6_Event_2_Temp_1_Set_Sensor_Path[] = {2, 3, 5, 1, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_2_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_6_Event_2_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 2, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_6_Event_2_Temp_2_Set_Sensor_Path[] = {2, 3, 5, 1, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_2_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_6_Event_2_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 2, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_6_Event_2_Temp_1_Set_Event_Path[] = {2, 3, 5, 1, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_2_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_6_Event_2_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 2, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_6_Event_2_Temp_2_Set_Event_Path[] = {2, 3, 5, 1, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_2_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_6_Event_2_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 3, Temp 1, State Dep ************************************/
+const uint8 Switch_6_Event_3_Temp_1_Set_StatePath[] = {2, 3, 5, 2, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_3_Temp_1_Set_State,
+  // Path
+  Switch_6_Event_3_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 3, Temp 2, State Dep ************************************/
+const uint8 Switch_6_Event_3_Temp_2_Set_StatePath[] = {2, 3, 5, 2, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_3_Temp_2_Set_State,
+  // Path
+  Switch_6_Event_3_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 3, Temp 1, Response Dep ************************************/
+const uint8 Switch_6_Event_3_Temp_1_Set_ResponsePath[] = {2, 3, 5, 2, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_3_Temp_1_Set_Response,
+  // Path
+  Switch_6_Event_3_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 3, Temp 2, Response Dep ************************************/
+const uint8 Switch_6_Event_3_Temp_2_Set_ResponsePath[] = {2, 3, 5, 2, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_3_Temp_2_Set_Response,
+  // Path
+  Switch_6_Event_3_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 3, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_6_Event_3_Temp_1_Set_Temp_Path[] = {2, 3, 5, 2, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_3_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_6_Event_3_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 3, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_6_Event_3_Temp_2_Set_Temp_Path[] = {2, 3, 5, 2, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_3_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_6_Event_3_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 3, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_6_Event_3_Temp_1_Set_Sensor_Path[] = {2, 3, 5, 2, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_3_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_6_Event_3_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 3, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_6_Event_3_Temp_2_Set_Sensor_Path[] = {2, 3, 5, 2, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_3_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_6_Event_3_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 3, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_6_Event_3_Temp_1_Set_Event_Path[] = {2, 3, 5, 2, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_3_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_6_Event_3_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 3, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_6_Event_3_Temp_2_Set_Event_Path[] = {2, 3, 5, 2, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_3_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_6_Event_3_Temp_2_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 4, Temp 1, State Dep ************************************/
+const uint8 Switch_6_Event_4_Temp_1_Set_StatePath[] = {2, 3, 5, 3, 1, 1, 0, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_4_Temp_1_Set_State,
+  // Path
+  Switch_6_Event_4_Temp_1_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 4, Temp 2, State Dep ************************************/
+const uint8 Switch_6_Event_4_Temp_2_Set_StatePath[] = {2, 3, 5, 3, 1, 1, 1, 0, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_4_Temp_2_Set_State,
+  // Path
+  Switch_6_Event_4_Temp_2_Set_StatePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_State,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 4, Temp 1, Response Dep ************************************/
+const uint8 Switch_6_Event_4_Temp_1_Set_ResponsePath[] = {2, 3, 5, 3, 1, 1, 0, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_4_Temp_1_Set_Response,
+  // Path
+  Switch_6_Event_4_Temp_1_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 4, Temp 2, Response Dep ************************************/
+const uint8 Switch_6_Event_4_Temp_2_Set_ResponsePath[] = {2, 3, 5, 3, 1, 1, 1, 1, 0};
+MENU_STATE_CREATE(
+  // Name
+  Switch_6_Event_4_Temp_2_Set_Response,
+  // Path
+  Switch_6_Event_4_Temp_2_Set_ResponsePath,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Temp_Response,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 4, Temp 1, Set Temp Dep ************************************/
+const uint8 Setting_Switch_6_Event_4_Temp_1_Set_Temp_Path[] = {2, 3, 5, 3, 1, 1, 0, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_4_Temp_1_Set_Temp,
+  // Path
+  Setting_Switch_6_Event_4_Temp_1_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 4, Temp 2, Set Temp Dep ************************************/
+const uint8 Setting_Switch_6_Event_4_Temp_2_Set_Temp_Path[] = {2, 3, 5, 3, 1, 1, 1, 2, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_4_Temp_2_Set_Temp,
+  // Path
+  Setting_Switch_6_Event_4_Temp_2_Set_Temp_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Temp,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 4, Temp 1, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_6_Event_4_Temp_1_Set_Sensor_Path[] = {2, 3, 5, 3, 1, 1, 0, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_4_Temp_1_Set_Sensor,
+  // Path
+  Setting_Switch_6_Event_4_Temp_1_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 4, Temp 2, Set Sensor Dep ************************************/
+const uint8 Setting_Switch_6_Event_4_Temp_2_Set_Sensor_Path[] = {2, 3, 5, 3, 1, 1, 1, 3, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_4_Temp_2_Set_Sensor,
+  // Path
+  Setting_Switch_6_Event_4_Temp_2_Set_Sensor_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  LEFT_KEY_EVENT | \
+  RIGHT_KEY_EVENT | \
+  EXIT_KEY_EVENT | \
+  NUM1_KEY_EVENT | \
+  NUM2_KEY_EVENT | \
+  NUM3_KEY_EVENT | \
+  NUM4_KEY_EVENT | \
+  NUM5_KEY_EVENT | \
+  NUM6_KEY_EVENT | \
+  NUM7_KEY_EVENT | \
+  NUM8_KEY_EVENT | \
+  NUM9_KEY_EVENT | \
+  NUM0_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Sensor,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 4, Temp 1, Set Event Dep ************************************/
+const uint8 Setting_Switch_6_Event_4_Temp_1_Set_Event_Path[] = {2, 3, 5, 3, 1, 1, 0, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_4_Temp_1_Set_Event,
+  // Path
+  Setting_Switch_6_Event_4_Temp_1_Set_Event_Path,
+  // Max Level
+  9,
+  // Flags
+  MENU_LAST_STATE | \
+  MENU_NO_DISPLAY_UPDATE,
+  // Possible Keys
+  ENTER_KEY_EVENT | \
+  CANCEL_KEY_EVENT | \
+  UP_KEY_EVENT | \
+  DOWN_KEY_EVENT | \
+  EXIT_KEY_EVENT,
+  // Callback
+  Menu_Temp_Dep_Set_Event,
+  // String
+  ""
+);
+
+/**** Switch 6, Event 4, Temp 2, Set Event Dep ************************************/
+const uint8 Setting_Switch_6_Event_4_Temp_2_Set_Event_Path[] = {2, 3, 5, 3, 1, 1, 1, 4, 0};
+MENU_STATE_CREATE(
+  // Name
+  Setting_Switch_6_Event_4_Temp_2_Set_Event,
+  // Path
+  Setting_Switch_6_Event_4_Temp_2_Set_Event_Path,
   // Max Level
   9,
   // Flags
